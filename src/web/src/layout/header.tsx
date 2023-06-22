@@ -30,7 +30,8 @@ const iconProps: IIconProps = {
 }
 
 const onLoginClick = () => {
-    window.location.href = `/.auth/login/google?post_login_redirect_uri=${process.env.PUBLIC_URL}`;
+    // window.location.href = `/.auth/login/google?post_login_redirect_uri=${process.env.PUBLIC_URL}`;
+    window.location.href = `/.auth/login/google`;
 }
 
 const Header: FC = (): ReactElement => {
