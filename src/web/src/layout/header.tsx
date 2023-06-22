@@ -1,5 +1,5 @@
-import { FontIcon, getTheme, IconButton, IIconProps, IStackStyles, mergeStyles, Persona, PersonaSize, Stack, Text } from '@fluentui/react';
-import React, { FC, ReactElement } from 'react';
+import { getTheme, IconButton, IIconProps, IStackStyles, Persona, PersonaSize, Stack } from '@fluentui/react';
+import { FC, ReactElement } from 'react';
 
 const theme = getTheme();
 
@@ -11,11 +11,6 @@ const logoStyles: IStackStyles = {
         padding: '0 20px'
     }
 }
-
-const logoIconClass = mergeStyles({
-    fontSize: 20,
-    paddingRight: 10
-});
 
 const toolStackClass: IStackStyles = {
     root: {
