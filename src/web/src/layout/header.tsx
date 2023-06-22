@@ -1,4 +1,4 @@
-import { getTheme, IconButton, IIconProps, IStackStyles, Persona, PersonaSize, Stack } from '@fluentui/react';
+import { getTheme, IconButton, IIconProps, IStackStyles, Stack } from '@fluentui/react';
 import { FC, ReactElement } from 'react';
 
 const theme = getTheme();
@@ -29,6 +29,10 @@ const iconProps: IIconProps = {
     }
 }
 
+const onLoginClick = () => {
+    window.location.href = `/.auth/login/google?post_login_redirect_uri=${process.env.PUBLIC_URL}`;
+}
+
 const Header: FC = (): ReactElement => {
     return (
         <Stack horizontal>
@@ -42,7 +46,8 @@ const Header: FC = (): ReactElement => {
                 <Stack horizontal styles={toolStackClass} grow={1}>
                     <IconButton aria-label="Add" iconProps={{ iconName: "Settings", ...iconProps }} />
                     <IconButton aria-label="Add" iconProps={{ iconName: "Help", ...iconProps }} />
-                    <Persona size={PersonaSize.size24} text="Sample User" />
+                    <IconButton aria-label="Login" iconProps={{ iconName: "Login", ...iconProps }} onClick={onLoginClick} />
+                    {/* <Persona size={PersonaSize.size24} text="Sample User" /> */}
                     {/* <Toggle label="Dark Mode" inlineLabel styles={{ root: { marginBottom: 0 } }} onChange={changeTheme} /> */}
                 </Stack>
             </Stack.Item>
