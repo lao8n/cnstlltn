@@ -38,8 +38,7 @@ const Header: FC = (): ReactElement => {
     return (
         <Stack horizontal>
             <Stack horizontal styles={logoStyles}>
-                <FontIcon aria-label="Check" iconName="SkypeCircleCheck" className={logoIconClass} />
-                <Text variant="xLarge">cnstlltn</Text>
+                <img src={`${process.env.PUBLIC_URL}/cnstlltn_logo.png`} alt="Logo" style={{width: '100px', height: 'auto'}}/>
             </Stack>
             <Stack.Item grow={1}>
                 <div></div>
