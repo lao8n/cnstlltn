@@ -1,5 +1,5 @@
-import { getTheme, IconButton, IIconProps, IStackStyles, Stack } from '@fluentui/react';
-import { FC, ReactElement } from 'react';
+import { FontIcon, getTheme, IconButton, IIconProps, IStackStyles, mergeStyles, Persona, PersonaSize, Stack, Text } from '@fluentui/react';
+import React, { FC, ReactElement } from 'react';
 
 const theme = getTheme();
 
@@ -11,6 +11,11 @@ const logoStyles: IStackStyles = {
         padding: '0 20px'
     }
 }
+
+const logoIconClass = mergeStyles({
+    fontSize: 20,
+    paddingRight: 10
+});
 
 const toolStackClass: IStackStyles = {
     root: {
@@ -29,16 +34,12 @@ const iconProps: IIconProps = {
     }
 }
 
-const onLoginClick = () => {
-    // window.location.href = `/.auth/login/google?post_login_redirect_uri=${process.env.PUBLIC_URL}`;
-    window.location.href = `/.auth/login/google`;
-}
-
 const Header: FC = (): ReactElement => {
     return (
         <Stack horizontal>
             <Stack horizontal styles={logoStyles}>
-                <img src={`${process.env.PUBLIC_URL}/cnstlltn_logo.png`} alt="Logo" style={{width: '100px', height: 'auto'}}/>
+                <FontIcon aria-label="Check" iconName="SkypeCircleCheck" className={logoIconClass} />
+                <Text variant="xLarge">ToDo</Text>
             </Stack>
             <Stack.Item grow={1}>
                 <div></div>
@@ -47,8 +48,7 @@ const Header: FC = (): ReactElement => {
                 <Stack horizontal styles={toolStackClass} grow={1}>
                     <IconButton aria-label="Add" iconProps={{ iconName: "Settings", ...iconProps }} />
                     <IconButton aria-label="Add" iconProps={{ iconName: "Help", ...iconProps }} />
-                    <IconButton aria-label="Login" iconProps={{ iconName: "Login", ...iconProps }} onClick={onLoginClick} />
-                    {/* <Persona size={PersonaSize.size24} text="Sample User" /> */}
+                    <Persona size={PersonaSize.size24} text="Sample User" />
                     {/* <Toggle label="Dark Mode" inlineLabel styles={{ root: { marginBottom: 0 } }} onChange={changeTheme} /> */}
                 </Stack>
             </Stack.Item>

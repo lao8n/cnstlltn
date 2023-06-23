@@ -3,7 +3,6 @@ import Header from './header';
 import Sidebar from './sidebar';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import HomePage from '../pages/homePage';
-import Home from '../pages/home';
 import { Stack } from '@fluentui/react';
 import { AppContext } from '../models/applicationState';
 import { TodoContext } from '../components/todoContext';
@@ -66,7 +65,7 @@ const Layout: FC = (): ReactElement => {
                         <Route path="/lists/:listId/items/:itemId" element={<HomePage />} />
                         <Route path="/lists/:listId" element={<HomePage />} />
                         <Route path="/lists" element={<HomePage />} />
-                        <Route path="/" element={<Home />} />
+                        <Route path="/" element={<HomePage />} />
                     </Routes>
                 </Stack.Item>
                 <Stack.Item styles={sidebarStackStyles}>
