@@ -1,11 +1,7 @@
-import { Stack } from '@fluentui/react';
 import { withApplicationInsights } from '../components/telemetry';
 
 const Home = () => {
-    return (
-        <Stack>
-        </Stack >
-    );
+    return ;
 };
 
 export default withApplicationInsights(Home, 'Home');

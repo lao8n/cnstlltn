@@ -21,7 +21,7 @@ const Constellation = () => {
     if(!user){
         return (
             <Stack>
-            <Text>Login to access constellation</Text>
+                <Text>Login to access constellation</Text>
             </Stack>
         );
     }
