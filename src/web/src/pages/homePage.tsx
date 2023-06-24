@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useMemo, useState, Fragment } from 'react';
+import { useEffect, useContext, useMemo, useState, Fragment } from 'react';
 import { IconButton, IContextualMenuProps, IIconProps, Stack, Text, Shimmer, ShimmerElementType } from '@fluentui/react';
 import TodoItemListPane from '../components/todoItemListPane';
 import { TodoItem, TodoItemState } from '../models';
