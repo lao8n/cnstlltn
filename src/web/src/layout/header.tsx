@@ -29,9 +29,8 @@ const iconProps: IIconProps = {
     }
 }
 
-const handleGoogleLogin = () => {
-    const redirectUri = `${process.env.PUBLIC_URL}/constellation`;
-    window.location.href = `/.auth/login/google?post_login_redirect_uri=${encodeURIComponent(redirectUri)}`;
+const handleLogin = () => {
+   window.location.href = `/login`;
 }
 
 const Header: FC = (): ReactElement => {
@@ -47,7 +46,7 @@ const Header: FC = (): ReactElement => {
                 <Stack horizontal styles={toolStackClass} grow={1}>
                     <IconButton aria-label="Add" iconProps={{ iconName: "Settings", ...iconProps }} />
                     <IconButton aria-label="Add" iconProps={{ iconName: "Help", ...iconProps }} />
-                    <IconButton aria-label="Add" iconProps={{ iconName: "Contact", ...iconProps }} onClick={handleGoogleLogin} />
+                    <IconButton aria-label="Add" iconProps={{ iconName: "Contact", ...iconProps }} onClick={handleLogin} />
                 </Stack>
             </Stack.Item>
         </Stack>
