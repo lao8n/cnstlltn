@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Stack, Text } from '@fluentui/react';
 import { withApplicationInsights } from '../components/telemetry';
-
+import { User } from '../models/userState';
 
 const Constellation = () => {
-    const [user, setUser] = useState(null)
+    const [user, setUser] = useState<User | null>(null);
 
     // Get user id
     useEffect(() => {
