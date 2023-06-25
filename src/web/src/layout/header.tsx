@@ -1,4 +1,4 @@
-import { FontIcon, getTheme, IconButton, IIconProps, IStackStyles, mergeStyles, Persona, PersonaSize, Stack, Text } from '@fluentui/react';
+import { getTheme, IconButton, IIconProps, IStackStyles, Stack } from '@fluentui/react';
 import React, { FC, ReactElement } from 'react';
 
 const theme = getTheme();
@@ -11,11 +11,6 @@ const logoStyles: IStackStyles = {
         padding: '0 20px'
     }
 }
-
-const logoIconClass = mergeStyles({
-    fontSize: 20,
-    paddingRight: 10
-});
 
 const toolStackClass: IStackStyles = {
     root: {
@@ -34,12 +29,15 @@ const iconProps: IIconProps = {
     }
 }
 
+const handleGoogleLogin = () => {
+    window.location.href = `/.auth/login/google?post_login_redirect_uri=${process.env.PUBLIC_URL}/constellation`;
+}
+
 const Header: FC = (): ReactElement => {
     return (
         <Stack horizontal>
             <Stack horizontal styles={logoStyles}>
-                <FontIcon aria-label="Check" iconName="SkypeCircleCheck" className={logoIconClass} />
-                <Text variant="xLarge">ToDo</Text>
+                <img src={`${process.env.PUBLIC_URL}/cnstlltn_logo.jpg`} alt="Logo" style={{width: '100px', height: 'auto'}}/>
             </Stack>
             <Stack.Item grow={1}>
                 <div></div>
@@ -48,8 +46,7 @@ const Header: FC = (): ReactElement => {
                 <Stack horizontal styles={toolStackClass} grow={1}>
                     <IconButton aria-label="Add" iconProps={{ iconName: "Settings", ...iconProps }} />
                     <IconButton aria-label="Add" iconProps={{ iconName: "Help", ...iconProps }} />
-                    <Persona size={PersonaSize.size24} text="Sample User" />
-                    {/* <Toggle label="Dark Mode" inlineLabel styles={{ root: { marginBottom: 0 } }} onChange={changeTheme} /> */}
+                    <IconButton aria-label="Add" iconProps={{ iconName: "Contact", ...iconProps }} onClick={handleGoogleLogin} />
                 </Stack>
             </Stack.Item>
         </Stack>
