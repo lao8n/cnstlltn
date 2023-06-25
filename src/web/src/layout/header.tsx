@@ -30,14 +30,14 @@ const iconProps: IIconProps = {
 }
 
 const handleGoogleLogin = () => {
-    window.location.href = `/.auth/login/google?post_login_redirect_uri=${process.env.PUBLIC_URL}/constellation`;
+    window.location.href = `${process.env.PUBLIC_URL}/.auth/login/google?post_login_redirect_uri=${process.env.PUBLIC_URL}/constellation`;
 }
 
 const Header: FC = (): ReactElement => {
     return (
         <Stack horizontal>
             <Stack horizontal styles={logoStyles}>
-                <img src={`${process.env.PUBLIC_URL}/cnstlltn_logo.jpg`} alt="Logo" style={{width: '100px', height: 'auto'}}/>
+                <img src={`${process.env.PUBLIC_URL}/cnstlltn_logo.png`} alt="Logo" style={{width: '100px', height: 'auto'}}/>
             </Stack>
             <Stack.Item grow={1}>
                 <div></div>
