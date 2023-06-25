@@ -30,7 +30,8 @@ const iconProps: IIconProps = {
 }
 
 const handleGoogleLogin = () => {
-    window.location.href = `${process.env.PUBLIC_URL}/.auth/login/google?post_login_redirect_uri=${process.env.PUBLIC_URL}/constellation`;
+    const redirectUri = `${process.env.PUBLIC_URL}/constellation`;
+    window.location.href = `/.auth/login/google?post_login_redirect_uri=${encodeURIComponent(redirectUri)}`;
 }
 
 const Header: FC = (): ReactElement => {
