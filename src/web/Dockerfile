@@ -1,5 +1,5 @@
-FROM node:16.13-alpine AS build
-
+FROM node:current-alpine AS build
+1
 # make the 'app' folder the current working directory
 WORKDIR /app
 
