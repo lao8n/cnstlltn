@@ -3,7 +3,7 @@ import Header from './header';
 import { Routes, Route } from 'react-router-dom';
 import Home from '../pages/home';
 import Constellation from '../pages/constellation';
-import Login from '../pages/constellation';
+import Login from '../pages/login';
 import { Stack } from '@fluentui/react';
 import { headerStackStyles, mainStackStyles, rootStackStyles } from '../ux/styles';
 
@@ -17,8 +17,8 @@ const Layout: FC = (): ReactElement => {
             <Stack horizontal grow={1}>
                 <Stack.Item grow={1} styles={mainStackStyles}>
                     <Routes>
-                        <Route path="/constellation" element={<Constellation />} />
                         <Route path="/login" element={<Login />} />
+                        <Route path="/constellation" element={<Constellation />} />
                         <Route path="/" element={<Home />} />
                     </Routes>
                 </Stack.Item>
