@@ -17,7 +17,11 @@ export const UserProvider: FC<UserProps> = (props: UserProps): ReactElement => {
         .then(response => {
           console.log("auth me called - here is response", response);
           if (response.clientPrincipal){
-            setUser(response.clientPrincipal.userId)
+            setUser(prevUser => ({
+              ...prevUser,
+              userId: response.clientPrincipal.userId, 
+              isAuthenticated: true,
+            }));
           }
         })
         .catch(error => console.log(error));

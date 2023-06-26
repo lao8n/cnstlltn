@@ -13,4 +13,5 @@ export interface User {
 
 export interface UserState {
     userId: string;
+    isAuthenticated: boolean;
 }

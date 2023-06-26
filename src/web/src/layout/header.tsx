@@ -38,7 +38,7 @@ const handleLogin = () => {
 
 const handleLogout = () => {
     console.log("handleLogout called");
-    window.location.href = `/.auth/logout`;
+    window.location.href = `/.auth/logout?post_login_redirect_uri=/constellation`;
 }
 
 const Header: FC = (): ReactElement => {
@@ -46,7 +46,7 @@ const Header: FC = (): ReactElement => {
     const [logInOrOut, setLogInOrOut] = useState(() => handleLogin);
 
     useEffect(() => {
-        if(user){
+        if(user.state.userState?.isAuthenticated){
             setLogInOrOut(() => handleLogout);
         } else {
             setLogInOrOut(() => handleLogin);
