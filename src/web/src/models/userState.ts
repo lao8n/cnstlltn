@@ -10,3 +10,7 @@ export interface User {
     userRoles: string[];
     claims: Claim[];
 }
+
+export interface UserState {
+    userId: string;
+}
