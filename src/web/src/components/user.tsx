@@ -13,7 +13,7 @@ export const UserProvider: FC<UserProps> = (props: UserProps): ReactElement => {
     // Fetch user data when component mounts
     useEffect(() => {
       console.log("useEffect called");
-      if(!user?.isAuthenticated){
+      if(user?.isAuthenticated){
         fetch(`/.auth/me`)
         .then(response => response.json())
         .then(response => {
@@ -29,12 +29,15 @@ export const UserProvider: FC<UserProps> = (props: UserProps): ReactElement => {
         })
         .catch(error => console.log(error));
       }
-    }, [user]); // Empty dependency array so this runs once on mount
+    }, [user?.isAuthenticated]);
 
-    const userContext : AppContext = { state: { userState: user } }
+    const userContext : AppContext = { 
+      state: { userState: user },
+      setUser
+    }
     console.log("userContext", userContext);
     return (
-        <UserContext.Provider value={userContext}>
+        <UserContext.Provider value={ userContext }>
             {props.children}
         </UserContext.Provider>
     );

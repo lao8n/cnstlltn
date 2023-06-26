@@ -12,6 +12,6 @@ export interface User {
 }
 
 export interface UserState {
-    userId: string;
+    userId?: string;
     isAuthenticated: boolean;
 }

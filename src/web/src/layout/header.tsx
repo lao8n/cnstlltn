@@ -38,7 +38,7 @@ const handleLogin = () => {
 
 const handleLogout = () => {
     console.log("handleLogout called");
-    window.location.href = `/.auth/logout?post_login_redirect_uri=/constellation`;
+    window.location.href = `/auth/logout?post_login_redirect_uri=${encodeURIComponent('/constellation')}`;
 }
 
 const Header: FC = (): ReactElement => {

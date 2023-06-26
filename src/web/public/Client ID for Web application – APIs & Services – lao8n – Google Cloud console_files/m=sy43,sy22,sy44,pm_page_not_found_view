@@ -1,0 +1,17 @@
+"use strict";this.default_r_zfdvltmqh=this.default_r_zfdvltmqh||{};(function(_){var window=this;
+try{
+_.EG=class{constructor(a,b){this.analyticsService=a;this.elementRef=b}onClick(a){this.analyticsService.sendEventOnElementClick(this.elementRef.nativeElement,a)}};_.EG.\u0275fac=function(a){return new (a||_.EG)(_.x(_.En),_.x(_.Od))};_.EG.\u0275dir=_.md({type:_.EG,selectors:[["","cfcTrackedLink",""]],hostBindings:function(a,b){a&1&&_.M("click",function(c){return b.onClick(c)})},inputs:{"track-type":"track-type","track-name":"track-name"}});_.FG=class{};_.FG.\u0275fac=function(a){return new (a||_.FG)};_.FG.\u0275mod=_.jd({type:_.FG});_.FG.\u0275inj=_.Yc({});
+}catch(e){_._DumpException(e)}
+try{
+_.vRb=class extends _.Zm{constructor(){super();this.previousPage=new _.Xm("query","previousPage");this.pendingDeletion=new _.Ym("query","pendingDeletion");_.Wm(this,["cloud-resource-manager"])}};
+}catch(e){_._DumpException(e)}
+try{
+_.vg("pm_page_not_found_view");
+var vwc=class{constructor(){this.projectListUrl=_.vRb.create().link().asString()}};vwc.\u0275fac=function(a){return new (a||vwc)};
+vwc.\u0275cmp=_.id({type:vwc,selectors:[["page-not-found"]],hostAttrs:[1,"cfc-flex-layout-column"],decls:14,vars:1,consts:function(){return[[1,"cfc-space-first"]," URL not found "," We couldn't find what you were looking for. Try one of the links below. ",["cfc-list",""],["cfcTrackedLink","","track-type","errorAction","track-name","toConsole",3,"cfcRouterLink"]," Google Cloud Console Home ","cfc-external-link;http://cloud.google.com;cfcTrackedLink;;track-type;errorAction;track-name;toMarketing;linkText;Google Cloud Platform".split(";"),
+"cfc-external-link;http://developers.google.com;cfcTrackedLink;;track-type;errorAction;track-name;toDeveloperDocs;linkText;Google Developers".split(";")]},template:function(a,b){a&1&&(_.F(0,"cfc-single-panel-layout")(1,"cfc-panel-body")(2,"h2",0),_.J(3,1),_.G(),_.F(4,"p"),_.J(5,2),_.G(),_.F(6,"ul",3)(7,"li")(8,"a",4),_.J(9,5),_.G()(),_.F(10,"li"),_.H(11,"a",6),_.G(),_.F(12,"li"),_.H(13,"a",7),_.G()()()());a&2&&(_.u(8),_.C("cfcRouterLink",b.projectListUrl))},dependencies:[_.eD,_.EG,_.Lu,_.fu,_.pE,
+_.rp],encapsulation:2});var wwc=class{};wwc.\u0275fac=function(a){return new (a||wwc)};wwc.\u0275mod=_.jd({type:wwc});wwc.\u0275inj=_.Yc({imports:[_.gD,_.FG,_.Mu,_.gu,_.sE]});var xwc=class{};xwc.\u0275fac=function(a){return new (a||xwc)};xwc.\u0275mod=_.jd({type:xwc,id:"pm_page_not_found_view"});xwc.\u0275inj=_.Yc({imports:[_.Np([{path:"",component:vwc}]),wwc]});_.uf(xwc,"pm_page_not_found_view");
+_.wg();
+}catch(e){_._DumpException(e)}
+}).call(this,this.default_r_zfdvltmqh);
+// Google Inc.
