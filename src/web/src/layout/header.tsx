@@ -44,12 +44,14 @@ const handleLogout = () => {
 const Header: FC = (): ReactElement => {
     const user : AppContext = useContext(UserContext);
     const [logInOrOut, setLogInOrOut] = useState(() => handleLogin);
-
+    const [signInOrOut, setSignInOrOut] = useState(() => "Signin");
     useEffect(() => {
         if(user.state.userState?.isAuthenticated){
             setLogInOrOut(() => handleLogout);
+            setSignInOrOut(() => "SignOut");
         } else {
             setLogInOrOut(() => handleLogin);
+            setSignInOrOut(() => "Signin");
         }
     }, [user]);
 
@@ -65,7 +67,7 @@ const Header: FC = (): ReactElement => {
                 <Stack horizontal styles={toolStackClass} grow={1}>
                     <IconButton aria-label="Add" iconProps={{ iconName: "Settings", ...iconProps }} />
                     <IconButton aria-label="Add" iconProps={{ iconName: "Help", ...iconProps }} />
-                    <IconButton aria-label="Add" iconProps={{ iconName: "Contact", ...iconProps }} onClick={logInOrOut} />
+                    <IconButton aria-label="Add" iconProps={{ iconName: signInOrOut, ...iconProps }} onClick={logInOrOut} />
                 </Stack>
             </Stack.Item>
         </Stack>

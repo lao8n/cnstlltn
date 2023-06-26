@@ -1,4 +1,4 @@
-import { Stack, BaseButton, Icon } from '@fluentui/react';
+import { Stack, BaseButton } from '@fluentui/react';
 import { withApplicationInsights } from '../components/telemetry';
 
 const Login = () => {
@@ -8,11 +8,9 @@ const Login = () => {
         <Stack.Item>
           <Stack horizontalAlign="center" tokens={{ childrenGap: 10 }}>
             <Stack>
-              <Icon iconName="GoogleLogo" styles={{ root: { fontSize: 24 } }} />
               <BaseButton href="/.auth/login/google">Login with Google</BaseButton>
             </Stack>
             <Stack>
-              <Icon iconName="GoogleLogo" styles={{ root: { fontSize: 24 } }} />
               <BaseButton href="/.auth/login/google?post_login_redirect_uri=/constellation">
                 Login with Google redirect
               </BaseButton>
