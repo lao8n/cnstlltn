@@ -1,5 +1,7 @@
 import { getTheme, IconButton, IIconProps, IStackStyles, Stack } from '@fluentui/react';
-import React, { FC, ReactElement } from 'react';
+import { FC, useContext, useEffect, useState, ReactElement } from 'react';
+import { UserContext } from '../components/userContext';
+import { AppContext } from '../models/applicationState';
 
 const theme = getTheme();
 
@@ -30,10 +32,27 @@ const iconProps: IIconProps = {
 }
 
 const handleLogin = () => {
+    console.log("handleLogin called");
    window.location.href = `/login`;
 }
 
+const handleLogout = () => {
+    console.log("handleLogout called");
+    window.location.href = `/.auth/logout`;
+}
+
 const Header: FC = (): ReactElement => {
+    const user : AppContext = useContext(UserContext);
+    const [logInOrOut, setLogInOrOut] = useState(() => handleLogin);
+
+    useEffect(() => {
+        if(user){
+            setLogInOrOut(() => handleLogout);
+        } else {
+            setLogInOrOut(() => handleLogin);
+        }
+    }, [user]);
+
     return (
         <Stack horizontal>
             <Stack horizontal styles={logoStyles}>
@@ -46,7 +65,7 @@ const Header: FC = (): ReactElement => {
                 <Stack horizontal styles={toolStackClass} grow={1}>
                     <IconButton aria-label="Add" iconProps={{ iconName: "Settings", ...iconProps }} />
                     <IconButton aria-label="Add" iconProps={{ iconName: "Help", ...iconProps }} />
-                    <IconButton aria-label="Add" iconProps={{ iconName: "Contact", ...iconProps }} onClick={handleLogin} />
+                    <IconButton aria-label="Add" iconProps={{ iconName: "Contact", ...iconProps }} onClick={logInOrOut} />
                 </Stack>
             </Stack.Item>
         </Stack>
