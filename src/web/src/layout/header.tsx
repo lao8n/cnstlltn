@@ -53,7 +53,7 @@ const Header: FC = (): ReactElement => {
             setLogInOrOut(() => handleLogin);
             setSignInOrOut(() => "Signin");
         }
-    }, [user]);
+    }, [user, UserContext]);
 
     return (
         <Stack horizontal>

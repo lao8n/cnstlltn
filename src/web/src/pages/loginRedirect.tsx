@@ -3,7 +3,7 @@ import UserContext from "../components/userContext";
 import { useNavigate } from 'react-router-dom';
 
 export const LoginRedirect = () => {
-    const { setUser } = useContext(UserContext);
+    const { setUser, user } = useContext(UserContext);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -11,8 +11,13 @@ export const LoginRedirect = () => {
             ...prevUser, 
             userId: prevUser?.userId,
             isAuthenticated: true}));
-        navigate('/constellation');
-    }, [setUser, navigate]);
+    }, [setUser]);
+
+    useEffect(() => {
+        if (user.isAuthenticated) {
+            navigate('/constellation');
+        }
+    }, [user, navigate]);
 
     return null;
 };

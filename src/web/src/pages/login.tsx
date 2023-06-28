@@ -11,12 +11,13 @@ const Login = () => {
               <BaseButton href="/.auth/login/google">Login with Google</BaseButton>
             </Stack>
             <Stack>
+              console.log("Login with Google redirect")
               <BaseButton href={`/.auth/login/google?post_login_redirect_uri=${encodeURIComponent('/login-redirect')}`}>
-                console.log("Login with Google redirect")
                 Login with Google redirect
               </BaseButton>
             </Stack>
             <Stack>
+              console.log("Login with Microsoft redirect")
               <BaseButton href={`/.auth/login/aad?post_login_redirect_uri=${encodeURIComponent('/login-redirect')}`}>
                 console.log("Login with Microsoft redirect")
                 Login with Microsoft redirect
