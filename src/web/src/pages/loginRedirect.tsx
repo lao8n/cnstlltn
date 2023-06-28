@@ -3,6 +3,7 @@ import UserContext from "../components/userContext";
 import { useNavigate } from 'react-router-dom';
 import { trackEvent } from "../services/telemetryService";
 import { ActionTypes } from "../actions/common";
+import { withApplicationInsights } from "../components/telemetry";
 
 export const LoginRedirect = () => {
     const { state, setUser } = useContext(UserContext);
@@ -23,3 +24,5 @@ export const LoginRedirect = () => {
 
     return null;
 };
+
+export default withApplicationInsights(LoginRedirect, 'LoginRedirect');

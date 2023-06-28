@@ -11,6 +11,7 @@ const Login = () => {
               <BaseButton href="/.auth/login/google">Login with Google</BaseButton>
             </Stack>
             <Stack>
+              trackEvent(ActionTypes.LOGIN_PAGE.toString());
               <BaseButton href={`/.auth/login/google?post_login_redirect_uri=${encodeURIComponent('/login-redirect')}`}>
                 Login with Google redirect
               </BaseButton>
