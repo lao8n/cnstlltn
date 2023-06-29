@@ -8,7 +8,7 @@ import { withApplicationInsights } from "../components/telemetry";
 export const LoginRedirect = () => {
     const { state, setUser } = useContext(UserContext);
     const navigate = useNavigate();
-
+    
     useEffect(() => {
         setUser(prevUser => ({
             ...prevUser, 
@@ -16,11 +16,14 @@ export const LoginRedirect = () => {
             isAuthenticated: true
         }));
         trackEvent(ActionTypes.LOGIN_REDIRECT_SET_USER.toString());
+    }, [setUser, state.userState?.userId]);
+    
+    useEffect(() => {
         if (state.userState?.isAuthenticated) {
             trackEvent(ActionTypes.LOGIN_REDIRECT_LINK.toString());
             navigate('/constellation');
         }
-    }, [setUser, state.userState?.userId, navigate]);
+    }, [state.userState?.isAuthenticated, navigate]);
 
     return null;
 };
