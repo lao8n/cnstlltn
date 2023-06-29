@@ -1,5 +1,6 @@
 import { getTheme, IconButton, IIconProps, IStackStyles, Stack } from '@fluentui/react';
 import { FC, useContext, useEffect, useState, ReactElement } from 'react';
+import { Link } from 'react-router-dom';
 import { UserContext } from '../components/userContext';
 import { AppContext } from '../models/applicationState';
 
@@ -38,7 +39,7 @@ const handleLogin = () => {
 
 const handleLogout = () => {
     console.log("handleLogout called");
-    window.location.href = `/auth/logout?post_login_redirect_uri=${encodeURIComponent('/constellation')}`;
+    window.location.href = `/auth/logout?post_login_redirect_uri=${encodeURIComponent('/')}`;
 }
 
 const Header: FC = (): ReactElement => {
@@ -58,15 +59,15 @@ const Header: FC = (): ReactElement => {
     return (
         <Stack horizontal>
             <Stack horizontal styles={logoStyles}>
-                <img src={`${process.env.PUBLIC_URL}/cnstlltn_logo.png`} alt="Logo" style={{width: '100px', height: 'auto'}}/>
+                <Link to="/constellation">
+                    <img src={`${process.env.PUBLIC_URL}/cnstlltn_logo.png`} alt="Logo" style={{width: '100px', height: 'auto'}}/>
+                </Link>
             </Stack>
             <Stack.Item grow={1}>
                 <div></div>
             </Stack.Item>
             <Stack.Item>
                 <Stack horizontal styles={toolStackClass} grow={1}>
-                    <IconButton aria-label="Add" iconProps={{ iconName: "Settings", ...iconProps }} />
-                    <IconButton aria-label="Add" iconProps={{ iconName: "Help", ...iconProps }} />
                     <IconButton aria-label="Add" iconProps={{ iconName: signInOrOut, ...iconProps }} onClick={logInOrOut} />
                 </Stack>
             </Stack.Item>
