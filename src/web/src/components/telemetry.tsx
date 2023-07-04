@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, useEffect, ComponentType, ComponentClass, PropsWithChildren } from 'react';
+import { FC, ReactElement, useEffect, ComponentType, ComponentClass, PropsWithChildren } from 'react';
 import { TelemetryProvider } from './telemetryContext';
 import { reactPlugin, getApplicationInsights } from '../services/telemetryService';
 import { withAITracking } from '@microsoft/applicationinsights-react-js';
