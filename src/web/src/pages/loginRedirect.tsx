@@ -10,17 +10,13 @@ export const LoginRedirect = () => {
     const navigate = useNavigate();
     
     useEffect(() => {
-        if (!state.userState?.isAuthenticated) {
-            setUser(prevUser => ({
-                ...prevUser, 
-                userId: prevUser?.userId,
-                isAuthenticated: true
-            }));
-            trackEvent(ActionTypes.LOGIN_REDIRECT_SET_USER.toString());
-        } else {
-            trackEvent(ActionTypes.LOGIN_REDIRECT_LINK.toString());
-            navigate('/constellation');
-        }
+        setUser(prevUser => ({
+            ...prevUser, 
+            userId: prevUser?.userId,
+            isAuthenticated: true
+        }));
+        trackEvent(ActionTypes.LOGIN_REDIRECT_SET_USER.toString());
+        navigate('/constellation');
     }, [setUser, state, navigate ]);
     
     return null;
