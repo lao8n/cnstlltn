@@ -21,7 +21,7 @@ export const LoginRedirect = () => {
             trackEvent(ActionTypes.LOGIN_REDIRECT_LINK.toString());
             navigate('/constellation');
         }
-    }, [setUser, navigate, state.userState?.isAuthenticated]);
+    }, [setUser, state, navigate ]);
     
     return null;
 };

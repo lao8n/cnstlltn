@@ -8,7 +8,7 @@ const Login = () => {
         <Stack.Item>
           <Stack horizontalAlign="center" tokens={{ childrenGap: 10 }}>
             <Stack>
-              <BaseButton href={`/.auth/login/google?post_login_redirect_uri=/login-redirect`}>
+              <BaseButton href={`/.auth/login/google?post_login_redirect_uri=/login-redirect&time=` + Date.now()}>
                 Login with Google redirect
               </BaseButton>
             </Stack>
