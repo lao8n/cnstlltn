@@ -57,7 +57,7 @@ module app '../core/host/container-app-upsert.bicep' = {
     ]
     secrets: [
       {
-        name: 'GOOGLE_LOGIN_CLIENT_SECRET'
+        name: 'google-login-client-secret'
         value: '@Microsoft.KeyVault(SecretUri=${keyVault.properties.vaultUri}secrets/google-login-client-secret/ec219b1c2c73428fabbc119e94e1d508)'
       }
     ]
