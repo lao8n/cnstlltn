@@ -22,6 +22,12 @@
     },
     "useAPIM": {
       "value": "${USE_APIM=false}"
+    },
+    "googleLoginClientId": {
+      "value": "${GOOGLE_LOGIN_CLIENT_ID}"
+    },
+    "googleLoginClientSecret": {
+      "value": "${GOOGLE_LOGIN_CLIENT_SECRET}"
     }
   }
 }

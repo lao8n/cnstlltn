@@ -37,6 +37,9 @@ param principalId string = ''
 @description('The base URL used by the web service for sending API requests')
 param webApiBaseUrl string = ''
 
+@secure()
+param googleLoginClientSecret string = ''
+
 var abbrs = loadJsonContent('./abbreviations.json')
 var resourceToken = toLower(uniqueString(subscription().id, environmentName, location))
 var tags = { 'azd-env-name': environmentName }
@@ -78,6 +81,7 @@ module web './app/web.bicep' = {
     applicationInsightsName: monitoring.outputs.applicationInsightsName
     containerAppsEnvironmentName: containerApps.outputs.environmentName
     containerRegistryName: containerApps.outputs.registryName
+    keyVaultName: keyVault.outputs.name
     exists: webAppExists
   }
 }
@@ -122,6 +126,16 @@ module keyVault './core/security/keyvault.bicep' = {
     location: location
     tags: tags
     principalId: principalId
+  }
+}
+
+module keyVaultGoogleLoginClientSecret './core/security/keyvault-secret.bicep' = {
+  name: 'google-login-client-secret'
+  scope: rg
+  params: {
+    keyVaultName: keyVault.outputs.name
+    name: 'google-login-client-secret'
+    secretValue: googleLoginClientSecret
   }
 }
 
