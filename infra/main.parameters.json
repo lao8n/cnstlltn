@@ -11,6 +11,9 @@
     "principalId": {
       "value": "${AZURE_PRINCIPAL_ID}"
     },
+    "userId": {
+      "value": "${AZURE_USER_ID}"
+    },
     "apiAppExists": {
       "value": "${SERVICE_API_RESOURCE_EXISTS=false}"
     },
