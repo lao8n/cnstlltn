@@ -58,12 +58,7 @@ module app '../core/host/container-app-upsert.bicep' = {
     secrets: [
       {
         name: 'google-login-client-secret'
-        secretReference: {
-          keyVault: {
-            id: keyVault.id
-          }
-          secretName: 'google-login-client-secret'
-        }
+        secureValue: '@Microsoft.KeyVault(VaultName=${keyVault.id};SecretName=google-login-client-secret)'
       }
     ]
     targetPort: 80
