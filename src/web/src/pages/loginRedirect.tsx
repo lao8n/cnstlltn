@@ -11,11 +11,6 @@ export const LoginRedirect = () => {
 
     useEffect(() => {
         const fetchAuthInfo = async () => {
-            const requestOptions = {
-                method: 'GET',
-                headers: headers,
-                'credentials': 'same-origin'  //credentials go here!!!
-            };
             const clientPrincipal = await getAuthInfo();
             console.log(clientPrincipal);
             if (clientPrincipal && clientPrincipal.userId) {
