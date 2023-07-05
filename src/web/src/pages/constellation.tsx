@@ -17,7 +17,7 @@ const Constellation = () => {
   
     return (
       <Stack>
-        <Text>Welcome {user.state.userState.userId}</Text>
+        <Text>Welcome</Text>
       </Stack >
     );
   };

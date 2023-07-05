@@ -10,7 +10,6 @@ export const LoginRedirect = () => {
     useEffect(() => {
         setUser(prevUser => ({
             ...prevUser,
-            userId: prevUser?.userId ?? '',
             isAuthenticated: true,
         }));
         navigate('/constellation');
