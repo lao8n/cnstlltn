@@ -56,6 +56,10 @@ module app '../core/host/container-app-upsert.bicep' = {
         name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
         value: applicationInsights.properties.ConnectionString
       }
+      {
+        name: 'AUTH_LOGIN_PARAMS'
+        value: 'response_type=code id_token&resource=${name}'
+      }
     ]
     secrets: [
       {
@@ -71,9 +75,9 @@ resource applicationInsights 'Microsoft.Insights/components@2020-02-02' existing
   name: applicationInsightsName
 }
 
-resource keyVault 'Microsoft.KeyVault/vaults@2022-07-01' existing = {
-  name: keyVaultName
-}
+// resource keyVault 'Microsoft.KeyVault/vaults@2022-07-01' existing = {
+//   name: keyVaultName
+// }
 
 output SERVICE_WEB_IDENTITY_PRINCIPAL_ID string = webIdentity.properties.principalId
 output SERVICE_WEB_NAME string = app.outputs.name
