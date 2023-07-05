@@ -37,7 +37,7 @@ param principalId string = ''
 @description('The base URL used by the web service for sending API requests')
 param webApiBaseUrl string = ''
 
-// param userId string = ''
+param userId string = ''
 
 @secure()
 param googleLoginClientSecret string = ''
@@ -129,7 +129,7 @@ module keyVault './core/security/keyvault.bicep' = {
     location: location
     tags: tags
     principalId: principalId
-    // userId: userId
+    userId: userId
   }
 }
 
