@@ -10,6 +10,8 @@ param containerRegistryName string
 param keyVaultName string
 param serviceName string = 'web'
 param exists bool
+@secure()
+param googleLoginClientSecret string
 
 resource webIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
   name: identityName
@@ -57,6 +59,12 @@ module app '../core/host/container-app-upsert.bicep' = {
       {
         name: 'GOOGLE_LOGIN_CLIENT_SECRET'
         value: '@Microsoft.KeyVault(VaultName=${keyVault.name};SecretName=google-login-client-secret)'
+      }
+    ]
+    secrets: [
+      {
+        name: 'google-login-client-secret'
+        value: googleLoginClientSecret
       }
     ]
     targetPort: 80

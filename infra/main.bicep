@@ -85,6 +85,7 @@ module web './app/web.bicep' = {
     containerRegistryName: containerApps.outputs.registryName
     keyVaultName: keyVault.outputs.name
     exists: webAppExists
+    googleLoginClientSecret: googleLoginClientSecret
   }
 }
 

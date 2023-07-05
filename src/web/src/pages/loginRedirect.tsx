@@ -11,8 +11,16 @@ export const LoginRedirect = () => {
     
     useEffect(() => {
         fetch(`/.auth/me`)
-            .then(response => { console.log(response); return response.json() })
-          .then(response => {
+            .then(response => {
+                console.log(response);
+                return response.text();
+            })
+            .then(text => {
+                console.log(text);
+            })
+        fetch(`/.auth/me`)
+            .then(response => response.json())
+            .then(response => {
               if (response.clientPrincipal) {
                   setUser(prevUser => ({
                       ...prevUser,
