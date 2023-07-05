@@ -43,7 +43,7 @@ module app '../core/host/container-app-upsert.bicep' = {
       }
       {
         name: 'AUTH_LOGIN_PARAMS'
-        value: 'response_type=code id_token&resource=5e77e06d-e071-406e-a7fc-02453e850549'
+        value: 'response_type=code id_token&resource=194094976957-s4uccitb516kkvcra1brbbe40398i6rl.apps.googleusercontent.com'
       }
     ]
     secrets: [
