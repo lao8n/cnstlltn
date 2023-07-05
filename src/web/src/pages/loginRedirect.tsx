@@ -10,35 +10,40 @@ export const LoginRedirect = () => {
     const navigate = useNavigate();
     
     useEffect(() => {
-        fetch(`/.auth/me`)
-            .then(response => {
-                console.log(response);
-                return response.text();
-            })
-            .then(text => {
-                console.log(text);
-            })
-        fetch(`/.auth/me`)
-            .then(response => response.json())
-            .then(response => {
-              if (response.clientPrincipal) {
-                  setUser(prevUser => ({
-                      ...prevUser,
-                      userId: response.clientPrincipal.userId, 
-                      isAuthenticated: true,
-                  }));
-                  trackEvent(ActionTypes.LOGIN_REDIRECT_SET_USER.toString());
-                  navigate('/constellation');
-              }
-          })
-          .catch(error => {
-              console.error('Error during authentication:', error);
-              navigate('/login')
-              // Handle error, maybe navigate to an error page or show a message
-          });
+        const fetchAuthInfo = async () => {
+            const clientPrincipal = await getAuthInfo();
+            console.log(clientPrincipal);
+            if (clientPrincipal && clientPrincipal.userId) {
+                setUser(prevUser => ({
+                    ...prevUser,
+                    userId: clientPrincipal.userId, 
+                    isAuthenticated: true,
+                }));
+                trackEvent(ActionTypes.LOGIN_REDIRECT_SET_USER.toString());
+                navigate('/constellation');
+            } else {
+                console.error('Error during authentication:');
+                navigate('/login');
+            }
+        };
+        fetchAuthInfo();
     }, [setUser, navigate]);
     
     return null;
 };
+
+async function getAuthInfo() {  
+    // call the endpoint  
+    const response = await fetch('/.auth/me');  
+    // convert to JSON  
+    const json = await response.json();  
+    // ensure clientPrincipal  exist  
+    if(json.clientPrincipal) {  
+        return json.clientPrincipal;  
+    } else {  
+        // return null if anonymous  
+        return null;  
+    }  
+}  
 
 export default withApplicationInsights(LoginRedirect, 'LoginRedirect');
