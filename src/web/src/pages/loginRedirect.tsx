@@ -8,9 +8,14 @@ import { withApplicationInsights } from "../components/telemetry";
 export const LoginRedirect = () => {
     const { setUser } = useContext(UserContext);
     const navigate = useNavigate();
-    
+
     useEffect(() => {
         const fetchAuthInfo = async () => {
+            const requestOptions = {
+                method: 'GET',
+                headers: headers,
+                'credentials': 'same-origin'  //credentials go here!!!
+            };
             const clientPrincipal = await getAuthInfo();
             console.log(clientPrincipal);
             if (clientPrincipal && clientPrincipal.userId) {
@@ -33,8 +38,17 @@ export const LoginRedirect = () => {
 };
 
 async function getAuthInfo() {  
+    const headers = {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+    };
+    const requestOptions = {
+        method: 'GET',
+        headers: headers,
+        credentials: 'same-origin' as RequestCredentials
+    };
     // call the endpoint  
-    const response = await fetch('/.auth/me');  
+    const response = await fetch('/.auth/me', requestOptions);  
     // convert to JSON  
     const json = await response.json();  
     // ensure clientPrincipal  exist  
