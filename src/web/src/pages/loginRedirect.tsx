@@ -6,18 +6,29 @@ import { ActionTypes } from "../actions/common";
 import { withApplicationInsights } from "../components/telemetry";
 
 export const LoginRedirect = () => {
-    const { state, setUser } = useContext(UserContext);
+    const { setUser } = useContext(UserContext);
     const navigate = useNavigate();
     
     useEffect(() => {
-        setUser(prevUser => ({
-            ...prevUser, 
-            userId: prevUser?.userId,
-            isAuthenticated: true
-        }));
-        trackEvent(ActionTypes.LOGIN_REDIRECT_SET_USER.toString());
-        navigate('/constellation');
-    }, [setUser, state, navigate ]);
+        fetch(`/.auth/me`)
+          .then(response => response.json())
+          .then(response => {
+              if (response.clientPrincipal) {
+                  setUser(prevUser => ({
+                      ...prevUser,
+                      userId: response.clientPrincipal.userId, 
+                      isAuthenticated: true,
+                  }));
+                  trackEvent(ActionTypes.LOGIN_REDIRECT_SET_USER.toString());
+                  navigate('/constellation');
+              }
+          })
+          .catch(error => {
+              console.error('Error during authentication:', error);
+              navigate('/login')
+              // Handle error, maybe navigate to an error page or show a message
+          });
+    }, [setUser, navigate]);
     
     return null;
 };

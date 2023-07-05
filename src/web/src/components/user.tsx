@@ -1,11 +1,8 @@
 import { FC, PropsWithChildren, ReactElement, useEffect, useContext } from 'react';
 import UserContext from './userContext';
 import { AppContext } from '../models/applicationState';
-import { getDefaultState } from '../models/applicationState';
 
 type UserProps = PropsWithChildren<unknown>;
-
-const initialState = getDefaultState();
 
 export const UserProvider: FC<UserProps> = (props: UserProps): ReactElement => {
   const { state, setUser } = useContext(UserContext);
@@ -25,7 +22,7 @@ export const UserProvider: FC<UserProps> = (props: UserProps): ReactElement => {
           })
           .catch(error => console.log(error));
       }
-  }, [state.userState?.isAuthenticated, setUser]);
+  }, [state, setUser]);
 
     const userContext : AppContext = { 
       state: { userState: state.userState },
