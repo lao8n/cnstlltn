@@ -23,6 +23,11 @@ export const LoginRedirect = () => {
                 navigate('/constellation');
             } else {
                 console.error('Error during authentication:');
+                setUser(prevUser => ({
+                    ...prevUser,
+                    userId: prevUser?.userId ?? '',
+                    isAuthenticated: true,
+                }));
                 navigate('/login');
             }
         };
