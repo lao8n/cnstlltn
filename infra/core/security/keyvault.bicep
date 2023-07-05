@@ -3,7 +3,7 @@ param location string = resourceGroup().location
 param tags object = {}
 
 param principalId string = ''
-param userId string = ''
+// param userId string = ''
 
 resource keyVault 'Microsoft.KeyVault/vaults@2022-07-01' = {
   name: name
@@ -18,11 +18,11 @@ resource keyVault 'Microsoft.KeyVault/vaults@2022-07-01' = {
         permissions: { secrets: [ 'get', 'list' ] }
         tenantId: subscription().tenantId
       }
-      {
-        objectId: userId
-        permissions: { secrets: [ 'get', 'list' ] }
-        tenantId: subscription().tenantId
-      }
+      // {
+      //   objectId: userId
+      //   permissions: { secrets: [ 'get', 'list' ] }
+      //   tenantId: subscription().tenantId
+      // }
     ] : []
   }
 }
