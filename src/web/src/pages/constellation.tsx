@@ -7,7 +7,7 @@ import { AppContext } from '../models/applicationState';
 const Constellation = () => {
     const user : AppContext = useContext(UserContext);
 
-    if(!user.state.userState?.isAuthenticated){
+    if(!user.state.userState?.isLoggedIn){
       return (
         <Stack>
           <Text>Login to access constellation</Text>

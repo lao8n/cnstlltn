@@ -1,3 +1,3 @@
 export interface UserState {
-    isAuthenticated: boolean;
+    isLoggedIn: boolean;
 }

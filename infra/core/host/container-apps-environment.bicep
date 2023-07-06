@@ -1,3 +1,9 @@
+@description('The custom domain container')
+param customDomain string = ''
+
+@description('Name of the managed certificate for custom domain')
+param managedCertificateName string
+
 param name string
 param location string = resourceGroup().location
 param tags object = {}
@@ -27,6 +33,17 @@ resource containerAppsEnvironment 'Microsoft.App/managedEnvironments@2023-04-01-
   }
 }
 
+resource managedCertificate 'Microsoft.App/managedEnvironments/managedCertificates@2022-11-01-preview' = {
+  name: managedCertificateName
+  location: location
+  parent: containerAppsEnvironment
+  properties: {
+    domainControlValidation: 'CNAME'
+    subjectName: customDomain
+  }
+}
+
+
 resource logAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' existing = {
   name: logAnalyticsWorkspaceName
 }
@@ -35,6 +52,7 @@ resource applicationInsights 'Microsoft.Insights/components@2020-02-02' existing
   name: applicationInsightsName
 }
 
+output appIpAddress string = containerAppsEnvironment.properties.staticIp
 output defaultDomain string = containerAppsEnvironment.properties.defaultDomain
 output id string = containerAppsEnvironment.id
 output name string = containerAppsEnvironment.name

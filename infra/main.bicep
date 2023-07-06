@@ -43,6 +43,7 @@ param userId string = ''
 param googleLoginClientSecret string = ''
 
 var abbrs = loadJsonContent('./abbreviations.json')
+var managedCertificateName = 'cnstlltn-managed-certificate'
 var resourceToken = toLower(uniqueString(subscription().id, environmentName, location))
 var tags = { 'azd-env-name': environmentName }
 var apiContainerAppNameOrDefault = '${abbrs.appContainerApps}web-${resourceToken}'
@@ -66,6 +67,7 @@ module containerApps './core/host/container-apps.bicep' = {
     containerAppsEnvironmentName: !empty(containerAppsEnvironmentName) ? containerAppsEnvironmentName : '${abbrs.appManagedEnvironments}${resourceToken}'
     containerRegistryName: !empty(containerRegistryName) ? containerRegistryName : '${abbrs.containerRegistryRegistries}${resourceToken}'
     logAnalyticsWorkspaceName: monitoring.outputs.logAnalyticsWorkspaceName
+    managedCertificateName: managedCertificateName
     applicationInsightsName: monitoring.outputs.applicationInsightsName
   }
 }
@@ -83,6 +85,7 @@ module web './app/web.bicep' = {
     applicationInsightsName: monitoring.outputs.applicationInsightsName
     containerAppsEnvironmentName: containerApps.outputs.environmentName
     containerRegistryName: containerApps.outputs.registryName
+    managedCertificateName: managedCertificateName
     // keyVaultName: keyVault.outputs.name
     exists: webAppExists
     googleLoginClientSecret: googleLoginClientSecret
@@ -188,6 +191,7 @@ output AZURE_COSMOS_CONNECTION_STRING_KEY string = cosmos.outputs.connectionStri
 output AZURE_COSMOS_DATABASE_NAME string = cosmos.outputs.databaseName
 
 // App outputs
+output APP_IP_ADDRESS string = containerApps.outputs.appIpAddress
 output API_CORS_ACA_URL string = corsAcaUrl
 output APPLICATIONINSIGHTS_CONNECTION_STRING string = monitoring.outputs.applicationInsightsConnectionString
 output APPLICATIONINSIGHTS_NAME string = monitoring.outputs.applicationInsightsName
@@ -198,6 +202,7 @@ output AZURE_KEY_VAULT_ENDPOINT string = keyVault.outputs.endpoint
 output AZURE_KEY_VAULT_NAME string = keyVault.outputs.name
 output AZURE_LOCATION string = location
 output AZURE_TENANT_ID string = tenant().tenantId
+output CUSTOM_DOMAIN_VERIFICATION_ID string = web.outputs.CUSTOM_DOMAIN_VERIFICATION_ID
 output REACT_APP_API_BASE_URL string = useAPIM ? apimApi.outputs.SERVICE_API_URI : api.outputs.SERVICE_API_URI
 output REACT_APP_APPLICATIONINSIGHTS_CONNECTION_STRING string = monitoring.outputs.applicationInsightsConnectionString
 output REACT_APP_WEB_BASE_URL string = web.outputs.SERVICE_WEB_URI

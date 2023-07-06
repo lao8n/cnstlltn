@@ -44,7 +44,7 @@ const handleLogout = (navigate : NavigateFunction, setUser : Dispatch<SetStateAc
     
     setUser(prevUser => ({
         ...prevUser,
-        isAuthenticated: false,
+        isLoggedIn: false,
     }));
     navigate(`/auth/logout?post_logout_redirect_uri=${window.location.origin}`);
 }
@@ -55,7 +55,7 @@ const Header: FC = (): ReactElement => {
     const [logInOrOut, setLogInOrOut] = useState<() => void>(() => () => handleLogin(navigate));
     const [signInOrOut, setSignInOrOut] = useState(() => "Signin");
     useEffect(() => {
-        if(user.state.userState?.isAuthenticated){
+        if(user.state.userState?.isLoggedIn){
             setLogInOrOut(() => () => handleLogout(navigate, user.setUser));
             setSignInOrOut(() => "SignOut");
         } else {

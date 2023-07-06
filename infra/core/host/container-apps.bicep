@@ -6,6 +6,7 @@ param containerAppsEnvironmentName string
 param containerRegistryName string
 param containerRegistryResourceGroupName string = ''
 param logAnalyticsWorkspaceName string
+param managedCertificateName string
 param applicationInsightsName string = ''
 
 module containerAppsEnvironment 'container-apps-environment.bicep' = {
@@ -15,6 +16,7 @@ module containerAppsEnvironment 'container-apps-environment.bicep' = {
     location: location
     tags: tags
     logAnalyticsWorkspaceName: logAnalyticsWorkspaceName
+    managedCertificateName: managedCertificateName
     applicationInsightsName: applicationInsightsName
   }
 }
@@ -29,6 +31,7 @@ module containerRegistry 'container-registry.bicep' = {
   }
 }
 
+output appIpAddress string = containerAppsEnvironment.outputs.appIpAddress
 output defaultDomain string = containerAppsEnvironment.outputs.defaultDomain
 output environmentName string = containerAppsEnvironment.outputs.name
 output environmentId string = containerAppsEnvironment.outputs.id

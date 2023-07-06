@@ -25,6 +25,9 @@ param containerName string = 'main'
 @description('The name of the container registry')
 param containerRegistryName string = ''
 
+@description('The custom domain container')
+param customDomain string = ''
+
 @allowed([ 'http', 'grpc' ])
 @description('The protocol used by Dapr to connect to the app, e.g., HTTP or gRPC')
 param daprAppProtocol string = 'http'
@@ -50,6 +53,9 @@ param identityName string = ''
 
 @description('The name of the container image')
 param imageName string = ''
+
+@description('Name of the managed certificate for custom domain')
+param managedCertificateName string
 
 @description('The secrets required for the container')
 param secrets array = []
@@ -86,6 +92,7 @@ module app 'container-app.bicep' = {
     containerMemory: containerMemory
     containerMinReplicas: containerMinReplicas
     containerMaxReplicas: containerMaxReplicas
+    customDomain: customDomain
     daprEnabled: daprEnabled
     daprAppId: daprAppId
     daprAppProtocol: daprAppProtocol
@@ -93,11 +100,13 @@ module app 'container-app.bicep' = {
     external: external
     env: env
     imageName: !empty(imageName) ? imageName : exists ? existingApp.properties.template.containers[0].image : ''
+    managedCertificateName: managedCertificateName
     targetPort: targetPort
     serviceBinds: serviceBinds
   }
 }
 
+output customDomainVerificationId string = app.outputs.customDomainVerificationId
 output defaultDomain string = app.outputs.defaultDomain
 output imageName string = app.outputs.imageName
 output name string = app.outputs.name

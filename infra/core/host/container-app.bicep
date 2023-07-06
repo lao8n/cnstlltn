@@ -27,6 +27,9 @@ param containerName string = 'main'
 @description('The name of the container registry')
 param containerRegistryName string = ''
 
+@description('The custom domain container')
+param customDomain string = ''
+
 @description('The protocol used by Dapr to connect to the app, e.g., http or grpc')
 @allowed([ 'http', 'grpc' ])
 param daprAppProtocol string = 'http'
@@ -57,6 +60,9 @@ param imageName string = ''
 param ingressEnabled bool = true
 
 param revisionMode string = 'Single'
+
+@description('Name of the managed certificate for custom domain')
+param managedCertificateName string
 
 @description('The secrets required for the container')
 param secrets array = []
@@ -106,6 +112,13 @@ resource app 'Microsoft.App/containerApps@2023-04-01-preview' = {
     configuration: {
       activeRevisionsMode: revisionMode
       ingress: ingressEnabled ? {
+        customDomains: [
+          {
+            bindingType: 'SniEnbaled'
+            certificateId: managedCertificate.id
+            name: customDomain
+          }
+        ]
         external: external
         targetPort: targetPort
         transport: 'auto'
@@ -153,6 +166,11 @@ resource containerAppsEnvironment 'Microsoft.App/managedEnvironments@2023-04-01-
   name: containerAppsEnvironmentName
 }
 
+resource managedCertificate 'Microsoft.App/managedEnvironments/managedCertificates@2022-11-01-preview' existing = {
+  name: managedCertificateName
+}
+
+output customDomainVerificationId string = app.properties.customDomainVerificationId
 output defaultDomain string = containerAppsEnvironment.properties.defaultDomain
 output identityPrincipalId string = normalizedIdentityType == 'None' ? '' : (empty(identityName) ? app.identity.principalId : userIdentity.properties.principalId)
 output imageName string = imageName
