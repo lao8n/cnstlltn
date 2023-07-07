@@ -12,7 +12,7 @@ resource managedCertificate 'Microsoft.App/managedEnvironments/managedCertificat
   location: location
   parent: containerAppsEnvironment
   properties: {
-    domainControlValidation: 'CNAME'
+    domainControlValidation: 'TXT'
     subjectName: customDomain
   }
 }
