@@ -16,8 +16,16 @@ module containerAppsEnvironment 'container-apps-environment.bicep' = {
     location: location
     tags: tags
     logAnalyticsWorkspaceName: logAnalyticsWorkspaceName
-    managedCertificateName: managedCertificateName
     applicationInsightsName: applicationInsightsName
+  }
+}
+
+module managedCertificate 'managed-certificate.bicep' = {
+  name: managedCertificateName
+  params: {
+    managedCertificateName: managedCertificateName
+    location: location
+    environmentName: containerAppsEnvironmentName
   }
 }
 
