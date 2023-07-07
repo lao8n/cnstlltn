@@ -66,6 +66,8 @@ param env array = []
 @description('Specifies if the resource ingress is exposed externally')
 param external bool = true
 
+param register_custom_domains bool = false
+
 @description('The service binds associated with the container')
 param serviceBinds array = []
 
@@ -96,6 +98,7 @@ module app 'container-app.bicep' = {
     daprEnabled: daprEnabled
     daprAppId: daprAppId
     daprAppProtocol: daprAppProtocol
+    register_custom_domains: register_custom_domains
     secrets: secrets
     external: external
     env: env
