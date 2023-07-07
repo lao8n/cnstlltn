@@ -5,6 +5,7 @@ param tags object = {}
 param containerAppsEnvironmentName string
 param containerRegistryName string
 param containerRegistryResourceGroupName string = ''
+param customDomain string
 param logAnalyticsWorkspaceName string
 param managedCertificateName string
 param applicationInsightsName string = ''
@@ -21,11 +22,15 @@ module containerAppsEnvironment 'container-apps-environment.bicep' = {
 }
 
 module managedCertificate 'managed-certificate.bicep' = {
-  name: managedCertificateName
+  name: '${name}-managed-certificate'
+  dependsOn: [
+    containerAppsEnvironment
+  ]
   params: {
-    managedCertificateName: managedCertificateName
-    location: location
     environmentName: containerAppsEnvironmentName
+    customDomain: customDomain
+    location: location
+    managedCertificateName: managedCertificateName
   }
 }
 

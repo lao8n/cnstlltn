@@ -1,5 +1,5 @@
 @description('The custom domain container')
-param customDomain string = ''
+param customDomain string
 
 @description('Name of the managed certificate for custom domain')
 param managedCertificateName string

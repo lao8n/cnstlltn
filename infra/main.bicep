@@ -48,6 +48,7 @@ var resourceToken = toLower(uniqueString(subscription().id, environmentName, loc
 var tags = { 'azd-env-name': environmentName }
 var apiContainerAppNameOrDefault = '${abbrs.appContainerApps}web-${resourceToken}'
 var corsAcaUrl = 'https://${apiContainerAppNameOrDefault}.${containerApps.outputs.defaultDomain}'
+var customDomain = 'cnstlltn.ai'
 
 // Organize resources in a resource group
 resource rg 'Microsoft.Resources/resourceGroups@2021-04-01' = {
@@ -66,6 +67,7 @@ module containerApps './core/host/container-apps.bicep' = {
     tags: tags
     containerAppsEnvironmentName: !empty(containerAppsEnvironmentName) ? containerAppsEnvironmentName : '${abbrs.appManagedEnvironments}${resourceToken}'
     containerRegistryName: !empty(containerRegistryName) ? containerRegistryName : '${abbrs.containerRegistryRegistries}${resourceToken}'
+    customDomain: customDomain
     logAnalyticsWorkspaceName: monitoring.outputs.logAnalyticsWorkspaceName
     managedCertificateName: managedCertificateName
     applicationInsightsName: monitoring.outputs.applicationInsightsName
@@ -85,6 +87,7 @@ module web './app/web.bicep' = {
     applicationInsightsName: monitoring.outputs.applicationInsightsName
     containerAppsEnvironmentName: containerApps.outputs.environmentName
     containerRegistryName: containerApps.outputs.registryName
+    customDomain: customDomain
     managedCertificateName: managedCertificateName
     // keyVaultName: keyVault.outputs.name
     exists: webAppExists
