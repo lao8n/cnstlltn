@@ -64,6 +64,8 @@ param revisionMode string = 'Single'
 @description('Name of the managed certificate for custom domain')
 param managedCertificateName string
 
+param register_custom_domains bool = false
+
 @description('The secrets required for the container')
 param secrets array = []
 
@@ -112,13 +114,14 @@ resource app 'Microsoft.App/containerApps@2023-04-01-preview' = {
     configuration: {
       activeRevisionsMode: revisionMode
       ingress: ingressEnabled ? {
-        customDomains: [
+        // https://stackoverflow.com/questions/74804714/how-can-i-add-a-custom-domain-to-azure-container-app-via-bicep
+        customDomains: register_custom_domains ? [
           {
-            bindingType: 'SniEnbaled'
-            certificateId: managedCertificate.id
             name: customDomain
+            certificateId: managedCertificate.id
+            bindingType: 'SniEnabled'
           }
-        ]
+        ] : null
         external: external
         targetPort: targetPort
         transport: 'auto'
