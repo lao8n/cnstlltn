@@ -2,15 +2,15 @@ import { createTheme } from '@fluentui/react';
 
 export const DarkTheme = createTheme({
     palette: {
-        themePrimary: '#0C343C',
+        themePrimary: '#0c343c',
         themeLighterAlt: '#00060a',
         themeLighter: '#001729',
         themeLight: '#012c4d',
         themeTertiary: '#025799',
         themeSecondary: '#0280e0',
-        themeDarkAlt: '#0C343C',
-        themeDark: '#0C343C',
-        themeDarker: '#0C343C',
+        themeDarkAlt: '#1c9dff',
+        themeDark: '#3facff',
+        themeDarker: '#72c2ff',
         neutralLighterAlt: '#323232',
         neutralLighter: '#3a3a3a',
         neutralLight: '#484848',
