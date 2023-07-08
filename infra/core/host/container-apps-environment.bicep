@@ -30,6 +30,15 @@ resource containerAppsEnvironment 'Microsoft.App/managedEnvironments@2023-04-01-
   }
 }
 
+resource containerAppsEnvironmentManagedCertificate 'Microsoft.App/managedEnvironments/managedCertificates@2023-04-01-preview' = {
+  parent: containerAppsEnvironment
+  name: '${name}-certificate'
+  location: location
+
+  properties: {
+  }
+}
+
 resource logAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' existing = {
   name: logAnalyticsWorkspaceName
 }

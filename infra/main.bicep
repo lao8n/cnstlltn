@@ -96,7 +96,7 @@ module dns './core/dns/dns.bicep' = {
   params: {
     dnsZoneName: customDomain
     webContainerAppName: web.name
-    location: location
+    location: 'global'
     verificationId: web.outputs.CUSTOM_DOMAIN_VERIFICATION_ID
   }
 }
