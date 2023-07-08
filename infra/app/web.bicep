@@ -7,7 +7,6 @@ param apiBaseUrl string
 param applicationInsightsName string
 param containerAppsEnvironmentName string
 param containerRegistryName string
-param managedCertificateName string
 param serviceName string = 'web'
 param exists bool
 @secure()
@@ -47,7 +46,6 @@ module app '../core/host/container-app-upsert.bicep' = {
         value: 'response_type=code id_token&resource=194094976957-s4uccitb516kkvcra1brbbe40398i6rl.apps.googleusercontent.com'
       }
     ]
-    managedCertificateName: managedCertificateName
     secrets: [
       {
         name: 'google-login-client-secret'

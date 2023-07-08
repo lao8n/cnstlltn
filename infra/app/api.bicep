@@ -6,7 +6,6 @@ param identityName string
 param applicationInsightsName string
 param containerAppsEnvironmentName string
 param containerRegistryName string
-param managedCertificateName string = ''
 param keyVaultName string
 param serviceName string = 'api'
 param corsAcaUrl string
@@ -58,7 +57,6 @@ module app '../core/host/container-app-upsert.bicep' = {
         value: corsAcaUrl
       }
     ]
-    managedCertificateName: managedCertificateName
     targetPort: 3100
   }
 }

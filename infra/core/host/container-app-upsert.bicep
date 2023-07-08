@@ -51,9 +51,6 @@ param identityName string = ''
 @description('The name of the container image')
 param imageName string = ''
 
-@description('Name of the managed certificate for custom domain')
-param managedCertificateName string
-
 @description('The secrets required for the container')
 param secrets array = []
 
@@ -96,7 +93,6 @@ module app 'container-app.bicep' = {
     external: external
     env: env
     imageName: !empty(imageName) ? imageName : exists ? existingApp.properties.template.containers[0].image : ''
-    managedCertificateName: managedCertificateName
     targetPort: targetPort
     serviceBinds: serviceBinds
   }

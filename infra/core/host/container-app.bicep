@@ -27,6 +27,8 @@ param containerName string = 'main'
 @description('The name of the container registry')
 param containerRegistryName string = ''
 
+param customDomainName string = 'cnstlltn.ai'
+
 @description('The protocol used by Dapr to connect to the app, e.g., http or grpc')
 @allowed([ 'http', 'grpc' ])
 param daprAppProtocol string = 'http'
@@ -55,9 +57,6 @@ param imageName string = ''
 
 @description('Specifies if Ingress is enabled for the container app')
 param ingressEnabled bool = true
-
-@description('Name of the managed certificate for custom domain')
-param managedCertificateName string
 
 param revisionMode string = 'Single'
 
@@ -111,8 +110,7 @@ resource app 'Microsoft.App/containerApps@2023-04-01-preview' = {
       ingress: ingressEnabled ? {
         customDomains: [
           {
-            name: managedCertificate.properties.subjectName
-            // certificateId: managedCertificate.id
+            name: customDomainName
             bindingType: 'Disabled'
           }
         ]
@@ -161,10 +159,6 @@ resource app 'Microsoft.App/containerApps@2023-04-01-preview' = {
 
 resource containerAppsEnvironment 'Microsoft.App/managedEnvironments@2023-04-01-preview' existing = {
   name: containerAppsEnvironmentName
-}
-
-resource managedCertificate 'Microsoft.App/managedEnvironments/managedCertificates@2022-11-01-preview' existing = {
-  name: managedCertificateName
 }
 
 output customDomainVerificationId string = app.properties.customDomainVerificationId

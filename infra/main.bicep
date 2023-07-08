@@ -43,7 +43,6 @@ param userId string = ''
 param googleLoginClientSecret string = ''
 
 var abbrs = loadJsonContent('./abbreviations.json')
-var managedCertificateName = 'cnstlltn-managed-certificate'
 var resourceToken = toLower(uniqueString(subscription().id, environmentName, location))
 var tags = { 'azd-env-name': environmentName }
 var apiContainerAppNameOrDefault = '${abbrs.appContainerApps}web-${resourceToken}'
@@ -67,7 +66,7 @@ module containerApps './core/host/container-apps.bicep' = {
     tags: tags
     containerAppsEnvironmentName: !empty(containerAppsEnvironmentName) ? containerAppsEnvironmentName : '${abbrs.appManagedEnvironments}${resourceToken}'
     containerRegistryName: !empty(containerRegistryName) ? containerRegistryName : '${abbrs.containerRegistryRegistries}${resourceToken}'
-    customDomain: customDomain
+    // customDomain: customDomain
     logAnalyticsWorkspaceName: monitoring.outputs.logAnalyticsWorkspaceName
     applicationInsightsName: monitoring.outputs.applicationInsightsName
   }
@@ -86,9 +85,19 @@ module web './app/web.bicep' = {
     applicationInsightsName: monitoring.outputs.applicationInsightsName
     containerAppsEnvironmentName: containerApps.outputs.environmentName
     containerRegistryName: containerApps.outputs.registryName
-    managedCertificateName: managedCertificateName
     exists: webAppExists
     googleLoginClientSecret: googleLoginClientSecret
+  }
+}
+
+module dns './core/dns/dns.bicep' = {
+  name: customDomain
+  scope: rg
+  params: {
+    dnsZoneName: customDomain
+    webContainerAppName: web.name
+    location: location
+    verificationId: web.outputs.CUSTOM_DOMAIN_VERIFICATION_ID
   }
 }
 

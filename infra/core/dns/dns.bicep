@@ -1,31 +1,35 @@
-param environmentName string
+param webContainerAppName string
+param dnsZoneName string
+param location string = resourceGroup().location
+param verificationId string
 
-resource dns_zone 'Microsoft.Network/dnsZones@2018-05-01' existing = {
-  name: 'cnstlltn.ai'
+resource dnsZone 'Microsoft.Network/dnsZones@2018-05-01' = {
+  name: dnsZoneName
+  location: location
+}
 
-  resource cname 'CNAME@2018-05-01' = {
-    name: '@'
-    properties: {
-      TTL: 3600
-      CNAMERecord: {
-        cname: containerAppsEnvironment.properties.defaultDomain
-      }
-    }
-  }
-
-  resource verification 'TXT@2018-05-01' = {
-    name: 'asuid'
-    properties: {
-      TTL: 3600
-      TXTRecords: [
-        {
-          value: [containerAppsEnvironment.properties.customDomainConfiguration.customDomainVerificationId]
-        }
-      ]
+resource cname 'Microsoft.Network/dnsZones/CNAME@2018-05-01' = {
+  name: 'www'
+  parent: dnsZone
+  properties: {
+    TTL: 3600
+    CNAMERecord: {
+      cname: '${webContainerAppName}.${location}.azurecontainer.io'
     }
   }
 }
 
-resource containerAppsEnvironment 'Microsoft.App/managedEnvironments@2023-04-01-preview' existing = {
-  name: environmentName
+resource txtRecord 'Microsoft.Network/dnsZones/TXT@2018-05-01' = {
+  name: '@'
+  parent: dnsZone
+  properties: {
+    TTL: 3600
+    TXTRecords: [
+      {
+        value: [
+          verificationId
+        ]
+      }
+    ]
+  }
 }
