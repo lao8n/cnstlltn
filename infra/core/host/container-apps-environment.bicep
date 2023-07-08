@@ -5,8 +5,8 @@ param tags object = {}
 @description('Name of the Application Insights resource')
 param applicationInsightsName string = ''
 
-@description('The custom domain container')
-param customDomain string
+// @description('The custom domain container')
+// param customDomain string
 
 @description('Specifies if Dapr is enabled')
 param daprEnabled bool = false
@@ -30,16 +30,16 @@ resource containerAppsEnvironment 'Microsoft.App/managedEnvironments@2023-04-01-
   }
 }
 
-resource containerAppsEnvironmentManagedCertificate 'Microsoft.App/managedEnvironments/managedCertificates@2023-04-01-preview' = {
-  parent: containerAppsEnvironment
-  name: '${name}-certificate'
-  location: location
-  tags: tags
-  properties: {
-    subjectName: customDomain
-    domainControlValidation: 'TXT'
-  }
-}
+// resource containerAppsEnvironmentManagedCertificate 'Microsoft.App/managedEnvironments/managedCertificates@2023-04-01-preview' = {
+//   parent: containerAppsEnvironment
+//   name: '${name}-certificate'
+//   location: location
+//   tags: tags
+//   properties: {
+//     subjectName: customDomain
+//     domainControlValidation: 'TXT'
+//   }
+// }
 
 resource logAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' existing = {
   name: logAnalyticsWorkspaceName
