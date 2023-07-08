@@ -5,6 +5,9 @@ param tags object = {}
 @description('Name of the Application Insights resource')
 param applicationInsightsName string = ''
 
+@description('The custom domain container')
+param customDomain string
+
 @description('Specifies if Dapr is enabled')
 param daprEnabled bool = false
 
@@ -24,6 +27,17 @@ resource containerAppsEnvironment 'Microsoft.App/managedEnvironments@2023-04-01-
       }
     }
     daprAIInstrumentationKey: daprEnabled && !empty(applicationInsightsName) ? applicationInsights.properties.InstrumentationKey : ''
+  }
+}
+
+resource managedCertificate 'Microsoft.App/managedEnvironments/managedCertificates@2022-11-01-preview' = {
+  name: '${containerAppsEnvironment.name}-certificate'
+  location: location
+  tags: tags
+  parent: containerAppsEnvironment
+  properties: {
+    subjectName: customDomain
+    domainControlValidation: 'TXT'
   }
 }
 

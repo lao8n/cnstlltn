@@ -7,7 +7,6 @@ param containerRegistryName string
 param containerRegistryResourceGroupName string = ''
 param customDomain string
 param logAnalyticsWorkspaceName string
-param managedCertificateName string
 param applicationInsightsName string = ''
 
 module containerAppsEnvironment 'container-apps-environment.bicep' = {
@@ -15,22 +14,10 @@ module containerAppsEnvironment 'container-apps-environment.bicep' = {
   params: {
     name: containerAppsEnvironmentName
     location: location
+    customDomain: customDomain
     tags: tags
     logAnalyticsWorkspaceName: logAnalyticsWorkspaceName
     applicationInsightsName: applicationInsightsName
-  }
-}
-
-module managedCertificate 'managed-certificate.bicep' = {
-  name: '${name}-managed-certificate'
-  dependsOn: [
-    containerAppsEnvironment
-  ]
-  params: {
-    environmentName: containerAppsEnvironmentName
-    customDomain: customDomain
-    location: location
-    managedCertificateName: managedCertificateName
   }
 }
 

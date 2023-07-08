@@ -69,7 +69,6 @@ module containerApps './core/host/container-apps.bicep' = {
     containerRegistryName: !empty(containerRegistryName) ? containerRegistryName : '${abbrs.containerRegistryRegistries}${resourceToken}'
     customDomain: customDomain
     logAnalyticsWorkspaceName: monitoring.outputs.logAnalyticsWorkspaceName
-    managedCertificateName: managedCertificateName
     applicationInsightsName: monitoring.outputs.applicationInsightsName
   }
 }
@@ -87,9 +86,7 @@ module web './app/web.bicep' = {
     applicationInsightsName: monitoring.outputs.applicationInsightsName
     containerAppsEnvironmentName: containerApps.outputs.environmentName
     containerRegistryName: containerApps.outputs.registryName
-    customDomain: customDomain
     managedCertificateName: managedCertificateName
-    // keyVaultName: keyVault.outputs.name
     exists: webAppExists
     googleLoginClientSecret: googleLoginClientSecret
   }

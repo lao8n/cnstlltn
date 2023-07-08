@@ -7,7 +7,6 @@ param apiBaseUrl string
 param applicationInsightsName string
 param containerAppsEnvironmentName string
 param containerRegistryName string
-param customDomain string
 param managedCertificateName string
 param serviceName string = 'web'
 param exists bool
@@ -30,7 +29,6 @@ module app '../core/host/container-app-upsert.bicep' = {
     exists: exists
     containerAppsEnvironmentName: containerAppsEnvironmentName
     containerRegistryName: containerRegistryName
-    customDomain: customDomain
     env: [
       {
         name: 'REACT_APP_APPLICATIONINSIGHTS_CONNECTION_STRING'
@@ -50,7 +48,6 @@ module app '../core/host/container-app-upsert.bicep' = {
       }
     ]
     managedCertificateName: managedCertificateName
-    register_custom_domains: true
     secrets: [
       {
         name: 'google-login-client-secret'

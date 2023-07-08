@@ -25,9 +25,6 @@ param containerName string = 'main'
 @description('The name of the container registry')
 param containerRegistryName string = ''
 
-@description('The custom domain container')
-param customDomain string = ''
-
 @allowed([ 'http', 'grpc' ])
 @description('The protocol used by Dapr to connect to the app, e.g., HTTP or gRPC')
 param daprAppProtocol string = 'http'
@@ -66,8 +63,6 @@ param env array = []
 @description('Specifies if the resource ingress is exposed externally')
 param external bool = true
 
-param register_custom_domains bool = false
-
 @description('The service binds associated with the container')
 param serviceBinds array = []
 
@@ -94,11 +89,9 @@ module app 'container-app.bicep' = {
     containerMemory: containerMemory
     containerMinReplicas: containerMinReplicas
     containerMaxReplicas: containerMaxReplicas
-    customDomain: customDomain
     daprEnabled: daprEnabled
     daprAppId: daprAppId
     daprAppProtocol: daprAppProtocol
-    register_custom_domains: register_custom_domains
     secrets: secrets
     external: external
     env: env

@@ -27,9 +27,6 @@ param containerName string = 'main'
 @description('The name of the container registry')
 param containerRegistryName string = ''
 
-@description('The custom domain container')
-param customDomain string = ''
-
 @description('The protocol used by Dapr to connect to the app, e.g., http or grpc')
 @allowed([ 'http', 'grpc' ])
 param daprAppProtocol string = 'http'
@@ -59,12 +56,10 @@ param imageName string = ''
 @description('Specifies if Ingress is enabled for the container app')
 param ingressEnabled bool = true
 
-param revisionMode string = 'Single'
-
 @description('Name of the managed certificate for custom domain')
 param managedCertificateName string
 
-param register_custom_domains bool = false
+param revisionMode string = 'Single'
 
 @description('The secrets required for the container')
 param secrets array = []
@@ -114,14 +109,13 @@ resource app 'Microsoft.App/containerApps@2023-04-01-preview' = {
     configuration: {
       activeRevisionsMode: revisionMode
       ingress: ingressEnabled ? {
-        // https://stackoverflow.com/questions/74804714/how-can-i-add-a-custom-domain-to-azure-container-app-via-bicep
-        customDomains: register_custom_domains ? [
+        customDomains: [
           {
-            name: customDomain
-            certificateId: managedCertificate.id
-            bindingType: 'SniEnabled'
+            name: managedCertificate.properties.subjectName
+            // certificateId: managedCertificate.id
+            bindingType: 'Disabled'
           }
-        ] : null
+        ]
         external: external
         targetPort: targetPort
         transport: 'auto'
