@@ -58,6 +58,8 @@ param imageName string = ''
 @description('Specifies if Ingress is enabled for the container app')
 param ingressEnabled bool = true
 
+param isWebApp bool
+
 param revisionMode string = 'Single'
 
 @description('The secrets required for the container')
@@ -108,12 +110,12 @@ resource app 'Microsoft.App/containerApps@2023-04-01-preview' = {
     configuration: {
       activeRevisionsMode: revisionMode
       ingress: ingressEnabled ? {
-        customDomains: [
+        customDomains: isWebApp ? [
           {
             name: customDomainName
             bindingType: 'Disabled'
           }
-        ]
+        ] : null
         external: external
         targetPort: targetPort
         transport: 'auto'

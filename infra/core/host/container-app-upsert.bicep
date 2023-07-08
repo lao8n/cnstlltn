@@ -51,6 +51,8 @@ param identityName string = ''
 @description('The name of the container image')
 param imageName string = ''
 
+param isWebApp bool = false
+
 @description('The secrets required for the container')
 param secrets array = []
 
@@ -89,6 +91,7 @@ module app 'container-app.bicep' = {
     daprEnabled: daprEnabled
     daprAppId: daprAppId
     daprAppProtocol: daprAppProtocol
+    isWebApp: isWebApp
     secrets: secrets
     external: external
     env: env
