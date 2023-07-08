@@ -50,7 +50,7 @@ module app '../core/host/container-app-upsert.bicep' = {
       }
     ]
     managedCertificateName: managedCertificateName
-    register_custom_domains: false
+    register_custom_domains: true
     secrets: [
       {
         name: 'google-login-client-secret'

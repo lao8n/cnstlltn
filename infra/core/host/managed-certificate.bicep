@@ -10,6 +10,7 @@ param location string = resourceGroup().location
 resource managedCertificate 'Microsoft.App/managedEnvironments/managedCertificates@2022-11-01-preview' = {
   name: managedCertificateName
   location: location
+  dependsOn: [ webApp ]
   parent: containerAppsEnvironment
   properties: {
     domainControlValidation: 'TXT'
@@ -19,4 +20,9 @@ resource managedCertificate 'Microsoft.App/managedEnvironments/managedCertificat
 
 resource containerAppsEnvironment 'Microsoft.App/managedEnvironments@2023-04-01-preview' existing = {
   name: environmentName
+}
+
+
+resource webApp 'Microsoft.App/containerApps@2023-04-01-preview' existing = {
+  name: 'web'
 }
