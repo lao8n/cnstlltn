@@ -5,7 +5,7 @@ param tags object = {}
 param containerAppsEnvironmentName string
 param containerRegistryName string
 param containerRegistryResourceGroupName string = ''
-// param customDomain string
+param customDomain string
 param logAnalyticsWorkspaceName string
 param applicationInsightsName string = ''
 
@@ -14,7 +14,7 @@ module containerAppsEnvironment 'container-apps-environment.bicep' = {
   params: {
     name: containerAppsEnvironmentName
     location: location
-    // customDomain: customDomain
+    customDomain: customDomain
     tags: tags
     logAnalyticsWorkspaceName: logAnalyticsWorkspaceName
     applicationInsightsName: applicationInsightsName

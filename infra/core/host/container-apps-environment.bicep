@@ -5,8 +5,8 @@ param tags object = {}
 @description('Name of the Application Insights resource')
 param applicationInsightsName string = ''
 
-// @description('The custom domain container')
-// param customDomain string
+@description('The custom domain container')
+param customDomain string
 
 @description('Specifies if Dapr is enabled')
 param daprEnabled bool = false
@@ -34,8 +34,10 @@ resource containerAppsEnvironmentManagedCertificate 'Microsoft.App/managedEnviro
   parent: containerAppsEnvironment
   name: '${name}-certificate'
   location: location
-
+  tags: tags
   properties: {
+    subjectName: customDomain
+    domainControlValidation: 'TXT'
   }
 }
 
