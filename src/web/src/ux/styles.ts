@@ -4,14 +4,13 @@ const theme = getTheme();
 export const rootStackStyles: IStackStyles = {
     root: {
         height: '100vh',
-        background: theme.palette.themePrimary
     }
 }
 
 export const headerStackStyles: IStackStyles = {
     root: {
         height: 48,
-        background: theme.palette.themePrimary,
+        backgroundColor: theme.palette.themePrimary,
     }
 }
 
