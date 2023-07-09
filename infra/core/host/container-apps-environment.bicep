@@ -37,7 +37,7 @@ resource containerAppsEnvironmentManagedCertificate 'Microsoft.App/managedEnviro
   tags: tags
   properties: {
     subjectName: customDomain
-    domainControlValidation: 'TXT'
+    domainControlValidation: 'HTTP'
   }
 }
 
