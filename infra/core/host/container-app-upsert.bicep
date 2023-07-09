@@ -62,8 +62,8 @@ param env array = []
 @description('Specifies if the resource ingress is exposed externally')
 param external bool = true
 
-@description('The service binds associated with the container')
-param serviceBinds array = []
+// @description('The service binds associated with the container')
+// param serviceBinds array = []
 
 @description('The target port for the container')
 param targetPort int = 80
@@ -97,7 +97,7 @@ module app 'container-app.bicep' = {
     env: env
     imageName: !empty(imageName) ? imageName : exists ? existingApp.properties.template.containers[0].image : ''
     targetPort: targetPort
-    serviceBinds: serviceBinds
+    // serviceBinds: serviceBinds
   }
 }
 

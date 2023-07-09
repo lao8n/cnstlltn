@@ -63,8 +63,8 @@ param revisionMode string = 'Single'
 @description('The secrets required for the container')
 param secrets array = []
 
-@description('The service binds associated with the container')
-param serviceBinds array = []
+// @description('The service binds associated with the container')
+// param serviceBinds array = []
 
 @description('The name of the container apps add-on to use. e.g. redis')
 param serviceType string = ''
@@ -90,7 +90,7 @@ module containerRegistryAccess '../security/registry-access.bicep' = if (usePriv
   }
 }
 
-resource app 'Microsoft.App/containerApps@2023-04-01-preview' = {
+resource app 'Microsoft.App/containerApps@2022-11-01-preview' = {
   name: name
   location: location
   tags: tags
@@ -114,7 +114,7 @@ resource app 'Microsoft.App/containerApps@2023-04-01-preview' = {
             certificateId: containerAppsEnvironmentManagedCertificate.id
             bindingType: 'SniEnabled'
           }
-        ] : []
+        ] : null
         external: external
         targetPort: targetPort
         transport: 'auto'
@@ -129,7 +129,7 @@ resource app 'Microsoft.App/containerApps@2023-04-01-preview' = {
         appPort: ingressEnabled ? targetPort : 0
       } : { enabled: false }
       secrets: secrets
-      service: !empty(serviceType) ? { type: serviceType } : null
+      // service: !empty(serviceType) ? { type: serviceType } : null
       registries: usePrivateRegistry ? [
         {
           server: '${containerRegistryName}.azurecr.io'
@@ -138,7 +138,7 @@ resource app 'Microsoft.App/containerApps@2023-04-01-preview' = {
       ] : []
     }
     template: {
-      serviceBinds: !empty(serviceBinds) ? serviceBinds : null
+      // serviceBinds: !empty(serviceBinds) ? serviceBinds : null
       containers: [
         {
           image: !empty(imageName) ? imageName : 'mcr.microsoft.com/azuredocs/containerapps-helloworld:latest'
