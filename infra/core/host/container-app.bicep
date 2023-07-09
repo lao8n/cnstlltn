@@ -114,7 +114,7 @@ resource app 'Microsoft.App/containerApps@2023-04-01-preview' = {
             certificateId: containerAppsEnvironmentManagedCertificate.id
             bindingType: 'SniEnabled'
           }
-        ] : null
+        ] : []
         external: external
         targetPort: targetPort
         transport: 'auto'
