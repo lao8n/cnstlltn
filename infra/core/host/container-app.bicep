@@ -163,6 +163,7 @@ resource containerAppsEnvironment 'Microsoft.App/managedEnvironments@2023-04-01-
 }
 
 resource containerAppsEnvironmentManagedCertificate 'Microsoft.App/managedEnvironments/managedCertificates@2023-04-01-preview' existing = {
+  parent: containerAppsEnvironment
   name: '${containerAppsEnvironmentName}-certificate'
 }
 
