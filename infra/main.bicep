@@ -90,17 +90,6 @@ module web './app/web.bicep' = {
   }
 }
 
-// module dns './core/dns/dns.bicep' = {
-//   name: customDomain
-//   scope: rg
-//   params: {
-//     dnsZoneName: customDomain
-//     webContainerAppName: web.name
-//     location: 'global'
-//     verificationId: web.outputs.CUSTOM_DOMAIN_VERIFICATION_ID
-//   }
-// }
-
 // Api backend
 module api './app/api.bicep' = {
   name: 'api'
