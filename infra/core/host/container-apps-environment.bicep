@@ -14,7 +14,7 @@ param daprEnabled bool = false
 @description('Name of the Log Analytics workspace')
 param logAnalyticsWorkspaceName string
 
-resource containerAppsEnvironment 'Microsoft.App/managedEnvironments@2022-11-01-preview' = {
+resource containerAppsEnvironment 'Microsoft.App/managedEnvironments@2023-04-01-preview' = {
   name: name
   location: location
   tags: tags
@@ -30,7 +30,7 @@ resource containerAppsEnvironment 'Microsoft.App/managedEnvironments@2022-11-01-
   }
 }
 
-resource containerAppsEnvironmentManagedCertificate 'Microsoft.App/managedEnvironments/managedCertificates@2022-11-01-preview' = {
+resource containerAppsEnvironmentManagedCertificate 'Microsoft.App/managedEnvironments/managedCertificates@2023-04-01-preview' = {
   parent: containerAppsEnvironment
   name: '${containerAppsEnvironment.name}-certificate'
   location: location

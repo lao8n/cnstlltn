@@ -63,8 +63,8 @@ param revisionMode string = 'Single'
 @description('The secrets required for the container')
 param secrets array = []
 
-// @description('The service binds associated with the container')
-// param serviceBinds array = []
+@description('The service binds associated with the container')
+param serviceBinds array = []
 
 @description('The name of the container apps add-on to use. e.g. redis')
 param serviceType string = ''
@@ -90,7 +90,7 @@ module containerRegistryAccess '../security/registry-access.bicep' = if (usePriv
   }
 }
 
-resource app 'Microsoft.App/containerApps@2022-11-01-preview' = {
+resource app 'Microsoft.App/containerApps@2023-04-01-preview' = {
   name: name
   location: location
   tags: tags
@@ -138,7 +138,7 @@ resource app 'Microsoft.App/containerApps@2022-11-01-preview' = {
       ] : []
     }
     template: {
-      // serviceBinds: !empty(serviceBinds) ? serviceBinds : null
+      serviceBinds: !empty(serviceBinds) ? serviceBinds : null
       containers: [
         {
           image: !empty(imageName) ? imageName : 'mcr.microsoft.com/azuredocs/containerapps-helloworld:latest'
@@ -158,11 +158,11 @@ resource app 'Microsoft.App/containerApps@2022-11-01-preview' = {
   }
 }
 
-resource containerAppsEnvironment 'Microsoft.App/managedEnvironments@2022-11-01-preview' existing = {
+resource containerAppsEnvironment 'Microsoft.App/managedEnvironments@2023-04-01-preview' existing = {
   name: containerAppsEnvironmentName
 }
 
-resource containerAppsEnvironmentManagedCertificate 'Microsoft.App/managedEnvironments/managedCertificates@2022-11-01-preview' existing = {
+resource containerAppsEnvironmentManagedCertificate 'Microsoft.App/managedEnvironments/managedCertificates@2023-04-01-preview' existing = {
   parent: containerAppsEnvironment
   name: '${containerAppsEnvironmentName}-certificate'
 }
