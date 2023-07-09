@@ -110,11 +110,11 @@ resource app 'Microsoft.App/containerApps@2022-11-01-preview' = {
       ingress: ingressEnabled ? {
         customDomains: isWebApp ? [
           {
-            name: containerAppsEnvironmentManagedCertificate.properties.subjectName
+            name: 'cnstlltn.ai'
             certificateId: containerAppsEnvironmentManagedCertificate.id
             bindingType: 'SniEnabled'
           }
-        ] : null
+        ] : []
         external: external
         targetPort: targetPort
         transport: 'auto'
@@ -158,11 +158,11 @@ resource app 'Microsoft.App/containerApps@2022-11-01-preview' = {
   }
 }
 
-resource containerAppsEnvironment 'Microsoft.App/managedEnvironments@2023-04-01-preview' existing = {
+resource containerAppsEnvironment 'Microsoft.App/managedEnvironments@2022-11-01-preview' existing = {
   name: containerAppsEnvironmentName
 }
 
-resource containerAppsEnvironmentManagedCertificate 'Microsoft.App/managedEnvironments/managedCertificates@2023-04-01-preview' existing = {
+resource containerAppsEnvironmentManagedCertificate 'Microsoft.App/managedEnvironments/managedCertificates@2022-11-01-preview' existing = {
   parent: containerAppsEnvironment
   name: '${containerAppsEnvironmentName}-certificate'
 }

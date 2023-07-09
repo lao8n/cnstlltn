@@ -32,7 +32,7 @@ resource containerAppsEnvironment 'Microsoft.App/managedEnvironments@2022-11-01-
 
 resource containerAppsEnvironmentManagedCertificate 'Microsoft.App/managedEnvironments/managedCertificates@2022-11-01-preview' = {
   parent: containerAppsEnvironment
-  name: '${name}-certificate'
+  name: '${containerAppsEnvironment.name}-certificate'
   location: location
   tags: tags
   properties: {
@@ -53,3 +53,4 @@ output appIpAddress string = containerAppsEnvironment.properties.staticIp
 output defaultDomain string = containerAppsEnvironment.properties.defaultDomain
 output id string = containerAppsEnvironment.id
 output name string = containerAppsEnvironment.name
+output managedCertificateId string = containerAppsEnvironmentManagedCertificate.id
