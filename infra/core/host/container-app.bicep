@@ -110,11 +110,9 @@ resource app 'Microsoft.App/containerApps@2023-04-01-preview' = {
       ingress: ingressEnabled ? {
         customDomains: isWebApp ? [
           {
-            // name: containerAppsEnvironmentManagedCertificate.properties.subjectName
-            // certificateId: containerAppsEnvironmentManagedCertificate.id
-            // bindingType: 'SniEnabled'
-            name: 'cnstlltn.ai'
-            bindingType: 'Disabled'
+            name: containerAppsEnvironmentManagedCertificate.properties.subjectName
+            certificateId: containerAppsEnvironmentManagedCertificate.id
+            bindingType: 'SniEnabled'
           }
         ] : null
         external: external
