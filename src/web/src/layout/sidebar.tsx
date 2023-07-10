@@ -1,20 +1,17 @@
 import React, { FC, ReactElement } from 'react';
-import TodoListMenu from '../components/todoListMenu';
-import { TodoList } from '../models/todoList';
+import QueryPane from '../components/queryPane';
 
-interface SidebarProps {
-    selectedList?: TodoList
-    lists?: TodoList[];
-    onListCreate: (list: TodoList) => void
+interface QueryPaneProps {
+    query: string
+    onQueryCreate: (query: string) => void
 }
 
-const Sidebar: FC<SidebarProps> = (props: SidebarProps): ReactElement => {
+const Sidebar: FC<QueryPaneProps> = (props: QueryPaneProps): ReactElement => {
     return (
         <div>
-            <TodoListMenu
-                selectedList={props.selectedList}
-                lists={props.lists}
-                onCreate={props.onListCreate} />
+            <QueryPane
+                query={props.query}
+                onCreate={props.onQueryCreate} />
         </div>
     );
 };

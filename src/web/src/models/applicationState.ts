@@ -1,4 +1,5 @@
 import { UserState } from "../models/userState";
+import { QueryState } from "../models/queryState";
 import { Dispatch, SetStateAction } from "react";
 
 export interface AppContext {
@@ -8,10 +9,12 @@ export interface AppContext {
 
 export interface ApplicationState {
     userState?: UserState,
+    queryState?: QueryState
 }
 
 export const getDefaultState = (): ApplicationState => {
     return {
-        userState: undefined
+        userState: undefined,
+        queryState: {query: ''},
     }
 }

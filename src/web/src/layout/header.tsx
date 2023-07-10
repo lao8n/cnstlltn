@@ -12,6 +12,7 @@ const logoStyles: IStackStyles = {
     root: {
         width: '300px',
         background: theme.palette.themePrimary,
+        color: theme.palette.themePrimary,
         alignItems: 'center',
         padding: '0 20px'
     }
