@@ -34,7 +34,7 @@ const QueryPane: FC<QueryPaneProps> = (props: QueryPaneProps): ReactElement => {
                         borderless
                         iconProps={iconProps}
                         value={newQuery}
-                        placeholder="New List"
+                        placeholder="Enter the name of a book or a link to an article"
                         onChange={onNewQueryChange} />
                 </form>
             </Stack.Item>

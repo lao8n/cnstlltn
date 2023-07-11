@@ -10,7 +10,8 @@ export const rootStackStyles: IStackStyles = {
 export const headerStackStyles: IStackStyles = {
     root: {
         height: 48,
-        background: theme.palette.themeDarker
+        background: theme.palette.themePrimary,
+        color: theme.palette.themePrimary,
     }
 }
 
@@ -27,7 +28,7 @@ export const mainStackStyles: IStackStyles = {
 
 export const sidebarStackStyles: IStackStyles = {
     root: {
-        minWidth: 300,
+        minWidth: 500,
         background: theme.palette.neutralPrimary,
         boxShadow: theme.effects.elevation8
     }
