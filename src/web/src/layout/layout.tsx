@@ -1,4 +1,4 @@
-import { FC, ReactElement, useContext } from 'react';
+import { FC, ReactElement, useContext, useMemo } from 'react';
 import Header from './header';
 import { Routes, Route } from 'react-router-dom';
 import Home from '../pages/home';
@@ -9,17 +9,24 @@ import { Stack } from '@fluentui/react';
 import { headerStackStyles, mainStackStyles, rootStackStyles, sidebarStackStyles } from '../ux/styles';
 import { LoginRedirect } from '../pages/loginRedirect';
 import Sidebar from './sidebar';
+import * as queryActions from '../actions/queryActions';
 import UserContext from '../components/userContext';
-// import { bindActionCreators } from '../actions/actionCreators';
+import { bindActionCreators } from '../actions/actionCreators';
+import { QueryActions } from '../actions/queryActions';
+import { Query } from '../models/queryState';
 
 const Layout: FC = (): ReactElement => {
     const appContext = useContext<AppContext>(UserContext)
-    // const actions = useMemo(() =>
-    //     query: bindActionCreators(queryCreated, dispatch)
-    // }, [appContext.dispatch]);
-    const onQueryCreated = async (query: string) => { 
-        // await appContext.actions.queryCreated(query);
-        console.log("onQueryCreated called" + query);
+    const actions = useMemo(() => ({
+        queryResponseList: bindActionCreators(queryActions, appContext.dispatch) as unknown as QueryActions
+    }), [appContext.dispatch]);
+
+    // do not need to load initial query?
+
+    const onQueryCreated = async (query: Query) => { 
+        const queryResponseList = await actions.queryResponseList.getQueryResponseList(query);
+        console.log("onQueryCreated called" + query + queryResponseList);
+        // TODO: fetch query response list
     }
 
     return (
@@ -38,7 +45,7 @@ const Layout: FC = (): ReactElement => {
                 </Stack.Item>
                 <Stack.Item styles={sidebarStackStyles}>
                     <Sidebar
-                        query={appContext.state.queryState?.query || ''}
+                        query={appContext.state.queryState.query}
                         onQueryCreate={onQueryCreated}/>
                 </Stack.Item>
             </Stack>

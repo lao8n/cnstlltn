@@ -1,18 +1,17 @@
-import { getTheme, IconButton, IIconProps, IStackStyles, Stack } from '@fluentui/react';
+import { IconButton, IIconProps, IStackStyles, Stack } from '@fluentui/react';
 import { FC, useContext, useEffect, useState, ReactElement, Dispatch, SetStateAction } from 'react';
 import { Link, NavigateFunction } from 'react-router-dom';
 import { UserContext } from '../components/userContext';
 import { AppContext } from '../models/applicationState';
 import { useNavigate } from 'react-router-dom';
 import { UserState } from '../models/userState';
+import { CnstlltnTheme } from '../ux/theme';
 
-const theme = getTheme();
+const theme = CnstlltnTheme
 
 const logoStyles: IStackStyles = {
     root: {
         width: '300px',
-        background: theme.palette.themePrimary,
-        color: theme.palette.themePrimary,
         alignItems: 'center',
         padding: '0 20px'
     }

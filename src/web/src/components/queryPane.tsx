@@ -1,10 +1,11 @@
 import { IIconProps, Stack, TextField } from '@fluentui/react';
 import React, { FC, ReactElement, useState, FormEvent } from "react";
 import { stackItemPadding } from '../ux/styles';
+import { Query } from '../models/queryState';
 
 interface QueryPaneProps {
-    query: string
-    onCreate: (query: string) => void
+    query: Query
+    onCreate: (query: Query) => void
 }
 
 const iconProps: IIconProps = {
@@ -21,7 +22,7 @@ const QueryPane: FC<QueryPaneProps> = (props: QueryPaneProps): ReactElement => {
     const onFormSubmit = async (evt: FormEvent<HTMLFormElement>) => {
         evt.preventDefault();
         if (newQuery) {
-            props.onCreate(newQuery);
+            props.onCreate({ userTxt: newQuery });
             setNewQuery('');
         }
     }

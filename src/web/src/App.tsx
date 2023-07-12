@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import Layout from './layout/layout';
 import './App.css';
-import { DarkTheme } from './ux/theme';
+import { CnstlltnTheme } from './ux/theme';
 import { UserProvider } from './components/user';
 import { initializeIcons } from '@fluentui/react/lib/Icons';
 import { ThemeProvider } from '@fluentui/react';
@@ -13,7 +13,7 @@ export const App: FC = () => {
   initializeIcons();
 
   return (
-    <ThemeProvider applyTo="body" theme={DarkTheme}>
+    <ThemeProvider applyTo="body" theme={CnstlltnTheme}>
       <UserProvider>
         <BrowserRouter>
           <Telemetry>

@@ -1,5 +1,9 @@
-import * as itemActions from './itemActions';
-import * as listActions from './listActions';
+import * as queryActions from './queryActions';
+
+// 3 categories of data
+// 1. query data
+// 2. user data
+// 3. display data
 
 export enum ActionTypes {
     LOAD_TODO_LISTS = "LOAD_TODO_LISTS",
@@ -15,16 +19,8 @@ export enum ActionTypes {
     LOGIN_PAGE = "LOGIN_PAGE",
     LOGIN_REDIRECT_SET_USER = "LOGIN_REDIRECT_SET_USER",
     LOGIN_REDIRECT_LINK = "LOGIN_REDIRECT_LINK",
+    GET_QUERY_RESPONSE_LIST = "GET_QUERY_RESPONSE_LIST",
 }
 
-export type TodoActions =
-    itemActions.ListItemsAction |
-    itemActions.SelectItemAction |
-    itemActions.LoadItemAction |
-    itemActions.SaveItemAction |
-    itemActions.DeleteItemAction |
-    listActions.ListListsAction |
-    listActions.SelectListAction |
-    listActions.LoadListAction |
-    listActions.SaveListAction |
-    listActions.DeleteListAction;
+export type QueryActions =
+    queryActions.GetQueryResponseListAction;

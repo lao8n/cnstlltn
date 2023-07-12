@@ -1,9 +1,10 @@
 import React, { FC, ReactElement } from 'react';
 import QueryPane from '../components/queryPane';
+import { Query } from '../models/queryState';
 
 interface QueryPaneProps {
-    query: string
-    onQueryCreate: (query: string) => void
+    query: Query
+    onQueryCreate: (query: Query) => void
 }
 
 const Sidebar: FC<QueryPaneProps> = (props: QueryPaneProps): ReactElement => {

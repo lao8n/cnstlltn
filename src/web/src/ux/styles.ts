@@ -1,5 +1,7 @@
-import { getTheme, IStackItemTokens, IStackStyles, IStackTokens } from '@fluentui/react'
-const theme = getTheme();
+import { IStackItemTokens, IStackStyles, IStackTokens } from '@fluentui/react'
+import { CnstlltnTheme } from './theme'
+
+const theme = CnstlltnTheme
 
 export const rootStackStyles: IStackStyles = {
     root: {
@@ -8,10 +10,10 @@ export const rootStackStyles: IStackStyles = {
 }
 
 export const headerStackStyles: IStackStyles = {
+
     root: {
         height: 48,
         background: theme.palette.themePrimary,
-        color: theme.palette.themePrimary,
     }
 }
 
