@@ -25,6 +25,7 @@ export const listItemsStackStyles: IStackStyles = {
 
 export const mainStackStyles: IStackStyles = {
     root: {
+        background: theme.palette.black,
     }
 }
 
@@ -32,7 +33,8 @@ export const sidebarStackStyles: IStackStyles = {
     root: {
         minWidth: 500,
         background: theme.palette.neutralPrimary,
-        boxShadow: theme.effects.elevation8
+        boxShadow: theme.effects.elevation8,
+        color: theme.palette.black,
     }
 }
 
