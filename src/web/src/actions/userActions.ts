@@ -15,6 +15,7 @@ export interface SetUserAction {
     type: ActionTypes.SET_USER,
     payload: UserState
 }
+
 const setUserAction = (payload: UserState): SetUserAction => ({
     type: ActionTypes.SET_USER,
     payload
