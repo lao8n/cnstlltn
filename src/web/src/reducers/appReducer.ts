@@ -13,3 +13,5 @@ export const appReducer: Reducer<ApplicationState, ApplicationActions> = (state:
     }
     return state;
 }
+
+export default appReducer;
