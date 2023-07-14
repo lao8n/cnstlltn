@@ -42,9 +42,9 @@ from .models import Settings, __beanie_models__
 
 settings = Settings()
 app = FastAPI(
-    description="Simple Todo API",
-    version="2.0.0",
-    title="Simple Todo API",
+    description="Cnstlltn App",
+    version="0.0.1",
+    title="Cnstlltn App",
     docs_url="/",
 )
 app.add_middleware(

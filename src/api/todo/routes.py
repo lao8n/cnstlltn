@@ -7,10 +7,44 @@ from beanie import PydanticObjectId
 from fastapi import HTTPException, Response
 from starlette.requests import Request
 
+import openai
 from .app import app
-from .models import (CreateUpdateTodoItem, CreateUpdateTodoList, TodoItem,
+from .models import (QueryAiResponseBlock, CreateUpdateTodoItem, CreateUpdateTodoList, TodoItem,
                      TodoList, TodoState)
+from .app import settings
+openai.api_key = settings.OPENAI_API_KEY
 
+@app.get("/queryAi", response_model=List[QueryAiResponseBlock], response_model_by_alias=False)
+async def query_ai(query: str) -> List[QueryAiResponseBlock]:
+    prompt_format = """
+    this prompt is to describe how i want to format your response. i will prompt with something like a book title and i want you to respond with the following format
+    '
+    concept 1
+    concept 1 content
+    concept 2
+    concept 2 content
+    '
+    make sure you do not return an intro paragraph, conclusion paragraph or anything that deviates from the above format. here is the prompt: return the key frameworks/ideas in
+    """
+    response = openai.ChatCompletion.create(
+        model='gpt-4',
+        messages=[
+            {
+                "role": "system",
+                "content": prompt_format + query,
+            }
+        ]
+    )
+    # Split response into blocks
+    response_blocks = response.strip().split("\n\n")
+
+    # Create QueryAiResponseBlock list
+    query_ai_response_blocks = []
+    for block in response_blocks:
+        title, content = block.split("\n", 1)
+        query_ai_response_blocks.append(QueryAiResponseBlock(title=title, content=content))
+
+    return query_ai_response_blocks
 
 @app.get("/lists", response_model=List[TodoList], response_model_by_alias=False)
 async def get_lists(

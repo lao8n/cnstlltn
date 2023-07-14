@@ -42,6 +42,9 @@ param userId string = ''
 @secure()
 param googleLoginClientSecret string = ''
 
+@secure()
+param openAiApiKey string = ''
+
 var abbrs = loadJsonContent('./abbreviations.json')
 var resourceToken = toLower(uniqueString(subscription().id, environmentName, location))
 var tags = { 'azd-env-name': environmentName }
@@ -141,6 +144,16 @@ module keyVaultGoogleLoginClientSecret './core/security/keyvault-secret.bicep' =
     keyVaultName: keyVault.outputs.name
     name: 'google-login-client-secret'
     secretValue: googleLoginClientSecret
+  }
+}
+
+module keyVaultOpenAiApiKey './core/security/keyvault-secret.bicep' = {
+  name: 'openai-api-key'
+  scope: rg
+  params: {
+    keyVaultName: keyVault.outputs.name
+    name: 'openai-api-key'
+    secretValue: openAiApiKey
   }
 }
 

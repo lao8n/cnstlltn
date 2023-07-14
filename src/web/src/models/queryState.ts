@@ -9,8 +9,7 @@ export interface Query {
 }
 
 export interface QueryResponse {
-    id?: string;
-    created?: Date;
-    updated?: Date;
-    response: string;
+    id?: string, // TODO: need this to match rest service extends entity - maybe remove?
+    title: string;
+    content: string;
 }

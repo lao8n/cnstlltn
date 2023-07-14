@@ -1,6 +1,6 @@
 from datetime import datetime
 from enum import Enum
-from typing import Optional
+from typing import Optional, List
 
 from azure.identity import DefaultAzureCredential
 from azure.keyvault.secrets import SecretClient
@@ -31,11 +31,15 @@ class Settings(BaseSettings):
     AZURE_KEY_VAULT_ENDPOINT: Optional[str] = None
     APPLICATIONINSIGHTS_CONNECTION_STRING: Optional[str] = None
     APPLICATIONINSIGHTS_ROLENAME: Optional[str] = "API"
+    OPENAI_API_KEY: str = ""
 
     class Config:
         env_file = ".env"
         env_file_encoding = "utf-8"
 
+class QueryAiResponseBlock(BaseModel):
+    title: str    
+    content: str
 
 class TodoList(Document):
     name: str

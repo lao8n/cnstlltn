@@ -6,7 +6,7 @@ import { ActionMethod, createPayloadAction, PayloadAction } from "./actionCreato
 import { ActionTypes } from "./common";
 import { QueryOptions } from "@testing-library/react";
 
-const queryService = new QueryService(config.api.baseUrl, '/query');
+const queryService = new QueryService(config.api.baseUrl, '/queryAi');
 
 export interface QueryActions {
     getQueryResponseList(query: Query): Promise<QueryResponse[]>;

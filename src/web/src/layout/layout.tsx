@@ -14,6 +14,7 @@ import UserAppContext from '../components/userContext';
 import { bindActionCreators } from '../actions/actionCreators';
 import { QueryActions } from '../actions/queryActions';
 import { Query } from '../models/queryState';
+import { ActionTypes } from '../actions/common';
 
 const Layout: FC = (): ReactElement => {
     const appContext = useContext<AppContext>(UserAppContext)
@@ -26,7 +27,7 @@ const Layout: FC = (): ReactElement => {
     const onQueryCreated = async (query: Query) => { 
         const queryResponseList = await actions.queryResponseList.getQueryResponseList(query);
         console.log("onQueryCreated called" + query + queryResponseList);
-        // TODO: fetch query response list
+        appContext.dispatch({ type: ActionTypes.GET_QUERY_RESPONSE_LIST, payload: queryResponseList });
     }
 
     return (

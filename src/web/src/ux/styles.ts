@@ -26,6 +26,7 @@ export const listItemsStackStyles: IStackStyles = {
 export const mainStackStyles: IStackStyles = {
     root: {
         background: theme.palette.black,
+        color: theme.palette.white,
     }
 }
 
