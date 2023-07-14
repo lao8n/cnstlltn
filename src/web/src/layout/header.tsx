@@ -64,7 +64,7 @@ const Header: FC = (): ReactElement => {
             setLogInOrOut(() => () => handleLogin(navigate));
             setSignInOrOut(() => "Signin");
         }
-    }, [state, dispatch, navigate]);
+    }, [state.userState?.isLoggedIn, dispatch, navigate]);
 
     return (
         <Stack horizontal>

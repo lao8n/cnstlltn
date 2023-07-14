@@ -1,18 +1,21 @@
 import { Dispatch } from "react";
 import { UserState } from "../models/userState";
-import { PayloadAction, createPayloadAction } from "./actionCreators"
 import { ActionTypes } from "./common"
 
 export interface UserActions {
-    setUser(): void;
+    setUser(isLoggedIn: boolean): void;
 }
 
-export const setUser = () =>
-    async (dispatch: Dispatch<SetUserAction>) => {
-        dispatch(setUserAction({ isLoggedIn: true }));
+export const setUser = (isLoggedIn: boolean) =>
+    (dispatch: Dispatch<SetUserAction>) => {
+        dispatch(setUserAction({isLoggedIn }));
 }
 
-export interface SetUserAction extends PayloadAction<string, UserState> {
-    type: ActionTypes.SET_USER
+export interface SetUserAction {
+    type: ActionTypes.SET_USER,
+    payload: UserState
 }
-const setUserAction = createPayloadAction<SetUserAction>(ActionTypes.SET_USER);
+const setUserAction = (payload: UserState): SetUserAction => ({
+    type: ActionTypes.SET_USER,
+    payload
+});

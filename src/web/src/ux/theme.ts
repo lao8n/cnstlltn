@@ -22,7 +22,7 @@ export const CnstlltnTheme = createTheme({
         neutralPrimaryAlt: '#f2f2f2',
         neutralPrimary: '#e3e3e3',
         neutralDark: '#f9f9f9',
-        black: '#fcfcfc',
-        white: '#292929',
+        black: '#292929',
+        white: '#fcfcfc',
     }
 });
