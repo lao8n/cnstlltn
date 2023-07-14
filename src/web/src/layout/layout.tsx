@@ -10,13 +10,13 @@ import { headerStackStyles, mainStackStyles, rootStackStyles, sidebarStackStyles
 import { LoginRedirect } from '../pages/loginRedirect';
 import Sidebar from './sidebar';
 import * as queryActions from '../actions/queryActions';
-import UserContext from '../components/userContext';
+import UserAppContext from '../components/userContext';
 import { bindActionCreators } from '../actions/actionCreators';
 import { QueryActions } from '../actions/queryActions';
 import { Query } from '../models/queryState';
 
 const Layout: FC = (): ReactElement => {
-    const appContext = useContext<AppContext>(UserContext)
+    const appContext = useContext<AppContext>(UserAppContext)
     const actions = useMemo(() => ({
         queryResponseList: bindActionCreators(queryActions, appContext.dispatch) as unknown as QueryActions
     }), [appContext.dispatch]);

@@ -1,11 +1,12 @@
 import { IconButton, IIconProps, IStackStyles, Stack } from '@fluentui/react';
-import { FC, useContext, useEffect, useState, ReactElement, Dispatch, SetStateAction } from 'react';
+import { FC, useContext, useEffect, useState, ReactElement, Dispatch } from 'react';
 import { Link, NavigateFunction } from 'react-router-dom';
-import { UserContext } from '../components/userContext';
+import { UserAppContext } from '../components/userContext';
 import { AppContext } from '../models/applicationState';
 import { useNavigate } from 'react-router-dom';
-import { UserState } from '../models/userState';
 import { CnstlltnTheme } from '../ux/theme';
+import { ActionTypes } from '../actions/common';
+import { SetUserAction } from '../actions/userActions';
 
 const theme = CnstlltnTheme
 
@@ -39,30 +40,31 @@ const handleLogin = (navigate : NavigateFunction) => {
    navigate('/login');
 }
 
-const handleLogout = (navigate : NavigateFunction, setUser : Dispatch<SetStateAction<UserState | undefined>>) => {
+const handleLogout = (navigate : NavigateFunction, dispatch : Dispatch<SetUserAction>) => {
     console.log("handleLogout called");
-    
-    setUser(prevUser => ({
-        ...prevUser,
-        isLoggedIn: false,
-    }));
+    dispatch({
+        type: ActionTypes.SET_USER,
+        payload: {
+            isLoggedIn: false,
+        },
+    });
     navigate(`/auth/logout?post_logout_redirect_uri=${window.location.origin}`);
 }
 
 const Header: FC = (): ReactElement => {
-    const user: AppContext = useContext(UserContext);
+    const { state, dispatch }: AppContext = useContext(UserAppContext);
     const navigate = useNavigate();
     const [logInOrOut, setLogInOrOut] = useState<() => void>(() => () => handleLogin(navigate));
     const [signInOrOut, setSignInOrOut] = useState(() => "Signin");
     useEffect(() => {
-        if(user.state.userState?.isLoggedIn){
-            setLogInOrOut(() => () => handleLogout(navigate, user.setUser));
+        if(state.userState?.isLoggedIn){
+            setLogInOrOut(() => () => handleLogout(navigate, dispatch));
             setSignInOrOut(() => "SignOut");
         } else {
             setLogInOrOut(() => () => handleLogin(navigate));
             setSignInOrOut(() => "Signin");
         }
-    }, [user, navigate]);
+    }, [state, dispatch, navigate]);
 
     return (
         <Stack horizontal>

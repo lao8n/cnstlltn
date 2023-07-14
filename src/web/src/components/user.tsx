@@ -1,21 +1,19 @@
-import { FC, PropsWithChildren, ReactElement, useState } from 'react';
-import UserContext from './userContext';
-import { AppContext } from '../models/applicationState';
-import { UserState } from '../models/userState';
+import { FC, PropsWithChildren, ReactElement, useReducer } from 'react';
+import UserAppContext from './userContext';
+import { AppContext, ApplicationState, getDefaultState } from '../models/applicationState';
+import appReducer from '../reducers';
 
-type UserProps = PropsWithChildren<unknown>;
+type AppProps = PropsWithChildren<unknown>;
 
-export const UserProvider: FC<UserProps> = (props: UserProps): ReactElement => {
-  const [userState, setUser] = useState<UserState | undefined>(undefined);  // Initialize state here
-  
-    const userContext : AppContext = { 
-        state: { userState },
-        setUser
-    }
+export const UserAppProvider: FC<AppProps> = (props: AppProps): ReactElement => {
+    const defaultState: ApplicationState = getDefaultState();
+    const [applicationState, dispatch] = useReducer(appReducer, defaultState)
+    const initialContext: AppContext = { state: applicationState, dispatch: dispatch }
+
     return (
-        <UserContext.Provider value={ userContext }>
+        <UserAppContext.Provider value={ initialContext }>
             {props.children}
-        </UserContext.Provider>
+        </UserAppContext.Provider>
     );
 }
-export default UserProvider
+export default UserAppProvider

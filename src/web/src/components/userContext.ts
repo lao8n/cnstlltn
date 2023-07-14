@@ -3,10 +3,9 @@ import { AppContext, getDefaultState } from '../models/applicationState';
 
 const initialState = getDefaultState();
 const dispatch = () => { return };
-export const UserContext = createContext<AppContext>({
+export const UserAppContext = createContext<AppContext>({
     state: initialState,
-    setUser: () => { throw new Error("setUser function must be overridden"); },
     dispatch: dispatch
 });
 
-export default UserContext;
+export default UserAppContext;

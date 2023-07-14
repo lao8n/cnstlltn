@@ -3,7 +3,7 @@ import QueryPane from '../components/queryPane';
 import { Query } from '../models/queryState';
 
 interface QueryPaneProps {
-    query: Query
+    query?: Query
     onQueryCreate: (query: Query) => void
 }
 

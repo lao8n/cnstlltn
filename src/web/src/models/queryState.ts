@@ -1,5 +1,6 @@
 export interface QueryState {
-    query: Query;
+    query?: Query;
+    responses?: QueryResponse[];
 }
 
 export interface Query {

@@ -1,19 +1,22 @@
 import { useEffect, useContext } from "react";
-import UserContext from "../components/userContext";
+import UserAppContext from "../components/userContext";
 import { useNavigate } from 'react-router-dom';
 import { withApplicationInsights } from "../components/telemetry";
+import { ActionTypes } from "../actions/common";
 
 export const LoginRedirect = () => {
-    const { setUser } = useContext(UserContext);
+    const { dispatch } = useContext(UserAppContext);
     const navigate = useNavigate();
 
     useEffect(() => {
-        setUser(prevUser => ({
-            ...prevUser,
-            isLoggedIn: true,
-        }));
+        dispatch({
+            type: ActionTypes.SET_USER,
+            payload: {
+                isLoggedIn: true,
+            },
+        });
         navigate('/constellation');
-    }, [setUser, navigate]);
+    }, [dispatch, navigate]);
     
     return null;
 };

@@ -4,7 +4,7 @@ import { stackItemPadding } from '../ux/styles';
 import { Query } from '../models/queryState';
 
 interface QueryPaneProps {
-    query: Query
+    query?: Query
     onCreate: (query: Query) => void
 }
 

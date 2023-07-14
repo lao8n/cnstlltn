@@ -1,11 +1,11 @@
 import { useContext } from 'react';
 import { Stack, Text } from '@fluentui/react';
 import { withApplicationInsights } from '../components/telemetry';
-import { UserContext } from '../components/userContext';
+import { UserAppContext } from '../components/userContext';
 import { AppContext } from '../models/applicationState';
 
 const Constellation = () => {
-    const user : AppContext = useContext(UserContext);
+    const user : AppContext = useContext(UserAppContext);
 
     if(!user.state.userState?.isLoggedIn){
       return (
