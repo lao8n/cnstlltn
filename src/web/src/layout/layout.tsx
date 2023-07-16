@@ -25,7 +25,7 @@ const Layout: FC = (): ReactElement => {
     // do not need to load initial query?
 
     const onQueryCreated = async (query: Query) => { 
-        console.log("onQueryCreated called" + query)
+        console.log("onQueryCreated called" + query.userTxt)
         const queryResponseList = await actions.queryResponseList.getQueryResponseList(query);
         console.log("query response returned" + queryResponseList);
         appContext.dispatch({ type: ActionTypes.GET_QUERY_RESPONSE_LIST, payload: queryResponseList });

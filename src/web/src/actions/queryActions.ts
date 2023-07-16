@@ -4,7 +4,6 @@ import { QueryService } from "../services/queryService";
 import { Query, QueryResponse } from "../models/queryState";
 import { ActionMethod, createPayloadAction, PayloadAction } from "./actionCreators";
 import { ActionTypes } from "./common";
-import { QueryOptions } from "@testing-library/react";
 
 const queryService = new QueryService(config.api.baseUrl, '/queryAi');
 
@@ -12,9 +11,10 @@ export interface QueryActions {
     getQueryResponseList(query: Query): Promise<QueryResponse[]>;
 }
 
-export const getQueryResponseList = (query: QueryOptions): ActionMethod<QueryResponse[]> =>
+export const getQueryResponseList = (query: Query): ActionMethod<QueryResponse[]> =>
     async (dispatch: Dispatch<GetQueryResponseListAction>) => {
-        const queryResponses = await queryService.getList(query);
+        console.log("query", query.userTxt)
+        const queryResponses = await queryService.getQueryResponseList(query);
         console.log("query responses", queryResponses)
     dispatch(getQueryResponseListAction(queryResponses));
     return queryResponses;

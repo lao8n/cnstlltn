@@ -6,9 +6,14 @@ export interface QueryOptions {
 }
 
 export interface Entity {
+    title?: string;
     id?: string;
     created?: Date;
     updated?: Date
+}
+
+export interface Query {
+    userTxt: string;
 }
 
 export abstract class RestService<T extends Entity> {
@@ -36,6 +41,14 @@ export abstract class RestService<T extends Entity> {
         });
 
         return response.data
+    }
+
+    public async getQueryResponseList(query: Query): Promise<T[]> {
+        const response = await this.client.request<T[]>({
+            method: 'GET',
+            data: query
+        });
+        return response.data;
     }
 
     public async save(entity: T): Promise<T> {
