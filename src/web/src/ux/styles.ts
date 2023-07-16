@@ -3,9 +3,17 @@ import { CnstlltnTheme } from './theme'
 
 const theme = CnstlltnTheme
 
+export const queryFieldStyles = {
+    field: {
+        color: 'theme.palette.black',
+    },
+};
+
+
 export const rootStackStyles: IStackStyles = {
     root: {
         height: '100vh',
+        background: theme.palette.black,
     }
 }
 
@@ -35,7 +43,6 @@ export const sidebarStackStyles: IStackStyles = {
         minWidth: 500,
         background: theme.palette.neutralPrimary,
         boxShadow: theme.effects.elevation8,
-        color: theme.palette.black,
     }
 }
 
@@ -55,7 +62,7 @@ export const stackGaps: IStackTokens = {
 }
 
 export const stackItemPadding: IStackItemTokens = {
-    padding: 10
+    padding: 10,
 }
 
 export const stackItemMargin: IStackItemTokens = {

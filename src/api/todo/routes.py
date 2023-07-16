@@ -26,6 +26,7 @@ async def query_ai(query: str) -> List[QueryAiResponseBlock]:
     '
     make sure you do not return an intro paragraph, conclusion paragraph or anything that deviates from the above format. here is the prompt: return the key frameworks/ideas in
     """
+    print(query)
     response = openai.ChatCompletion.create(
         model='gpt-4',
         messages=[
@@ -35,6 +36,7 @@ async def query_ai(query: str) -> List[QueryAiResponseBlock]:
             }
         ]
     )
+    print(response)
     # Split response into blocks
     response_blocks = response.strip().split("\n\n")
 
@@ -43,7 +45,7 @@ async def query_ai(query: str) -> List[QueryAiResponseBlock]:
     for block in response_blocks:
         title, content = block.split("\n", 1)
         query_ai_response_blocks.append(QueryAiResponseBlock(title=title, content=content))
-
+    print(query_ai_response_blocks)
     return query_ai_response_blocks
 
 @app.get("/lists", response_model=List[TodoList], response_model_by_alias=False)

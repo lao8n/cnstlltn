@@ -14,7 +14,8 @@ export interface QueryActions {
 
 export const getQueryResponseList = (query: QueryOptions): ActionMethod<QueryResponse[]> =>
     async (dispatch: Dispatch<GetQueryResponseListAction>) => {
-    const queryResponses = await queryService.getList(query);
+        const queryResponses = await queryService.getList(query);
+        console.log("query responses", queryResponses)
     dispatch(getQueryResponseListAction(queryResponses));
     return queryResponses;
 }

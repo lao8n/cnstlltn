@@ -1,6 +1,6 @@
 import { IIconProps, Stack, TextField } from '@fluentui/react';
 import React, { FC, ReactElement, useState, FormEvent } from "react";
-import { stackItemPadding } from '../ux/styles';
+import { queryFieldStyles, stackItemPadding } from '../ux/styles';
 import { Query, QueryResponse } from '../models/queryState';
 
 interface QueryPaneProps {
@@ -37,7 +37,9 @@ const QueryPane: FC<QueryPaneProps> = (props: QueryPaneProps): ReactElement => {
                         iconProps={iconProps}
                         value={newQuery}
                         placeholder="Enter the name of a book or a link to an article"
-                        onChange={onNewQueryChange} />
+                        onChange={onNewQueryChange}
+                        styles={queryFieldStyles}
+                    />
                 </form>
             </Stack.Item>
             <Stack.Item tokens={stackItemPadding}>
