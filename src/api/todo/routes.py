@@ -9,13 +9,14 @@ from starlette.requests import Request
 
 import openai
 from .app import app
-from .models import (QueryAiResponseBlock, CreateUpdateTodoItem, CreateUpdateTodoList, TodoItem,
+from .models import (Query, QueryAiResponseBlock, CreateUpdateTodoItem, CreateUpdateTodoList, TodoItem,
                      TodoList, TodoState)
 from .app import settings
 openai.api_key = settings.OPENAI_API_KEY
 
 @app.get("/queryAi", response_model=List[QueryAiResponseBlock], response_model_by_alias=False)
-async def query_ai(query: str) -> List[QueryAiResponseBlock]:
+async def query_ai(query: Query) -> List[QueryAiResponseBlock]:
+    print("allow origins" + app.allow_origins)
     prompt_format = """
     this prompt is to describe how i want to format your response. i will prompt with something like a book title and i want you to respond with the following format
     '
@@ -26,13 +27,13 @@ async def query_ai(query: str) -> List[QueryAiResponseBlock]:
     '
     make sure you do not return an intro paragraph, conclusion paragraph or anything that deviates from the above format. here is the prompt: return the key frameworks/ideas in
     """
-    print(query)
+    print(query.userTxt)
     response = openai.ChatCompletion.create(
         model='gpt-4',
         messages=[
             {
                 "role": "system",
-                "content": prompt_format + query,
+                "content": prompt_format + query.userTxt,
             }
         ]
     )

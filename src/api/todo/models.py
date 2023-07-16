@@ -37,6 +37,9 @@ class Settings(BaseSettings):
         env_file = ".env"
         env_file_encoding = "utf-8"
 
+class Query(BaseModel):
+    userTxt: str
+
 class QueryAiResponseBlock(BaseModel):
     title: str    
     content: str
