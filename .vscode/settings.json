@@ -2,5 +2,6 @@
     "editor.formatOnType": true,
     "[lisp]": {
         "editor.wordSeparators": "`|;:'\",()"
-    }
+    },
+    "python.analysis.typeCheckingMode": "off"
 }

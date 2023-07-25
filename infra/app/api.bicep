@@ -37,8 +37,6 @@ module app '../core/host/container-app-upsert.bicep' = {
     exists: exists
     containerAppsEnvironmentName: containerAppsEnvironmentName
     containerRegistryName: containerRegistryName
-    containerCpuCoreCount: '1.0'
-    containerMemory: '2.0Gi'
     env: [
       {
         name: 'AZURE_CLIENT_ID'
