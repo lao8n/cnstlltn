@@ -14,7 +14,7 @@ from .models import (Query, QueryAiResponseBlock, CreateUpdateTodoItem, CreateUp
 from .app import settings
 openai.api_key = settings.OPENAI_API_KEY
 
-@app.get("/queryAi", response_model=List[QueryAiResponseBlock], response_model_by_alias=False)
+@app.post("/queryAi", response_model=List[QueryAiResponseBlock], response_model_by_alias=False)
 async def query_ai(query: Query) -> List[QueryAiResponseBlock]:
     print("allow origins" + app.allow_origins)
     prompt_format = """
