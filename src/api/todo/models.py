@@ -32,6 +32,7 @@ class Settings(BaseSettings):
     APPLICATIONINSIGHTS_CONNECTION_STRING: Optional[str] = None
     APPLICATIONINSIGHTS_ROLENAME: Optional[str] = "API"
     OPENAI_API_KEY: str = ""
+    GOOGLE_LOGIN_CLIENT_SECRET: Optional[str] = None # TODO: remove this as shouldn't be necessary only needed for front-end
 
     class Config:
         env_file = ".env"
