@@ -1,9 +1,24 @@
-import { RestService } from "./restService";
 import { QueryResponse } from "../models/queryState";
+import axios, { AxiosInstance } from 'axios';
 
-export class QueryService extends RestService<QueryResponse> {
+export interface Query {
+    userTxt: string;
+}
+
+export class QueryService {
+    protected client: AxiosInstance;
 
     public constructor(baseUrl: string, baseRoute: string) {
-        super(baseUrl, baseRoute);
+        this.client = axios.create({
+            baseURL: `${baseUrl}${baseRoute}`
+        });
+    }
+
+    public async postQueryResponseList(query: Query): Promise<QueryResponse[]> {
+        const response = await this.client.request<QueryResponse[]>({
+            method: 'POST',
+            data: query
+        });
+        return response.data;
     }
 }
