@@ -37,6 +37,7 @@ module app '../core/host/container-app-upsert.bicep' = {
     exists: exists
     containerAppsEnvironmentName: containerAppsEnvironmentName
     containerRegistryName: containerRegistryName
+    allowedOrigins: [ corsAcaUrl ]
     env: [
       {
         name: 'AZURE_CLIENT_ID'

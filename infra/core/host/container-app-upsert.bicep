@@ -2,6 +2,8 @@ param name string
 param location string = resourceGroup().location
 param tags object = {}
 
+param allowedOrigins array = []
+
 @description('The environment name for the container apps')
 param containerAppsEnvironmentName string
 
@@ -82,6 +84,7 @@ module app 'container-app.bicep' = {
     identityName: identityName
     ingressEnabled: ingressEnabled
     containerName: containerName
+    allowedOrigins: allowedOrigins
     containerAppsEnvironmentName: containerAppsEnvironmentName
     containerRegistryName: containerRegistryName
     containerCpuCoreCount: containerCpuCoreCount

@@ -1,9 +1,5 @@
-import { QueryResponse } from "../models/queryState";
+import { Query, QueryResponse } from "../models/queryState";
 import axios, { AxiosInstance } from 'axios';
-
-export interface Query {
-    userTxt: string;
-}
 
 export class QueryService {
     protected client: AxiosInstance;
