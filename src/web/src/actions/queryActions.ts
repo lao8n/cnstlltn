@@ -11,7 +11,7 @@ export interface QueryActions {
     postQueryResponseList(query: Query): Promise<QueryResponse[]>;
 }
 
-export const post = (query: Query): ActionMethod<QueryResponse[]> =>
+export const postQueryResponseList = (query: Query): ActionMethod<QueryResponse[]> =>
     async (dispatch: Dispatch<PostQueryResponseListAction>) => {
         console.log("query", query.userTxt)
         const queryResponses = await queryService.postQueryResponseList(query);
