@@ -7,7 +7,7 @@ export const appReducer: Reducer<ApplicationState, ApplicationActions> = (state:
         case ActionTypes.SET_USER:
             state = { ...state, userState: { isLoggedIn: action.payload.isLoggedIn } };
             break;
-        case ActionTypes.GET_QUERY_RESPONSE_LIST:
+        case ActionTypes.POST_QUERY_RESPONSE_LIST:
             state = { ...state, queryState: { responses: action.payload } };
             break;
     }

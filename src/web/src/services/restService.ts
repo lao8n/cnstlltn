@@ -43,9 +43,9 @@ export abstract class RestService<T extends Entity> {
         return response.data
     }
 
-    public async getQueryResponseList(query: Query): Promise<T[]> {
+    public async postQueryResponseList(query: Query): Promise<T[]> {
         const response = await this.client.request<T[]>({
-            method: 'GET',
+            method: 'POST',
             data: query
         });
         return response.data;

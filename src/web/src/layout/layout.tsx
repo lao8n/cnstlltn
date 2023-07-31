@@ -26,9 +26,9 @@ const Layout: FC = (): ReactElement => {
 
     const onQueryCreated = async (query: Query) => { 
         console.log("onQueryCreated called " + query.userTxt)
-        const queryResponseList = await actions.queryResponseList.getQueryResponseList(query);
+        const queryResponseList = await actions.queryResponseList.postQueryResponseList(query);
         console.log("query response returned" + queryResponseList);
-        appContext.dispatch({ type: ActionTypes.GET_QUERY_RESPONSE_LIST, payload: queryResponseList });
+        appContext.dispatch({ type: ActionTypes.POST_QUERY_RESPONSE_LIST, payload: queryResponseList });
     }
 
     return (

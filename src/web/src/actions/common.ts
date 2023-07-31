@@ -8,9 +8,9 @@ import * as userActions from './userActions';
 
 export enum ActionTypes {
     SET_USER = "SET_USER",
-    GET_QUERY_RESPONSE_LIST = "GET_QUERY_RESPONSE_LIST",
+    POST_QUERY_RESPONSE_LIST = "POST_QUERY_RESPONSE_LIST",
 }
 
 export type ApplicationActions =
-    queryActions.GetQueryResponseListAction |
+    queryActions.PostQueryResponseListAction |
     userActions.SetUserAction;
