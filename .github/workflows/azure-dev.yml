@@ -61,6 +61,7 @@ jobs:
           AZURE_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
           AZURE_USER_ID: ${{ vars.AZURE_USER_ID }}
           GOOGLE_LOGIN_CLIENT_SECRET: ${{ secrets.GOOGLE_LOGIN_CLIENT_SECRET }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
 
       - name: Deploy Application
         run: azd deploy --no-prompt
