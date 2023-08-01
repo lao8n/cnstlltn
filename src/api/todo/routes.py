@@ -16,7 +16,6 @@ openai.api_key = settings.OPENAI_API_KEY
 
 @app.post("/queryAi", response_model=List[QueryAiResponseBlock], response_model_by_alias=False)
 async def query_ai(query: Query) -> List[QueryAiResponseBlock]:
-    print("allow origins" + app.allow_origins)
     prompt_format = """
     this prompt is to describe how i want to format your response. i will prompt with something like a book title and i want you to respond with the following format
     '
