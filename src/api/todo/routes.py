@@ -38,7 +38,7 @@ async def query_ai(query: Query) -> List[QueryAiResponseBlock]:
     )
     print(response)
     # Split response into blocks
-    response_blocks = response.strip().split("\n\n")
+    response_blocks = response.choices[0].message.content.strip().split("\n\n")
 
     # Create QueryAiResponseBlock list
     query_ai_response_blocks = []

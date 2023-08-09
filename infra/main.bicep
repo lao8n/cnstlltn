@@ -107,6 +107,7 @@ module api './app/api.bicep' = {
     containerRegistryName: containerApps.outputs.registryName
     keyVaultName: keyVault.outputs.name
     corsAcaUrl: corsAcaUrl
+    customDomain: customDomain
     exists: apiAppExists
   }
 }
