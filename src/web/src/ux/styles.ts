@@ -1,5 +1,6 @@
 import { IStackItemTokens, IStackStyles, IStackTokens } from '@fluentui/react'
 import { CnstlltnTheme } from './theme'
+import { mergeStyles } from '@fluentui/react';
 
 const theme = CnstlltnTheme
 
@@ -52,6 +53,24 @@ export const titleStackStyles: IStackStyles = {
         background: theme.palette.neutralPrimaryAlt,
     }
 }
+
+// Define styles for the button
+export const buttonStyles = mergeStyles({
+    backgroundColor: theme.palette.neutralPrimary,
+    color: theme.palette.black,
+    margin: '5px',
+    padding: '5px 10px',
+    cursor: 'pointer',
+    border: 'none',
+    transition: 'background-color 0.3s',
+    '&:hover': {
+        backgroundColor: theme.palette.neutralPrimaryAlt
+    }
+});
+
+export const selectedButtonStyles = mergeStyles(buttonStyles, {
+    backgroundColor: theme.palette.themePrimary
+});
 
 export const stackPadding: IStackTokens = {
     padding: 10

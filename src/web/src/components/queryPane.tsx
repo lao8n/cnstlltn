@@ -2,6 +2,7 @@ import { IIconProps, Stack, TextField } from '@fluentui/react';
 import React, { FC, ReactElement, useState, FormEvent } from "react";
 import { queryFieldStyles, stackItemPadding } from '../ux/styles';
 import { Query, QueryResponse } from '../models/queryState';
+import { buttonStyles, selectedButtonStyles } from '../ux/styles';
 
 interface QueryPaneProps {
     query?: Query
@@ -15,10 +16,21 @@ const iconProps: IIconProps = {
 
 const QueryPane: FC<QueryPaneProps> = (props: QueryPaneProps): ReactElement => {
     const [newQuery, setNewQuery] = useState('');
+    const [selectedResponses, setSelectedResponses] = useState<Set<number>>(new Set());
 
     const onNewQueryChange = (evt: FormEvent<HTMLInputElement | HTMLTextAreaElement>, value?: string) => {
         setNewQuery(value || '');
     }
+
+    const toggleResponseSelection = (index: number) => {
+        const newSelectedResponses = new Set(selectedResponses);
+        if (newSelectedResponses.has(index)) {
+            newSelectedResponses.delete(index);
+        } else {
+            newSelectedResponses.add(index);
+        }
+        setSelectedResponses(newSelectedResponses);
+    };
 
     const onFormSubmit = async (evt: FormEvent<HTMLFormElement>) => {
         evt.preventDefault();
@@ -27,6 +39,13 @@ const QueryPane: FC<QueryPaneProps> = (props: QueryPaneProps): ReactElement => {
             setNewQuery('');
         }
     }
+
+    const saveSelectedResponses = () => {
+        const responsesToSave = Array.from(selectedResponses).map(index => props.queryResponseList?[index]);
+        // Now, you can save 'responsesToSave' to the database
+        console.log(responsesToSave)
+    };
+
 
     return (
         <Stack>
@@ -44,8 +63,16 @@ const QueryPane: FC<QueryPaneProps> = (props: QueryPaneProps): ReactElement => {
             </Stack.Item>
             <Stack.Item tokens={stackItemPadding}>
                 {props.queryResponseList && props.queryResponseList.map((response, index) => (
-                    <p key={index}>{response.title}: {response.content}</p>
+                    <button 
+                        key={index} 
+                        className={selectedResponses.has(index) ? selectedButtonStyles: buttonStyles} 
+                        onClick={() => toggleResponseSelection(index)}>
+                        {response.title}: {response.content}
+                    </button>
                 ))}
+            </Stack.Item>
+            <Stack.Item tokens={stackItemPadding}>
+                <button onClick={saveSelectedResponses}>Save to Constellation</button>
             </Stack.Item>
         </Stack>
     );

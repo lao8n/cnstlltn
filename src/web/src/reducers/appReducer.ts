@@ -9,6 +9,10 @@ export const appReducer: Reducer<ApplicationState, ApplicationActions> = (state:
             break;
         case ActionTypes.POST_QUERY_RESPONSE_LIST:
             state = { ...state, queryState: { responses: action.payload } };
+            console.log("reducer state updated " + state.queryState.responses)
+            break;
+        default:
+            console.log("reducer state not updated " + state.queryState.responses)
             break;
     }
     return state;

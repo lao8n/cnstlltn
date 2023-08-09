@@ -51,6 +51,7 @@ var tags = { 'azd-env-name': environmentName }
 var apiContainerAppNameOrDefault = '${abbrs.appContainerApps}web-${resourceToken}'
 var corsAcaUrl = 'https://${apiContainerAppNameOrDefault}.${containerApps.outputs.defaultDomain}'
 var customDomain = 'cnstlltn.ai'
+var customDomainUrl = 'https://${customDomain}'
 
 // Organize resources in a resource group
 resource rg 'Microsoft.Resources/resourceGroups@2021-04-01' = {
@@ -107,7 +108,7 @@ module api './app/api.bicep' = {
     containerRegistryName: containerApps.outputs.registryName
     keyVaultName: keyVault.outputs.name
     corsAcaUrl: corsAcaUrl
-    customDomain: customDomain
+    customDomain: customDomainUrl
     exists: apiAppExists
   }
 }

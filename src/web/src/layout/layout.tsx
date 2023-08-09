@@ -14,7 +14,6 @@ import UserAppContext from '../components/userContext';
 import { bindActionCreators } from '../actions/actionCreators';
 import { QueryActions } from '../actions/queryActions';
 import { Query } from '../models/queryState';
-import { ActionTypes } from '../actions/common';
 
 const Layout: FC = (): ReactElement => {
     const appContext = useContext<AppContext>(UserAppContext)
@@ -28,7 +27,7 @@ const Layout: FC = (): ReactElement => {
         console.log("onQueryCreated called " + query.userTxt)
         const queryResponseList = await actions.queryResponseList.postQueryResponseList(query);
         console.log("query response returned" + queryResponseList);
-        appContext.dispatch({ type: ActionTypes.POST_QUERY_RESPONSE_LIST, payload: queryResponseList });
+        // appContext.dispatch({ type: ActionTypes.POST_QUERY_RESPONSE_LIST, payload: queryResponseList });
     }
 
     return (
