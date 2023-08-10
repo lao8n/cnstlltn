@@ -43,8 +43,13 @@ async def query_ai(query: Query) -> List[QueryAiResponseBlock]:
     for block in response_blocks:
         title, content = block.split("\n", 1)
         query_ai_response_blocks.append(QueryAiResponseBlock(title=title, content=content))
-    print("query_ai response blocks" + query_ai_response_blocks)
+    formatted_blocks = [f"Title: {block.title}\nContent: {block.content}" for block in query_ai_response_blocks]
+    print("query_ai response blocks:\n" + '\n\n'.join(formatted_blocks))    
     return query_ai_response_blocks
+
+@app.put("save_frameworks")
+async def save_frameworks():
+    
 
 @app.get("/lists", response_model=List[TodoList], response_model_by_alias=False)
 async def get_lists(
