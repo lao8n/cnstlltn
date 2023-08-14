@@ -45,41 +45,14 @@ class QueryAiResponseBlock(BaseModel):
     title: str    
     content: str
 
-class TodoList(Document):
-    name: str
-    description: Optional[str] = None
-    createdDate: Optional[datetime] = None
-    updatedDate: Optional[datetime] = None
+class Framework(BaseModel):
+    title: str
+    content: str
 
+class UserFramework(Document):
+    userid: str # partition key
+    # unique id -> cosmos can automatically generate this
+    title: str
+    content: str
 
-class CreateUpdateTodoList(BaseModel):
-    name: str
-    description: Optional[str] = None
-
-
-class TodoState(Enum):
-    TODO = "todo"
-    INPROGRESS = "inprogress"
-    DONE = "done"
-
-
-class TodoItem(Document):
-    listId: PydanticObjectId
-    name: str
-    description: Optional[str] = None
-    state: Optional[TodoState] = None
-    dueDate: Optional[datetime] = None
-    completedDate: Optional[datetime] = None
-    createdDate: Optional[datetime] = None
-    updatedDate: Optional[datetime] = None
-
-
-class CreateUpdateTodoItem(BaseModel):
-    name: str
-    description: Optional[str] = None
-    state: Optional[TodoState] = None
-    dueDate: Optional[datetime] = None
-    completedDate: Optional[datetime] = None
-
-
-__beanie_models__ = [TodoList, TodoItem]
+__beanie_models__ = [UserFramework]
