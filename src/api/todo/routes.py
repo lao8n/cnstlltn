@@ -9,8 +9,7 @@ from starlette.requests import Request
 
 import openai
 from .app import app
-from .models import (Query, QueryAiResponseBlock, CreateUpdateTodoItem, CreateUpdateTodoList, TodoItem,
-                     TodoList, TodoState, Framework, UserFramework)
+from .models import (Query, QueryAiResponseBlock, Framework, UserFramework)
 from .app import settings
 openai.api_key = settings.OPENAI_API_KEY
 
