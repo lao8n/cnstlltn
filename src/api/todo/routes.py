@@ -46,7 +46,7 @@ async def query_ai(query: Query) -> List[QueryAiResponseBlock]:
     print("query_ai response blocks:\n" + '\n\n'.join(formatted_blocks))    
     return query_ai_response_blocks
 
-@app.put("/save-frameworks", response_model=List[UserFramework])
+@app.post("/save-frameworks", response_model=List[UserFramework])
 async def save_frameworks(request: Request, saveFrameworks: List[Framework]) -> List[UserFramework]:
     print("saving frameworks")
     print(request.headers["x-ms-client-principal-id"])
