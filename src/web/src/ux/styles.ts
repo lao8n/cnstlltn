@@ -69,7 +69,8 @@ export const buttonStyles = mergeStyles({
 });
 
 export const selectedButtonStyles = mergeStyles(buttonStyles, {
-    backgroundColor: theme.palette.themePrimary
+    backgroundColor: theme.palette.themePrimary,
+    color: theme.palette.white,
 });
 
 export const stackPadding: IStackTokens = {
