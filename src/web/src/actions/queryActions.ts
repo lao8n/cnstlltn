@@ -5,7 +5,7 @@ import { Query, QueryResponse } from "../models/queryState";
 import { ActionMethod, createPayloadAction, PayloadAction } from "./actionCreators";
 import { ActionTypes } from "./common";
 
-const queryService = new QueryService(config.api.baseUrl, '/queryAi');
+const queryService = new QueryService(config.api.baseUrl, '/query-ai');
 
 export interface QueryActions {
     postQueryResponseList(query: Query): Promise<QueryResponse[]>;
@@ -16,8 +16,8 @@ export const postQueryResponseList = (query: Query): ActionMethod<QueryResponse[
         console.log("query", query.userTxt)
         const queryResponses = await queryService.postQueryResponseList(query);
         console.log("query responses", queryResponses)
-    dispatch(postQueryResponseListAction(queryResponses));
-    return queryResponses;
+        dispatch(postQueryResponseListAction(queryResponses));
+        return queryResponses;
 }
 
 export interface PostQueryResponseListAction extends PayloadAction<string, QueryResponse[]> {

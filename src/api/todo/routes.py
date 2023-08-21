@@ -14,7 +14,7 @@ from .models import (Query, QueryAiResponseBlock, CreateUpdateTodoItem, CreateUp
 from .app import settings
 openai.api_key = settings.OPENAI_API_KEY
 
-@app.post("/queryAi", response_model=List[QueryAiResponseBlock], response_model_by_alias=False)
+@app.post("/query-ai", response_model=List[QueryAiResponseBlock], response_model_by_alias=False)
 async def query_ai(query: Query) -> List[QueryAiResponseBlock]:
     prompt_format = """
     this prompt is to describe how i want to format your response. i will prompt with something like a book title and i want you to respond with the following format
@@ -47,7 +47,7 @@ async def query_ai(query: Query) -> List[QueryAiResponseBlock]:
     print("query_ai response blocks:\n" + '\n\n'.join(formatted_blocks))    
     return query_ai_response_blocks
 
-@app.put("save_frameworks", response_model=List[UserFramework])
+@app.put("/save-frameworks", response_model=List[UserFramework])
 async def save_frameworks(request: Request, saveFrameworks: List[Framework]) -> List[UserFramework]:
     print("saving frameworks")
     print(request.headers["x-ms-client-principal-id"])

@@ -8,9 +8,12 @@ import * as userActions from './userActions';
 
 export enum ActionTypes {
     SET_USER = "SET_USER",
+    SAVE_SELECTED_FRAMEWORKS = "SAVE_SELECTED_FRAMEWORKS",
     POST_QUERY_RESPONSE_LIST = "POST_QUERY_RESPONSE_LIST",
+    SAVE_FRAMEWORKS = "SAVE_FRAMEWORKS",
 }
 
 export type ApplicationActions =
-    queryActions.PostQueryResponseListAction |
-    userActions.SetUserAction;
+    userActions.SaveSelectedFrameworksAction |
+    userActions.SetUserAction |
+    queryActions.PostQueryResponseListAction;
