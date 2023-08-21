@@ -1,8 +1,14 @@
 import { IIconProps, Stack, TextField } from '@fluentui/react';
-import React, { FC, ReactElement, useState, FormEvent } from "react";
+import React, { FC, ReactElement, useState, useContext, FormEvent } from "react";
 import { queryFieldStyles, stackItemPadding } from '../ux/styles';
 import { Query, QueryResponse } from '../models/queryState';
 import { buttonStyles, selectedButtonStyles } from '../ux/styles';
+import { bindActionCreators } from '../actions/actionCreators';
+import * as userActions from '../actions/userActions';
+import UserAppContext from '../components/userContext';
+import { AppContext } from '../models/applicationState';
+import { UserActions } from '../actions/userActions';
+
 
 interface QueryPaneProps {
     query?: Query
@@ -17,6 +23,11 @@ const iconProps: IIconProps = {
 const QueryPane: FC<QueryPaneProps> = (props: QueryPaneProps): ReactElement => {
     const [newQuery, setNewQuery] = useState('');
     const [selectedResponses, setSelectedResponses] = useState<Set<number>>(new Set());
+    const appContext = useContext<AppContext>(UserAppContext)
+    const actions = {
+        queryResponseList: bindActionCreators(userActions, appContext.dispatch) as unknown as UserActions
+    };
+
 
     const onNewQueryChange = (evt: FormEvent<HTMLInputElement | HTMLTextAreaElement>, value?: string) => {
         setNewQuery(value || '');
@@ -40,11 +51,12 @@ const QueryPane: FC<QueryPaneProps> = (props: QueryPaneProps): ReactElement => {
         }
     }
 
-    const saveSelectedResponses = () => {
-        const responsesToSave = Array.from(selectedResponses).map(index => props.queryResponseList?.[index]);
+    const saveSelectedResponses = async () => {
+        const queryResponseList = props.queryResponseList || [];
+        const responsesToSave = Array.from(selectedResponses).map(index => queryResponseList[index]) ;
         // Now, you can save 'responsesToSave' to the database
         console.log("responses to save " + responsesToSave)
-        const savedFrameworks = await 
+        const savedFrameworks = await actions.queryResponseList.saveSelectedFrameworks(responsesToSave);
         console.log("saved Frameworks " + savedFrameworks)
     };
 
