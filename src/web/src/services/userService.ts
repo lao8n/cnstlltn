@@ -25,6 +25,7 @@ export class UserService {
                 console.error('Error:", error');
             }
             throw error;
+        }
     }
 }
 
