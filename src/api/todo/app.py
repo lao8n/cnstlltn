@@ -51,6 +51,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=originList(),
     allow_credentials=True,
+    allow_credentials_origins=["*"],  # Add this line to specify allowed origins for credentials
     allow_methods=["*"],
     allow_headers=["*"],
 )
