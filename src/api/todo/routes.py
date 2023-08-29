@@ -13,7 +13,7 @@ from .models import (Query, QueryAiResponseBlock, Framework, UserFramework)
 from .app import settings
 openai.api_key = settings.OPENAI_API_KEY
 
-@app.post("/query-ai", response_model=List[QueryAiResponseBlock], response_model_by_alias=False)
+@app.post("/query-ai", response_model=List[QueryAiResponseBlock], response_model_by_alias=False, status_code=201)
 async def query_ai(query: Query) -> List[QueryAiResponseBlock]:
     prompt_format = """
     this prompt is to describe how i want to format your response. i will prompt with something like a book title and i want you to respond with the following format
@@ -46,7 +46,7 @@ async def query_ai(query: Query) -> List[QueryAiResponseBlock]:
     print("query_ai response blocks:\n" + '\n\n'.join(formatted_blocks))    
     return query_ai_response_blocks
 
-@app.post("/save-frameworks", response_model=List[UserFramework])
+@app.post("/save-frameworks", response_model=List[UserFramework], status_code=201)
 async def save_frameworks(request: Request, saveFrameworks: List[Framework]) -> List[UserFramework]:
     print("saving frameworks")
     print(request.headers)

@@ -29,6 +29,7 @@ def originList():
     origins = [
         "https://portal.azure.com",
         "https://ms.portal.azure.com",
+        "https://ca-web-4a73yskoiju2e.whiteground-d98c7a61.eastus.azurecontainerapps.io",
     ]
     print('allowOrigins=', allowOrigins)
     if allowOrigins is not None:
