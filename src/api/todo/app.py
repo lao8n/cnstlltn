@@ -58,8 +58,8 @@ app.add_middleware(
     CustomCORSMiddleware,
     allow_origins=originList(),
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["POST"],
+    allow_headers=["Content-Type", "Authorization"],
     expose_headers=["*"],
 )
 print(originList())
