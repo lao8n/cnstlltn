@@ -12,11 +12,19 @@ export class UserService {
     }
 
     public async saveSelectedFrameworks(frameworks: QueryResponse[]): Promise<QueryResponse[]> {
-        const response = await this.client.request<QueryResponse[]>({
-            method: 'POST',
-            data: frameworks,
-        });
-        return response.data;
+        try {
+            const response = await this.client.request<QueryResponse[]>({
+                method: 'POST',
+                data: frameworks,
+            });
+            return response.data;
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                console.error('Axios error:", error.response?.data');
+            } else {
+                console.error('Error:", error');
+            }
+            throw error;
     }
 }
 
