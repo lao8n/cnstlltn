@@ -1,7 +1,7 @@
 import motor
 from azure.monitor.opentelemetry.exporter import AzureMonitorTraceExporter
 from beanie import init_beanie
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
 from opentelemetry.sdk.resources import SERVICE_NAME, Resource
@@ -48,8 +48,14 @@ app = FastAPI(
     title="Cnstlltn App",
     docs_url="/",
 )
+class CustomCORSMiddleware(CORSMiddleware):
+    async def dispatch(self, request: Request, call_next):
+        response = await call_next(request)
+        response.headers["Access-Control-Allow-Credentials"] = "true"
+        return response
+    
 app.add_middleware(
-    CORSMiddleware,
+    CustomCORSMiddleware,
     allow_origins=originList(),
     allow_credentials=True,
     allow_methods=["*"],
