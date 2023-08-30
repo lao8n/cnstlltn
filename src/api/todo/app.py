@@ -48,14 +48,14 @@ app = FastAPI(
     title="Cnstlltn App",
     docs_url="/",
 )
-class CustomCORSMiddleware(CORSMiddleware):
-    async def dispatch(self, request: Request, call_next):
-        response = await call_next(request)
-        response.headers["Access-Control-Allow-Credentials"] = "true"
-        return response
+# class CustomCORSMiddleware(CORSMiddleware):
+#     async def dispatch(self, request: Request, call_next):
+#         response = await call_next(request)
+#         response.headers["Access-Control-Allow-Credentials"] = "true"
+#         return response
     
 app.add_middleware(
-    CustomCORSMiddleware,
+    CORSMiddleware,
     allow_origins=originList(),
     allow_credentials=True,
     allow_methods=["POST"],
