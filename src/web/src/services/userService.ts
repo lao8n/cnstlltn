@@ -7,7 +7,7 @@ export class UserService {
     public constructor(baseUrl: string, baseRoute: string) {
         this.client = axios.create({
             baseURL: `${baseUrl}${baseRoute}`,
-            withCredentials: true,
+            // withCredentials: true,
         });
     }
 
