@@ -42,6 +42,7 @@ export const mainStackStyles: IStackStyles = {
 export const sidebarStackStyles: IStackStyles = {
     root: {
         minWidth: 500,
+        maxWidth: 500,
         background: theme.palette.neutralPrimary,
         boxShadow: theme.effects.elevation8,
     }
