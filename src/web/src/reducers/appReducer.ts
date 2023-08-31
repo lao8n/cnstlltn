@@ -5,7 +5,10 @@ import { ApplicationState } from "../models/applicationState";
 export const appReducer: Reducer<ApplicationState, ApplicationActions> = (state: ApplicationState, action: ApplicationActions): ApplicationState => {
     switch (action.type) {
         case ActionTypes.SET_USER:
-            state = { ...state, userState: { isLoggedIn: action.payload.isLoggedIn } };
+            state = { ...state, userState: { isLoggedIn: action.isLoggedIn, constellation: state.userState.constellation } };
+            break;
+        case ActionTypes.GET_CONSTELLATION:
+            state = { ...state, userState: { isLoggedIn: state.userState.isLoggedIn, constellation: action.payload } };
             break;
         case ActionTypes.POST_QUERY_RESPONSE_LIST:
             state = { ...state, queryState: { responses: action.payload } };

@@ -58,3 +58,12 @@ async def save_frameworks(request: Request, saveFrameworks: List[Framework]) -> 
         print(f"framework: {framework}")
         results.append(await UserFramework(userid=user_id, title=framework.title, content=framework.content).save())
     return results
+
+@app.get("/get-constellation", response_model=List[UserFramework], status_code=200)
+async def get_constellation(request: Request) -> List[UserFramework]:
+    print("getting constellation")
+    print(request.headers)
+    user_id = request.headers.get("X-MS-CLIENT-PRINCIPAL-ID")
+    print(f"user_id: {user_id}")
+    user_id = "test_user_id_123"
+    return await UserFramework.find_many({"userid": user_id})

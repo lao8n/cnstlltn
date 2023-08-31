@@ -37,16 +37,14 @@ const iconProps: IIconProps = {
 
 const handleLogin = (navigate : NavigateFunction) => {
     console.log("handleLogin called");
-   navigate('/login');
+    navigate('/login');
 }
 
 const handleLogout = (navigate : NavigateFunction, dispatch : Dispatch<SetUserAction>) => {
     console.log("handleLogout called");
     dispatch({
         type: ActionTypes.SET_USER,
-        payload: {
-            isLoggedIn: false,
-        },
+        isLoggedIn: false,
     });
     navigate(`/auth/logout?post_logout_redirect_uri=${window.location.origin}`);
 }

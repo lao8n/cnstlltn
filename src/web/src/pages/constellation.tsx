@@ -3,6 +3,7 @@ import { Stack, Text } from '@fluentui/react';
 import { withApplicationInsights } from '../components/telemetry';
 import { UserAppContext } from '../components/userContext';
 import { AppContext } from '../models/applicationState';
+import ConstellationPane from '../components/constellationPane';
 
 const Constellation = () => {
     const appContext : AppContext = useContext(UserAppContext);
@@ -18,6 +19,7 @@ const Constellation = () => {
     return (
       <Stack>
         <Text>Welcome</Text>
+        <ConstellationPane />
       </Stack >
     );
   };

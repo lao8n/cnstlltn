@@ -11,9 +11,7 @@ export const LoginRedirect = () => {
     useEffect(() => {
         dispatch({
             type: ActionTypes.SET_USER,
-            payload: {
-                isLoggedIn: true,
-            },
+            isLoggedIn: true,
         });
         navigate('/constellation');
     }, [dispatch, navigate]);

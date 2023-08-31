@@ -1,5 +1,5 @@
 import { Dispatch } from "react";
-import { UserState } from "../models/userState";
+import { UserFramework } from "../models/userState";
 import { ActionTypes } from "./common"
 import { QueryResponse } from "../models/queryState";
 import config from "../config";
@@ -11,35 +11,38 @@ const userService = new UserService(config.api.baseUrl, '/save-frameworks');
 export interface UserActions {
     setUser(isLoggedIn: boolean): void;
     saveSelectedFrameworks(frameworks: QueryResponse[]): Promise<QueryResponse[]>;
+    getConstellation(): Promise<UserFramework[]>;
 }
 
 export const setUser = (isLoggedIn: boolean) =>
     (dispatch: Dispatch<SetUserAction>) => {
-        dispatch(setUserAction({isLoggedIn }));
+        dispatch(setUserAction(isLoggedIn));
 }
 
 export const saveSelectedFrameworks = (frameworks: QueryResponse[]): ActionMethod<QueryResponse[]> =>
     async (dispatch: Dispatch<SaveSelectedFrameworksAction>) => {
-        try {
-            console.log("save selected frameworks ", frameworks)
-            const savedFrameworks = await userService.saveSelectedFrameworks(frameworks);
-            console.log("saved frameworks " + savedFrameworks)
-            dispatch(saveSelectedFrameworksAction(frameworks))
-            return savedFrameworks
-        } catch (error) {
-            console.error("Error saving selected frameworks: ", error)
-            throw error;
-        }
-}
+        console.log("save selected frameworks ", frameworks)
+        const savedFrameworks = await userService.saveSelectedFrameworks(frameworks);
+        console.log("saved frameworks " + savedFrameworks)
+        dispatch(saveSelectedFrameworksAction(frameworks))
+        return savedFrameworks
+    }
+
+export const getConstellation = (): ActionMethod<UserFramework[]> =>
+    async (dispatch: Dispatch<GetConstellationAction>) => {
+        const constellation = await userService.getConstellation();
+        dispatch(getConstellationAction(constellation))
+        return constellation;
+    }
 
 export interface SetUserAction {
     type: ActionTypes.SET_USER,
-    payload: UserState
+    isLoggedIn: boolean
 }
 
-const setUserAction = (payload: UserState): SetUserAction => ({
+const setUserAction = (isLoggedIn: boolean): SetUserAction => ({
     type: ActionTypes.SET_USER,
-    payload: payload,
+    isLoggedIn: isLoggedIn,
 });
 
 export interface SaveSelectedFrameworksAction extends PayloadAction<string, QueryResponse[]> {
@@ -48,3 +51,10 @@ export interface SaveSelectedFrameworksAction extends PayloadAction<string, Quer
 
 const saveSelectedFrameworksAction =
     createPayloadAction<SaveSelectedFrameworksAction>(ActionTypes.SAVE_SELECTED_FRAMEWORKS);
+
+export interface GetConstellationAction extends PayloadAction<string, UserFramework[]> {
+    type: ActionTypes.GET_CONSTELLATION
+}
+
+const getConstellationAction =
+    createPayloadAction<GetConstellationAction>(ActionTypes.GET_CONSTELLATION);
