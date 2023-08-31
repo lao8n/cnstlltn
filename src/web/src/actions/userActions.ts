@@ -17,7 +17,7 @@ export interface UserActions {
 export const setUser = (isLoggedIn: boolean) =>
     (dispatch: Dispatch<SetUserAction>) => {
         dispatch(setUserAction(isLoggedIn));
-}
+    }
 
 export const saveSelectedFrameworks = (frameworks: QueryResponse[]): ActionMethod<QueryResponse[]> =>
     async (dispatch: Dispatch<SaveSelectedFrameworksAction>) => {
@@ -33,6 +33,11 @@ export const getConstellation = (): ActionMethod<UserFramework[]> =>
         const constellation = await userService.getConstellation();
         dispatch(getConstellationAction(constellation))
         return constellation;
+    }
+
+export const setConstellation = (constellation: UserFramework[]) =>
+    (dispatch: Dispatch<SetConstellationAction>) => {
+        dispatch(setConstellationAction(constellation));
     }
 
 export interface SetUserAction {
@@ -58,3 +63,13 @@ export interface GetConstellationAction extends PayloadAction<string, UserFramew
 
 const getConstellationAction =
     createPayloadAction<GetConstellationAction>(ActionTypes.GET_CONSTELLATION);
+
+export interface SetConstellationAction {
+    type: ActionTypes.SET_CONSTELLATION,
+    constellation: UserFramework[]
+}
+
+const setConstellationAction = (constellation: UserFramework[]): SetConstellationAction => ({
+    type: ActionTypes.SET_CONSTELLATION,
+    constellation: constellation,
+});

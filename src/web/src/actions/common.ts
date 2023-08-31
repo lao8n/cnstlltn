@@ -11,10 +11,12 @@ export enum ActionTypes {
     SAVE_SELECTED_FRAMEWORKS = "SAVE_SELECTED_FRAMEWORKS",
     POST_QUERY_RESPONSE_LIST = "POST_QUERY_RESPONSE_LIST",
     GET_CONSTELLATION = "GET_CONSTELLATION",
+    SET_CONSTELLATION = "SET_CONSTELLATION",
 }
 
 export type ApplicationActions =
     userActions.SaveSelectedFrameworksAction |
     userActions.SetUserAction |
     userActions.GetConstellationAction |
+    userActions.SetConstellationAction |
     queryActions.PostQueryResponseListAction;

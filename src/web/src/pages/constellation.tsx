@@ -19,7 +19,9 @@ const Constellation = () => {
     return (
       <Stack>
         <Text>Welcome</Text>
-        <ConstellationPane />
+        <Text>{appContext.state.queryState.responses}</Text>
+        <ConstellationPane
+          constellation={appContext.state.userState.constellation} />
       </Stack >
     );
   };
