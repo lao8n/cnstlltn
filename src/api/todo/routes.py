@@ -7,11 +7,13 @@ from beanie import PydanticObjectId
 from fastapi import HTTPException, Response
 from starlette.requests import Request
 
+from openai import OpenAI
 import openai
 from .app import app
 from .models import (Query, QueryAiResponseBlock, Framework, UserFramework)
 from .app import settings
-openai.api_key = settings.OPENAI_API_KEY
+openai.api_key = settings.openai_api_key
+client = OpenAI()
 
 @app.post("/query-ai", response_model=List[QueryAiResponseBlock], response_model_by_alias=False, status_code=201)
 async def query_ai(query: Query) -> List[QueryAiResponseBlock]:
@@ -25,12 +27,16 @@ async def query_ai(query: Query) -> List[QueryAiResponseBlock]:
     '
     make sure you do not return an intro paragraph, conclusion paragraph or anything that deviates from the above format. here is the prompt: return the key frameworks/ideas in
     """
-    response = openai.ChatCompletion.create(
+    response = client.chat.completions.create(
         model='gpt-4',
         messages=[
             {
                 "role": "system",
-                "content": prompt_format + query.userTxt,
+                "content": prompt_format,
+            },
+            {
+                "role": "user",
+                "content": query.userTxt,
             }
         ]
     )
