@@ -25,9 +25,13 @@ const Layout: FC = (): ReactElement => {
 
     const onQueryCreated = async (query: Query) => { 
         console.log("onQueryCreated called " + query.userTxt)
-        const queryResponseList = await actions.queryResponseList.postQueryResponseList(query);
-        console.log("query response returned " + queryResponseList);
-        // appContext.dispatch({ type: ActionTypes.POST_QUERY_RESPONSE_LIST, payload: queryResponseList });
+        try {
+            const queryResponseList = await actions.queryResponseList.postQueryResponseList(query);
+            console.log("query response returned " + queryResponseList);
+            // appContext.dispatch({ type: ActionTypes.POST_QUERY_RESPONSE_LIST, payload: queryResponseList });
+        } catch (error) {
+            console.log("error " + error);
+        }
     }
 
     return (

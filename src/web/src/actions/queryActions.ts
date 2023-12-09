@@ -14,11 +14,16 @@ export interface QueryActions {
 export const postQueryResponseList = (query: Query): ActionMethod<QueryResponse[]> =>
     async (dispatch: Dispatch<PostQueryResponseListAction>) => {
         console.log("query", query.userTxt)
-        const queryResponses = await queryService.postQueryResponseList(query);
-        console.log("query responses", queryResponses)
-        dispatch(postQueryResponseListAction(queryResponses));
-        console.log("returned query responses")
-        return queryResponses;
+        try {
+            const queryResponses = await queryService.postQueryResponseList(query);
+            console.log("query responses", queryResponses)
+            dispatch(postQueryResponseListAction(queryResponses));
+            console.log("returned query responses")
+            return queryResponses
+        } catch (error) {
+            console.error("Error posting query responses: ", error);
+            throw error
+        }
 }
 
 export interface PostQueryResponseListAction extends PayloadAction<string, QueryResponse[]> {
