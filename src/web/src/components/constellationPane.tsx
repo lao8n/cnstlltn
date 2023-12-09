@@ -18,7 +18,6 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
         constellation: bindActionCreators(userActions, appContext.dispatch) as unknown as UserActions
     }), [appContext.dispatch]);
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
         const getConstellation =async () => {
             const constellation = await actions.constellation.getConstellation();
@@ -30,7 +29,8 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
             return constellation
         };
         getConstellation();
-    }, [actions.constellation, appContext]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [actions.constellation, appContext.dispatch]);
 
     return (
         <Stack>
