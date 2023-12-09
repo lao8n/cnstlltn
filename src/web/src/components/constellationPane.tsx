@@ -19,19 +19,18 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
     }), [appContext.dispatch]);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    const getConstellation = async () => {
-        const constellation = await actions.constellation.getConstellation();
-        console.log("constellation " + constellation)
-        appContext.dispatch({
-            type: ActionTypes.SET_CONSTELLATION,
-            constellation: constellation,
-        });
-        return constellation
-    }
-
     useEffect(() => {
+        const getConstellation =async () => {
+            const constellation = await actions.constellation.getConstellation();
+            console.log("constellation " + constellation)
+            appContext.dispatch({
+                type: ActionTypes.SET_CONSTELLATION,
+                constellation: constellation,
+            });
+            return constellation
+        };
         getConstellation();
-    }, [getConstellation]);
+    }, [actions.constellation, appContext]);
 
     return (
         <Stack>
