@@ -23,7 +23,7 @@ export const appReducer: Reducer<ApplicationState, ApplicationActions> = (state:
             state = { ...state, userState: { isLoggedIn: state.userState.isLoggedIn, constellation: state.userState.constellation } };
             break;
         default:
-            console.log("reducer state not updated", action.type)
+            console.log("reducer state not updated")
             break;
     }
     return state;

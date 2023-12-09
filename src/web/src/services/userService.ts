@@ -13,7 +13,8 @@ export class UserService {
 
     public async getUserInfo(): Promise<any> {
         try {
-            const response = await this.client.get(`${this.baseUrl}${/.auth/me}`);
+            console.log(`${this.baseUrl}/.auth/me`)
+            const response = await this.client.get(`${this.baseUrl}/.auth/me`);
             console.log("User info: ", response)
             return response.data;
         } catch (error) {
