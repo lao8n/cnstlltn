@@ -14,6 +14,7 @@ export class UserService {
     public async getUserInfo(): Promise<any> {
         try {
             const response = await axios.get('/.auth/me');
+            console.log("User info: ", response.data)
             return response.data;
         } catch (error) {
             console.error("Error getting user info: ", error);

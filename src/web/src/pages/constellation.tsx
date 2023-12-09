@@ -19,13 +19,6 @@ const Constellation = () => {
     return (
       <Stack>
         <Text>Welcome</Text>
-
-        {appContext.state.queryState.responses && appContext.state.queryState.responses.map((response, index) => (
-            <div key={index}>
-                <Text><strong>Title:</strong> {response.title}</Text>
-                <Text><strong>Content:</strong> {response.content}</Text>
-            </div>
-        ))}
         <ConstellationPane
           constellation={appContext.state.userState.constellation} />
       </Stack >

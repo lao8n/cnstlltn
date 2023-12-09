@@ -13,7 +13,6 @@ const Sidebar: FC<QueryPaneProps> = (props: QueryPaneProps): ReactElement => {
     const appContext = useContext<AppContext>(UserAppContext);
     return (
         <div>
-            console.log("sidebar ", appContext.state.queryState.responses)
             <QueryPane
                 query={props.query}
                 queryResponseList={appContext.state.queryState.responses}
