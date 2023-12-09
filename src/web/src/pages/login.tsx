@@ -3,12 +3,13 @@ import { withApplicationInsights } from '../components/telemetry';
 import { GoogleLogin, GoogleOAuthProvider, CredentialResponse } from '@react-oauth/google';
 import { ActionTypes } from "../actions/common";
 import { useNavigate } from 'react-router-dom';
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import UserAppContext from '../components/userContext';
 
 const Login = () => {
   const { dispatch } = useContext(UserAppContext);
   const navigate = useNavigate();
+  const [googleClientId, setGoogleClientId] = useState("");
 
   const handleLoginSuccess = (response: CredentialResponse) => {
     console.log('Login Success:', response);
@@ -27,8 +28,18 @@ const Login = () => {
     console.log('Login Failed');
   };
 
+  useEffect(() => {
+    fetch("/login-config")
+        .then(response => response.json())
+        .then(data => {
+            setGoogleClientId(data.googleClientId);
+        })
+        .catch(error => console.error("Failed to load Google login config:", error));
+  }, []);
+
+
   return (
-    <GoogleOAuthProvider clientId={process.env.GOOGLE_LOGIN_CLIENT_ID || ""}>
+    <GoogleOAuthProvider clientId={googleClientId}>
       <Stack verticalAlign="center" horizontalAlign="center">
         <Stack.Item> Login into cnstlltn </Stack.Item>
         <Stack.Item>

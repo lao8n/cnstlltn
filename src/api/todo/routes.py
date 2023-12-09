@@ -9,7 +9,7 @@ from starlette.requests import Request
 
 from openai import OpenAI
 from .app import app
-from .models import (Query, QueryAiResponseBlock, Framework, UserFramework)
+from .models import (Query, QueryAiResponseBlock, Framework, UserFramework, LoginConfig)
 from .app import settings
 
 from .app import environment
@@ -74,3 +74,7 @@ async def get_constellation(request: Request) -> List[UserFramework]:
     print(f"user_id: {user_id}")
     user_id = "test_user_id_123"
     return await UserFramework.find_many({"userid": user_id}).to_list();
+
+@app.get("/login-config", response_model=LoginConfig, status_code=200)
+def get_login_config() -> LoginConfig:
+    return LoginConfig(googleClientId=settings.GOOGLE_LOGIN_CLIENT_ID)

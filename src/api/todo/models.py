@@ -32,8 +32,9 @@ class Settings(BaseSettings):
     APPLICATIONINSIGHTS_CONNECTION_STRING: Optional[str] = None
     APPLICATIONINSIGHTS_ROLENAME: Optional[str] = "API"
     OPENAI_API_KEY: str = ""
-    GOOGLE_LOGIN_CLIENT_SECRET: Optional[str] = None # TODO: remove this as shouldn't be necessary only needed for front-end
-
+    GOOGLE_LOGIN_CLIENT_SECRET: Optional[str] = None 
+    GOOGLE_LOGIN_CLIENT_ID: Optional[str] = None 
+    
     class Config:
         env_file = ".env"
         env_file_encoding = "utf-8"
@@ -44,6 +45,9 @@ class Query(BaseModel):
 class QueryAiResponseBlock(BaseModel):
     title: str    
     content: str
+
+class LoginConfig(BaseModel):
+    googleClientId: str
 
 class Framework(BaseModel):
     title: str
