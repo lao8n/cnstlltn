@@ -5,28 +5,27 @@ import { ApplicationState } from "../models/applicationState";
 export const appReducer: Reducer<ApplicationState, ApplicationActions> = (state: ApplicationState, action: ApplicationActions): ApplicationState => {
     switch (action.type) {
         case ActionTypes.SET_USER:
-            state = { ...state, userState: { isLoggedIn: action.isLoggedIn, constellation: state.userState.constellation } };
+            state.userState.isLoggedIn = action.isLoggedIn;
             break;
         case ActionTypes.GET_CONSTELLATION:
-            state = { ...state, userState: { isLoggedIn: state.userState.isLoggedIn, constellation: action.payload } };
+            state.userState.constellation = action.payload;
             break;
         case ActionTypes.POST_QUERY_RESPONSE_LIST:
-            state = { ...state, queryState: { responses: action.payload } };
+            state.queryState.responses = action.payload;
             state.queryState.responses?.forEach((response) => {
                 console.log("response title ", response.title + " content " + response.content)
             })
             break;
         case ActionTypes.SET_CONSTELLATION:
-            state = { ...state, userState: { isLoggedIn: state.userState.isLoggedIn, constellation: action.constellation } };
+            state.userState.constellation = action.constellation;
             break;
         case ActionTypes.SAVE_SELECTED_FRAMEWORKS:
-            state = { ...state, userState: { isLoggedIn: state.userState.isLoggedIn, constellation: state.userState.constellation } };
             break;
         default:
             console.log("reducer state not updated")
             break;
     }
-    return state;
+    return { ...state};
 }
 
 export default appReducer;

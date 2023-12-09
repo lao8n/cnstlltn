@@ -31,7 +31,7 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
 
     useEffect(() => {
         getConstellation();
-    }, [getConstellation, appContext.state.queryState?.responses]);
+    }, [getConstellation]);
 
     return (
         <Stack>
