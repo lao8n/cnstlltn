@@ -39,7 +39,7 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
                 <div>Constellation</div>
                 {props.constellation?.map((constellation, index) => (
                     <div key={index}>
-                        {constellation}
+                        {constellation.title}: {constellation.content}
                     </div>
                 ))}
             </Stack.Item>
