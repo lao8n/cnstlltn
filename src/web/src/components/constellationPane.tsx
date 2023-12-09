@@ -1,5 +1,5 @@
 import { Stack } from '@fluentui/react';
-import React, { FC, ReactElement, useContext, useEffect } from "react";
+import React, { FC, ReactElement, useContext, useEffect, useMemo} from "react";
 import { UserFramework } from "../models/userState";
 import { AppContext } from "../models/applicationState";
 import UserAppContext from "./userContext";
@@ -14,9 +14,9 @@ interface ConstellationPaneProps {
 
 const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneProps): ReactElement => {
     const appContext = useContext<AppContext>(UserAppContext)
-    const actions = {      
+    const actions = useMemo(() => ({      
         constellation: bindActionCreators(userActions, appContext.dispatch) as unknown as UserActions
-    };
+    }), [appContext.dispatch]);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const getConstellation = async () => {
