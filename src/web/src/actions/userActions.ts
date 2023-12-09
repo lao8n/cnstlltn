@@ -21,8 +21,11 @@ export const setUser = (isLoggedIn: boolean) =>
 
 export const saveSelectedFrameworks = (frameworks: QueryResponse[]): ActionMethod<QueryResponse[]> =>
     async (dispatch: Dispatch<SaveSelectedFrameworksAction>) => {
+        const userInfo = await userService.getUserInfo();
+        console.log("user info ", userInfo)
+        const userId = userInfo[0].user_id;
         console.log("save selected frameworks ", frameworks)
-        const savedFrameworks = await userService.saveSelectedFrameworks(frameworks);
+        const savedFrameworks = await userService.saveSelectedFrameworks(userId, frameworks);
         console.log("saved frameworks " + savedFrameworks)
         dispatch(saveSelectedFrameworksAction(frameworks))
         return savedFrameworks

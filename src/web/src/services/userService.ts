@@ -11,10 +11,21 @@ export class UserService {
         });
     }
 
-    public async saveSelectedFrameworks(frameworks: QueryResponse[]): Promise<QueryResponse[]> {
+    public async getUserInfo(): Promise<any> {
+        try {
+            const response = await axios.get('/.auth/me');
+            return response.data;
+        } catch (error) {
+            console.error("Error getting user info: ", error);
+            throw error
+        }
+    }
+
+    public async saveSelectedFrameworks(userId: string, frameworks: QueryResponse[]): Promise<QueryResponse[]> {
         const response = await this.client.request<QueryResponse[]>({
             method: 'POST',
             data: frameworks,
+            headers: {'USER-ID': userId}
         });
         return response.data;
     }
