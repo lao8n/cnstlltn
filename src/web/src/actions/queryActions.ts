@@ -17,6 +17,7 @@ export const postQueryResponseList = (query: Query): ActionMethod<QueryResponse[
         const queryResponses = await queryService.postQueryResponseList(query);
         console.log("query responses", queryResponses)
         dispatch(postQueryResponseListAction(queryResponses));
+        console.log("returned query responses")
         return queryResponses;
 }
 
