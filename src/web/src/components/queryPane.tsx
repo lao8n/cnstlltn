@@ -53,6 +53,7 @@ const QueryPane: FC<QueryPaneProps> = (props: QueryPaneProps): ReactElement => {
 
     const saveSelectedResponses = async () => {
         const queryResponseList = props.queryResponseList || [];
+        console.log("queryResponseList " + queryResponseList)
         const responsesToSave = Array.from(selectedResponses).map(index => queryResponseList[index]) ;
         // Now, you can save 'responsesToSave' to the database
         console.log("responses to save " + responsesToSave)
@@ -81,6 +82,7 @@ const QueryPane: FC<QueryPaneProps> = (props: QueryPaneProps): ReactElement => {
                         key={index} 
                         className={selectedResponses.has(index) ? selectedButtonStyles: buttonStyles} 
                         onClick={() => toggleResponseSelection(index)}>
+                        console.log(response.title, response.content)
                         {response.title}: {response.content}
                     </button>
                 ))}
