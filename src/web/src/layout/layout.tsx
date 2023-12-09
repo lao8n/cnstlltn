@@ -7,7 +7,6 @@ import Login from '../pages/login';
 import { AppContext } from '../models/applicationState';
 import { Stack } from '@fluentui/react';
 import { headerStackStyles, mainStackStyles, rootStackStyles, sidebarStackStyles } from '../ux/styles';
-import { LoginRedirect } from '../pages/loginRedirect';
 import Sidebar from './sidebar';
 import * as queryActions from '../actions/queryActions';
 import UserAppContext from '../components/userContext';
