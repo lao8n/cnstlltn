@@ -41,6 +41,8 @@ def originList(origins):
         
     return origins
     
+origins = originList(origins)
+
 from .models import Settings, __beanie_models__
 
 settings = Settings()
