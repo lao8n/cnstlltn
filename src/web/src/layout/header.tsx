@@ -45,6 +45,7 @@ const handleLogout = (navigate : NavigateFunction, dispatch : Dispatch<SetUserAc
     dispatch({
         type: ActionTypes.SET_USER,
         isLoggedIn: false,
+        userId: "",
     });
     navigate(`/auth/logout?post_logout_redirect_uri=${window.location.origin}`);
 }

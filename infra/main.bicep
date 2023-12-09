@@ -153,6 +153,16 @@ module keyVaultGoogleLoginClientSecret './core/security/keyvault-secret.bicep' =
   }
 }
 
+module keyVaultGoogleLoginClienId './core/security/keyvault-secret.bicep' = {
+  name: 'google-login-client-id'
+  scope: rg
+  params: {
+    keyVaultName: keyVault.outputs.name
+    name: 'google-login-client-id'
+    secretValue: googleLoginClientId
+  }
+}
+
 module keyVaultOpenAiApiKey './core/security/keyvault-secret.bicep' = {
   name: 'openai-api-key'
   scope: rg
