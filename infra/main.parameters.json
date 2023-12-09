@@ -29,6 +29,9 @@
     "googleLoginClientSecret": {
       "value": "${GOOGLE_LOGIN_CLIENT_SECRET}"
     },
+    "googleLoginClientId": {
+      "value": "${GOOGLE_LOGIN_CLIENT_ID}"
+    },
     "openAiApiKey": {
       "value": "${OPENAI_API_KEY}"
     }

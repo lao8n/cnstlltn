@@ -40,6 +40,9 @@ param webApiBaseUrl string = ''
 param userId string = ''
 
 @secure()
+param googleLoginClientId string = ''
+
+@secure()
 param googleLoginClientSecret string = ''
 
 @secure()
@@ -91,6 +94,7 @@ module web './app/web.bicep' = {
     containerRegistryName: containerApps.outputs.registryName
     exists: webAppExists
     googleLoginClientSecret: googleLoginClientSecret
+    googleLoginClientId: googleLoginClientId
   }
 }
 

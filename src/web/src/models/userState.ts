@@ -1,5 +1,6 @@
 export interface UserState {
     isLoggedIn: boolean;
+    userId: string;
     constellation: UserFramework[];   
 }
 

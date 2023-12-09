@@ -11,22 +11,6 @@ export class UserService {
         this.baseUrl = baseUrl;
     }
 
-    public async getUserInfo(): Promise<any> {
-        try {
-            // const response = await this.client.get('/.auth/me');
-            // console.log("User info: ", response)
-            const response = await this.client.request({
-                method: 'POST',
-                url: `${this.baseUrl}/.auth/login/google`,
-            })
-            console.log("User info: ", response)
-            return response.data;
-        } catch (error) {
-            console.error("Error getting user info: ", error);
-            throw error
-        }
-    }
-
     public async saveSelectedFrameworks(userId: string, frameworks: QueryResponse[]): Promise<QueryResponse[]> {
         const response = await this.client.request<QueryResponse[]>({
             method: 'POST',

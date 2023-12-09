@@ -9,22 +9,22 @@ import { UserService } from "../services/userService";
 const userService = new UserService(config.api.baseUrl);
 
 export interface UserActions {
-    setUser(isLoggedIn: boolean): void;
-    saveSelectedFrameworks(frameworks: QueryResponse[]): Promise<QueryResponse[]>;
+    setUser(isLoggedIn: boolean, userId: string): void;
+    saveSelectedFrameworks(userId: string, frameworks: QueryResponse[]): Promise<QueryResponse[]>;
     getConstellation(): Promise<UserFramework[]>;
 }
 
-export const setUser = (isLoggedIn: boolean) =>
+export const setUser = (isLoggedIn: boolean, userId: string) =>
     (dispatch: Dispatch<SetUserAction>) => {
-        dispatch(setUserAction(isLoggedIn));
+        dispatch(setUserAction(isLoggedIn, userId));
     }
 
-export const saveSelectedFrameworks = (frameworks: QueryResponse[]): ActionMethod<QueryResponse[]> =>
+export const saveSelectedFrameworks = (userId: string, frameworks: QueryResponse[]): ActionMethod<QueryResponse[]> =>
     async (dispatch: Dispatch<SaveSelectedFrameworksAction>) => {
         // const userInfo = await userService.getUserInfo();
         // console.log("user info ", userInfo)
         // let userId = userInfo[0].user_id;
-        const userId = "test-user-id"
+
         console.log("save selected frameworks ", frameworks)
         const savedFrameworks = await userService.saveSelectedFrameworks(userId, frameworks);
         console.log("saved frameworks " + savedFrameworks)
@@ -47,11 +47,13 @@ export const setConstellation = (constellation: UserFramework[]) =>
 export interface SetUserAction {
     type: ActionTypes.SET_USER,
     isLoggedIn: boolean
+    userId: string
 }
 
-const setUserAction = (isLoggedIn: boolean): SetUserAction => ({
+const setUserAction = (isLoggedIn: boolean, userId: string): SetUserAction => ({
     type: ActionTypes.SET_USER,
     isLoggedIn: isLoggedIn,
+    userId: userId,
 });
 
 export interface SaveSelectedFrameworksAction extends PayloadAction<string, QueryResponse[]> {

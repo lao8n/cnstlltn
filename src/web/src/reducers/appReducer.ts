@@ -5,7 +5,7 @@ import { ApplicationState } from "../models/applicationState";
 export const appReducer: Reducer<ApplicationState, ApplicationActions> = (state: ApplicationState, action: ApplicationActions): ApplicationState => {
     switch (action.type) {
         case ActionTypes.SET_USER:
-            state.userState.isLoggedIn = action.isLoggedIn;
+            state.userState = { ...state.userState, isLoggedIn: action.isLoggedIn, userId: action.userId };
             break;
         case ActionTypes.GET_CONSTELLATION:
             state.userState.constellation = action.payload;

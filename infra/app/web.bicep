@@ -10,6 +10,8 @@ param containerRegistryName string
 param serviceName string = 'web'
 param exists bool
 @secure()
+param googleLoginClientId string
+@secure()
 param googleLoginClientSecret string
 
 resource webIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
@@ -51,6 +53,10 @@ module app '../core/host/container-app-upsert.bicep' = {
       {
         name: 'google-login-client-secret'
         value: googleLoginClientSecret
+      }
+      {
+        name: 'google-login-client-id'
+        value: googleLoginClientId
       }
     ]
     targetPort: 80

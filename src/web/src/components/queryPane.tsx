@@ -57,7 +57,7 @@ const QueryPane: FC<QueryPaneProps> = (props: QueryPaneProps): ReactElement => {
         const responsesToSave = Array.from(selectedResponses).map(index => queryResponseList[index]) ;
         // Now, you can save 'responsesToSave' to the database
         console.log("responses to save " + responsesToSave)
-        const savedFrameworks = await actions.queryResponseList.saveSelectedFrameworks(responsesToSave);
+        const savedFrameworks = await actions.queryResponseList.saveSelectedFrameworks(appContext.state.userState.userId, responsesToSave);
         console.log("saved Frameworks " + savedFrameworks)
     };
 
