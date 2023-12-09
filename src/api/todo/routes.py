@@ -8,12 +8,11 @@ from fastapi import HTTPException, Response
 from starlette.requests import Request
 
 from openai import OpenAI
-import openai
 from .app import app
 from .models import (Query, QueryAiResponseBlock, Framework, UserFramework)
 from .app import settings
 from .app import originList
-openai.api_key = settings.openai_api_key
+# openai.api_key = settings.openai_api_key
 client = OpenAI()
 
 @app.post("/query-ai", response_model=List[QueryAiResponseBlock], response_model_by_alias=False, status_code=201)

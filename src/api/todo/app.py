@@ -64,7 +64,6 @@ app.add_middleware(
     allow_headers= ["*"], #["Content-Type", "Authorization"],
     expose_headers=["*"],
 )
-print(originList())
 
 if settings.APPLICATIONINSIGHTS_CONNECTION_STRING:
     exporter = AzureMonitorTraceExporter.from_connection_string(
