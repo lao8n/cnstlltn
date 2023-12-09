@@ -13,7 +13,12 @@ export class UserService {
 
     public async getUserInfo(): Promise<any> {
         try {
-            const response = await this.client.get('/.auth/me');
+            // const response = await this.client.get('/.auth/me');
+            // console.log("User info: ", response)
+            const response = await this.client.request({
+                method: 'POST',
+                url: `${this.baseUrl}/.auth/login/google`,
+            })
             console.log("User info: ", response)
             return response.data;
         } catch (error) {
@@ -27,7 +32,8 @@ export class UserService {
             method: 'POST',
             url: `${this.baseUrl}/save-frameworks`,
             data: frameworks,
-            headers: {'USER-ID': userId}
+            headers: { 'USER-ID': userId },
+            withCredentials: true,
         });
         return response.data;
     }

@@ -23,7 +23,8 @@ export const saveSelectedFrameworks = (frameworks: QueryResponse[]): ActionMetho
     async (dispatch: Dispatch<SaveSelectedFrameworksAction>) => {
         const userInfo = await userService.getUserInfo();
         console.log("user info ", userInfo)
-        const userId = userInfo[0].user_id;
+        let userId = userInfo[0].user_id;
+        userId = "test-user-id"
         console.log("save selected frameworks ", frameworks)
         const savedFrameworks = await userService.saveSelectedFrameworks(userId, frameworks);
         console.log("saved frameworks " + savedFrameworks)
