@@ -82,7 +82,6 @@ const QueryPane: FC<QueryPaneProps> = (props: QueryPaneProps): ReactElement => {
                         key={index} 
                         className={selectedResponses.has(index) ? selectedButtonStyles: buttonStyles} 
                         onClick={() => toggleResponseSelection(index)}>
-                        console.log(response.title, response.content)
                         {response.title}: {response.content}
                     </button>
                 ))}

@@ -19,6 +19,9 @@ export const appReducer: Reducer<ApplicationState, ApplicationActions> = (state:
         case ActionTypes.SET_CONSTELLATION:
             state = { ...state, userState: { isLoggedIn: state.userState.isLoggedIn, constellation: action.constellation } };
             break;
+        case ActionTypes.SAVE_SELECTED_FRAMEWORKS:
+            state = { ...state, userState: { isLoggedIn: state.userState.isLoggedIn, constellation: state.userState.constellation } };
+            break;
         default:
             console.log("reducer state not updated", action.type)
             break;

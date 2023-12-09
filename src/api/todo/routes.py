@@ -57,8 +57,6 @@ async def save_frameworks(request: Request, saveFrameworks: List[Framework]) -> 
     print("saving frameworks")
     print(request.headers)
     user_id = request.headers.get("USER-ID")
-    # print(f"user_id: {user_id}")
-    # user_id = "test_user_id_123"
     results = []
     for framework in saveFrameworks:
         print(f"framework: {framework}")
