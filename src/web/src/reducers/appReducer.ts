@@ -12,7 +12,9 @@ export const appReducer: Reducer<ApplicationState, ApplicationActions> = (state:
             break;
         case ActionTypes.POST_QUERY_RESPONSE_LIST:
             state = { ...state, queryState: { responses: action.payload } };
-            console.log("reducer state updated ")
+            state.queryState.responses?.forEach((response) => {
+                console.log("response title ", response.title + " content " + response.content)
+            })
             break;
         case ActionTypes.SET_CONSTELLATION:
             state = { ...state, userState: { isLoggedIn: state.userState.isLoggedIn, constellation: action.constellation } };
