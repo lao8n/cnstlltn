@@ -21,16 +21,18 @@ allowOrigins = os.environ.get('API_ALLOW_ORIGINS')
 # allowing all origins.
 environment = os.environ.get('API_ENVIRONMENT')
 
-def originList():
-    # if environment is not None and environment == "develop":
-    #     print("Allowing requests from any origins. API_ENVIRONMENT=", environment)
-    #     return ["*"]
-    
-    origins = [
+
+origins = [
         "https://portal.azure.com",
         "https://ms.portal.azure.com",
         "https://ca-web-4a73yskoiju2e.whiteground-d98c7a61.eastus.azurecontainerapps.io",
     ]
+
+def originList(origins):
+    # if environment is not None and environment == "develop":
+    #     print("Allowing requests from any origins. API_ENVIRONMENT=", environment)
+    #     return ["*"]
+    
     print('allowOrigins=', allowOrigins)
     if allowOrigins is not None:
         for origin in allowOrigins.split(","):
@@ -60,7 +62,7 @@ app.add_middleware(
         "https://ms.portal.azure.com",
         "https://ca-web-4a73yskoiju2e.whiteground-d98c7a61.eastus.azurecontainerapps.io"],
     allow_credentials=True,
-    allow_methods=["POST", "GET"],
+    allow_methods=["POST", "GET", "OPTIONS"],
     allow_headers= ["*"], #["Content-Type", "Authorization"],
     expose_headers=["*"],
 )
