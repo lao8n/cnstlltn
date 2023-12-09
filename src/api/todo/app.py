@@ -56,10 +56,12 @@ app = FastAPI(
     
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=originList(),
+    allow_origins=["https://portal.azure.com",
+        "https://ms.portal.azure.com",
+        "https://ca-web-4a73yskoiju2e.whiteground-d98c7a61.eastus.azurecontainerapps.io"],
     allow_credentials=True,
     allow_methods=["POST", "GET"],
-    allow_headers=["Content-Type", "Authorization"],
+    allow_headers= ["*"], #["Content-Type", "Authorization"],
     expose_headers=["*"],
 )
 print(originList())
