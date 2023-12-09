@@ -6,7 +6,7 @@ import config from "../config";
 import { ActionMethod, PayloadAction, createPayloadAction } from "./actionCreators";
 import { UserService } from "../services/userService";
 
-const userService = new UserService(config.api.baseUrl, '/save-frameworks');
+const userService = new UserService(config.api.baseUrl);
 
 export interface UserActions {
     setUser(isLoggedIn: boolean): void;
