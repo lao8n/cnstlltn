@@ -12,8 +12,9 @@ from .app import app
 from .models import (Query, QueryAiResponseBlock, Framework, UserFramework)
 from .app import settings
 from .app import originList
-# openai.api_key = settings.openai_api_key
-client = OpenAI()
+client = OpenAI(
+    api_key=settings.OPENAI_API_KEY
+)
 
 @app.post("/query-ai", response_model=List[QueryAiResponseBlock], response_model_by_alias=False, status_code=201)
 async def query_ai(query: Query) -> List[QueryAiResponseBlock]:
