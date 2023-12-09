@@ -1,6 +1,6 @@
 import { Stack } from '@fluentui/react';
 import { withApplicationInsights } from '../components/telemetry';
-import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
+import { GoogleLogin, GoogleOAuthProvider, CredentialResponse } from '@react-oauth/google';
 import { ActionTypes } from "../actions/common";
 import { useNavigate } from 'react-router-dom';
 import React, { useContext } from 'react';
@@ -10,14 +10,14 @@ const Login = () => {
   const { dispatch } = useContext(UserAppContext);
   const navigate = useNavigate();
 
-  const handleLoginSuccess = (response) => {
+  const handleLoginSuccess = (response: CredentialResponse) => {
     console.log('Login Success:', response);
     // Extract the user information or token from the response
     // Dispatch action to update user state
     dispatch({
       type: ActionTypes.SET_USER,
       isLoggedIn: true,
-      userId: response.credential, // Update based on actual response structure
+      userId: response.clientId || "", // Update based on actual response structure
     });
     // Redirect to another page if needed
     navigate('/constellation');
