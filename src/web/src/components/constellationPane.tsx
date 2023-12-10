@@ -20,7 +20,7 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
 
     useEffect(() => {
         const getConstellation = async () => {
-            const constellation = await actions.constellation.getConstellation();
+            const constellation = await actions.constellation.getConstellation(appContext.state.userState.userId);
             console.log("constellation " + constellation)
             appContext.dispatch({
                 type: ActionTypes.SET_CONSTELLATION,

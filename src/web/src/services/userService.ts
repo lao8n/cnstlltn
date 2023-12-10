@@ -22,10 +22,11 @@ export class UserService {
         return response.data;
     }
 
-    public async getConstellation(): Promise<UserFramework[]> {
+    public async getConstellation(userId: string): Promise<UserFramework[]> {
         const response = await this.client.request<UserFramework[]>({
             method: 'GET',
             url: `${this.baseUrl}/get-constellation`,
+            headers: { 'USER-ID': userId },
         });
         return response.data;
     }

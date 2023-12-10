@@ -11,7 +11,7 @@ const userService = new UserService(config.api.baseUrl);
 export interface UserActions {
     setUser(isLoggedIn: boolean, userId: string): void;
     saveSelectedFrameworks(userId: string, frameworks: QueryResponse[]): Promise<QueryResponse[]>;
-    getConstellation(): Promise<UserFramework[]>;
+    getConstellation(userId: string): Promise<UserFramework[]>;
     getLoginConfig(): Promise<LoginConfig>;
 }
 
@@ -33,9 +33,9 @@ export const saveSelectedFrameworks = (userId: string, frameworks: QueryResponse
         return savedFrameworks
     }
 
-export const getConstellation = (): ActionMethod<UserFramework[]> =>
+export const getConstellation = (userId: string): ActionMethod<UserFramework[]> =>
     async (dispatch: Dispatch<GetConstellationAction>) => {
-        const constellation = await userService.getConstellation();
+        const constellation = await userService.getConstellation(userId);
         dispatch(getConstellationAction(constellation))
         return constellation;
     }
