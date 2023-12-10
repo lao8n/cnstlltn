@@ -1,6 +1,6 @@
 import { QueryResponse } from "../models/queryState";
 import axios, { AxiosInstance } from 'axios';
-import { UserFramework } from "../models/userState";
+import { LoginConfig, UserFramework } from "../models/userState";
 
 export class UserService {
     protected client: AxiosInstance;
@@ -29,5 +29,14 @@ export class UserService {
         });
         return response.data;
     }
+
+    public async getLoginConfig(): Promise<LoginConfig> {
+        const response = await this.client.request<LoginConfig>({
+            method: 'GET',
+            url: `${this.baseUrl}/login-config`,
+        });
+        return response.data;
+    }
+
 }
 

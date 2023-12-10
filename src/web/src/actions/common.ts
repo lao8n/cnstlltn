@@ -12,6 +12,7 @@ export enum ActionTypes {
     POST_QUERY_RESPONSE_LIST = "POST_QUERY_RESPONSE_LIST",
     GET_CONSTELLATION = "GET_CONSTELLATION",
     SET_CONSTELLATION = "SET_CONSTELLATION",
+    GET_LOGIN_CONFIG = "GET_LOGIN_CONFIG",
 }
 
 export type ApplicationActions =
@@ -19,4 +20,5 @@ export type ApplicationActions =
     userActions.SetUserAction |
     userActions.GetConstellationAction |
     userActions.SetConstellationAction |
+    userActions.GetLoginConfigAction |
     queryActions.PostQueryResponseListAction;

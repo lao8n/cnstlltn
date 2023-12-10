@@ -8,3 +8,7 @@ export interface UserFramework {
     title: string;
     content: string;
 }
+
+export interface LoginConfig {
+    googleClientId: string;
+}

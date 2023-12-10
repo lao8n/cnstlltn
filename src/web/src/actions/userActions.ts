@@ -1,5 +1,5 @@
 import { Dispatch } from "react";
-import { UserFramework } from "../models/userState";
+import { LoginConfig, UserFramework } from "../models/userState";
 import { ActionTypes } from "./common"
 import { QueryResponse } from "../models/queryState";
 import config from "../config";
@@ -12,6 +12,7 @@ export interface UserActions {
     setUser(isLoggedIn: boolean, userId: string): void;
     saveSelectedFrameworks(userId: string, frameworks: QueryResponse[]): Promise<QueryResponse[]>;
     getConstellation(): Promise<UserFramework[]>;
+    getLoginConfig(): Promise<LoginConfig>;
 }
 
 export const setUser = (isLoggedIn: boolean, userId: string) =>
@@ -42,6 +43,13 @@ export const getConstellation = (): ActionMethod<UserFramework[]> =>
 export const setConstellation = (constellation: UserFramework[]) =>
     (dispatch: Dispatch<SetConstellationAction>) => {
         dispatch(setConstellationAction(constellation));
+    }
+
+export const getLoginConfig = (): ActionMethod<LoginConfig> =>
+    async (dispatch: Dispatch<GetLoginConfigAction>) => {
+        const loginConfig = await userService.getLoginConfig();
+        dispatch(getLoginConfigAction(loginConfig))
+        return loginConfig;
     }
 
 export interface SetUserAction {
@@ -79,3 +87,9 @@ const setConstellationAction = (constellation: UserFramework[]): SetConstellatio
     type: ActionTypes.SET_CONSTELLATION,
     constellation: constellation,
 });
+
+export interface GetLoginConfigAction extends PayloadAction<string, LoginConfig> {
+    type: ActionTypes.GET_LOGIN_CONFIG
+}
+
+const getLoginConfigAction = createPayloadAction<GetLoginConfigAction>(ActionTypes.GET_LOGIN_CONFIG);
