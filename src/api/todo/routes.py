@@ -9,9 +9,10 @@ from starlette.requests import Request
 
 from openai import OpenAI
 from .app import app
-from .models import (Query, QueryAiResponseBlock, Framework, UserFramework, LoginConfig)
+from .models import (Query, QueryAiResponseBlock, Framework, UserFramework, Cluster, LoginConfig)
 from .app import settings
-
+from random import random
+from math import sqrt
 from .app import environment
 
 client = OpenAI(
@@ -110,10 +111,24 @@ async def cluster(request: Request, clusterby: str) -> List[UserFramework]:
     )
     # Split response into blocks
     response_blocks = response.choices[0].message.content.strip().split("\n\n")
-    print("response blocks\n" + response_blocks)
+    print("response blocks")
+    print(response_blocks)
+
+    if len(response_blocks) != len(user_data):
+        print("response blocks length does not match user data length", len(response_blocks), len(user_data))
+
+    # generate clusters
+    clusters = {}
     for i in range (len(user_data)):
-        user_data[i].clusterby[clusterby] = response_blocks[i]
-        print(user_data[i])
+        if response_blocks[i] not in clusters:
+            clusters[response_blocks[i]] = (random.uniform(0, 1), random.uniform(0, 1))
+
+    for i in range (len(user_data)):
+        # if we have n clusters then we want them to have a maximum size of sqrt(n) - we divide by 2 for a buffer
+        x = clusters[response_blocks[i]][0] + random.uniform(-1, 1) * sqrt(len(clusters) / 2) 
+        y = clusters[response_blocks[i]][1] + random.uniform(-1, 1) * sqrt(len(clusters) / 2)
+        print(response_blocks[i], x, y)
+        user_data[i].clusterby[clusterby] = Cluster(cluster=response_blocks[i], coordinate=(x, y))
         await user_data[i].save()
     return user_data
 
