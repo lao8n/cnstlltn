@@ -73,7 +73,7 @@ async def get_constellation(request: Request) -> List[UserFramework]:
     user_id = request.headers.get("user-id")
     return await UserFramework.find_many({"userid": user_id}).to_list();
 
-@app.get("/cluster", response_model=List[UserFramework], status_code=200)
+@app.post("/cluster", response_model=List[UserFramework], status_code=200)
 async def cluster(request: Request, clusterby: str) -> List[UserFramework]: 
     user_id = request.headers.get("user-id")
     user_data = await UserFramework.find_many({"userid": user_id}).to_list();

@@ -74,6 +74,10 @@ export const selectedButtonStyles = mergeStyles(buttonStyles, {
     color: theme.palette.white,
 });
 
+export const clusterButtonStyles = mergeStyles(buttonStyles, {
+    alignItems: 'flex-end',
+})
+
 export const stackPadding: IStackTokens = {
     padding: 10
 }

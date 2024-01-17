@@ -1,6 +1,6 @@
-import { Stack } from '@fluentui/react';
+import { Stack, merge } from '@fluentui/react';
 import React, { FC, ReactElement, useContext, useEffect, useMemo } from "react";
-import { stackItemPadding } from '../ux/styles';
+import { clusterButtonStyles, stackItemPadding } from '../ux/styles';
 import { UserFramework } from "../models/userState";
 import { AppContext } from "../models/applicationState";
 import UserAppContext from "./userContext";
@@ -44,8 +44,12 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
                 <Stack.Item tokens={stackItemPadding}>
                     <div>Constellation</div>
                 </Stack.Item>
-                <Stack.Item tokens={stackItemPadding}>
-                    <button onClick={clusterBy}>Cluster</button>
+                <Stack.Item>
+                    <button
+                        className={clusterButtonStyles}
+                        onClick={clusterBy}>
+                        Cluster
+                    </button>
                 </Stack.Item>
             </Stack>
             <Stack.Item>
