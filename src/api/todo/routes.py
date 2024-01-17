@@ -110,10 +110,11 @@ async def cluster(request: Request, clusterby: str) -> List[UserFramework]:
     )
     # Split response into blocks
     response_blocks = response.choices[0].message.content.strip().split("\n\n")
-    print(response_blocks)
-    for i in range (len(response_blocks)):
-        user_data[i].clusterby = {clusterby: response_blocks[i]}
-        user_data[i].save()
+    print("response blocks\n" + response_blocks)
+    for i in range (len(user_data)):
+        user_data[i].clusterby[clusterby] = response_blocks[i]
+        print(user_data[i])
+        await user_data[i].save()
     return user_data
 
 @app.get("/login-config", response_model=LoginConfig, status_code=200)
