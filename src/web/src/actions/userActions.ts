@@ -12,7 +12,7 @@ export interface UserActions {
     setUser(isLoggedIn: boolean, userId: string): void;
     saveSelectedFrameworks(userId: string, frameworks: QueryResponse[]): Promise<QueryResponse[]>;
     getConstellation(userId: string): Promise<UserFramework[]>;
-    cluster(clusterby: string): void;
+    cluster(clusterby: string): Promise<UserFramework[]>;
     getLoginConfig(): Promise<LoginConfig>;
 }
 
