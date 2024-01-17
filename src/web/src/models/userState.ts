@@ -7,6 +7,8 @@ export interface UserState {
 export interface UserFramework {
     title: string;
     content: string;
+    cluster: string;
+    coordinates: number[];
 }
 
 export interface LoginConfig {

@@ -73,6 +73,49 @@ async def get_constellation(request: Request) -> List[UserFramework]:
     user_id = request.headers.get("user-id")
     return await UserFramework.find_many({"userid": user_id}).to_list();
 
+@app.get("/cluster", response_model=List[UserFramework], status_code=200)
+async def cluster(request: Request, clusterby: str) -> List[UserFramework]: 
+    user_id = request.headers.get("user-id")
+    user_data = await UserFramework.find_many({"userid": user_id}).to_list();
+    print(user_data)
+    prompt_format = """
+    this prompt is to describe how i want to format your response. i will prompt with something like a list of concepts
+    with a title and description separated by a colon, for example 
+    concept 1: description of concept 1
+    concept 2: description of concept 2
+    concept 3: description of concept 3
+    i then want you to return the following format where you have a list of categories etc
+    category 1
+    category 2
+    category 1
+    this should correspond in order exactly to the list of concepts in the prompt.
+    """
+    content = """the following is a list of concepts and their descriptions, using {clusterby} assign a category to each 
+    one of them\n
+    """
+    for data in user_data: 
+        content += f"{data.title}: {data.content}\n"
+    response = client.chat.completions.create(
+        model='gpt-4',
+        messages=[
+            {
+                "role": "system",
+                "content": prompt_format,
+            },
+            {
+                "role": "user",
+                "content": content,
+            }
+        ]
+    )
+    # Split response into blocks
+    response_blocks = response.choices[0].message.content.strip().split("\n\n")
+    print(response_blocks)
+    for i in range (len(response_blocks)):
+        user_data[i].clusterby = {clusterby: response_blocks[i]}
+        user_data[i].save()
+    return user_data
+
 @app.get("/login-config", response_model=LoginConfig, status_code=200)
 def get_login_config() -> LoginConfig:
     return LoginConfig(googleClientId=settings.GOOGLE_LOGIN_CLIENT_ID)

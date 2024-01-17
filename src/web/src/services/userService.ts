@@ -39,5 +39,13 @@ export class UserService {
         return response.data;
     }
 
+    public async cluster(clusterby: string): Promise<UserFramework[]> {
+        const response = await this.client.request<UserFramework[]>({
+            method: 'POST',
+            url: `${this.baseUrl}/cluster`,
+            params: { clusterby: clusterby },
+        });
+        return response.data;
+    }
 }
 

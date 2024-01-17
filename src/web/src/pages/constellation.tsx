@@ -18,7 +18,6 @@ const Constellation = () => {
   
     return (
       <Stack>
-        <Text>Welcome</Text>
         <ConstellationPane
           constellation={appContext.state.userState.constellation} />
       </Stack >

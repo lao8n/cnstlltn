@@ -1,11 +1,12 @@
 from datetime import datetime
 from enum import Enum
 from typing import Optional, List
+from typing import Dict, Tuple
 
 from azure.identity import DefaultAzureCredential
 from azure.keyvault.secrets import SecretClient
 from beanie import Document, PydanticObjectId
-from pydantic import BaseModel, BaseSettings
+from pydantic import BaseModel, BaseSettings, Field
 
 def keyvault_name_as_attr(name: str) -> str:
     return name.replace("-", "_").upper()
@@ -53,10 +54,15 @@ class Framework(BaseModel):
     title: str
     content: str
 
+class Cluster(BaseModel):
+    cluster: str
+    coordinate: Tuple[float, float]
+
 class UserFramework(Document):
     userid: str # partition key
     # unique id -> cosmos can automatically generate this
     title: str
     content: str
+    clusterby: Dict[str, Cluster] = Field(default_factory=dict)
 
 __beanie_models__ = [UserFramework]

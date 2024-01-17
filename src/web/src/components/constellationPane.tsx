@@ -1,5 +1,6 @@
 import { Stack } from '@fluentui/react';
-import React, { FC, ReactElement, useContext, useEffect, useMemo} from "react";
+import React, { FC, ReactElement, useContext, useEffect, useMemo } from "react";
+import { stackItemPadding } from '../ux/styles';
 import { UserFramework } from "../models/userState";
 import { AppContext } from "../models/applicationState";
 import UserAppContext from "./userContext";
@@ -32,13 +33,25 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [actions.constellation, appContext.dispatch]);
 
+    const clusterBy = async () => {
+        const clusterby = "political, economic, sociological, technological, legal, environmental etc."
+        actions.constellation.cluster(clusterby)
+    };
+
     return (
         <Stack>
+            <Stack horizontal>
+                <Stack.Item tokens={stackItemPadding}>
+                    <div>Constellation</div>
+                </Stack.Item>
+                <Stack.Item tokens={stackItemPadding}>
+                    <button onClick={clusterBy}>Cluster</button>
+                </Stack.Item>
+            </Stack>
             <Stack.Item>
-                <div>Constellation</div>
                 {props.constellation?.map((constellation, index) => (
                     <div key={index}>
-                        {constellation.title}: {constellation.content}
+                        {constellation.title}: {constellation.content} - {constellation.cluster} 
                     </div>
                 ))}
             </Stack.Item>

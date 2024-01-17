@@ -11,6 +11,7 @@ export enum ActionTypes {
     SAVE_SELECTED_FRAMEWORKS = "SAVE_SELECTED_FRAMEWORKS",
     POST_QUERY_RESPONSE_LIST = "POST_QUERY_RESPONSE_LIST",
     GET_CONSTELLATION = "GET_CONSTELLATION",
+    CLUSTER = "CLUSTER",
     SET_CONSTELLATION = "SET_CONSTELLATION",
     GET_LOGIN_CONFIG = "GET_LOGIN_CONFIG",
 }
@@ -19,6 +20,7 @@ export type ApplicationActions =
     userActions.SaveSelectedFrameworksAction |
     userActions.SetUserAction |
     userActions.GetConstellationAction |
+    userActions.ClusterAction |
     userActions.SetConstellationAction |
     userActions.GetLoginConfigAction |
     queryActions.PostQueryResponseListAction;

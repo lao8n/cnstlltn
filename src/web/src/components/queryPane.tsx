@@ -61,7 +61,6 @@ const QueryPane: FC<QueryPaneProps> = (props: QueryPaneProps): ReactElement => {
         console.log("saved Frameworks " + savedFrameworks)
     };
 
-
     return (
         <Stack>
             <Stack.Item tokens={stackItemPadding}>
