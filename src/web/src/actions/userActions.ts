@@ -12,7 +12,7 @@ export interface UserActions {
     setUser(isLoggedIn: boolean, userId: string): void;
     saveSelectedFrameworks(userId: string, frameworks: QueryResponse[]): Promise<QueryResponse[]>;
     getConstellation(userId: string): Promise<UserFramework[]>;
-    cluster(clusterby: string): Promise<UserFramework[]>;
+    cluster(userId: string, clusterby: string): Promise<UserFramework[]>;
     getLoginConfig(): Promise<LoginConfig>;
 }
 
@@ -41,9 +41,9 @@ export const getConstellation = (userId: string): ActionMethod<UserFramework[]> 
         return constellation;
     }
 
-export const cluster = (clusterby: string): ActionMethod<UserFramework[]> => 
+export const cluster = (userId: string, clusterby: string): ActionMethod<UserFramework[]> => 
     async (dispatch: Dispatch<ClusterAction>) => {
-        const clusters = await userService.cluster(clusterby)
+        const clusters = await userService.cluster(userId, clusterby)
         dispatch(clusterAction(clusters))
         return clusters;
     }

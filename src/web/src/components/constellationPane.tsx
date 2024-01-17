@@ -1,4 +1,4 @@
-import { Stack, merge } from '@fluentui/react';
+import { Stack } from '@fluentui/react';
 import React, { FC, ReactElement, useContext, useEffect, useMemo } from "react";
 import { clusterButtonStyles, stackItemPadding } from '../ux/styles';
 import { UserFramework } from "../models/userState";
@@ -35,7 +35,7 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
 
     const clusterBy = async () => {
         const clusterby = "political, economic, sociological, technological, legal, environmental etc."
-        const clustered = await actions.constellation.cluster(clusterby)
+        const clustered = await actions.constellation.cluster(appContext.state.userState.userId, clusterby)
         console.log("clustered " + clustered)
     };
 
