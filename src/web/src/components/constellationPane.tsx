@@ -34,7 +34,7 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
     }, [actions.constellation, appContext.dispatch]);
 
     const clusterBy = async () => {
-        const clusterby = "political, economic, sociological, technological, legal, environmental etc."
+        const clusterby = "political, economic, sociological, technological, legal, environmental"
         const clustered = await actions.constellation.cluster(appContext.state.userState.userId, clusterby)
         console.log("clustered " + clustered)
     };

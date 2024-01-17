@@ -11,7 +11,7 @@ from openai import OpenAI
 from .app import app
 from .models import (Query, QueryAiResponseBlock, Framework, UserFramework, Cluster, LoginConfig)
 from .app import settings
-from random import random
+from random import uniform
 from math import sqrt
 from .app import environment
 
@@ -110,7 +110,7 @@ async def cluster(request: Request, clusterby: str) -> List[UserFramework]:
         ]
     )
     # Split response into blocks
-    response_blocks = response.choices[0].message.content.strip().split("\n\n")
+    response_blocks = response.choices[0].message.content.strip().split("\n")
     print("response blocks")
     print(response_blocks)
 
@@ -121,12 +121,12 @@ async def cluster(request: Request, clusterby: str) -> List[UserFramework]:
     clusters = {}
     for i in range (len(user_data)):
         if response_blocks[i] not in clusters:
-            clusters[response_blocks[i]] = (random.uniform(0, 1), random.uniform(0, 1))
+            clusters[response_blocks[i]] = (uniform(0, 1), uniform(0, 1))
 
     for i in range (len(user_data)):
         # if we have n clusters then we want them to have a maximum size of sqrt(n) - we divide by 2 for a buffer
-        x = clusters[response_blocks[i]][0] + random.uniform(-1, 1) * sqrt(len(clusters) / 2) 
-        y = clusters[response_blocks[i]][1] + random.uniform(-1, 1) * sqrt(len(clusters) / 2)
+        x = clusters[response_blocks[i]][0] + uniform(-1, 1) * sqrt(len(clusters) / 2) 
+        y = clusters[response_blocks[i]][1] + uniform(-1, 1) * sqrt(len(clusters) / 2)
         print(response_blocks[i], x, y)
         user_data[i].clusterby[clusterby] = Cluster(cluster=response_blocks[i], coordinate=(x, y))
         await user_data[i].save()
