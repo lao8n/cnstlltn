@@ -79,8 +79,8 @@ async def cluster(request: Request, clusterby: str) -> List[UserFramework]:
     user_id = request.headers.get("user-id")
     user_data = await UserFramework.find_many({"userid": user_id}).to_list();
     print(user_data)
-    l = len(user_data)
-    prompt_format = """
+    len_user_data = len(user_data)
+    prompt_format = f"""
     this prompt is to describe how i want to format your response. i will prompt with something like a list of concepts
     with a title and description separated by a colon, for example 
     concept 1: description of concept 1
@@ -91,10 +91,10 @@ async def cluster(request: Request, clusterby: str) -> List[UserFramework]:
     category 2
     category 1
     this should correspond in order exactly to the list of concepts in the prompt. therefore there should be 
-    {l} lines in total, one for each concept.
+    {len_user_data} lines in total, one for each concept.
     """
-    content = """the following is a list of concepts and their descriptions, using {clusterby} assign a category to each 
-    one of them\n
+    content = f"""the following is a list of concepts and their descriptions, using {clusterby} assign a category to 
+    each one of them\n
     """
     for data in user_data: 
         content += f"{data.title}: {data.content}\n"
@@ -129,8 +129,8 @@ async def cluster(request: Request, clusterby: str) -> List[UserFramework]:
         # if we have n clusters then we want them to have a maximum size of sqrt(n) - we divide by 2 for a buffer
         x = clusters[response_blocks[i]][0] + uniform(-1, 1) * sqrt(len(clusters) / 2) 
         y = clusters[response_blocks[i]][1] + uniform(-1, 1) * sqrt(len(clusters) / 2)
-        print(response_blocks[i], x, y)
         user_data[i].clusterby[clusterby] = Cluster(cluster=response_blocks[i], coordinate=(x, y))
+        print(user_data[i], i)
         await user_data[i].save()
     return user_data
 
