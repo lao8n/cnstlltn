@@ -133,6 +133,7 @@ async def cluster(request: Request, clusterby: str) -> List[UserFramework]:
             user_data[i].clusterby[clusterby] = Cluster(cluster=response_blocks[i], coordinate=(x, y))
             print(user_data[i], i)
             await user_data[i].save()
+
     return user_data
 
 @app.get("/login-config", response_model=LoginConfig, status_code=200)

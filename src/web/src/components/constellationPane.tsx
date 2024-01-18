@@ -18,6 +18,7 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
     const actions = useMemo(() => ({      
         constellation: bindActionCreators(userActions, appContext.dispatch) as unknown as UserActions
     }), [appContext.dispatch]);
+    const clusterbyquery = "political, economic, sociological, technological, legal, environmental"
 
     useEffect(() => {
         const getConstellation = async () => {
@@ -34,8 +35,7 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
     }, [actions.constellation, appContext.dispatch]);
 
     const clusterBy = async () => {
-        const clusterby = "political, economic, sociological, technological, legal, environmental"
-        const clustered = await actions.constellation.cluster(appContext.state.userState.userId, clusterby)
+        const clustered = await actions.constellation.cluster(appContext.state.userState.userId, clusterbyquery)
         console.log("clustered " + clustered)
     };
 
@@ -56,7 +56,7 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
             <Stack.Item>
                 {props.constellation?.map((constellation, index) => (
                     <div key={index}>
-                        {constellation.title}: {constellation.content} - {constellation.cluster} {constellation.coordinates}
+                        {constellation.title}: {constellation.content} - {constellation.clusterby[clusterbyquery].cluster} - {constellation.clusterby[clusterbyquery].coordinates}
                     </div>
                 ))}
             </Stack.Item>
