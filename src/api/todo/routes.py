@@ -79,6 +79,7 @@ async def cluster(request: Request, clusterby: str) -> List[UserFramework]:
     user_id = request.headers.get("user-id")
     user_data = await UserFramework.find_many({"userid": user_id}).to_list();
     print(user_data)
+    l = len(user_data)
     prompt_format = """
     this prompt is to describe how i want to format your response. i will prompt with something like a list of concepts
     with a title and description separated by a colon, for example 
@@ -89,7 +90,8 @@ async def cluster(request: Request, clusterby: str) -> List[UserFramework]:
     category 1
     category 2
     category 1
-    this should correspond in order exactly to the list of concepts in the prompt.
+    this should correspond in order exactly to the list of concepts in the prompt. therefore there should be 
+    {l} lines in total, one for each concept.
     """
     content = """the following is a list of concepts and their descriptions, using {clusterby} assign a category to each 
     one of them\n
@@ -119,7 +121,7 @@ async def cluster(request: Request, clusterby: str) -> List[UserFramework]:
 
     # generate clusters
     clusters = {}
-    for i in range (len(user_data)):
+    for i in range (len(response_blocks)):
         if response_blocks[i] not in clusters:
             clusters[response_blocks[i]] = (uniform(0, 1), uniform(0, 1))
 
