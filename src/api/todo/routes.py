@@ -127,11 +127,12 @@ async def cluster(request: Request, clusterby: str) -> List[UserFramework]:
 
     for i in range (len(user_data)):
         # if we have n clusters then we want them to have a maximum size of sqrt(n) - we divide by 2 for a buffer
-        x = clusters[response_blocks[i]][0] + uniform(-1, 1) * sqrt(len(clusters) / 2) 
-        y = clusters[response_blocks[i]][1] + uniform(-1, 1) * sqrt(len(clusters) / 2)
-        user_data[i].clusterby[clusterby] = Cluster(cluster=response_blocks[i], coordinate=(x, y))
-        print(user_data[i], i)
-        await user_data[i].save()
+        if i < len(response_blocks):
+            x = clusters[response_blocks[i]][0] + uniform(-1, 1) * sqrt(len(clusters) / 2) 
+            y = clusters[response_blocks[i]][1] + uniform(-1, 1) * sqrt(len(clusters) / 2)
+            user_data[i].clusterby[clusterby] = Cluster(cluster=response_blocks[i], coordinate=(x, y))
+            print(user_data[i], i)
+            await user_data[i].save()
     return user_data
 
 @app.get("/login-config", response_model=LoginConfig, status_code=200)
