@@ -9,10 +9,17 @@ import * as userActions from '../actions/userActions';
 import { UserActions } from '../actions/userActions';
 import { ActionTypes } from '../actions/common';
 import { CanvasSpace, Circle, Pt } from "pts";
+import { format } from 'path';
 
 interface ConstellationPaneProps {
     constellation?: UserFramework[];
 }
+
+type Data = {
+    name: string;
+    description: string;
+    position: Pt;
+};
 
 const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneProps): ReactElement => {
     const appContext = useContext<AppContext>(UserAppContext)
@@ -53,12 +60,11 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
 
             const space = new CanvasSpace(canvasRef.current).setup({ bgcolor: "#123", resize: true });
             const form = space.getForm();
-            let pts : Pt[] = [];
-
+            let data: Data[] = [];
             space.add({
                 start: (bound) => {
                     if (props.constellation) {
-                        pts = props.constellation.filter(framework => {
+                        data = props.constellation.filter(framework => {
                             // Check if the framework has the necessary coordinate data
                             if (framework.clusterby[clusterbyquery] && 
                                    framework.clusterby[clusterbyquery].coordinate && 
@@ -73,7 +79,11 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
                             // Now we know that framework has valid coordinates
                             const x = framework.clusterby[clusterbyquery].coordinate[0] * (canvasRef.current?.width || 0);
                             const y = framework.clusterby[clusterbyquery].coordinate[1] * (canvasRef.current?.height || 0);
-                            return new Pt(x, y);
+                            return {
+                                name: framework.title,
+                                description: framework.content,
+                                position: new Pt(x, y),
+                            };
                         });
                     }
                 },
@@ -82,13 +92,14 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
                     const range = Circle.fromCenter(space.pointer, r);
                     const colors = ["#ff2d5d", "#42dc8e", "#2e43eb", "#ffe359"]; // Define all colors
                     
-                    for (let i = 0, len = pts?.length; i < len; i++) {
-                        if (Circle.withinBound(range, pts[i])) {
-                            const dist = (r - pts[i].$subtract(space.pointer).magnitude()) / r;
-                            const p = pts[i].$subtract(space.pointer).scale(1 + dist).add(space.pointer);
+                    for (let i = 0, len = data?.length; i < len; i++) {
+                        if (Circle.withinBound(range, data[i].position)) {
+                            const dist = (r - data[i].position.$subtract(space.pointer).magnitude()) / r;
+                            const p = data[i].position.$subtract(space.pointer).scale(1 + dist).add(space.pointer);
                             form.fillOnly(colors[i % colors.length]).point(p, dist * 25, "circle");
+                            form.fill("#fff").text(data[i].position.$add(15, 15), data[i].name)
                         } else {
-                            form.fillOnly("#fff").point(pts[i], 0.5);
+                            form.fillOnly("#fff").point(data[i].position, 0.5);
                         }
                     }
                 }
@@ -112,13 +123,6 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
                     </button>
                 </Stack.Item>
             </Stack>
-            <Stack.Item>
-                {props.constellation?.map((constellation, index) => (
-                    <div key={index}>
-                        {constellation.title}: {constellation.content}
-                    </div>
-                ))}
-            </Stack.Item>
             <Stack.Item>
                 <canvas ref={canvasRef} id="pt" />
             </Stack.Item>
