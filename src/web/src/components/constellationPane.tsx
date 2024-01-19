@@ -19,7 +19,7 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
     const actions = useMemo(() => ({
         constellation: bindActionCreators(userActions, appContext.dispatch) as unknown as UserActions
     }), [appContext.dispatch]);
-    const clusterbyquery = "political, economic, sociological, technological, legal, environmental, psychological"
+    const clusterbyquery = "political, economic, sociological, technological, legal, environmental"
     const canvasRef = useRef<HTMLCanvasElement>(null); // Create a ref for the canvas
 
     useEffect(() => {
