@@ -70,4 +70,4 @@ class UserFramework(Document):
     content: str
     clusterby: Dict[str, Cluster] = Field(default_factory=dict)
 
-__beanie_models__ = [UserFramework]
+__beanie_models__ = [UserFramework, UserCluster]

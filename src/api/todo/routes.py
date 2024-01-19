@@ -136,6 +136,7 @@ async def cluster(request: Request, clusterby: str) ->  List[UserFramework]:
             clusters[response_blocks[i]] = (uniform(0.1, 0.9), uniform(0.1, 0.9))
 
     for key in clusters:
+        print(key, clusters[key])
         await UserCluster(userid=user_id, cluster=key, coordinate=clusters[key]).save()
 
     for i in range (len(user_data)):
