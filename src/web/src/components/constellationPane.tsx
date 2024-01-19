@@ -25,7 +25,7 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
     useEffect(() => {
         const getConstellation = async () => {
             const constellation = await actions.constellation.getConstellation(appContext.state.userState.userId);
-            console.log("constellation " + constellation)
+            constellation.forEach(framework => { console.log(framework) });
             appContext.dispatch({
                 type: ActionTypes.SET_CONSTELLATION,
                 constellation: constellation,
@@ -57,7 +57,7 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
                                 framework.clusterby[clusterbyquery].coordinates.length >= 2) {
                                 return true;
                             } else {
-                                console.log(`Missing coordinate data for framework: ${framework.title}`);
+                                console.log(`Missing coordinate data for framework: ${framework.title} ${framework.clusterby[clusterbyquery]}`);
                                 return false;
                             }
                         })
