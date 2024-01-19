@@ -61,8 +61,8 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
                         pts = props.constellation.filter(framework => {
                             // Check if the framework has the necessary coordinate data
                             if (framework.clusterby[clusterbyquery] && 
-                                   framework.clusterby[clusterbyquery].coordinates && 
-                                framework.clusterby[clusterbyquery].coordinates.length >= 2) {
+                                   framework.clusterby[clusterbyquery].coordinate && 
+                                framework.clusterby[clusterbyquery].coordinate.length >= 2) {
                                 return true;
                             } else {
                                 console.log(`Missing coordinate data for framework: ${framework.title} ${framework.clusterby[clusterbyquery]}`);
@@ -71,7 +71,7 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
                         })
                         .map(framework => {
                             // Now we know that framework has valid coordinates
-                            return new Pt(framework.clusterby[clusterbyquery].coordinates[0], framework.clusterby[clusterbyquery].coordinates[1]);
+                            return new Pt(framework.clusterby[clusterbyquery].coordinate[0], framework.clusterby[clusterbyquery].coordinate[1]);
                         });
                     }
                 },

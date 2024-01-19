@@ -12,7 +12,7 @@ export interface UserFramework {
 
 export interface Cluster {
     cluster: string;
-    coordinates: [number, number];
+    coordinate: [number, number];
 }
 
 export interface LoginConfig {
