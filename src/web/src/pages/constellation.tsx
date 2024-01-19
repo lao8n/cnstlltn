@@ -4,6 +4,7 @@ import { withApplicationInsights } from '../components/telemetry';
 import { UserAppContext } from '../components/userContext';
 import { AppContext } from '../models/applicationState';
 import ConstellationPane from '../components/constellationPane';
+import { canvasStackStyle } from '../ux/styles';
 
 const Constellation = () => {
     const appContext : AppContext = useContext(UserAppContext);
@@ -17,7 +18,7 @@ const Constellation = () => {
     }
   
     return (
-      <Stack grow={1}>
+      <Stack grow={1} styles={canvasStackStyle}>
         <ConstellationPane
           constellation={appContext.state.userState.constellation}
           cluster={appContext.state.userState.cluster} />

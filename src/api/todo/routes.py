@@ -80,7 +80,7 @@ async def get_cluster(request: Request) -> List[Cluster]:
     print("getting cluster")
     print(request.headers)
     user_id = request.headers.get("user-id")
-    cluster: List[Cluster] = await UserCluster.find_many({"userid": user_id}).map(lambda x: Cluster(cluster=x.cluster, coordinate=x.coordinate)).to_list();
+    cluster: List[Cluster] = await UserCluster.find_many({"userid": user_id}).to_list().map(lambda x: Cluster(cluster=x.cluster, coordinate=x.coordinate));
     print(cluster)
     return cluster
 
