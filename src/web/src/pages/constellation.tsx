@@ -8,16 +8,16 @@ import ConstellationPane from '../components/constellationPane';
 const Constellation = () => {
     const appContext : AppContext = useContext(UserAppContext);
 
-    if(!appContext.state.userState?.isLoggedIn){
-      return (
-        <Stack>
+  if (!appContext.state.userState?.isLoggedIn) {
+    return (
+      <Stack grow={1}>
           <Text>Login to access constellation</Text>
         </Stack>
       );
     }
   
     return (
-      <Stack>
+      <Stack grow={1}>
         <ConstellationPane
           constellation={appContext.state.userState.constellation}
           cluster={appContext.state.userState.cluster} />

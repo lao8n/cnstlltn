@@ -149,8 +149,8 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
                     </button>
                 </Stack.Item>
             </Stack>
-            <Stack.Item grow={1}>
-                <canvas ref={canvasRef} id="pt" />
+            <Stack.Item grow={1} styles={{ root: { height: '100%' } }}>
+                <canvas ref={canvasRef} id="pt" style={{ width: '100%', height: '100%' }}/>
             </Stack.Item>
         </Stack>
     )

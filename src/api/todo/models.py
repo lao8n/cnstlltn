@@ -58,7 +58,7 @@ class Cluster(BaseModel):
     cluster: str
     coordinate: Tuple[float, float]
 
-class UserCluster(BaseModel):
+class UserCluster(Document):
     userid: str
     cluster: str
     coordinate: Tuple[float, float]
