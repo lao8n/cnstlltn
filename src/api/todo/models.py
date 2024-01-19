@@ -58,6 +58,11 @@ class Cluster(BaseModel):
     cluster: str
     coordinate: Tuple[float, float]
 
+class UserCluster(BaseModel):
+    userid: str
+    cluster: str
+    coordinate: Tuple[float, float]
+
 class UserFramework(Document):
     userid: str # partition key
     # unique id -> cosmos can automatically generate this

@@ -9,7 +9,7 @@ from starlette.requests import Request
 
 from openai import OpenAI
 from .app import app
-from .models import (Query, QueryAiResponseBlock, Framework, UserFramework, Cluster, LoginConfig)
+from .models import (Query, QueryAiResponseBlock, Framework, UserFramework, Cluster, UserCluster, LoginConfig)
 from .app import settings
 from random import uniform
 from math import sqrt
@@ -67,15 +67,18 @@ async def save_frameworks(request: Request, saveFrameworks: List[Framework]) -> 
         results.append(await UserFramework(userid=user_id, title=framework.title, content=framework.content).save())
     return results
 
-@app.get("/get-constellation", response_model=List[UserFramework], status_code=200)
-async def get_constellation(request: Request) -> List[UserFramework]:
+@app.get("/get-constellation-cluster", response_model=(List[UserFramework], List[Cluster]), status_code=200)
+async def get_constellation_cluster(request: Request) -> (List[UserFramework], List[Cluster]):
     print("getting constellation")
     print(request.headers)
     user_id = request.headers.get("user-id")
-    return await UserFramework.find_many({"userid": user_id}).to_list();
+    constellation : List[UserFramework] =  await UserFramework.find_many({"userid": user_id}).to_list();
+    cluster: List[Cluster] = await UserCluster.find_many({"userid": user_id}).map(lambda x: Cluster(cluster=x.cluster, coordinate=x.coordinate)).to_list();
+    print(cluster)
+    return constellation, cluster
 
 @app.post("/cluster", response_model=List[UserFramework], status_code=200)
-async def cluster(request: Request, clusterby: str) -> (List[UserFramework], List[Cluster]): 
+async def cluster(request: Request, clusterby: str) ->  List[UserFramework]: 
     user_id = request.headers.get("user-id")
     user_data = await UserFramework.find_many({"userid": user_id}).to_list();
     print(user_data)
@@ -125,9 +128,8 @@ async def cluster(request: Request, clusterby: str) -> (List[UserFramework], Lis
         if response_blocks[i] not in clusters:
             clusters[response_blocks[i]] = (uniform(0.1, 0.9), uniform(0.1, 0.9))
 
-    clusterList = []
     for key in clusters:
-        clusterList.append(Cluster(cluster=key, coordinate=clusters[key]))
+        await UserCluster(userid=user_id, cluster=key, coordinate=clusters[key]).save()
 
     for i in range (len(user_data)):
         # if we have n clusters then we want them to have a maximum size of sqrt(n) - we divide by 2 for a buffer
@@ -138,7 +140,7 @@ async def cluster(request: Request, clusterby: str) -> (List[UserFramework], Lis
             print(user_data[i], i)
             await user_data[i].save()
 
-    return user_data, clusterList
+    return user_data
 
 @app.get("/login-config", response_model=LoginConfig, status_code=200)
 def get_login_config() -> LoginConfig:
