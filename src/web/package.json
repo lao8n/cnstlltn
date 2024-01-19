@@ -8,6 +8,7 @@
     "@microsoft/applicationinsights-web": "^2.8.14",
     "@react-oauth/google": "^0.12.1",
     "axios": "^0.27.2",
+    "pts": "^0.11.5",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-router-dom": "^6.3.0",
