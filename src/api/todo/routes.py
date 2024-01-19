@@ -67,15 +67,22 @@ async def save_frameworks(request: Request, saveFrameworks: List[Framework]) -> 
         results.append(await UserFramework(userid=user_id, title=framework.title, content=framework.content).save())
     return results
 
-@app.get("/get-constellation-cluster", response_model=(List[UserFramework], List[Cluster]), status_code=200)
-async def get_constellation_cluster(request: Request) -> (List[UserFramework], List[Cluster]):
+@app.get("/get-constellation", response_model=List[UserFramework], status_code=200)
+async def get_constellation(request: Request) -> List[UserFramework]:
     print("getting constellation")
     print(request.headers)
     user_id = request.headers.get("user-id")
     constellation : List[UserFramework] =  await UserFramework.find_many({"userid": user_id}).to_list();
+    return constellation
+
+@app.get("/get-cluster", response_model=List[Cluster], status_code=200)
+async def get_cluster(request: Request) -> List[Cluster]:
+    print("getting cluster")
+    print(request.headers)
+    user_id = request.headers.get("user-id")
     cluster: List[Cluster] = await UserCluster.find_many({"userid": user_id}).map(lambda x: Cluster(cluster=x.cluster, coordinate=x.coordinate)).to_list();
     print(cluster)
-    return constellation, cluster
+    return cluster
 
 @app.post("/cluster", response_model=List[UserFramework], status_code=200)
 async def cluster(request: Request, clusterby: str) ->  List[UserFramework]: 
@@ -132,7 +139,7 @@ async def cluster(request: Request, clusterby: str) ->  List[UserFramework]:
         await UserCluster(userid=user_id, cluster=key, coordinate=clusters[key]).save()
 
     for i in range (len(user_data)):
-        # if we have n clusters then we want them to have a maximum size of sqrt(n) - we divide by 2 for a buffer
+        # if we have n clusters then we want them to have a maximum size of n
         if i < len(response_blocks):
             x = clusters[response_blocks[i]][0] + uniform(-1, 1) / len(clusters)
             y = clusters[response_blocks[i]][1] + uniform(-1, 1) / len(clusters)

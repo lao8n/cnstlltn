@@ -7,10 +7,12 @@ export const appReducer: Reducer<ApplicationState, ApplicationActions> = (state:
         case ActionTypes.SET_USER:
             state.userState = { ...state.userState, isLoggedIn: action.isLoggedIn, userId: action.userId };
             break;
-        case ActionTypes.GET_CONSTELLATION_CLUSTER:
+        case ActionTypes.GET_CONSTELLATION:
             // TODO maybe don't need this as we set constellation and set cluster already?
-            state.userState.constellation = action.payload[0];
-            state.userState.cluster = action.payload[1];
+            state.userState.constellation = action.payload;
+            break;
+        case ActionTypes.GET_CLUSTER:
+            state.userState.cluster = action.payload;
             break;
         case ActionTypes.POST_QUERY_RESPONSE_LIST:
             state.queryState.responses = action.payload;

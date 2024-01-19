@@ -11,7 +11,8 @@ const userService = new UserService(config.api.baseUrl);
 export interface UserActions {
     setUser(isLoggedIn: boolean, userId: string): void;
     saveSelectedFrameworks(userId: string, frameworks: QueryResponse[]): Promise<QueryResponse[]>;
-    getConstellationCluster(userId: string): Promise<[UserFramework[], Cluster[]]>;
+    getConstellation(userId: string): Promise<UserFramework[]>;
+    getCluster(userId: string): Promise<Cluster[]>;
     cluster(userId: string, clusterby: string): Promise<UserFramework[]>;
     getLoginConfig(): Promise<LoginConfig>;
 }
@@ -34,11 +35,18 @@ export const saveSelectedFrameworks = (userId: string, frameworks: QueryResponse
         return savedFrameworks
     }
 
-export const getConstellationCluster = (userId: string): ActionMethod<[UserFramework[], Cluster[]]> =>
-    async (dispatch: Dispatch<GetConstellationClusterAction>) => {
-        const constellationcluster = await userService.getConstellationCluster(userId);
-        dispatch(getConstellationClusterAction(constellationcluster))
-        return constellationcluster;
+export const getConstellation = (userId: string): ActionMethod<UserFramework[]> =>
+    async (dispatch: Dispatch<GetConstellationAction>) => {
+        const constellation = await userService.getConstellation(userId);
+        dispatch(getConstellationAction(constellation))
+        return constellation;
+    }
+
+export const getCluster = (userId: string): ActionMethod<Cluster[]> =>
+    async (dispatch: Dispatch<GetClusterAction>) => {
+        const cluster = await userService.getCluster(userId);
+        dispatch(getClusterAction(cluster))
+        return cluster;
     }
 
 export const cluster = (userId: string, clusterby: string): ActionMethod<UserFramework[]> => 
@@ -84,12 +92,19 @@ export interface SaveSelectedFrameworksAction extends PayloadAction<string, Quer
 const saveSelectedFrameworksAction =
     createPayloadAction<SaveSelectedFrameworksAction>(ActionTypes.SAVE_SELECTED_FRAMEWORKS);
 
-export interface GetConstellationClusterAction extends PayloadAction<string, [UserFramework[], Cluster[]]> {
-    type: ActionTypes.GET_CONSTELLATION_CLUSTER
+export interface GetConstellationAction extends PayloadAction<string, UserFramework[]> {
+    type: ActionTypes.GET_CONSTELLATION
 }
 
-const getConstellationClusterAction =
-    createPayloadAction<GetConstellationClusterAction>(ActionTypes.GET_CONSTELLATION_CLUSTER);
+const getConstellationAction =
+    createPayloadAction<GetConstellationAction>(ActionTypes.GET_CONSTELLATION);
+
+export interface GetClusterAction extends PayloadAction<string, Cluster[]> {
+    type: ActionTypes.GET_CLUSTER
+}
+
+const getClusterAction =
+    createPayloadAction<GetClusterAction>(ActionTypes.GET_CLUSTER);
 
 export interface SetConstellationAction {
     type: ActionTypes.SET_CONSTELLATION,

@@ -10,7 +10,8 @@ export enum ActionTypes {
     SET_USER = "SET_USER",
     SAVE_SELECTED_FRAMEWORKS = "SAVE_SELECTED_FRAMEWORKS",
     POST_QUERY_RESPONSE_LIST = "POST_QUERY_RESPONSE_LIST",
-    GET_CONSTELLATION_CLUSTER = "GET_CONSTELLATION_CLUSTER",
+    GET_CONSTELLATION = "GET_CONSTELLATION",
+    GET_CLUSTER = "GET_CLUSTER",
     CLUSTER = "CLUSTER",
     SET_CLUSTER = "SET_CLUSTER", 
     SET_CONSTELLATION = "SET_CONSTELLATION",
@@ -20,7 +21,8 @@ export enum ActionTypes {
 export type ApplicationActions =
     userActions.SaveSelectedFrameworksAction |
     userActions.SetUserAction |
-    userActions.GetConstellationClusterAction |
+    userActions.GetConstellationAction |
+    userActions.GetClusterAction | 
     userActions.ClusterAction |
     userActions.SetClusterAction |
     userActions.SetConstellationAction |

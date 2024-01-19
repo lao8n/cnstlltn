@@ -22,10 +22,19 @@ export class UserService {
         return response.data;
     }
 
-    public async getConstellationCluster(userId: string): Promise<[UserFramework[], Cluster[]]> {
-        const response = await this.client.request<[UserFramework[], Cluster[]]>({
+    public async getConstellation(userId: string): Promise<UserFramework[]> {
+        const response = await this.client.request<UserFramework[]>({
             method: 'GET',
-            url: `${this.baseUrl}/get-constellation-cluster`,
+            url: `${this.baseUrl}/get-constellation`,
+            headers: { 'USER-ID': userId },
+        });
+        return response.data;
+    }
+
+    public async getCluster(userId: string): Promise<Cluster[]> {
+        const response = await this.client.request<Cluster[]>({
+            method: 'GET',
+            url: `${this.baseUrl}/get-cluster`,
             headers: { 'USER-ID': userId },
         });
         return response.data;
