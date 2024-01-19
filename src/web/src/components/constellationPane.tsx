@@ -136,7 +136,7 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
     }, [props.constellation, props.cluster]);
 
     return (
-        <Stack>
+        <Stack grow={1}>
             <Stack horizontal>
                 <Stack.Item tokens={stackItemPadding}>
                     <div>Constellation</div>
@@ -149,7 +149,7 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
                     </button>
                 </Stack.Item>
             </Stack>
-            <Stack.Item grow>
+            <Stack.Item grow={1}>
                 <canvas ref={canvasRef} id="pt" />
             </Stack.Item>
         </Stack>

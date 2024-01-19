@@ -19,7 +19,8 @@ const Constellation = () => {
     return (
       <Stack>
         <ConstellationPane
-          constellation={appContext.state.userState.constellation} />
+          constellation={appContext.state.userState.constellation}
+          cluster={appContext.state.userState.cluster} />
       </Stack >
     );
   };
