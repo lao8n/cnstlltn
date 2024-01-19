@@ -1,6 +1,6 @@
 import { QueryResponse } from "../models/queryState";
 import axios, { AxiosInstance } from 'axios';
-import { LoginConfig, UserFramework } from "../models/userState";
+import { LoginConfig, UserFramework, Cluster } from "../models/userState";
 
 export class UserService {
     protected client: AxiosInstance;
@@ -22,10 +22,10 @@ export class UserService {
         return response.data;
     }
 
-    public async getConstellation(userId: string): Promise<UserFramework[]> {
-        const response = await this.client.request<UserFramework[]>({
+    public async getConstellationCluster(userId: string): Promise<[UserFramework[], Cluster[]]> {
+        const response = await this.client.request<[UserFramework[], Cluster[]]>({
             method: 'GET',
-            url: `${this.baseUrl}/get-constellation`,
+            url: `${this.baseUrl}/get-constellation-cluster`,
             headers: { 'USER-ID': userId },
         });
         return response.data;

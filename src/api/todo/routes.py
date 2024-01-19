@@ -75,7 +75,7 @@ async def get_constellation(request: Request) -> List[UserFramework]:
     return await UserFramework.find_many({"userid": user_id}).to_list();
 
 @app.post("/cluster", response_model=List[UserFramework], status_code=200)
-async def cluster(request: Request, clusterby: str) -> List[UserFramework]: 
+async def cluster(request: Request, clusterby: str) -> (List[UserFramework], List[Cluster]): 
     user_id = request.headers.get("user-id")
     user_data = await UserFramework.find_many({"userid": user_id}).to_list();
     print(user_data)
@@ -125,6 +125,10 @@ async def cluster(request: Request, clusterby: str) -> List[UserFramework]:
         if response_blocks[i] not in clusters:
             clusters[response_blocks[i]] = (uniform(0.1, 0.9), uniform(0.1, 0.9))
 
+    clusterList = []
+    for key in clusters:
+        clusterList.append(Cluster(cluster=key, coordinate=clusters[key]))
+
     for i in range (len(user_data)):
         # if we have n clusters then we want them to have a maximum size of sqrt(n) - we divide by 2 for a buffer
         if i < len(response_blocks):
@@ -134,7 +138,7 @@ async def cluster(request: Request, clusterby: str) -> List[UserFramework]:
             print(user_data[i], i)
             await user_data[i].save()
 
-    return user_data
+    return user_data, clusterList
 
 @app.get("/login-config", response_model=LoginConfig, status_code=200)
 def get_login_config() -> LoginConfig:

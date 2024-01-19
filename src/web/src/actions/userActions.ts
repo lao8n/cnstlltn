@@ -1,5 +1,5 @@
 import { Dispatch } from "react";
-import { LoginConfig, UserFramework } from "../models/userState";
+import { LoginConfig, UserFramework, Cluster } from "../models/userState";
 import { ActionTypes } from "./common"
 import { QueryResponse } from "../models/queryState";
 import config from "../config";
@@ -11,7 +11,7 @@ const userService = new UserService(config.api.baseUrl);
 export interface UserActions {
     setUser(isLoggedIn: boolean, userId: string): void;
     saveSelectedFrameworks(userId: string, frameworks: QueryResponse[]): Promise<QueryResponse[]>;
-    getConstellation(userId: string): Promise<UserFramework[]>;
+    getConstellationCluster(userId: string): Promise<[UserFramework[], Cluster[]]>;
     cluster(userId: string, clusterby: string): Promise<UserFramework[]>;
     getLoginConfig(): Promise<LoginConfig>;
 }
@@ -34,11 +34,11 @@ export const saveSelectedFrameworks = (userId: string, frameworks: QueryResponse
         return savedFrameworks
     }
 
-export const getConstellation = (userId: string): ActionMethod<UserFramework[]> =>
-    async (dispatch: Dispatch<GetConstellationAction>) => {
-        const constellation = await userService.getConstellation(userId);
-        dispatch(getConstellationAction(constellation))
-        return constellation;
+export const getConstellationCluster = (userId: string): ActionMethod<[UserFramework[], Cluster[]]> =>
+    async (dispatch: Dispatch<GetConstellationClusterAction>) => {
+        const constellationcluster = await userService.getConstellationCluster(userId);
+        dispatch(getConstellationClusterAction(constellationcluster))
+        return constellationcluster;
     }
 
 export const cluster = (userId: string, clusterby: string): ActionMethod<UserFramework[]> => 
@@ -51,6 +51,11 @@ export const cluster = (userId: string, clusterby: string): ActionMethod<UserFra
 export const setConstellation = (constellation: UserFramework[]) =>
     (dispatch: Dispatch<SetConstellationAction>) => {
         dispatch(setConstellationAction(constellation));
+    }
+
+export const setCluster = (cluster: Cluster[]) =>
+    (dispatch: Dispatch<SetClusterAction>) => {
+        dispatch(setClusterAction(cluster));
     }
 
 export const getLoginConfig = (): ActionMethod<LoginConfig> =>
@@ -79,17 +84,22 @@ export interface SaveSelectedFrameworksAction extends PayloadAction<string, Quer
 const saveSelectedFrameworksAction =
     createPayloadAction<SaveSelectedFrameworksAction>(ActionTypes.SAVE_SELECTED_FRAMEWORKS);
 
-export interface GetConstellationAction extends PayloadAction<string, UserFramework[]> {
-    type: ActionTypes.GET_CONSTELLATION
+export interface GetConstellationClusterAction extends PayloadAction<string, [UserFramework[], Cluster[]]> {
+    type: ActionTypes.GET_CONSTELLATION_CLUSTER
 }
 
-const getConstellationAction =
-    createPayloadAction<GetConstellationAction>(ActionTypes.GET_CONSTELLATION);
+const getConstellationClusterAction =
+    createPayloadAction<GetConstellationClusterAction>(ActionTypes.GET_CONSTELLATION_CLUSTER);
 
 export interface SetConstellationAction {
     type: ActionTypes.SET_CONSTELLATION,
     constellation: UserFramework[]
 }
+
+const setConstellationAction = (constellation: UserFramework[]): SetConstellationAction => ({
+    type: ActionTypes.SET_CONSTELLATION,
+    constellation: constellation,
+});
 
 export interface ClusterAction extends PayloadAction<string, UserFramework[]> {
     type: ActionTypes.CLUSTER
@@ -98,9 +108,14 @@ export interface ClusterAction extends PayloadAction<string, UserFramework[]> {
 const clusterAction = 
     createPayloadAction<ClusterAction>(ActionTypes.CLUSTER);
 
-const setConstellationAction = (constellation: UserFramework[]): SetConstellationAction => ({
-    type: ActionTypes.SET_CONSTELLATION,
-    constellation: constellation,
+export interface SetClusterAction {
+    type: ActionTypes.SET_CLUSTER,
+    cluster: Cluster[]
+}
+
+const setClusterAction = (cluster: Cluster[]): SetClusterAction => ({
+    type: ActionTypes.SET_CLUSTER,
+    cluster: cluster,
 });
 
 export interface GetLoginConfigAction extends PayloadAction<string, LoginConfig> {

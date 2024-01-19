@@ -15,7 +15,7 @@ export interface ApplicationState {
 
 export const getDefaultState = (): ApplicationState => {
     return {
-        userState: {isLoggedIn: false, userId: "", constellation: []},
+        userState: {isLoggedIn: false, userId: "", constellation: [], cluster: []},
         queryState: {query: undefined, responses: undefined},
     }
 }
