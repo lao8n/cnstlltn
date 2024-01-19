@@ -123,13 +123,13 @@ async def cluster(request: Request, clusterby: str) -> List[UserFramework]:
     clusters = {}
     for i in range (len(response_blocks)):
         if response_blocks[i] not in clusters:
-            clusters[response_blocks[i]] = (uniform(0, 1), uniform(0, 1))
+            clusters[response_blocks[i]] = (uniform(0.1, 0.9), uniform(0.1, 0.9))
 
     for i in range (len(user_data)):
         # if we have n clusters then we want them to have a maximum size of sqrt(n) - we divide by 2 for a buffer
         if i < len(response_blocks):
-            x = clusters[response_blocks[i]][0] + uniform(-1, 1) * sqrt(len(clusters) / 2) 
-            y = clusters[response_blocks[i]][1] + uniform(-1, 1) * sqrt(len(clusters) / 2)
+            x = clusters[response_blocks[i]][0] + uniform(-1, 1) / len(clusters)
+            y = clusters[response_blocks[i]][1] + uniform(-1, 1) / len(clusters)
             user_data[i].clusterby[clusterby] = Cluster(cluster=response_blocks[i], coordinate=(x, y))
             print(user_data[i], i)
             await user_data[i].save()

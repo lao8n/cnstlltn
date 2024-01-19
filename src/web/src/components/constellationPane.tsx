@@ -71,7 +71,9 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
                         })
                         .map(framework => {
                             // Now we know that framework has valid coordinates
-                            return new Pt(framework.clusterby[clusterbyquery].coordinate[0], framework.clusterby[clusterbyquery].coordinate[1]);
+                            const x = framework.clusterby[clusterbyquery].coordinate[0] * (canvasRef.current?.width || 0);
+                            const y = framework.clusterby[clusterbyquery].coordinate[1] * (canvasRef.current?.height || 0);
+                            return new Pt(x, y);
                         });
                     }
                 },
