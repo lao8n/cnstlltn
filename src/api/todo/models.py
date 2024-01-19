@@ -56,7 +56,7 @@ class Framework(BaseModel):
 
 class Cluster(BaseModel):
     cluster: str
-    coordinate: Tuple[float, float]
+    coordinates: Tuple[float, float]
 
 class UserFramework(Document):
     userid: str # partition key

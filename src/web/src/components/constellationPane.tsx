@@ -19,7 +19,7 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
     const actions = useMemo(() => ({
         constellation: bindActionCreators(userActions, appContext.dispatch) as unknown as UserActions
     }), [appContext.dispatch]);
-    const clusterbyquery = "political, economic, sociological, technological, legal, environmental"
+    const clusterbyquery = "political, economic, sociological, technological, legal, environmental, psychological"
     const canvasRef = useRef<HTMLCanvasElement>(null); // Create a ref for the canvas
 
     useEffect(() => {
@@ -42,8 +42,16 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
     };
 
     useEffect(() => {
-        if (canvasRef.current) {
-            const space = new CanvasSpace(canvasRef.current).setup({ bgcolor: "#123" });
+        if (canvasRef.current && canvasRef.current.parentElement) {
+            const parent = canvasRef.current.parentElement;
+            const width = parent.clientWidth;
+            const height = parent.clientHeight;
+
+            // Set the size of the canvas
+            canvasRef.current.width = width;
+            canvasRef.current.height = height;
+
+            const space = new CanvasSpace(canvasRef.current).setup({ bgcolor: "#123", resize: true });
             const form = space.getForm();
             let pts : Pt[] = [];
 
@@ -102,6 +110,13 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
                     </button>
                 </Stack.Item>
             </Stack>
+            <Stack.Item>
+                {props.constellation?.map((constellation, index) => (
+                    <div key={index}>
+                        {constellation.title}: {constellation.content}
+                    </div>
+                ))}
+            </Stack.Item>
             <Stack.Item>
                 <canvas ref={canvasRef} id="pt" />
             </Stack.Item>
