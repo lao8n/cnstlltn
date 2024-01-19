@@ -1,6 +1,6 @@
 import { Stack } from '@fluentui/react';
 import React, { FC, ReactElement, useContext, useEffect, useMemo, useRef } from "react";
-import { clusterButtonStyles, stackItemPadding } from '../ux/styles';
+import { canvasStackStyle, clusterButtonStyles, stackItemPadding } from '../ux/styles';
 import { UserFramework, Cluster } from "../models/userState";
 import { AppContext } from "../models/applicationState";
 import UserAppContext from "./userContext";
@@ -65,11 +65,9 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
 
     useEffect(() => {
         if (canvasRef.current && canvasRef.current.parentElement) {
-            const parent = canvasRef.current.parentElement;
-
             // Set the size of the canvas
-            canvasRef.current.width = parent.clientWidth;
-            canvasRef.current.height = parent.clientHeight;
+            canvasRef.current.width = canvasRef.current.parentElement.clientWidth;
+            canvasRef.current.height = canvasRef.current.parentElement.clientHeight;
 
             const space = new CanvasSpace(canvasRef.current).setup({ bgcolor: "#123", resize: true });
             const form = space.getForm();
@@ -136,7 +134,7 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
     }, [props.constellation, props.cluster]);
 
     return (
-        <Stack grow={1}>
+        <Stack grow={1} styles={canvasStackStyle}>
             <Stack horizontal>
                 <Stack.Item tokens={stackItemPadding}>
                     <div>Constellation</div>
@@ -149,11 +147,11 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
                     </button>
                 </Stack.Item>
             </Stack>
-            <Stack.Item grow={1} styles={{ root: { height: '100%' } }}>
-                <canvas ref={canvasRef} id="pt" style={{ width: '100%', height: '100%' }}/>
+            <Stack.Item grow={1} styles={canvasStackStyle}>
+                <canvas ref={canvasRef} id="pt" style={{ width: '100%', height: '100%' }} />
             </Stack.Item>
         </Stack>
-    )
+    );
 }
 
 export default ConstellationPane
