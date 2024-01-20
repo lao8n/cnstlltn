@@ -64,73 +64,84 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
     };
 
     useEffect(() => {
-        if (canvasRef.current && canvasRef.current.parentElement) {
-            // Set the size of the canvas
-            canvasRef.current.width = canvasRef.current.parentElement.clientWidth;
-            canvasRef.current.height = canvasRef.current.parentElement.clientHeight;
-
-            const space = new CanvasSpace(canvasRef.current).setup({ bgcolor: "#123", resize: true });
-            const form = space.getForm();
-            let pts: Data[] = [];
-            let cluster: Data[] = [];
-            space.add({
-                start: (bound) => {
-                    if (props.constellation) {
-                        pts = props.constellation.filter(framework => {
-                            // Check if the framework has the necessary coordinate data
-                            if (framework.clusterby[clusterbyquery] &&
-                                framework.clusterby[clusterbyquery].coordinate &&
-                                framework.clusterby[clusterbyquery].coordinate.length >= 2) {
-                                return true;
-                            } else {
-                                console.log(`Missing coordinate data for framework: ${framework.title} ${framework.clusterby[clusterbyquery]}`);
-                                return false;
-                            }
-                        })
-                            .map(framework => {
-                                // Now we know that framework has valid coordinates
-                                const x = framework.clusterby[clusterbyquery].coordinate[0] * (canvasRef.current?.width || 0);
-                                const y = framework.clusterby[clusterbyquery].coordinate[1] * (canvasRef.current?.height || 0);
-                                return {
-                                    name: framework.title,
-                                    description: framework.content,
-                                    position: new Pt(x, y),
-                                };
-                            });
+        const handleResize = () => {
+            if (canvasRef.current && canvasRef.current.parentElement) {
+                // Set the size of the canvas
+                canvasRef.current.width = canvasRef.current.parentElement.clientWidth;
+                canvasRef.current.height = canvasRef.current.parentElement.clientHeight;
+                // Recalculate the positions based on new canvas size
+                updatePositions();
+                }
+        };
+        const space = new CanvasSpace(canvasRef.current || "").setup({ bgcolor: "#123", resize: true });
+        const form = space.getForm();
+        let pts: Data[] = [];
+        let cluster: Data[] = [];
+        const updatePositions = () => {
+            if (props.constellation) {
+                pts = props.constellation.filter(framework => {
+                    // Check if the framework has the necessary coordinate data
+                    if (framework.clusterby[clusterbyquery] &&
+                        framework.clusterby[clusterbyquery].coordinate &&
+                        framework.clusterby[clusterbyquery].coordinate.length >= 2) {
+                        return true;
+                    } else {
+                        console.log(`Missing coordinate data for framework: ${framework.title} ${framework.clusterby[clusterbyquery]}`);
+                        return false;
                     }
-                    if (props.cluster) {
-                        cluster = props.cluster.map(cluster => {
-                            const x = cluster.coordinate[0] * (canvasRef.current?.width || 0);
-                            const y = cluster.coordinate[1] * (canvasRef.current?.height || 0);
-                            return {
-                                name: cluster.cluster,
-                                description: "",
-                                position: new Pt(x, y),
-                            };
-                        })
-                    }
-                },
-                animate: (time, ftime) => {
-                    const r = Math.abs(space.pointer.x - space.center.x) / space.center.x * 150 + 70;
-                    const range = Circle.fromCenter(space.pointer, r);
-                    for (let i = 0, len = pts?.length; i < len; i++) {
-                        if (Circle.withinBound(range, pts[i].position)) {
-                            const dist = (r - pts[i].position.$subtract(space.pointer).magnitude()) / r;
-                            const p = pts[i].position.$subtract(space.pointer).scale(1 + dist).add(space.pointer);
-                            form.point(p, dist * 25, "circle");
-                            form.fill("#fff").text(pts[i].position.$add(15, 15), pts[i].name)
-                        } else {
-                            form.fillOnly("#fff").point(pts[i].position, 0.5);
-                        }
-                    }
-                    for (let i = 0, len = cluster?.length; i < len; i++) {
-                        form.fill("#fff").text(cluster[i].position, cluster[i].name)
+                })
+                    .map(framework => {
+                        // Now we know that framework has valid coordinates
+                        const x = framework.clusterby[clusterbyquery].coordinate[0] * (canvasRef.current?.width || 0);
+                        const y = framework.clusterby[clusterbyquery].coordinate[1] * (canvasRef.current?.height || 0);
+                        return {
+                            name: framework.title,
+                            description: framework.content,
+                            position: new Pt(x, y),
+                        };
+                    });
+            }
+            if (props.cluster) {
+                cluster = props.cluster.map(cluster => {
+                    const x = cluster.coordinate[0] * (canvasRef.current?.width || 0);
+                    const y = cluster.coordinate[1] * (canvasRef.current?.height || 0);
+                    return {
+                        name: cluster.cluster,
+                        description: "",
+                        position: new Pt(x, y),
+                    };
+                })
+            }
+        }
+        space.add({
+            start: (bound) => {
+                updatePositions();
+            },
+            animate: (time, ftime) => {
+                const r = 20;
+                const range = Circle.fromCenter(space.pointer, r);
+                for (let i = 0, len = pts?.length; i < len; i++) {
+                    if (Circle.withinBound(range, pts[i].position)) {
+                        const dist = (r - pts[i].position.$subtract(space.pointer).magnitude()) / r;
+                        const p = pts[i].position.$subtract(space.pointer).scale(1 + dist).add(space.pointer);
+                        form.point(p, dist * 25, "circle");
+                        form.fill("#fff").text(pts[i].position.$add(15, 15), pts[i].name)
+                    } else {
+                        form.fillOnly("#fff").point(pts[i].position, 0.5);
                     }
                 }
-            });
+                for (let i = 0, len = cluster?.length; i < len; i++) {
+                    form.fill("#fff").text(cluster[i].position, cluster[i].name)
+                }
+            },
+        });
+        space.bindMouse().bindTouch().play();
+        window.addEventListener("resize", handleResize);
 
-            space.bindMouse().bindTouch().play();
-        }
+        return () => {
+            window.removeEventListener("resize", handleResize);
+            space.stop();
+        };
     }, [props.constellation, props.cluster]);
 
     return (

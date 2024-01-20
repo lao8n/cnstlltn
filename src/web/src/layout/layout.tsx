@@ -42,7 +42,7 @@ const Layout: FC = (): ReactElement => {
                 <Stack.Item grow={1} styles={mainStackStyles}>
                     <Routes>
                         <Route path="/login" element={<Login />} />
-                        <Route path="/constellation" element={<Constellation />} />
+                        <Route path="/constellation" element={<Constellation/> } />
                         <Route path="/" element={<Home />} />
                     </Routes>
                 </Stack.Item>
