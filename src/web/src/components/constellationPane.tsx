@@ -9,6 +9,7 @@ import * as userActions from '../actions/userActions';
 import { UserActions } from '../actions/userActions';
 import { ActionTypes } from '../actions/common';
 import { CanvasSpace, Circle, Pt } from "pts";
+import { CnstlltnTheme } from "../ux/theme";
 
 interface ConstellationPaneProps {
     constellation?: UserFramework[];
@@ -73,7 +74,7 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
                 updatePositions();
                 }
         };
-        const space = new CanvasSpace(canvasRef.current || "").setup({ bgcolor: "#123", resize: true });
+        const space = new CanvasSpace(canvasRef.current || "").setup({ bgcolor: CnstlltnTheme.palette.black, resize: true });
         const form = space.getForm();
         let pts: Data[] = [];
         let cluster: Data[] = [];
@@ -118,7 +119,7 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
                 updatePositions();
             },
             animate: (time, ftime) => {
-                const r = 20;
+                const r = 50;
                 const range = Circle.fromCenter(space.pointer, r);
                 for (let i = 0, len = pts?.length; i < len; i++) {
                     if (Circle.withinBound(range, pts[i].position)) {
@@ -127,9 +128,10 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
                         form.point(p, dist * 25, "circle");
                         form.fill("#fff").text(pts[i].position.$add(15, 15), pts[i].name)
                     } else {
-                        form.fillOnly("#fff").point(pts[i].position, 0.5);
+                        form.fillOnly("#fff").point(pts[i].position, 3);
                     }
                 }
+                console.log("cluster " + cluster)
                 for (let i = 0, len = cluster?.length; i < len; i++) {
                     form.fill("#fff").text(cluster[i].position, cluster[i].name)
                 }
