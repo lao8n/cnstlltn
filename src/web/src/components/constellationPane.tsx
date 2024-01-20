@@ -134,25 +134,23 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
     }, [props.constellation, props.cluster]);
 
     return (
-        <div style={{ height: '100%' }}>
-            <Stack grow={1} styles={canvasStackStyle}>
-                <Stack horizontal>
-                    <Stack.Item tokens={stackItemPadding}>
-                        <div>Constellation</div>
-                    </Stack.Item>
-                    <Stack.Item>
-                        <button
-                            className={clusterButtonStyles}
-                            onClick={clusterBy}>
-                            Cluster
-                        </button>
-                    </Stack.Item>
-                </Stack>
-                <Stack.Item grow={1} styles={canvasStackStyle}>
-                    <canvas ref={canvasRef} id="pt" style={{ width: '100%', height: '100%' }} />
+        <Stack grow={1} styles={canvasStackStyle}>
+            <Stack horizontal>
+                <Stack.Item tokens={stackItemPadding}>
+                    <div>Constellation</div>
+                </Stack.Item>
+                <Stack.Item>
+                    <button
+                        className={clusterButtonStyles}
+                        onClick={clusterBy}>
+                        Cluster
+                    </button>
                 </Stack.Item>
             </Stack>
-        </div>
+            <Stack.Item grow={1} styles={canvasStackStyle}>
+                <canvas ref={canvasRef} id="pt" style={{ width: '100%', height: '100%' }} />
+            </Stack.Item>
+        </Stack>
     );
 }
 
