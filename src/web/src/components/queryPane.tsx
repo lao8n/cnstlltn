@@ -49,6 +49,8 @@ const QueryPane: FC<QueryPaneProps> = (props: QueryPaneProps): ReactElement => {
             props.onCreate({ userTxt: newQuery });
             setNewQuery('');
         }
+        // set selected responses to empty
+        setSelectedResponses(new Set());
     }
 
     const saveSelectedResponses = async () => {
@@ -59,6 +61,8 @@ const QueryPane: FC<QueryPaneProps> = (props: QueryPaneProps): ReactElement => {
         console.log("responses to save " + responsesToSave)
         const savedFrameworks = await actions.queryResponseList.saveSelectedFrameworks(appContext.state.userState.userId, responsesToSave);
         console.log("saved Frameworks " + savedFrameworks)
+        // set selected responses to empty
+        setSelectedResponses(new Set());
     };
 
     return (
