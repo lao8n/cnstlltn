@@ -48,7 +48,6 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
     useEffect(() => {
         const getCluster = async () => {
             const cluster = await actions.cluster.getCluster(appContext.state.userState.userId);
-            cluster.forEach(cluster => { console.log(cluster) });
             appContext.dispatch({
                 type: ActionTypes.SET_CLUSTER,
                 cluster: cluster,
@@ -131,7 +130,6 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
                         form.fillOnly("#fff").point(pts[i].position, 3);
                     }
                 }
-                console.log("cluster " + cluster)
                 for (let i = 0, len = cluster?.length; i < len; i++) {
                     form.fill("#fff").text(cluster[i].position, cluster[i].name)
                 }
