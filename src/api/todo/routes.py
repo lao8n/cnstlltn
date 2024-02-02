@@ -25,11 +25,19 @@ async def query_ai(query: Query) -> List[QueryAiResponseBlock]:
     this prompt is to describe how i want to format your response. i will prompt with something like a book title and i want you to respond with the following format
     '
     concept 1
-    concept 1 content
+    content 1
     concept 2
-    concept 2 content
+    concent 2
     '
     make sure you do not return an intro paragraph, conclusion paragraph or anything that deviates from the above format. here is the prompt: return the key frameworks/ideas in
+
+    as an example if the book title was 'guns germs and steel' the response should be in in the following format:
+    Geographic Determinism
+    This is a core concept in the book. The author suggests that the environment in which a society develops significantly determines its eventual success or failure. Factors such as climate, available flora and fauna, and geography shape the technologies, social organization, and disease resistance of societies.
+    Domestication of Plants and Animals
+    Jared Diamond discusses how the ability to domesticate plants and animals gave certain societies significant advantages over others. This allowed them to produce more food and support larger and denser populations. This, in turn, led to social stratification and technological advancements.
+
+    Note how none of the concepts or titles are numbered etc. 
     """
     response = client.chat.completions.create(
         model='gpt-4',
