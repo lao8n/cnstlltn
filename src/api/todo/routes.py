@@ -106,7 +106,8 @@ async def cluster(request: Request, clusterby: str) ->  List[UserFramework]:
     [{{"title": "concept 1", "content": "description of concept 1", "clusterby": ""}}, 
      {{"title": "concept 2", "content": "description of concept 2", "clusterby": ""}}, 
      {{"title": "concept 3", "content": "description of concept 3", "clusterby": ""}}]
-    i then want you to return the same data but with the clusterby field filled in with the cluster that the concept belongs to.
+    i then want you to return the same data but with the clusterby field filled in with the cluster that the concept belongs to
+    in valid json format.
     [{{"title": "concept 1", "content": "description of concept 1", "clusterby": "cluster 1"}}, 
      {{"title": "concept 2", "content": "description of concept 2", "clusterby": "cluster 2"}}, 
      {{"title": "concept 3", "content": "description of concept 3", "clusterby": "cluster 1"}}]
@@ -135,6 +136,7 @@ async def cluster(request: Request, clusterby: str) ->  List[UserFramework]:
     )
     # Split response into blocks
     json_response = response.choices[0].message.content.strip()
+    print(json_response)
     response_blocks = json.loads(json_response)
     print("response blocks")
     print(response_blocks)
