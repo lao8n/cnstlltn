@@ -147,7 +147,7 @@ async def cluster(request: Request, clusterby: str) ->  List[UserFramework]:
         for i in range (len(response_blocks)):
             cluster = response_blocks[i]['clusterby'].title()
             if cluster not in clusters:
-                clusters[response_blocks[i]['clusterby']] = (uniform(0.1, 0.9), uniform(0.1, 0.9))
+                clusters[cluster] = (uniform(0.1, 0.9), uniform(0.1, 0.9))
 
         for j in range (len(response_blocks)):
             # if we have n clusters then we want them to have a maximum size of n
