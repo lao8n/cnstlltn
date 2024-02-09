@@ -14,6 +14,7 @@ from .app import settings
 from random import uniform
 from math import sqrt
 from .app import environment
+import json
 
 client = OpenAI(
     api_key=settings.OPENAI_API_KEY
@@ -101,22 +102,24 @@ async def cluster(request: Request, clusterby: str) ->  List[UserFramework]:
     len_user_data = len(user_data)
     prompt_format = f"""
     this prompt is to describe how i want to format your response. i will prompt with something like a list of concepts
-    with a title and description separated by a colon, for example 
-    concept 1: description of concept 1
-    concept 2: description of concept 2
-    concept 3: description of concept 3
-    i then want you to return the following format where you have a list of categories etc
-    category 1
-    category 2
-    category 1
+    with a title and content and clusterby json format
+    [{{"title": "concept 1", "content": "description of concept 1", "clusterby": ""}}, 
+     {{"title": "concept 2", "content": "description of concept 2", "clusterby": ""}}, 
+     {{"title": "concept 3", "content": "description of concept 3", "clusterby": ""}}]
+    i then want you to return the same data but with the clusterby field filled in with the cluster that the concept belongs to.
+    [{{"title": "concept 1", "content": "description of concept 1", "clusterby": "cluster 1"}}, 
+     {{"title": "concept 2", "content": "description of concept 2", "clusterby": "cluster 2"}}, 
+     {{"title": "concept 3", "content": "description of concept 3", "clusterby": "cluster 1"}}]
     this should correspond in order exactly to the list of concepts in the prompt. therefore there should be 
     {len_user_data} lines in total, one for each concept.
     """
     content = f"""the following is a list of concepts and their descriptions, using {clusterby} assign a category to 
     each one of them\n
     """
+    json_data = []
     for data in user_data: 
-        content += f"{data.title}: {data.content}\n"
+        json_data.append({"title": data.title, "content": data.content, "clusterby": ""})
+    json_string = json.dumps(json_data)
     response = client.chat.completions.create(
         model='gpt-4',
         messages=[
@@ -126,12 +129,13 @@ async def cluster(request: Request, clusterby: str) ->  List[UserFramework]:
             },
             {
                 "role": "user",
-                "content": content,
+                "content": json_string,
             }
         ]
     )
     # Split response into blocks
-    response_blocks = response.choices[0].message.content.strip().split("\n")
+    json_response = response.choices[0].message.content.strip()
+    response_blocks = json.loads(json_response)
     print("response blocks")
     print(response_blocks)
 
@@ -141,21 +145,21 @@ async def cluster(request: Request, clusterby: str) ->  List[UserFramework]:
     # generate clusters
     clusters = {}
     for i in range (len(response_blocks)):
-        if response_blocks[i] not in clusters:
-            clusters[response_blocks[i]] = (uniform(0.1, 0.9), uniform(0.1, 0.9))
+        if response_blocks[i]['clusterby'] not in clusters:
+            clusters[response_blocks[i]['clusterby']] = (uniform(0.1, 0.9), uniform(0.1, 0.9))
 
     for key in clusters:
         print(key, clusters[key])
         await UserCluster(userid=user_id, cluster=key, coordinate=clusters[key]).save()
 
-    for i in range (len(user_data)):
+    for i in range (len(response_blocks)):
         # if we have n clusters then we want them to have a maximum size of n
-        if i < len(response_blocks):
-            x = clusters[response_blocks[i]][0] + uniform(-1, 1) / len(clusters)
-            y = clusters[response_blocks[i]][1] + uniform(-1, 1) / len(clusters)
-            user_data[i].clusterby[clusterby] = Cluster(cluster=response_blocks[i], coordinate=(x, y))
-            print(user_data[i], i)
-            await user_data[i].save()
+        cluster = response_blocks[i]['clusterby']
+        x = clusters[cluster][0] + uniform(-1, 1) / len(clusters)
+        y = clusters[cluster][1] + uniform(-1, 1) / len(clusters)
+        user_data[i].clusterby[clusterby] = Cluster(cluster=response_blocks[i], coordinate=(x, y))
+        print(user_data[i], i)
+        await user_data[i].save()
 
     return user_data
 

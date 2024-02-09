@@ -48,9 +48,9 @@ const QueryPane: FC<QueryPaneProps> = (props: QueryPaneProps): ReactElement => {
         if (newQuery) {
             props.onCreate({ userTxt: newQuery });
             setNewQuery('');
+             // set selected responses to empty
+            setSelectedResponses(new Set());
         }
-        // set selected responses to empty
-        setSelectedResponses(new Set());
     }
 
     const saveSelectedResponses = async () => {
