@@ -145,13 +145,14 @@ async def cluster(request: Request, clusterby: str) ->  List[UserFramework]:
 
         # generate clusters
         for i in range (len(response_blocks)):
-            if response_blocks[i]['clusterby'] not in clusters:
+            cluster = response_blocks[i]['clusterby'].title()
+            if cluster not in clusters:
                 clusters[response_blocks[i]['clusterby']] = (uniform(0.1, 0.9), uniform(0.1, 0.9))
 
         for j in range (len(response_blocks)):
             # if we have n clusters then we want them to have a maximum size of n
             i = index * chunk_size + j
-            cluster = response_blocks[j]['clusterby']
+            cluster = response_blocks[j]['clusterby'].title()
             x = clusters[cluster][0] + uniform(-1, 1) / 10
             y = clusters[cluster][1] + uniform(-1, 1) / 10
             user_data[i].clusterby[clusterby] = Cluster(cluster=cluster, coordinate=(x, y))
