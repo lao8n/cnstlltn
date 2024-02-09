@@ -143,9 +143,6 @@ async def cluster(request: Request, clusterby: str) ->  List[UserFramework]:
         print("response blocks")
         print(response_blocks)
 
-        if len(response_blocks) != len(user_data):
-            print("response blocks length does not match user data length", len(response_blocks), len(user_data))
-
         # generate clusters
         for i in range (len(response_blocks)):
             if response_blocks[i]['clusterby'] not in clusters:
