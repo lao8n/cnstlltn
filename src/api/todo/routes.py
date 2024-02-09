@@ -107,63 +107,69 @@ async def cluster(request: Request, clusterby: str) ->  List[UserFramework]:
      {{"title": "concept 2", "content": "description of concept 2", "clusterby": ""}}, 
      {{"title": "concept 3", "content": "description of concept 3", "clusterby": ""}}]
     i then want you to return the same data but with the clusterby field filled in with the cluster that the concept belongs to
-    in valid json format.
-    [{{"title": "concept 1", "content": "description of concept 1", "clusterby": "cluster 1"}}, 
-     {{"title": "concept 2", "content": "description of concept 2", "clusterby": "cluster 2"}}, 
-     {{"title": "concept 3", "content": "description of concept 3", "clusterby": "cluster 1"}}]
+    in valid json format - dropping the content field
+    [{{"title": "concept 1", "clusterby": "cluster 1"}}, 
+     {{"title": "concept 2", "clusterby": "cluster 2"}}, 
+     {{"title": "concept 3", "clusterby": "cluster 1"}}]
     this should correspond in order exactly to the list of concepts in the prompt. therefore there should be 
     {len_user_data} lines in total, one for each concept.
-    """
-    content = f"""the following is a list of concepts and their descriptions, using {clusterby} assign a category to 
+    the following is a list of concepts and their descriptions, using {clusterby} assign a category to 
     each one of them\n
     """
-    json_data = []
-    for data in user_data: 
-        json_data.append({"title": data.title, "content": data.content, "clusterby": ""})
-    json_string = json.dumps(json_data)
-    response = client.chat.completions.create(
-        model='gpt-4',
-        messages=[
-            {
-                "role": "system",
-                "content": prompt_format,
-            },
-            {
-                "role": "user",
-                "content": json_string,
-            }
-        ]
-    )
-    # Split response into blocks
-    json_response = response.choices[0].message.content.strip()
-    print(json_response)
-    response_blocks = json.loads(json_response)
-    print("response blocks")
-    print(response_blocks)
-
-    if len(response_blocks) != len(user_data):
-        print("response blocks length does not match user data length", len(response_blocks), len(user_data))
-
-    # generate clusters
     clusters = {}
-    for i in range (len(response_blocks)):
-        if response_blocks[i]['clusterby'] not in clusters:
-            clusters[response_blocks[i]['clusterby']] = (uniform(0.1, 0.9), uniform(0.1, 0.9))
+    chunk_size = 10
+    for index, chunk in enumerate(chunk_list(user_data, chunk_size)):
+        json_data = []
+        for data in chunk:
+            json_data.append({"title": data.title, "content": data.content, "clusterby": ""})
+        json_string = json.dumps(json_data)
+        response = client.chat.completions.create(
+            model='gpt-4',
+            messages=[
+                {
+                    "role": "system",
+                    "content": prompt_format,
+                },
+                {
+                    "role": "user",
+                    "content": json_string,
+                }
+            ]
+        )
+        # Split response into blocks
+        json_response = response.choices[0].message.content.strip()
+        print(json_response)
+        response_blocks = json.loads(json_response)
+        print("response blocks")
+        print(response_blocks)
+
+        if len(response_blocks) != len(user_data):
+            print("response blocks length does not match user data length", len(response_blocks), len(user_data))
+
+        # generate clusters
+        for i in range (len(response_blocks)):
+            if response_blocks[i]['clusterby'] not in clusters:
+                clusters[response_blocks[i]['clusterby']] = (uniform(0.1, 0.9), uniform(0.1, 0.9))
+
+        for j in range (len(response_blocks)):
+            # if we have n clusters then we want them to have a maximum size of n
+            i = index * chunk_size + j
+            cluster = response_blocks[i]['clusterby']
+            x = clusters[cluster][0] + uniform(-1, 1) / 10
+            y = clusters[cluster][1] + uniform(-1, 1) / 10
+            user_data[i].clusterby[clusterby] = Cluster(cluster=response_blocks[i], coordinate=(x, y))
+            print(user_data[i], i)
+            await user_data[i].save()
 
     for key in clusters:
         print(key, clusters[key])
         await UserCluster(userid=user_id, cluster=key, coordinate=clusters[key]).save()
-
-    for i in range (len(response_blocks)):
-        # if we have n clusters then we want them to have a maximum size of n
-        cluster = response_blocks[i]['clusterby']
-        x = clusters[cluster][0] + uniform(-1, 1) / len(clusters)
-        y = clusters[cluster][1] + uniform(-1, 1) / len(clusters)
-        user_data[i].clusterby[clusterby] = Cluster(cluster=response_blocks[i], coordinate=(x, y))
-        print(user_data[i], i)
-        await user_data[i].save()
-
+    
     return user_data
+
+def chunk_list(data, chunk_size):
+    for i in range(0, len(data), chunk_size):
+        yield data[i:i + chunk_size]
 
 @app.get("/login-config", response_model=LoginConfig, status_code=200)
 def get_login_config() -> LoginConfig:
