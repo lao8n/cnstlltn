@@ -154,7 +154,7 @@ async def cluster(request: Request, clusterby: str) ->  List[UserFramework]:
             cluster = response_blocks[j]['clusterby']
             x = clusters[cluster][0] + uniform(-1, 1) / 10
             y = clusters[cluster][1] + uniform(-1, 1) / 10
-            user_data[i].clusterby[clusterby] = Cluster(cluster=response_blocks[j], coordinate=(x, y))
+            user_data[i].clusterby[clusterby] = Cluster(cluster=cluster, coordinate=(x, y))
             print(user_data[i], i)
             await user_data[i].save()
 
