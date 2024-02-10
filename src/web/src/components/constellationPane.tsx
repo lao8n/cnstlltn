@@ -124,16 +124,35 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
                     if (Circle.withinBound(range, pts[i].position)) {
                         const dist = (r - pts[i].position.$subtract(space.pointer).magnitude()) / r;
                         const p = pts[i].position.$subtract(space.pointer).scale(1 + dist).add(space.pointer);
-                        form.point(p, dist * 25, "circle");
-                        form.fill("#fff").text(pts[i].position.$add(15, 15), pts[i].name)
+                        form.fill("#fff").point(p, dist * 15, "circle");
+                        form.font(dist * 15).fill("#fff").text(pts[i].position.$add(15, 15), pts[i].name);
                     } else {
-                        form.fillOnly("#fff").point(pts[i].position, 3);
+                        form.fill("#fff").point(pts[i].position, 3, "circle");
                     }
                 }
                 for (let i = 0, len = cluster?.length; i < len; i++) {
-                    form.fill("#fff").text(cluster[i].position, cluster[i].name)
+                    form.font(15).fill("#fff").text(cluster[i].position, cluster[i].name)
                 }
             },
+            action: (type, x, y) => {
+                const r = 10;
+                if (type === "up") { // Check if the mouse click is released, which indicates a click
+                    const mousePt = new Pt(x, y); // Create a Pt from the mouse position
+                    const range = Circle.fromCenter(mousePt, r);
+                    const topRightX = (canvasRef.current?.width || 0) - 100;
+                    const topRightY = 20;
+                    const topRight = new Pt(topRightX, topRightY);
+                    for (let i = 0, len = pts?.length; i < len; i++) {
+                        if (Circle.withinBound(range, pts[i].position)) {
+                            form.fill("#fff").text(topRight, cluster[i].name)
+                            form.fill("#fff").text(topRight.$add(0, 15), pts[i].description);
+                            break; // only print one thing
+                        }
+                    }
+                    // Handle the click event, e.g., by drawing a circle at the click position
+                    form.fillOnly("#123").circle([mousePt, 10]); // Draw a circle at the click position
+                }
+            }
         });
         space.bindMouse().bindTouch().play();
         window.addEventListener("resize", handleResize);
@@ -150,6 +169,7 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
                 <Stack.Item tokens={stackItemPadding}>
                     <div>Constellation</div>
                 </Stack.Item>
+                <Stack.Item grow={1} />
                 <Stack.Item>
                     <button
                         className={clusterButtonStyles}

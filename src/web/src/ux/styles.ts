@@ -43,6 +43,7 @@ export const mainStackStyles: IStackStyles = {
 export const canvasStackStyle: IStackStyles = {
     root: {
         minHeight: 900,
+        maxHeight: 1200,
         width: '100%',
     }
 }

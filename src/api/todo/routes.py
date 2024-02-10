@@ -150,7 +150,6 @@ async def cluster(request: Request, clusterby: str) ->  List[UserFramework]:
                 clusters[cluster] = (uniform(0.1, 0.9), uniform(0.1, 0.9))
 
         for j in range (len(response_blocks)):
-            # if we have n clusters then we want them to have a maximum size of n
             i = index * chunk_size + j
             cluster = response_blocks[j]['clusterby'].title()
             x = clusters[cluster][0] + uniform(-1, 1) / 10
