@@ -3,5 +3,8 @@
     "[lisp]": {
         "editor.wordSeparators": "`|;:'\",()"
     },
-    "python.analysis.typeCheckingMode": "off"
+    "python.analysis.typeCheckingMode": "off",
+    "[commonlisp]": {
+        "editor.wordSeparators": "`|;:'\",()"
+    }
 }
