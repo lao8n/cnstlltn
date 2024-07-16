@@ -147,7 +147,7 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
                     for (let i = 0, len = pts?.length; i < len; i++) {
                         if (Circle.withinBound(range, pts[i].position)) {
                             console.log(pts[i].description)
-                            form.fill("#fff").text(topRight, cluster[i].name)
+                            form.fill("#fff").text(topRight, pts[i].name)
                             form.fill("#fff").text(topRight.$add(0, 15), pts[i].description);
                             break; // only print one thing
                         }
