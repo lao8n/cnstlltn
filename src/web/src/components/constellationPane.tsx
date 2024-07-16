@@ -153,7 +153,7 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
                         }
                     }
                     // Handle the click event, e.g., by drawing a circle at the click position
-                    form.fillOnly("#123").circle([mousePt]); // Draw a circle at the click position
+                    form.fillOnly("#123").circle(Circle.fromCenter(mousePt, r)); // Draw a circle at the click position
                 }
             }
         });
