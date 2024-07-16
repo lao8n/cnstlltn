@@ -65,6 +65,7 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
 
     useEffect(() => {
         const handleResize = () => {
+            console.log("resizing to: ", canvasRef.current?.parentElement?.clientWidth, canvasRef.current?.parentElement?.clientHeight)
             if (canvasRef.current && canvasRef.current.parentElement) {
                 // Set the size of the canvas
                 canvasRef.current.width = canvasRef.current.parentElement.clientWidth;
@@ -152,7 +153,7 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
                         }
                     }
                     // Handle the click event, e.g., by drawing a circle at the click position
-                    form.fillOnly("#123").circle([mousePt, 10]); // Draw a circle at the click position
+                    form.fillOnly("#123").circle([mousePt]); // Draw a circle at the click position
                 }
             }
         });
