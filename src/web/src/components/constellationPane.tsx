@@ -34,7 +34,7 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
     const canvasRef = useRef<HTMLCanvasElement>(null); // Create a ref for the canvas
     const pts = useRef<Data[]>([]) as React.MutableRefObject<Data[]>;
     const cluster = useRef<Data[]>([])  as React.MutableRefObject<Data[]>;
-    const lastSelected = useRef<Data|null>(null) as React.MutableRefObject<Data>;
+    const lastSelected = useRef<Data|null>(null) as React.MutableRefObject<Data|null>;
     useEffect(() => {
         const getConstellation = async () => {
             const constellation = await actions.constellation.getConstellation(appContext.state.userState.userId);
@@ -122,7 +122,7 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
                 for (let i = 0, len = cluster.current?.length; i < len; i++) {
                     form.font(15).fill("#fff").text(cluster.current[i].position, cluster.current[i].name)
                 }
-                if (!lastSelected !== null) {
+                if (lastSelected.current !== null) {
                     const topRightX = (canvasRef.current?.width || 0) - 100;
                     const topRightY = 20;
                     const topRight = new Pt(topRightX, topRightY);
@@ -137,7 +137,11 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
                     const range = Circle.fromCenter(mousePt, r);
                     for (let i = 0, len = pts.current?.length; i < len; i++) {
                         if (Circle.withinBound(range, pts.current[i].position)) {
+                            if (lastSelected.current?.name === pts.current[i].name) {
+                                lastSelected.current = null;
+                            } 
                             pts.current[i].selected = !pts.current[i].selected;
+
                         }
                     }
                 }
