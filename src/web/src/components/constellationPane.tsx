@@ -19,7 +19,9 @@ interface ConstellationPaneProps {
 type Data = {
     name: string;
     description: string;
+    coord: [number, number];
     position: Pt;
+    selected: boolean;
 };
 
 const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneProps): ReactElement => {
@@ -30,7 +32,9 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
     }), [appContext.dispatch]);
     const clusterbyquery = "political, economic, sociological, technological, legal, environmental, psychological"
     const canvasRef = useRef<HTMLCanvasElement>(null); // Create a ref for the canvas
-
+    const pts = useRef<Data[]>([]) as React.MutableRefObject<Data[]>;
+    const cluster = useRef<Data[]>([])  as React.MutableRefObject<Data[]>;
+    const lastSelected = useRef<Data|null>(null) as React.MutableRefObject<Data>;
     useEffect(() => {
         const getConstellation = async () => {
             const constellation = await actions.constellation.getConstellation(appContext.state.userState.userId);
@@ -42,6 +46,9 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
             return constellation
         };
         getConstellation();
+        if (props.constellation) {
+            pts.current = initializeConstellation(props.constellation, clusterbyquery, canvasRef)
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [actions.constellation, appContext.dispatch]);
 
@@ -55,8 +62,11 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
             return cluster
         };
         getCluster();
+        if (props.cluster) {
+            cluster.current = initializeCluster(props.cluster, canvasRef)
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [actions.cluster, appContext.dispatch]);
+    }, [props.cluster, actions.cluster, appContext.dispatch]);
 
     const clusterBy = async () => {
         const clustered = await actions.constellation.cluster(appContext.state.userState.userId, clusterbyquery)
@@ -76,43 +86,17 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
         };
         const space = new CanvasSpace(canvasRef.current || "").setup({ bgcolor: CnstlltnTheme.palette.black, resize: true });
         const form = space.getForm();
-        let pts: Data[] = [];
-        let cluster: Data[] = [];
         const updatePositions = () => {
-            if (props.constellation) {
-                pts = props.constellation.filter(framework => {
-                    // Check if the framework has the necessary coordinate data
-                    if (framework.clusterby[clusterbyquery] &&
-                        framework.clusterby[clusterbyquery].coordinate &&
-                        framework.clusterby[clusterbyquery].coordinate.length >= 2) {
-                        return true;
-                    } else {
-                        console.log(`Missing coordinate data for framework: ${framework.title} ${framework.clusterby[clusterbyquery]}`);
-                        return false;
-                    }
-                })
-                    .map(framework => {
-                        // Now we know that framework has valid coordinates
-                        const x = framework.clusterby[clusterbyquery].coordinate[0] * (canvasRef.current?.width || 0);
-                        const y = framework.clusterby[clusterbyquery].coordinate[1] * (canvasRef.current?.height || 0);
-                        return {
-                            name: framework.title,
-                            description: framework.content,
-                            position: new Pt(x, y),
-                        };
-                    });
-            }
-            if (props.cluster) {
-                cluster = props.cluster.map(cluster => {
-                    const x = cluster.coordinate[0] * (canvasRef.current?.width || 0);
-                    const y = cluster.coordinate[1] * (canvasRef.current?.height || 0);
-                    return {
-                        name: cluster.cluster,
-                        description: "",
-                        position: new Pt(x, y),
-                    };
-                })
-            }
+            pts.current.forEach(pt => {
+                const x = pt.coord[0] * (canvasRef.current?.width || 0);
+                const y = pt.coord[1] * (canvasRef.current?.height || 0);
+                pt.position = new Pt(x, y);
+            })
+            cluster.current.forEach(pt => {
+                const x = pt.coord[0] * (canvasRef.current?.width || 0);
+                const y = pt.coord[1] * (canvasRef.current?.height || 0);
+                pt.position = new Pt(x, y);
+            })
         }
         space.add({
             start: (bound) => {
@@ -121,18 +105,29 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
             animate: (time, ftime) => {
                 const r = 50;
                 const range = Circle.fromCenter(space.pointer, r);
-                for (let i = 0, len = pts?.length; i < len; i++) {
-                    if (Circle.withinBound(range, pts[i].position)) {
-                        const dist = (r - pts[i].position.$subtract(space.pointer).magnitude()) / r;
-                        const p = pts[i].position.$subtract(space.pointer).scale(1 + dist).add(space.pointer);
+                for (let i = 0, len = pts.current?.length; i < len; i++) {
+                    if (Circle.withinBound(range, pts.current[i].position)) {
+                        const dist = (r - pts.current[i].position.$subtract(space.pointer).magnitude()) / r;
+                        const p = pts.current[i].position.$subtract(space.pointer).scale(1 + dist).add(space.pointer);
                         form.fill("#fff").point(p, dist * 15, "circle");
-                        form.font(dist * 15).fill("#fff").text(pts[i].position.$add(15, 15), pts[i].name);
+                        let colour = "#fff"
+                        if (pts.current[i].selected) {
+                            colour = "#ff0"
+                        }
+                        form.font(dist * 15).fill(colour).text(pts.current[i].position.$add(15, 15), pts.current[i].name);
                     } else {
-                        form.fill("#fff").point(pts[i].position, 3, "circle");
+                        form.fill("#fff").point(pts.current[i].position, 3, "circle");
                     }
                 }
-                for (let i = 0, len = cluster?.length; i < len; i++) {
-                    form.font(15).fill("#fff").text(cluster[i].position, cluster[i].name)
+                for (let i = 0, len = cluster.current?.length; i < len; i++) {
+                    form.font(15).fill("#fff").text(cluster.current[i].position, cluster.current[i].name)
+                }
+                if (!lastSelected !== null) {
+                    const topRightX = (canvasRef.current?.width || 0) - 100;
+                    const topRightY = 20;
+                    const topRight = new Pt(topRightX, topRightY);
+                    form.font(15).fill("#fff").text(topRight, lastSelected.current.name)
+                    form.font(12).fill("#fff").text(topRight.$add(0, 15), lastSelected.current.description);
                 }
             },
             action: (type, x, y) => {
@@ -140,20 +135,11 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
                 if (type === "up") { // Check if the mouse click is released, which indicates a click
                     const mousePt = new Pt(x, y); // Create a Pt from the mouse position
                     const range = Circle.fromCenter(mousePt, r);
-                    const topRightX = (canvasRef.current?.width || 0) - 100;
-                    const topRightY = 20;
-                    const topRight = new Pt(topRightX, topRightY);
-                    console.log("clicked", topRightX, topRightY)
-                    for (let i = 0, len = pts?.length; i < len; i++) {
-                        if (Circle.withinBound(range, pts[i].position)) {
-                            console.log(pts[i].description)
-                            form.font(15).fill("#fff").text(topRight, pts[i].name)
-                            form.font(12).fill("#fff").text(topRight.$add(0, 15), pts[i].description);
-                            break; // only print one thing
+                    for (let i = 0, len = pts.current?.length; i < len; i++) {
+                        if (Circle.withinBound(range, pts.current[i].position)) {
+                            pts.current[i].selected = !pts.current[i].selected;
                         }
                     }
-                    // Handle the click event, e.g., by drawing a circle at the click position
-                    form.fillOnly("#123").circle(range); // Draw a circle at the click position
                 }
             }
         });
@@ -186,6 +172,49 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
             </Stack.Item>
         </Stack>
     );
+}
+
+function initializeConstellation(constellation: UserFramework[], clusterbyQuery: string, canvasRef: React.RefObject<HTMLCanvasElement>): Data[] {
+    return constellation.filter(framework => {
+        // Check if the framework has the necessary coordinate data
+        if (framework.clusterby[clusterbyQuery] &&
+            framework.clusterby[clusterbyQuery].coordinate &&
+            framework.clusterby[clusterbyQuery].coordinate.length >= 2) {
+            return true;
+        } else {
+            console.log(`Missing coordinate data for framework: ${framework.title} ${framework.clusterby[clusterbyQuery]}`);
+            return false;
+        }
+    }).map(framework => {
+        // Now we know that framework has valid coordinates
+        const cx = framework.clusterby[clusterbyQuery].coordinate[0]
+        const cy = framework.clusterby[clusterbyQuery].coordinate[1]
+        const x = cx * (canvasRef.current?.width || 0);
+        const y = cy * (canvasRef.current?.height || 0);
+        return {
+            name: framework.title,
+            description: framework.content,
+            coord: [cx, cy],
+            position: new Pt(x, y),
+            selected: false,
+        };
+    });
+}
+
+function initializeCluster(cluster: Cluster[], canvasRef: React.RefObject<HTMLCanvasElement>): Data[] {
+    return cluster.map(cluster => {
+        const cx = cluster.coordinate[0]
+        const cy = cluster.coordinate[1]
+        const x = cx * (canvasRef.current?.width || 0);
+        const y = cy * (canvasRef.current?.height || 0);
+        return {
+            name: cluster.cluster,
+            description: "",
+            coord: [cx, cy],
+            position: new Pt(x, y),
+            selected: false,
+        };
+    })
 }
 
 export default ConstellationPane
