@@ -1,5 +1,5 @@
 import { Stack } from '@fluentui/react';
-import React, { FC, ReactElement, useContext, useEffect, useMemo, useRef } from "react";
+import React, { FC, ReactElement, useContext, useEffect, useState, useMemo, useRef } from "react";
 import { canvasStackStyle, clusterButtonStyles, stackItemPadding } from '../ux/styles';
 import { UserFramework, Cluster } from "../models/userState";
 import { AppContext } from "../models/applicationState";
@@ -33,8 +33,8 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
     const clusterbyquery = "political, economic, sociological, technological, legal, environmental, psychological"
     const canvasRef = useRef<HTMLCanvasElement>(null); // Create a ref for the canvas
     const pts = useRef<Data[]>([]) as React.MutableRefObject<Data[]>;
-    const cluster = useRef<Data[]>([])  as React.MutableRefObject<Data[]>;
-    const lastSelected = useRef<Data|null>(null) as React.MutableRefObject<Data|null>;
+    const clusters = useRef<Data[]>([]) as React.MutableRefObject<Data[]>;
+    const [lastSelected, setLastSelected] = useState<Data | null>(null);
     useEffect(() => {
         const getConstellation = async () => {
             const constellation = await actions.constellation.getConstellation(appContext.state.userState.userId);
@@ -63,7 +63,7 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
         };
         getCluster();
         if (props.cluster) {
-            cluster.current = initializeCluster(props.cluster, canvasRef);
+            clusters.current = initializeCluster(props.cluster, canvasRef);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.cluster, actions.cluster, appContext.dispatch]);
@@ -74,6 +74,8 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
     };
 
     useEffect(() => {
+        const space = new CanvasSpace(canvasRef.current || "").setup({ bgcolor: CnstlltnTheme.palette.black, resize: true });
+        const form = space.getForm();
         const handleResize = () => {
             console.log("resizing to: ", canvasRef.current?.parentElement?.clientWidth, canvasRef.current?.parentElement?.clientHeight)
             if (canvasRef.current && canvasRef.current.parentElement) {
@@ -85,15 +87,13 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
                 console.log("update canvas:", canvasRef.current?.width, canvasRef.current?.height);
                 }
         };
-        const space = new CanvasSpace(canvasRef.current || "").setup({ bgcolor: CnstlltnTheme.palette.black, resize: true });
-        const form = space.getForm();
         const updatePositions = () => {
             pts.current.forEach(pt => {
                 const x = pt.coord[0] * (canvasRef.current?.width || 0);
                 const y = pt.coord[1] * (canvasRef.current?.height || 0);
                 pt.position = new Pt(x, y);
             })
-            cluster.current.forEach(pt => {
+            clusters.current.forEach(pt => {
                 const x = pt.coord[0] * (canvasRef.current?.width || 0);
                 const y = pt.coord[1] * (canvasRef.current?.height || 0);
                 pt.position = new Pt(x, y);
@@ -106,30 +106,26 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
             animate: (time, ftime) => {
                 const r = 50;
                 const range = Circle.fromCenter(space.pointer, r);
-                for (let i = 0, len = pts.current?.length; i < len; i++) {
-                    let colour = "#fff";
-                    if (pts.current[i].selected) {
-                        colour = "#ff0";
-                    }
-                    if (Circle.withinBound(range, pts.current[i].position)) {
-                        const dist = (r - pts.current[i].position.$subtract(space.pointer).magnitude()) / r;
-                        const p = pts.current[i].position.$subtract(space.pointer).scale(1 + dist).add(space.pointer);
+                pts.current.forEach(pt => {
+                    const colour = pt.selected ? "#ff0" : "#fff";
+                    if (Circle.withinBound(range, pt.position)) {
+                        const dist = (r - pt.position.$subtract(space.pointer).magnitude()) / r;
+                        const p = pt.position.$subtract(space.pointer).scale(1 + dist).add(space.pointer);
                         form.fill(colour).point(p, dist * 15, "circle");
-                        form.font(dist * 15).fill("#fff").text(pts.current[i].position.$add(15, 15), pts.current[i].name);
+                        form.font(dist * 15).fill("#fff").text(pt.position.$add(15, 15), pt.name);
                     } else {
-                        form.fill(colour).point(pts.current[i].position, 3, "circle");
+                        form.fill(colour).point(pt.position, 3, "circle");
                     }
-                }
-                for (let i = 0, len = cluster.current?.length; i < len; i++) {
-                    form.font(15).fill("#fff").text(cluster.current[i].position, cluster.current[i].name);
-                }
-                if (lastSelected.current !== null) {
-                    console.log("last selected: ", lastSelected.current.name)
+                });
+                clusters.current.forEach(cluster => {
+                    form.font(15).fill("#fff").text(cluster.position, cluster.name);
+                });
+                if (lastSelected) {
                     const topRightX = (canvasRef.current?.width || 0) - 500;
                     const topRightY = 20;
                     const topRight = new Pt(topRightX, topRightY);
-                    form.font(15).fill("#fff").text(topRight, lastSelected.current.name);
-                    form.font(12).fill("#fff").text(topRight.$add(0, 15), lastSelected.current.description);
+                    form.font(15).fill("#fff").text(topRight, lastSelected.name);
+                    form.font(12).fill("#fff").text(topRight.$add(0, 15), lastSelected.description);
                 }
             },
             action: (type, x, y) => {
@@ -137,15 +133,13 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
                 if (type === "up") { // Check if the mouse click is released, which indicates a click
                     const mousePt = new Pt(x, y); // Create a Pt from the mouse position
                     const range = Circle.fromCenter(mousePt, r);
-                    for (let i = 0, len = pts.current?.length; i < len; i++) {
-                        if (Circle.withinBound(range, pts.current[i].position)) {
-                            if (lastSelected.current?.name === pts.current[i].name) {
-                                lastSelected.current = null;
-                            } 
-                            pts.current[i].selected = !pts.current[i].selected;
-                            console.log("select: ", pts.current[i].name);
+                    pts.current.forEach(pt => {
+                        if (Circle.withinBound(range, pt.position)){
+                            pt.selected = !pt.selected;
+                            setLastSelected(pt.selected ? pt : null)
+                            console.log("select: ", pt.name, lastSelected?.name);
                         }
-                    }
+                    });
                 }
             }
         });
@@ -156,7 +150,7 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
             window.removeEventListener("resize", handleResize);
             space.stop();
         };
-    }, [props.constellation, props.cluster]);
+    }, [lastSelected]);
 
     return (
         <Stack grow={1} styles={canvasStackStyle}>
