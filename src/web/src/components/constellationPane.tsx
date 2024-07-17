@@ -38,7 +38,7 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
     useEffect(() => {
         const getConstellation = async () => {
             const constellation = await actions.constellation.getConstellation(appContext.state.userState.userId);
-            constellation.forEach(framework => { console.log(framework) });
+            // constellation.forEach(framework => { console.log(framework) });
             appContext.dispatch({
                 type: ActionTypes.SET_CONSTELLATION,
                 constellation: constellation,
@@ -50,7 +50,7 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
             pts.current = initializeConstellation(props.constellation, clusterbyquery, canvasRef);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.constellation, actions.constellation, appContext.dispatch]);
+    }, [actions.constellation, appContext.dispatch]);
 
     useEffect(() => {
         const getCluster = async () => {
@@ -66,7 +66,7 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
             clusters.current = initializeCluster(props.cluster, canvasRef);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.cluster, actions.cluster, appContext.dispatch]);
+    }, [actions.cluster, appContext.dispatch]);
 
     const clusterBy = async () => {
         const clustered = await actions.constellation.cluster(appContext.state.userState.userId, clusterbyquery)
@@ -125,7 +125,7 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
                     const topRightY = 20;
                     const topRight = new Pt(topRightX, topRightY);
                     form.font(15).fill("#fff").text(topRight, lastSelected.name);
-                    form.font(12).fill("#fff").text(topRight.$add(0, 15), lastSelected.description);
+                    form.font(12).fill("#fff").text(topRight.$add(0, 0), lastSelected.description);
                 }
             },
             action: (type, x, y) => {
