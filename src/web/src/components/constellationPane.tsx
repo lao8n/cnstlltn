@@ -8,7 +8,7 @@ import { bindActionCreators } from "../actions/actionCreators";
 import * as userActions from '../actions/userActions';
 import { UserActions } from '../actions/userActions';
 import { ActionTypes } from '../actions/common';
-import { CanvasSpace, Circle, Pt } from "pts";
+import { CanvasSpace, Circle, Pt, CanvasForm } from "pts";
 import { CnstlltnTheme } from "../ux/theme";
 
 interface ConstellationPaneProps {
@@ -131,7 +131,7 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
                     const topRightY = 20;
                     const topRight = new Pt(topRightX, topRightY);
                     form.font(15).fill("#fff").text(topRight, lastSelected.name);
-                    form.font(12).fill("#fff").text(topRight.$add(0, 0), lastSelected.description);
+                    drawMultiLineText(form, topRight.$add(0, 15), lastSelected.description, 15, 400);
                 }
             },
             action: (type, x, y) => {
@@ -221,6 +221,25 @@ function initializeCluster(cluster: Cluster[], canvasRef: React.RefObject<HTMLCa
             selected: false,
         };
     })
+}
+
+function drawMultiLineText(form : CanvasForm, startingPoint : Pt, text : string, lineHeight : number, maxWidth: number) {
+    const words = text.split(' ');
+    let line = '';
+    let y = startingPoint.y;
+
+    for (let i = 0; i < words.length; i++) {
+        const testLine = line + words[i] + ' ';
+        const testWidth = form.getTextWidth(testLine);
+        if (testWidth > maxWidth && i > 0) {
+            form.font(12).fill("#fff").text(new Pt(startingPoint.x, y), line);
+            line = words[i] + ' ';
+            y += lineHeight;
+        } else {
+            line = testLine;
+        }
+    }
+    form.font(12).fill("#fff").text(new Pt(startingPoint.x, y), line); // Render the last line
 }
 
 export default ConstellationPane
