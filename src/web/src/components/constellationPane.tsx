@@ -143,17 +143,17 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
                     const topRightX = (canvasRef.current?.width || 0) - 100;
                     const topRightY = 20;
                     const topRight = new Pt(topRightX, topRightY);
-                    console.log("clicked")
+                    console.log("clicked", topRightX, topRightY)
                     for (let i = 0, len = pts?.length; i < len; i++) {
                         if (Circle.withinBound(range, pts[i].position)) {
                             console.log(pts[i].description)
-                            form.fill("#fff").text(topRight, pts[i].name)
-                            form.fill("#fff").text(topRight.$add(0, 15), pts[i].description);
+                            form.font(15).fill("#fff").text(topRight, pts[i].name)
+                            form.font(12).fill("#fff").text(topRight.$add(0, 15), pts[i].description);
                             break; // only print one thing
                         }
                     }
                     // Handle the click event, e.g., by drawing a circle at the click position
-                    form.fillOnly("#123").circle(Circle.fromCenter(mousePt, r)); // Draw a circle at the click position
+                    form.fillOnly("#123").circle(range); // Draw a circle at the click position
                 }
             }
         });
