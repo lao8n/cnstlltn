@@ -46,11 +46,14 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
             return constellation
         };
         getConstellation();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [actions.constellation, appContext.dispatch]);
+
+    useEffect(() => {
         if (props.constellation) {
             pts.current = initializeConstellation(props.constellation, clusterbyquery, canvasRef);
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [actions.constellation, appContext.dispatch]);
+    }, [props.constellation])
 
     useEffect(() => {
         const getCluster = async () => {
@@ -62,11 +65,14 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
             return cluster
         };
         getCluster();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [actions.cluster, appContext.dispatch]);
+
+    useEffect(() => {
         if (props.cluster) {
             clusters.current = initializeCluster(props.cluster, canvasRef);
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [actions.cluster, appContext.dispatch]);
+    }, [props.cluster])
 
     const clusterBy = async () => {
         const clustered = await actions.constellation.cluster(appContext.state.userState.userId, clusterbyquery)
