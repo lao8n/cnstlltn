@@ -82,12 +82,12 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
                 canvasRef.current.height = canvasRef.current.parentElement.clientHeight;
                 // Recalculate the positions based on new canvas size
                 updatePositions();
+                console.log("update canvas:", canvasRef.current?.width, canvasRef.current?.height);
                 }
         };
         const space = new CanvasSpace(canvasRef.current || "").setup({ bgcolor: CnstlltnTheme.palette.black, resize: true });
         const form = space.getForm();
         const updatePositions = () => {
-            console.log("update canvas:", canvasRef.current?.width, canvasRef.current?.height);
             pts.current.forEach(pt => {
                 const x = pt.coord[0] * (canvasRef.current?.width || 0);
                 const y = pt.coord[1] * (canvasRef.current?.height || 0);
@@ -107,9 +107,9 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
                 const r = 50;
                 const range = Circle.fromCenter(space.pointer, r);
                 for (let i = 0, len = pts.current?.length; i < len; i++) {
-                    let colour = "#fff"
+                    let colour = "#fff";
                     if (pts.current[i].selected) {
-                        colour = "#ff0"
+                        colour = "#ff0";
                     }
                     if (Circle.withinBound(range, pts.current[i].position)) {
                         const dist = (r - pts.current[i].position.$subtract(space.pointer).magnitude()) / r;
@@ -121,13 +121,14 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
                     }
                 }
                 for (let i = 0, len = cluster.current?.length; i < len; i++) {
-                    form.font(15).fill("#fff").text(cluster.current[i].position, cluster.current[i].name)
+                    form.font(15).fill("#fff").text(cluster.current[i].position, cluster.current[i].name);
                 }
                 if (lastSelected.current !== null) {
-                    const topRightX = (canvasRef.current?.width || 0) - 100;
+                    console.log("last selected: ", lastSelected.current.name)
+                    const topRightX = (canvasRef.current?.width || 0) - 500;
                     const topRightY = 20;
                     const topRight = new Pt(topRightX, topRightY);
-                    form.font(15).fill("#fff").text(topRight, lastSelected.current.name)
+                    form.font(15).fill("#fff").text(topRight, lastSelected.current.name);
                     form.font(12).fill("#fff").text(topRight.$add(0, 15), lastSelected.current.description);
                 }
             },
@@ -142,7 +143,7 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
                                 lastSelected.current = null;
                             } 
                             pts.current[i].selected = !pts.current[i].selected;
-
+                            console.log("select: ", pts.current[i].name);
                         }
                     }
                 }
