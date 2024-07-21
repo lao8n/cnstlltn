@@ -157,7 +157,7 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
             window.removeEventListener("resize", handleResize);
             space.stop();
         };
-    }, [lastSelected]);
+    }, [lastSelected, dimensions, maxDimensions]);
 
     return (
         <Stack grow={1} styles={canvasStackStyle}>
