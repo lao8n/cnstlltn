@@ -87,22 +87,22 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
         const handleResize = () => {
             console.log("resizing to: ", canvasRef.current?.parentElement?.clientWidth, canvasRef.current?.parentElement?.clientHeight)
             if (canvasRef.current?.parentElement) {
-                canvasRef.current.width = Math.min(canvasRef.current.parentElement.clientWidth, maxDimensions.width)
-                canvasRef.current.height = Math.min(canvasRef.current.parentElement.clientHeight, maxDimensions.height)
+                dimensions.width = Math.min(canvasRef.current.parentElement.clientWidth, maxDimensions.width)
+                dimensions.height = Math.min(canvasRef.current.parentElement.clientHeight, maxDimensions.height)
                 // Recalculate the positions based on new canvas size
                 updatePositions();
-                console.log("update canvas:", canvasRef.current?.width, canvasRef.current?.height);
+                console.log("update canvas:", dimensions.width, dimensions.height);
             }
         };
         const updatePositions = () => {
             pts.current.forEach(pt => {
-                const x = pt.coord[0] * (canvasRef.current?.width || 0);
-                const y = pt.coord[1] * (canvasRef.current?.height || 0);
+                const x = pt.coord[0] * (dimensions.width || 0);
+                const y = pt.coord[1] * (dimensions.height || 0);
                 pt.position = new Pt(x, y);
             })
             clusters.current.forEach(pt => {
-                const x = pt.coord[0] * (canvasRef.current?.width || 0);
-                const y = pt.coord[1] * (canvasRef.current?.height || 0);
+                const x = pt.coord[0] * (dimensions.width || 0);
+                const y = pt.coord[1] * (dimensions.height || 0);
                 pt.position = new Pt(x, y);
             })
         }
@@ -175,7 +175,7 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
                 </Stack.Item>
             </Stack>
             <Stack.Item grow={1} styles={canvasStackStyle}>
-                <canvas ref={canvasRef} id="pt" style={{ width: '100%', height: '100%' }} />
+                <canvas ref={canvasRef} id="pt" style={{ width: dimensions.width, height: dimensions.height }} />
             </Stack.Item>
         </Stack>
     );
