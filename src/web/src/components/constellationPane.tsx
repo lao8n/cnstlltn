@@ -36,7 +36,6 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
     const clusters = useRef<Data[]>([]) as React.MutableRefObject<Data[]>;
     const [lastSelected, setLastSelected] = useState<Data | null>(null);
     const [dimensions, setDimensions] = useState({ width: 1000, height: 600 })
-    const maxDimensions = { width: 1200, height: 800}
     useEffect(() => {
         const getConstellation = async () => {
             const constellation = await actions.constellation.getConstellation(appContext.state.userState.userId);
@@ -84,11 +83,13 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
     useEffect(() => {
         const space = new CanvasSpace(canvasRef.current || "").setup({ bgcolor: CnstlltnTheme.palette.black, resize: true });
         const form = space.getForm();
+        const maxDimensions = {width: 1200, height: 800}
         const handleResize = () => {
             console.log("resizing to: ", canvasRef.current?.parentElement?.clientWidth, canvasRef.current?.parentElement?.clientHeight)
             if (canvasRef.current?.parentElement) {
-                dimensions.width = Math.min(canvasRef.current.parentElement.clientWidth, maxDimensions.width)
-                dimensions.height = Math.min(canvasRef.current.parentElement.clientHeight, maxDimensions.height)
+                const newWidth = Math.min(canvasRef.current.parentElement.clientWidth, maxDimensions.width)
+                const newHeight = Math.min(canvasRef.current.parentElement.clientHeight, maxDimensions.height)
+                setDimensions({width: newWidth, height: newHeight})
                 // Recalculate the positions based on new canvas size
                 updatePositions();
                 console.log("update canvas:", dimensions.width, dimensions.height);
@@ -157,7 +158,7 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
             window.removeEventListener("resize", handleResize);
             space.stop();
         };
-    }, [lastSelected, dimensions, maxDimensions]);
+    }, [lastSelected, dimensions]);
 
     return (
         <Stack grow={1} styles={canvasStackStyle}>
