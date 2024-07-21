@@ -35,6 +35,8 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
     const pts = useRef<Data[]>([]) as React.MutableRefObject<Data[]>;
     const clusters = useRef<Data[]>([]) as React.MutableRefObject<Data[]>;
     const [lastSelected, setLastSelected] = useState<Data | null>(null);
+    const [dimensions, setDimensions] = useState({ width: 1000, height: 600 })
+    const maxDimensions = { width: 1200, height: 800}
     useEffect(() => {
         const getConstellation = async () => {
             const constellation = await actions.constellation.getConstellation(appContext.state.userState.userId);
@@ -84,14 +86,13 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
         const form = space.getForm();
         const handleResize = () => {
             console.log("resizing to: ", canvasRef.current?.parentElement?.clientWidth, canvasRef.current?.parentElement?.clientHeight)
-            if (canvasRef.current && canvasRef.current.parentElement) {
-                // Set the size of the canvas
-                canvasRef.current.width = canvasRef.current.parentElement.clientWidth;
-                canvasRef.current.height = canvasRef.current.parentElement.clientHeight;
+            if (canvasRef.current?.parentElement) {
+                canvasRef.current.width = Math.min(canvasRef.current.parentElement.clientWidth, maxDimensions.width)
+                canvasRef.current.height = Math.min(canvasRef.current.parentElement.clientHeight, maxDimensions.height)
                 // Recalculate the positions based on new canvas size
                 updatePositions();
                 console.log("update canvas:", canvasRef.current?.width, canvasRef.current?.height);
-                }
+            }
         };
         const updatePositions = () => {
             pts.current.forEach(pt => {
