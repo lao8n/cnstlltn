@@ -85,11 +85,11 @@ async def get_constellation(request: Request) -> List[UserFramework]:
     return constellation
 
 @app.get("/get-cluster", response_model=List[Cluster], status_code=200)
-async def get_cluster(request: Request) -> List[Cluster]:
+async def get_cluster(request: Request, clusterby: str) -> List[Cluster]:
     print("getting cluster")
     print(request.headers)
     user_id = request.headers.get("user-id")
-    clusters_data = await UserCluster.find_many({"userid": user_id}).to_list()
+    clusters_data = await UserCluster.find(UserCluster.userid == user_id, UserCluster.clusterby == clusterby).to_list()
     cluster = [Cluster(cluster=x.cluster, coordinate=x.coordinate) for x in clusters_data]
     print(cluster)
     return cluster
@@ -144,23 +144,29 @@ async def cluster(request: Request, clusterby: str) ->  List[UserFramework]:
         print(response_blocks)
 
         # generate clusters
-        for i in range (len(response_blocks)):
-            cluster = response_blocks[i]['clusterby'].title()
+        for response_block in response_blocks:
+            cluster = response_block['clusterby'].title()
             if cluster not in clusters:
                 clusters[cluster] = (uniform(0.1, 0.9), uniform(0.1, 0.9))
 
         for j in range (len(response_blocks)):
             i = index * chunk_size + j
             cluster = response_blocks[j]['clusterby'].title()
-            x = clusters[cluster][0] + uniform(-1, 1) / 10
-            y = clusters[cluster][1] + uniform(-1, 1) / 10
+            x = clusters[cluster][0] + uniform(-1, 1) / 7
+            y = clusters[cluster][1] + uniform(-1, 1) / 7
             user_data[i].clusterby[clusterby] = Cluster(cluster=cluster, coordinate=(x, y))
             print(user_data[i], i)
             await user_data[i].save()
 
-    for key in clusters:
-        print(key, clusters[key])
-        await UserCluster(userid=user_id, cluster=key, coordinate=clusters[key]).save()
+    # delete all clusters 
+    await UserCluster.find(
+        UserCluster.userid == user_id,
+        UserCluster.clusterby == clusterby
+    ).delete_many()
+
+    for key, coordinates in clusters:
+        print(key, coordinates)
+        await UserCluster(userid=user_id,  clusterby=clusterby, cluster=key, coordinate=coordinates).save()
     
     return user_data
 

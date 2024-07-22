@@ -31,11 +31,12 @@ export class UserService {
         return response.data;
     }
 
-    public async getCluster(userId: string): Promise<Cluster[]> {
+    public async getCluster(userId: string, clusterby: string): Promise<Cluster[]> {
         const response = await this.client.request<Cluster[]>({
             method: 'GET',
             url: `${this.baseUrl}/get-cluster`,
             headers: { 'USER-ID': userId },
+            params: { clusterby: clusterby },
         });
         return response.data;
     }

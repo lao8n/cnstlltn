@@ -35,7 +35,7 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
     const pts = useRef<Data[]>([]) as React.MutableRefObject<Data[]>;
     const clusters = useRef<Data[]>([]) as React.MutableRefObject<Data[]>;
     const [lastSelected, setLastSelected] = useState<Data | null>(null);
-    const [dimensions, setDimensions] = useState({ width: 1000, height: 600 })
+    const [dimensions, setDimensions] = useState({ width: 2000, height: 1200 })
     useEffect(() => {
         const getConstellation = async () => {
             const constellation = await actions.constellation.getConstellation(appContext.state.userState.userId);
@@ -58,7 +58,7 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
 
     useEffect(() => {
         const getCluster = async () => {
-            const cluster = await actions.cluster.getCluster(appContext.state.userState.userId);
+            const cluster = await actions.cluster.getCluster(appContext.state.userState.userId, clusterbyquery);
             appContext.dispatch({
                 type: ActionTypes.SET_CLUSTER,
                 cluster: cluster,

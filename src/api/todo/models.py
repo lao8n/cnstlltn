@@ -60,6 +60,7 @@ class Cluster(BaseModel):
 
 class UserCluster(Document):
     userid: str
+    clusterby: str
     cluster: str
     coordinate: Tuple[float, float]
 
