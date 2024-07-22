@@ -36,8 +36,6 @@ export const mainStackStyles: IStackStyles = {
     root: {
         background: theme.palette.black,
         color: theme.palette.white,
-        height: '100%',
-        width: '100%',
     }
 }
 
@@ -45,6 +43,7 @@ export const canvasStackStyle: IStackStyles = {
     root: {
         // minHeight: 900,
         // maxHeight: 1200,
+        overflow: 'hidden',
         width: '100%',
         height: '100%',
     }

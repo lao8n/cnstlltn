@@ -3,7 +3,7 @@ import asyncio
 import motor
 import pytest
 from fastapi.testclient import TestClient
-from todo.app import app, settings
+from src.app import app, settings
 
 TEST_DB_NAME = "test_db"
 

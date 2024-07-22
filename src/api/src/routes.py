@@ -3,7 +3,7 @@ from http import HTTPStatus
 from typing import List, Optional
 from urllib.parse import urljoin
 
-from beanie import PydanticObjectId
+from beanie import PydanticObjectId, Q
 from fastapi import HTTPException, Response
 from starlette.requests import Request
 
@@ -92,8 +92,8 @@ async def get_cluster(request: Request) -> List[Cluster]:
     clusterby = request.query_params.get("clusterby")
     print(clusterby)
     clusters_data = await UserCluster.find(
-        (UserCluster.userid == user_id) & 
-        (UserCluster.clusterby == clusterby)
+        Q(UserCluster.userid == user_id) & 
+        Q(UserCluster.clusterby == clusterby)
     ).to_list()
     print(clusters_data)
     cluster = [Cluster(cluster=x.cluster, coordinate=x.coordinate) for x in clusters_data]
@@ -166,8 +166,8 @@ async def cluster(request: Request, clusterby: str) ->  List[UserFramework]:
 
     # delete all clusters 
     await UserCluster.find(
-        (UserCluster.userid == user_id) & 
-        (UserCluster.clusterby == clusterby)
+        Q(UserCluster.userid == user_id) & 
+        Q(UserCluster.clusterby == clusterby)
     ).delete_many()
     print(clusters)
     for key, coordinates in clusters.items():
