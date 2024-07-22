@@ -37,6 +37,7 @@ export const mainStackStyles: IStackStyles = {
         background: theme.palette.black,
         color: theme.palette.white,
         height: '100%',
+        width: '100%',
     }
 }
 

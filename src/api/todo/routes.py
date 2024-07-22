@@ -164,7 +164,7 @@ async def cluster(request: Request, clusterby: str) ->  List[UserFramework]:
         UserCluster.clusterby == clusterby
     ).delete_many()
 
-    for key, coordinates in clusters:
+    for key, coordinates in clusters.items():
         print(key, coordinates)
         await UserCluster(userid=user_id,  clusterby=clusterby, cluster=key, coordinate=coordinates).save()
     
