@@ -90,7 +90,10 @@ async def get_cluster(request: Request) -> List[Cluster]:
     print(request.headers)
     user_id = request.headers.get("user-id")
     clusterby = request.query_params.get("clusterby")
-    clusters_data = await UserCluster.find(UserCluster.userid == user_id, UserCluster.clusterby == clusterby).to_list()
+    clusters_data = await UserCluster.find_many({
+            "userid": user_id,
+            "clusterby": clusterby}
+    ).to_list()
     print(clusters_data)
     cluster = [Cluster(cluster=x.cluster, coordinate=x.coordinate) for x in clusters_data]
     print(cluster)
@@ -161,9 +164,9 @@ async def cluster(request: Request, clusterby: str) ->  List[UserFramework]:
             await user_data[i].save()
 
     # delete all clusters 
-    await UserCluster.find(
-        UserCluster.userid == user_id,
-        UserCluster.clusterby == clusterby
+    await  UserCluster.find_many({
+        "userid": user_id,
+        "clusterby": clusterby}
     ).delete_many()
     print(clusters)
     for key, coordinates in clusters.items():

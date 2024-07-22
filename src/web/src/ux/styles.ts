@@ -46,7 +46,7 @@ export const canvasStackStyle: IStackStyles = {
         // minHeight: 900,
         // maxHeight: 1200,
         overflow: 'auto',
-        width: '100vw',
+        width: '100%',
         height: '100vh',
     }
 }
