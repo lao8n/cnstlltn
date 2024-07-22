@@ -85,11 +85,13 @@ async def get_constellation(request: Request) -> List[UserFramework]:
     return constellation
 
 @app.get("/get-cluster", response_model=List[Cluster], status_code=200)
-async def get_cluster(request: Request, clusterby: str) -> List[Cluster]:
+async def get_cluster(request: Request) -> List[Cluster]:
     print("getting cluster")
     print(request.headers)
     user_id = request.headers.get("user-id")
+    clusterby = request.query_params.get("clusterby")
     clusters_data = await UserCluster.find(UserCluster.userid == user_id, UserCluster.clusterby == clusterby).to_list()
+    print(clusters_data)
     cluster = [Cluster(cluster=x.cluster, coordinate=x.coordinate) for x in clusters_data]
     print(cluster)
     return cluster
@@ -163,7 +165,7 @@ async def cluster(request: Request, clusterby: str) ->  List[UserFramework]:
         UserCluster.userid == user_id,
         UserCluster.clusterby == clusterby
     ).delete_many()
-
+    print(clusters)
     for key, coordinates in clusters.items():
         print(key, coordinates)
         await UserCluster(userid=user_id,  clusterby=clusterby, cluster=key, coordinate=coordinates).save()
