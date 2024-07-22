@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   description: Simple Todo API
   version: 3.0.0
-  title: Simple Todo API
+  title: Cnstlltn
   contact:
     email: azdevteam@microsoft.com
 
