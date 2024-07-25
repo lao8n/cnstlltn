@@ -158,8 +158,8 @@ async def cluster(request: Request, clusterby: str) ->  List[UserFramework]:
         for j in range (len(response_blocks)):
             i = index * chunk_size + j
             cluster = response_blocks[j]['clusterby'].title()
-            x = clusters[cluster][0] + uniform(-1, 1) / 7
-            y = clusters[cluster][1] + uniform(-1, 1) / 7
+            x = clusters[cluster][0] + uniform(-1, 1) / 8
+            y = clusters[cluster][1] + uniform(-1, 1) / 8
             user_data[i].clusterby[clusterby] = Cluster(cluster=cluster, coordinate=(x, y))
             print(user_data[i], i)
             await user_data[i].save()
