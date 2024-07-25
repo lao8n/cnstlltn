@@ -6,7 +6,7 @@
 			"type": "python",
 			"request": "launch",
 			"module": "uvicorn",
-            "cwd": "${workspaceFolder}/src",
+            "cwd": "${workspaceFolder}/todo",
 			"args": [
 				"todo.app:app",
 				"--reload"
@@ -17,7 +17,7 @@
 			"type": "python",
 			"request": "launch",
 			"module": "pytest",
-            "cwd": "${workspaceFolder}/src",
+            "cwd": "${workspaceFolder}/todo",
 			"args": [
 				"${workspaceFolder}/tests", 
                 "-vv"

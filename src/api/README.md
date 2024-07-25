@@ -23,7 +23,7 @@ Before running, set the `AZURE_COSMOS_CONNECTION_STRING` environment variable to
 Run the following common from the root of the api folder to start the app:
 
 ```bash
-$ uvicorn src.app:app --port 3100 --reload
+$ uvicorn todo.app:app --port 3100 --reload
 ```
 
 There is also a launch profile in VS Code for debugging.
