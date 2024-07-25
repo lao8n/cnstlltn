@@ -13,6 +13,7 @@ export const queryFieldStyles = {
 
 export const rootStackStyles: IStackStyles = {
     root: {
+        width: '100vw',
         height: '100vh',
         background: theme.palette.black,
     }
@@ -41,8 +42,6 @@ export const mainStackStyles: IStackStyles = {
 
 export const canvasStackStyle: IStackStyles = {
     root: {
-        // minHeight: 900,
-        // maxHeight: 1200,
         overflow: 'hidden',
         width: '100%',
         height: '100%',

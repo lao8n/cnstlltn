@@ -1,6 +1,6 @@
 import { Stack } from '@fluentui/react';
 import React, { FC, ReactElement, useContext, useEffect, useState, useMemo, useRef } from "react";
-import { canvasStackStyle, clusterButtonStyles, stackItemPadding } from '../ux/styles';
+import { clusterButtonStyles, stackItemPadding } from '../ux/styles';
 import { UserFramework, Cluster } from "../models/userState";
 import { AppContext } from "../models/applicationState";
 import UserAppContext from "./userContext";
@@ -161,7 +161,7 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
     }, [lastSelected, dimensions]);
 
     return (
-        <Stack grow={1} styles={canvasStackStyle}>
+        <Stack>
             <Stack horizontal>
                 <Stack.Item tokens={stackItemPadding}>
                     <div>Constellation</div>
@@ -175,8 +175,8 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
                     </button>
                 </Stack.Item>
             </Stack>
-            <Stack.Item grow={1} styles={canvasStackStyle}>
-                <canvas ref={canvasRef} id="pt" style={{ width: '100%', height: '100%' }} />
+            <Stack.Item grow={1}>
+                <canvas ref={canvasRef} id="pt"/>
             </Stack.Item>
         </Stack>
     );
