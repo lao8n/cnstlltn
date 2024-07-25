@@ -57,7 +57,7 @@ module app '../core/host/container-app-upsert.bicep' = {
         value: corsAcaUrl
       }
     ]
-    targetPort: 3101
+    targetPort: 3100
   }
 }
 
