@@ -10,6 +10,7 @@ param keyVaultName string
 param serviceName string = 'api'
 param corsAcaUrl string
 param customDomain string
+param fakeChange string = ''
 param exists bool
 
 resource apiIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
@@ -38,7 +39,7 @@ module app '../core/host/container-app-upsert.bicep' = {
     exists: exists
     containerAppsEnvironmentName: containerAppsEnvironmentName
     containerRegistryName: containerRegistryName
-    allowedOrigins: [ corsAcaUrl, customDomain ]
+    allowedOrigins: [ corsAcaUrl, customDomain, fakeChange ]
     env: [
       {
         name: 'AZURE_CLIENT_ID'
