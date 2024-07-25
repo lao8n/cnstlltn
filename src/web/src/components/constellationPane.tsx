@@ -133,6 +133,7 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
                     const topRightY = 20;
                     const topRight = new Pt(topRightX, topRightY);
                     form.font(15).fill("#fff").text(topRight, lastSelected.name);
+                    console.log(topRightX, topRightY, canvasRef.current?.width)
                     drawMultiLineText(form, topRight.$add(0, 15), lastSelected.description, 15, 400);
                 }
             },

@@ -16,6 +16,7 @@ export const rootStackStyles: IStackStyles = {
         width: '100vw',
         height: '100vh',
         background: theme.palette.black,
+        overflow: 'hidden',
     }
 }
 
