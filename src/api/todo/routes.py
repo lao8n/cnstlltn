@@ -1,10 +1,6 @@
-from datetime import datetime
-from http import HTTPStatus
-from typing import List, Optional
+from typing import List
 from urllib.parse import urljoin
 
-from beanie import PydanticObjectId, Q
-from fastapi import HTTPException, Response
 from starlette.requests import Request
 
 from openai import OpenAI
@@ -13,7 +9,6 @@ from .models import (Query, QueryAiResponseBlock, Framework, UserFramework, Clus
 from .app import settings
 from random import uniform
 from math import sqrt
-from .app import environment
 import json
 
 client = OpenAI(
