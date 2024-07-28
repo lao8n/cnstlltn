@@ -10,10 +10,10 @@ const userService = new UserService(config.api.baseUrl);
 
 export interface UserActions {
     setUser(isLoggedIn: boolean, userId: string): void;
-    saveSelectedFrameworks(userId: string, frameworks: QueryResponse[]): Promise<QueryResponse[]>;
-    getConstellation(userId: string): Promise<UserFramework[]>;
-    getCluster(userId: string, clusterby: string): Promise<Cluster[]>;
-    cluster(userId: string, clusterby: string): Promise<UserFramework[]>;
+    saveSelectedFrameworks(userId: string, constellation: string, frameworks: QueryResponse[]): Promise<QueryResponse[]>;
+    getConstellation(userId: string, constellation: string): Promise<UserFramework[]>;
+    getCluster(userId: string, constellation: string, clusterby: string): Promise<Cluster[]>;
+    cluster(userId: string, constellation: string, clusterby: string): Promise<UserFramework[]>;
     getLoginConfig(): Promise<LoginConfig>;
 }
 
@@ -22,36 +22,36 @@ export const setUser = (isLoggedIn: boolean, userId: string) =>
         dispatch(setUserAction(isLoggedIn, userId));
     }
 
-export const saveSelectedFrameworks = (userId: string, frameworks: QueryResponse[]): ActionMethod<QueryResponse[]> =>
+export const saveSelectedFrameworks = (userId: string, constellationName: string, frameworks: QueryResponse[]): ActionMethod<QueryResponse[]> =>
     async (dispatch: Dispatch<SaveSelectedFrameworksAction>) => {
         // const userInfo = await userService.getUserInfo();
         // console.log("user info ", userInfo)
         // let userId = userInfo[0].user_id;
 
         console.log("save selected frameworks ", frameworks)
-        const savedFrameworks = await userService.saveSelectedFrameworks(userId, frameworks);
+        const savedFrameworks = await userService.saveSelectedFrameworks(userId, constellationName, frameworks);
         console.log("saved frameworks " + savedFrameworks)
         dispatch(saveSelectedFrameworksAction(frameworks))
         return savedFrameworks
     }
 
-export const getConstellation = (userId: string): ActionMethod<UserFramework[]> =>
+export const getConstellation = (userId: string, constellationName: string): ActionMethod<UserFramework[]> =>
     async (dispatch: Dispatch<GetConstellationAction>) => {
-        const constellation = await userService.getConstellation(userId);
+        const constellation = await userService.getConstellation(userId, constellationName);
         dispatch(getConstellationAction(constellation))
         return constellation;
     }
 
-export const getCluster = (userId: string, clusterby: string): ActionMethod<Cluster[]> =>
+export const getCluster = (userId: string, constellationName: string, clusterby: string): ActionMethod<Cluster[]> =>
     async (dispatch: Dispatch<GetClusterAction>) => {
-        const cluster = await userService.getCluster(userId, clusterby);
+        const cluster = await userService.getCluster(userId, constellationName, clusterby);
         dispatch(getClusterAction(cluster))
         return cluster;
     }
 
-export const cluster = (userId: string, clusterby: string): ActionMethod<UserFramework[]> => 
+export const cluster = (userId: string, constellationName: string, clusterby: string): ActionMethod<UserFramework[]> => 
     async (dispatch: Dispatch<ClusterAction>) => {
-        const clusters = await userService.cluster(userId, clusterby)
+        const clusters = await userService.cluster(userId, constellationName, clusterby)
         dispatch(clusterAction(clusters))
         return clusters;
     }

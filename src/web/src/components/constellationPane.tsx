@@ -34,11 +34,12 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
     const canvasRef = useRef<HTMLCanvasElement>(null); // Create a ref for the canvas
     const pts = useRef<Data[]>([]) as React.MutableRefObject<Data[]>;
     const clusters = useRef<Data[]>([]) as React.MutableRefObject<Data[]>;
+    const [constellationName, setConstellationName] = useState<string>;
     const [lastSelected, setLastSelected] = useState<Data | null>(null);
     const [dimensions, setDimensions] = useState({ width: 2000, height: 1200 })
     useEffect(() => {
         const getConstellation = async () => {
-            const constellation = await actions.constellation.getConstellation(appContext.state.userState.userId);
+            const constellation = await actions.constellation.getConstellation(appContext.state.userState.userId, constellationName);
             // constellation.forEach(framework => { console.log(framework) });
             appContext.dispatch({
                 type: ActionTypes.SET_CONSTELLATION,
@@ -58,7 +59,7 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
 
     useEffect(() => {
         const getCluster = async () => {
-            const cluster = await actions.cluster.getCluster(appContext.state.userState.userId, clusterbyquery);
+            const cluster = await actions.cluster.getCluster(appContext.state.userState.userId, constellationName, clusterbyquery);
             appContext.dispatch({
                 type: ActionTypes.SET_CLUSTER,
                 cluster: cluster,
@@ -76,7 +77,7 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
     }, [props.cluster])
 
     const clusterBy = async () => {
-        const clustered = await actions.constellation.cluster(appContext.state.userState.userId, clusterbyquery)
+        const clustered = await actions.constellation.cluster(appContext.state.userState.userId, constellationName, clusterbyquery)
         console.log("clustered " + clustered)
     };
 

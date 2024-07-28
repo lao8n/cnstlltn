@@ -65,10 +65,16 @@ async def save_frameworks(request: Request, saveFrameworks: List[Framework]) -> 
     print("saving frameworks")
     print(request.headers)
     user_id = request.headers.get("user-id")
+    constellation_name = request.query_params.get("constellation")
     results = []
     for framework in saveFrameworks:
         print(f"framework: {framework}")
-        results.append(await UserFramework(userid=user_id, title=framework.title, content=framework.content).save())
+        results.append(await UserFramework(
+            userid=user_id, 
+            constellation=constellation_name,
+            title=framework.title, 
+            content=framework.content
+        ).save())
     return results
 
 @app.get("/get-constellation", response_model=List[UserFramework], status_code=200)
