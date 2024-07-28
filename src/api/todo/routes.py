@@ -76,7 +76,11 @@ async def get_constellation(request: Request) -> List[UserFramework]:
     print("getting constellation")
     print(request.headers)
     user_id = request.headers.get("user-id")
-    constellation : List[UserFramework] =  await UserFramework.find_many({"userid": user_id}).to_list();
+    constellation_name = request.query_params.get("constellation")
+    constellation : List[UserFramework] =  await UserFramework.find(
+        UserFramework.userid == user_id,
+        UserFramework.constellation == constellation_name,
+    ).to_list();
     return constellation
 
 @app.get("/get-cluster", response_model=List[Cluster], status_code=200)
@@ -84,10 +88,12 @@ async def get_cluster(request: Request) -> List[Cluster]:
     print("getting cluster")
     print(request.headers)
     user_id = request.headers.get("user-id")
+    constellation_name = request.query_params.get("constellation")
     clusterby = request.query_params.get("clusterby")
-    print(clusterby)
+    print(constellation_name, clusterby)
     clusters_data = await UserCluster.find(
         UserCluster.userid == user_id,
+        UserFramework.constellation == constellation_name,
         UserCluster.clusterby == clusterby
     ).to_list()
     print(clusters_data)
@@ -98,7 +104,11 @@ async def get_cluster(request: Request) -> List[Cluster]:
 @app.post("/cluster", response_model=List[UserFramework], status_code=200)
 async def cluster(request: Request, clusterby: str) ->  List[UserFramework]: 
     user_id = request.headers.get("user-id")
-    user_data = await UserFramework.find_many({"userid": user_id}).to_list();
+    constellation_name = request.query_params.get("constellation")
+    user_data = List[UserFramework] =  await UserFramework.find(
+        UserFramework.userid == user_id,
+        UserFramework.constellation == constellation_name,
+    ).to_list();
     print(user_data)
     len_user_data = len(user_data)
     prompt_format = f"""
@@ -162,12 +172,19 @@ async def cluster(request: Request, clusterby: str) ->  List[UserFramework]:
     # delete all clusters 
     await UserCluster.find(
         UserCluster.userid == user_id,
+        UserCluster.constellation == constellation_name,
         UserCluster.clusterby == clusterby
     ).delete_many()
     print(clusters)
     for key, coordinates in clusters.items():
         print(key, coordinates)
-        await UserCluster(userid=user_id,  clusterby=clusterby, cluster=key, coordinate=coordinates).save()
+        await UserCluster(
+            userid=user_id, 
+            constellation=constellation_name, 
+            clusterby=clusterby, 
+            cluster=key, 
+            coordinate=coordinates
+        ).save()
     
     return user_data
 
