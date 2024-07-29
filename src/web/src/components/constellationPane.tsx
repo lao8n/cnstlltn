@@ -166,7 +166,7 @@ const ConstellationPane: FC = (): ReactElement => {
         <Stack>
             <Stack horizontal>
                 <Stack.Item tokens={stackItemPadding}>
-                    <div>constellationName</div>
+                    <div>{appContext.state.userState.constellationName}</div>
                 </Stack.Item>
                 <Stack.Item grow={1} />
                 <Stack.Item>

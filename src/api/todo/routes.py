@@ -65,7 +65,7 @@ async def save_frameworks(request: Request, saveFrameworks: List[Framework]) -> 
     print("saving frameworks")
     print(request.headers)
     user_id = request.headers.get("user-id")
-    constellation_name = request.query_params.get("constellation")
+    constellation_name = request.query_params.get("constellationName")
     results = []
     for framework in saveFrameworks:
         print(f"framework: {framework}")
@@ -82,7 +82,7 @@ async def get_constellation(request: Request) -> List[UserFramework]:
     print("getting constellation")
     print(request.headers)
     user_id = request.headers.get("user-id")
-    constellation_name = request.query_params.get("constellation")
+    constellation_name = request.query_params.get("constellationName")
     constellation : List[UserFramework] =  await UserFramework.find(
         UserFramework.userid == user_id,
         UserFramework.constellation == constellation_name,
@@ -94,7 +94,7 @@ async def get_cluster(request: Request) -> List[Cluster]:
     print("getting cluster")
     print(request.headers)
     user_id = request.headers.get("user-id")
-    constellation_name = request.query_params.get("constellation")
+    constellation_name = request.query_params.get("constellationName")
     clusterby = request.query_params.get("clusterby")
     print(constellation_name, clusterby)
     clusters_data = await UserCluster.find(
@@ -110,7 +110,7 @@ async def get_cluster(request: Request) -> List[Cluster]:
 @app.post("/cluster", response_model=List[UserFramework], status_code=200)
 async def cluster(request: Request, clusterby: str) ->  List[UserFramework]: 
     user_id = request.headers.get("user-id")
-    constellation_name = request.query_params.get("constellation")
+    constellation_name = request.query_params.get("constellationName")
     user_data = List[UserFramework] =  await UserFramework.find(
         UserFramework.userid == user_id,
         UserFramework.constellation == constellation_name,

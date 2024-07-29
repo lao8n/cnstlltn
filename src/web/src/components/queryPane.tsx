@@ -44,7 +44,7 @@ const QueryPane: FC<QueryPaneProps> = (props: QueryPaneProps): ReactElement => {
 
     const onFormSubmit = async (evt: FormEvent<HTMLFormElement>) => {
         evt.preventDefault();
-        if (newQuery) {
+        if (newQuery && appContext.state.userState.constellationName !== "Home") {
             props.onCreate({ userTxt: newQuery });
             setNewQuery('');
              // set selected responses to empty
@@ -78,7 +78,6 @@ const QueryPane: FC<QueryPaneProps> = (props: QueryPaneProps): ReactElement => {
         // set selected responses to empty
         setSelectedResponses(new Set());
     };
-
     return (
         <Stack>
             <Stack.Item tokens={stackItemPadding}>
