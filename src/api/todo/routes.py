@@ -111,7 +111,7 @@ async def get_cluster(request: Request) -> List[Cluster]:
 async def cluster(request: Request, clusterby: str) ->  List[UserFramework]: 
     user_id = request.headers.get("user-id")
     constellation_name = request.query_params.get("constellationName")
-    user_data = List[UserFramework] =  await UserFramework.find(
+    user_data : List[UserFramework] =  await UserFramework.find(
         UserFramework.userid == user_id,
         UserFramework.constellation == constellation_name,
     ).to_list();

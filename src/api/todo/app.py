@@ -1,7 +1,7 @@
 import motor
 from azure.monitor.opentelemetry.exporter import AzureMonitorTraceExporter
 from beanie import init_beanie
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
 from opentelemetry.sdk.resources import SERVICE_NAME, Resource
