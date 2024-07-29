@@ -23,19 +23,10 @@ const iconProps: IIconProps = {
 const QueryPane: FC<QueryPaneProps> = (props: QueryPaneProps): ReactElement => {
     const [newQuery, setNewQuery] = useState('');
     const [selectedResponses, setSelectedResponses] = useState<Set<number>>(new Set());
-    const [buttonName, setNewButton] = useState('');
     const appContext = useContext<AppContext>(UserAppContext)
     const actions = {
         queryResponseList: bindActionCreators(userActions, appContext.dispatch) as unknown as UserActions
     };
-
-    useEffect(() => {
-        if (appContext.state.userState.constellationName === "Home") {
-            setNewButton('Create Constellation')
-        } else {
-            setNewButton('Save to Constellation')
-        }
-    }, [appContext.state.userState.constellationName])
 
     const onNewQueryChange = (evt: FormEvent<HTMLInputElement | HTMLTextAreaElement>, value?: string) => {
         setNewQuery(value || '');
@@ -58,6 +49,18 @@ const QueryPane: FC<QueryPaneProps> = (props: QueryPaneProps): ReactElement => {
             setNewQuery('');
              // set selected responses to empty
             setSelectedResponses(new Set());
+        }
+    }
+
+    const createConstellation = async () => {
+        if (newQuery) {
+            const responses: QueryResponse[] = [{ title: newQuery, content: "" }];
+            const createdConstellation = await actions.queryResponseList.saveSelectedFrameworks(
+                appContext.state.userState.userId,
+                appContext.state.userState.constellationName,
+                responses,
+            )
+            console.log(createdConstellation)
         }
     }
 
@@ -84,7 +87,9 @@ const QueryPane: FC<QueryPaneProps> = (props: QueryPaneProps): ReactElement => {
                         borderless
                         iconProps={iconProps}
                         value={newQuery}
-                        placeholder="Enter the name of a book or a link to an article"
+                        placeholder={
+                            appContext.state.userState.constellationName === "Home" ?
+                                "Enter name of new constellation" : "Enter the name of a book or a link to an article"}
                         onChange={onNewQueryChange}
                         styles={queryFieldStyles}
                     />
@@ -101,7 +106,12 @@ const QueryPane: FC<QueryPaneProps> = (props: QueryPaneProps): ReactElement => {
                 ))}
             </Stack.Item>
             <Stack.Item tokens={stackItemPadding}>
-                <button onClick={saveSelectedResponses}>{buttonName}</button>
+                <button onClick={
+                    appContext.state.userState.constellationName === "Home" ?
+                        createConstellation : saveSelectedResponses}>
+                    {appContext.state.userState.constellationName === "Home" ?
+                        "Create Constellation" : "Save to Constellation"}
+                </button>
             </Stack.Item>
         </Stack>
     );
