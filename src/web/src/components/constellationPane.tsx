@@ -11,11 +11,6 @@ import { ActionTypes } from '../actions/common';
 import { CanvasSpace, Circle, Pt, CanvasForm } from "pts";
 import { CnstlltnTheme } from "../ux/theme";
 
-interface ConstellationPaneProps {
-    constellation?: UserFramework[];
-    cluster?: Cluster[];
-}
-
 type Data = {
     name: string;
     description: string;
@@ -24,23 +19,23 @@ type Data = {
     selected: boolean;
 };
 
-const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneProps): ReactElement => {
+const ConstellationPane: FC = (): ReactElement => {
     const appContext = useContext<AppContext>(UserAppContext)
     const actions = useMemo(() => ({
         constellation: bindActionCreators(userActions, appContext.dispatch) as unknown as UserActions,
         cluster: bindActionCreators(userActions, appContext.dispatch) as unknown as UserActions,
     }), [appContext.dispatch]);
-    const clusterbyquery = "political, economic, sociological, technological, legal, environmental, psychological"
     const canvasRef = useRef<HTMLCanvasElement>(null); // Create a ref for the canvas
     const pts = useRef<Data[]>([]) as React.MutableRefObject<Data[]>;
     const clusters = useRef<Data[]>([]) as React.MutableRefObject<Data[]>;
-    const [constellationName, setConstellationName] = useState<string>;
     const [lastSelected, setLastSelected] = useState<Data | null>(null);
     const [dimensions, setDimensions] = useState({ width: 2000, height: 1200 })
+
     useEffect(() => {
         const getConstellation = async () => {
-            const constellation = await actions.constellation.getConstellation(appContext.state.userState.userId, constellationName);
-            // constellation.forEach(framework => { console.log(framework) });
+            const constellation = await actions.constellation.getConstellation(
+                appContext.state.userState.userId,
+                appContext.state.userState.constellationName);
             appContext.dispatch({
                 type: ActionTypes.SET_CONSTELLATION,
                 constellation: constellation,
@@ -52,14 +47,18 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
     }, [actions.constellation, appContext.dispatch]);
 
     useEffect(() => {
-        if (props.constellation) {
-            pts.current = initializeConstellation(props.constellation, clusterbyquery, canvasRef);
-        }
-    }, [props.constellation])
+        pts.current = initializeConstellation(
+            appContext.state.userState.constellation,
+            appContext.state.userState.clusterBy,
+            canvasRef);
+    }, [appContext.state.userState.constellation, appContext.state.userState.clusterBy])
 
     useEffect(() => {
         const getCluster = async () => {
-            const cluster = await actions.cluster.getCluster(appContext.state.userState.userId, constellationName, clusterbyquery);
+            const cluster = await actions.cluster.getCluster(
+                appContext.state.userState.userId,
+                appContext.state.userState.constellationName,
+                appContext.state.userState.clusterBy);
             appContext.dispatch({
                 type: ActionTypes.SET_CLUSTER,
                 cluster: cluster,
@@ -71,13 +70,14 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
     }, [actions.cluster, appContext.dispatch]);
 
     useEffect(() => {
-        if (props.cluster) {
-            clusters.current = initializeCluster(props.cluster, canvasRef);
-        }
-    }, [props.cluster])
+        clusters.current = initializeCluster(appContext.state.userState.cluster, canvasRef);
+    }, [appContext.state.userState.cluster])
 
     const clusterBy = async () => {
-        const clustered = await actions.constellation.cluster(appContext.state.userState.userId, constellationName, clusterbyquery)
+        const clustered = await actions.constellation.cluster(
+            appContext.state.userState.userId,
+            appContext.state.userState.constellationName,
+            appContext.state.userState.clusterBy)
         console.log("clustered " + clustered)
     };
 
@@ -166,7 +166,7 @@ const ConstellationPane: FC<ConstellationPaneProps> = (props: ConstellationPaneP
         <Stack>
             <Stack horizontal>
                 <Stack.Item tokens={stackItemPadding}>
-                    <div>Constellation</div>
+                    <div>constellationName</div>
                 </Stack.Item>
                 <Stack.Item grow={1} />
                 <Stack.Item>

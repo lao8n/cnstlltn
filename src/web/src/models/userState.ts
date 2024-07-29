@@ -1,7 +1,9 @@
 export interface UserState {
     isLoggedIn: boolean;
     userId: string;
+    constellationName: string,
     constellation: UserFramework[];
+    clusterBy: string,
     cluster: Cluster[];
 }
 

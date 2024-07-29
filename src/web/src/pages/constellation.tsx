@@ -19,9 +19,7 @@ const Constellation = () => {
   
     return (
       <Stack grow={1} styles={canvasStackStyle}>
-        <ConstellationPane
-          constellation={appContext.state.userState.constellation}
-          cluster={appContext.state.userState.cluster} />
+        <ConstellationPane/>
       </Stack >
     );
   };

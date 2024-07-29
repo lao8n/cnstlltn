@@ -1,5 +1,5 @@
 import { IIconProps, Stack, TextField } from '@fluentui/react';
-import React, { FC, ReactElement, useState, useContext, FormEvent } from "react";
+import React, { FC, ReactElement, useState, useContext, useEffect, FormEvent } from "react";
 import { queryFieldStyles, stackItemPadding } from '../ux/styles';
 import { Query, QueryResponse } from '../models/queryState';
 import { buttonStyles, selectedButtonStyles } from '../ux/styles';
@@ -23,11 +23,19 @@ const iconProps: IIconProps = {
 const QueryPane: FC<QueryPaneProps> = (props: QueryPaneProps): ReactElement => {
     const [newQuery, setNewQuery] = useState('');
     const [selectedResponses, setSelectedResponses] = useState<Set<number>>(new Set());
+    const [buttonName, setNewButton] = useState('');
     const appContext = useContext<AppContext>(UserAppContext)
     const actions = {
         queryResponseList: bindActionCreators(userActions, appContext.dispatch) as unknown as UserActions
     };
 
+    useEffect(() => {
+        if (appContext.state.userState.constellationName === "Home") {
+            setNewButton('Create Constellation')
+        } else {
+            setNewButton('Save to Constellation')
+        }
+    }, [appContext.state.userState.constellationName])
 
     const onNewQueryChange = (evt: FormEvent<HTMLInputElement | HTMLTextAreaElement>, value?: string) => {
         setNewQuery(value || '');
@@ -59,7 +67,10 @@ const QueryPane: FC<QueryPaneProps> = (props: QueryPaneProps): ReactElement => {
         const responsesToSave = Array.from(selectedResponses).map(index => queryResponseList[index]) ;
         // Now, you can save 'responsesToSave' to the database
         console.log("responses to save " + responsesToSave)
-        const savedFrameworks = await actions.queryResponseList.saveSelectedFrameworks(appContext.state.userState.userId, responsesToSave);
+        const savedFrameworks = await actions.queryResponseList.saveSelectedFrameworks(
+            appContext.state.userState.userId,
+            appContext.state.userState.constellationName,
+            responsesToSave);
         console.log("saved Frameworks " + savedFrameworks)
         // set selected responses to empty
         setSelectedResponses(new Set());
@@ -90,7 +101,7 @@ const QueryPane: FC<QueryPaneProps> = (props: QueryPaneProps): ReactElement => {
                 ))}
             </Stack.Item>
             <Stack.Item tokens={stackItemPadding}>
-                <button onClick={saveSelectedResponses}>Save to Constellation</button>
+                <button onClick={saveSelectedResponses}>{buttonName}</button>
             </Stack.Item>
         </Stack>
     );

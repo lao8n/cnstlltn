@@ -15,7 +15,14 @@ export interface ApplicationState {
 
 export const getDefaultState = (): ApplicationState => {
     return {
-        userState: {isLoggedIn: false, userId: "", constellation: [], cluster: []},
+        userState: {
+            isLoggedIn: false,
+            userId: "",
+            constellationName: "Home",
+            constellation: [],
+            clusterBy: "political, economic, sociological, technological, legal, environmental, psychological",
+            cluster: []
+        },
         queryState: {query: undefined, responses: undefined},
     }
 }

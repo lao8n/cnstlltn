@@ -10,10 +10,10 @@ const userService = new UserService(config.api.baseUrl);
 
 export interface UserActions {
     setUser(isLoggedIn: boolean, userId: string): void;
-    saveSelectedFrameworks(userId: string, constellation: string, frameworks: QueryResponse[]): Promise<QueryResponse[]>;
-    getConstellation(userId: string, constellation: string): Promise<UserFramework[]>;
-    getCluster(userId: string, constellation: string, clusterby: string): Promise<Cluster[]>;
-    cluster(userId: string, constellation: string, clusterby: string): Promise<UserFramework[]>;
+    saveSelectedFrameworks(userId: string, constellationName: string, frameworks: QueryResponse[]): Promise<QueryResponse[]>;
+    getConstellation(userId: string, constellationName: string): Promise<UserFramework[]>;
+    getCluster(userId: string, constellationName: string, clusterby: string): Promise<Cluster[]>;
+    cluster(userId: string, constellationName: string, clusterby: string): Promise<UserFramework[]>;
     getLoginConfig(): Promise<LoginConfig>;
 }
 
@@ -24,10 +24,6 @@ export const setUser = (isLoggedIn: boolean, userId: string) =>
 
 export const saveSelectedFrameworks = (userId: string, constellationName: string, frameworks: QueryResponse[]): ActionMethod<QueryResponse[]> =>
     async (dispatch: Dispatch<SaveSelectedFrameworksAction>) => {
-        // const userInfo = await userService.getUserInfo();
-        // console.log("user info ", userInfo)
-        // let userId = userInfo[0].user_id;
-
         console.log("save selected frameworks ", frameworks)
         const savedFrameworks = await userService.saveSelectedFrameworks(userId, constellationName, frameworks);
         console.log("saved frameworks " + savedFrameworks)
