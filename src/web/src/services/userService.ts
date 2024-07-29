@@ -18,7 +18,7 @@ export class UserService {
             data: frameworks,
             headers: { 'USER-ID': userId },
             params: { constellationName: constellationName },
-            withCredentials: true,
+            // withCredentials: true,
         });
         return response.data;
     }
