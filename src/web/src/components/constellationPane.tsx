@@ -52,7 +52,7 @@ const ConstellationPane: FC = (): ReactElement => {
             appContext.state.userState.constellation,
             appContext.state.userState.clusterBy,
             canvasRef);
-    }, [appContext.state.userState.constellation, appContext.state.userState.clusterBy, actions.cluster])
+    }, [appContext.state.userState.constellation, appContext.state.userState.clusterBy])
 
     useEffect(() => {
         const getCluster = async () => {
@@ -73,7 +73,7 @@ const ConstellationPane: FC = (): ReactElement => {
     useEffect(() => {
         console.log("cluster updated")
         clusters.current = initializeCluster(appContext.state.userState.cluster, canvasRef);
-    }, [appContext.state.userState.cluster, actions.cluster])
+    }, [appContext.state.userState.cluster])
 
     const clusterBy = async () => {
         const clustered = await actions.constellation.cluster(
@@ -162,7 +162,7 @@ const ConstellationPane: FC = (): ReactElement => {
             window.removeEventListener("resize", handleResize);
             space.stop();
         };
-    }, [lastSelected, dimensions]);
+    }, [lastSelected, dimensions, pts, clusters]);
 
     return (
         <Stack>
