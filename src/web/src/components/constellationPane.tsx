@@ -52,7 +52,7 @@ const ConstellationPane: FC = (): ReactElement => {
         triggerUpdate();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [actions.constellation, appContext.dispatch, appContext.state.userState.constellationName, triggerUpdate]);
+    }, [actions.constellation, appContext.dispatch, appContext.state.userState.userId, appContext.state.userState.constellationName, triggerUpdate]);
 
     useEffect(() => {
         pts.current = initializeConstellation(
@@ -77,7 +77,11 @@ const ConstellationPane: FC = (): ReactElement => {
         getCluster();
         triggerUpdate();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [actions.cluster, appContext.dispatch, triggerUpdate]);
+    }, [actions.cluster, appContext.dispatch,
+        appContext.state.userState.userId,
+        appContext.state.userState.constellationName,
+        appContext.state.userState.clusterBy,
+        triggerUpdate]);
 
     useEffect(() => {
         clusters.current = initializeCluster(appContext.state.userState.cluster, canvasRef);
