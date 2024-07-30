@@ -76,7 +76,8 @@ const ConstellationPane: FC = (): ReactElement => {
         };
         getCluster();
         triggerUpdate();
-    }, [actions.cluster, appContext, triggerUpdate]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [actions.cluster, appContext.dispatch, triggerUpdate]);
 
     useEffect(() => {
         clusters.current = initializeCluster(appContext.state.userState.cluster, canvasRef);
