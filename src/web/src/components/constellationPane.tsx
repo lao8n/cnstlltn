@@ -33,7 +33,7 @@ const ConstellationPane: FC = (): ReactElement => {
     const [dimensions, setDimensions] = useState({ width: 2000, height: 1200 })
     const [updateTrigger, setUpdateTrigger] = useState(0);
     const triggerUpdate = useCallback(() => {
-        console.log("update triggered");
+        // console.log("update triggered");
         setUpdateTrigger(prevTrigger => prevTrigger + 1); // Increment to trigger re-render using functional update
     }, []);
     useEffect(() => {
@@ -50,17 +50,19 @@ const ConstellationPane: FC = (): ReactElement => {
         };
         getConstellation();
         triggerUpdate();
-    }, [actions.constellation, appContext, triggerUpdate]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [actions.constellation, appContext.dispatch, appContext.state.userState.constellationName, triggerUpdate]);
 
     useEffect(() => {
         pts.current = initializeConstellation(
             appContext.state.userState.constellation,
             appContext.state.userState.clusterBy,
             canvasRef);
-        triggerUpdate();
-    }, [appContext.state.userState.constellation, appContext.state.userState.clusterBy,triggerUpdate])
+    }, [appContext.state.userState.constellation, appContext.state.userState.clusterBy])
 
     useEffect(() => {
+        console.log("get cluster")
         const getCluster = async () => {
             const cluster = await actions.cluster.getCluster(
                 appContext.state.userState.userId,
@@ -78,8 +80,7 @@ const ConstellationPane: FC = (): ReactElement => {
 
     useEffect(() => {
         clusters.current = initializeCluster(appContext.state.userState.cluster, canvasRef);
-        triggerUpdate();
-    }, [appContext.state.userState.cluster, triggerUpdate])
+    }, [appContext.state.userState.cluster])
 
     const clusterBy = async () => {
         const clustered = await actions.constellation.cluster(
@@ -87,7 +88,6 @@ const ConstellationPane: FC = (): ReactElement => {
             appContext.state.userState.constellationName,
             appContext.state.userState.clusterBy)
         console.log("clustered " + clustered)
-        triggerUpdate();
     };
 
     useEffect(() => {
