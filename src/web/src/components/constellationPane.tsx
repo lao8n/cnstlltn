@@ -1,5 +1,5 @@
 import { Stack } from '@fluentui/react';
-import React, { FC, ReactElement, useContext, useEffect, useState, useMemo, useRef } from "react";
+import React, { FC, ReactElement, useContext, useEffect, useState, useMemo, useRef, useCallback } from "react";
 import { clusterButtonStyles, stackItemPadding } from '../ux/styles';
 import { UserFramework, Cluster } from "../models/userState";
 import { AppContext } from "../models/applicationState";
@@ -31,7 +31,11 @@ const ConstellationPane: FC = (): ReactElement => {
     const clusters = useRef<Data[]>([]) as React.MutableRefObject<Data[]>;
     const [lastSelected, setLastSelected] = useState<Data | null>(null);
     const [dimensions, setDimensions] = useState({ width: 2000, height: 1200 })
-
+    const [updateTrigger, setUpdateTrigger] = useState(0);
+    const triggerUpdate = useCallback(() => {
+        console.log("update triggered");
+        setUpdateTrigger(prevTrigger => prevTrigger + 1); // Increment to trigger re-render using functional update
+    }, []);
     useEffect(() => {
         const getConstellation = async () => {
             const constellation = await actions.constellation.getConstellation(
@@ -44,16 +48,16 @@ const ConstellationPane: FC = (): ReactElement => {
             return constellation
         };
         getConstellation();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [actions.constellation, appContext.dispatch]);
+        triggerUpdate();
+    }, [actions.constellation, appContext, triggerUpdate]);
 
     useEffect(() => {
-        console.log("constellation updated")
         pts.current = initializeConstellation(
             appContext.state.userState.constellation,
             appContext.state.userState.clusterBy,
             canvasRef);
-    }, [appContext.state.userState.constellation, appContext.state.userState.clusterBy])
+        triggerUpdate();
+    }, [appContext.state.userState.constellation, appContext.state.userState.clusterBy,triggerUpdate])
 
     useEffect(() => {
         const getCluster = async () => {
@@ -68,13 +72,13 @@ const ConstellationPane: FC = (): ReactElement => {
             return cluster
         };
         getCluster();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [actions.cluster, appContext.dispatch]);
+        triggerUpdate();
+    }, [actions.cluster, appContext, triggerUpdate]);
 
     useEffect(() => {
-        console.log("cluster updated")
         clusters.current = initializeCluster(appContext.state.userState.cluster, canvasRef);
-    }, [appContext.state.userState.cluster])
+        triggerUpdate();
+    }, [appContext.state.userState.cluster, triggerUpdate])
 
     const clusterBy = async () => {
         const clustered = await actions.constellation.cluster(
@@ -82,6 +86,7 @@ const ConstellationPane: FC = (): ReactElement => {
             appContext.state.userState.constellationName,
             appContext.state.userState.clusterBy)
         console.log("clustered " + clustered)
+        triggerUpdate();
     };
 
     useEffect(() => {
@@ -147,10 +152,18 @@ const ConstellationPane: FC = (): ReactElement => {
                     const mousePt = new Pt(x, y); // Create a Pt from the mouse position
                     const range = Circle.fromCenter(mousePt, r);
                     pts.current.forEach(pt => {
-                        if (Circle.withinBound(range, pt.position)){
-                            pt.selected = !pt.selected;
-                            setLastSelected(pt.selected ? pt : null)
-                            console.log("select: ", pt.name, lastSelected?.name);
+                        if (Circle.withinBound(range, pt.position)) {
+                            if (appContext.state.userState.constellationName === "Home") {
+                                console.log("constellation set to ", pt.name)
+                                appContext.dispatch({
+                                    type: ActionTypes.SET_CONSTELLATION_NAME,
+                                    constellationName: pt.name,
+                                });
+                            } else {
+                                pt.selected = !pt.selected;
+                                setLastSelected(pt.selected ? pt : null)
+                                console.log("select: ", pt.name, lastSelected?.name);
+                            }
                         }
                     });
                 }
@@ -163,7 +176,7 @@ const ConstellationPane: FC = (): ReactElement => {
             window.removeEventListener("resize", handleResize);
             space.stop();
         };
-    }, [lastSelected, dimensions, pts, clusters]);
+    }, [lastSelected, dimensions, pts, clusters, appContext, updateTrigger]);
 
     return (
         <Stack>

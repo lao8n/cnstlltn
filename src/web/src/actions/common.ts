@@ -15,6 +15,7 @@ export enum ActionTypes {
     CLUSTER = "CLUSTER",
     SET_CLUSTER = "SET_CLUSTER", 
     SET_CONSTELLATION = "SET_CONSTELLATION",
+    SET_CONSTELLATION_NAME = "SET_CONSTELLATION_NAME",
     GET_LOGIN_CONFIG = "GET_LOGIN_CONFIG",
 }
 
@@ -26,5 +27,6 @@ export type ApplicationActions =
     userActions.ClusterAction |
     userActions.SetClusterAction |
     userActions.SetConstellationAction |
+    userActions.SetConstellationNameAction | 
     userActions.GetLoginConfigAction |
     queryActions.PostQueryResponseListAction;

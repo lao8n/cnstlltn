@@ -57,6 +57,11 @@ export const setConstellation = (constellation: UserFramework[]) =>
         dispatch(setConstellationAction(constellation));
     }
 
+export const setConstellationName = (constellationName: string) =>
+    (dispatch: Dispatch<SetConstellationNameAction>) => {
+        dispatch(setConstellationNameAction(constellationName));
+    }
+
 export const setCluster = (cluster: Cluster[]) =>
     (dispatch: Dispatch<SetClusterAction>) => {
         dispatch(setClusterAction(cluster));
@@ -110,6 +115,16 @@ export interface SetConstellationAction {
 const setConstellationAction = (constellation: UserFramework[]): SetConstellationAction => ({
     type: ActionTypes.SET_CONSTELLATION,
     constellation: constellation,
+});
+
+export interface SetConstellationNameAction {
+    type: ActionTypes.SET_CONSTELLATION_NAME,
+    constellationName: string
+}
+
+const setConstellationNameAction = (constellationName: string): SetConstellationNameAction => ({
+    type: ActionTypes.SET_CONSTELLATION_NAME,
+    constellationName: constellationName,
 });
 
 export interface ClusterAction extends PayloadAction<string, UserFramework[]> {

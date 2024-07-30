@@ -23,6 +23,9 @@ export const appReducer: Reducer<ApplicationState, ApplicationActions> = (state:
         case ActionTypes.SET_CONSTELLATION:
             state.userState.constellation = action.constellation;
             break;
+        case ActionTypes.SET_CONSTELLATION_NAME:
+            state.userState.constellationName = action.constellationName;
+            break;
         case ActionTypes.SET_CLUSTER:
             state.userState.cluster = action.cluster;
             break;
