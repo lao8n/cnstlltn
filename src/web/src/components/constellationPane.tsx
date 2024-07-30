@@ -37,6 +37,7 @@ const ConstellationPane: FC = (): ReactElement => {
         setUpdateTrigger(prevTrigger => prevTrigger + 1); // Increment to trigger re-render using functional update
     }, []);
     useEffect(() => {
+        console.log("get constellation")
         const getConstellation = async () => {
             const constellation = await actions.constellation.getConstellation(
                 appContext.state.userState.userId,
@@ -94,14 +95,14 @@ const ConstellationPane: FC = (): ReactElement => {
         const form = space.getForm();
         const maxDimensions = {width: 1200, height: 800}
         const handleResize = () => {
-            console.log("resizing to: ", canvasRef.current?.parentElement?.clientWidth, canvasRef.current?.parentElement?.clientHeight)
+            // console.log("resizing to: ", canvasRef.current?.parentElement?.clientWidth, canvasRef.current?.parentElement?.clientHeight)
             if (canvasRef.current?.parentElement) {
                 const newWidth = Math.min(canvasRef.current.parentElement.clientWidth, maxDimensions.width)
                 const newHeight = Math.min(canvasRef.current.parentElement.clientHeight, maxDimensions.height)
                 setDimensions({width: newWidth, height: newHeight})
                 // Recalculate the positions based on new canvas size
                 updatePositions();
-                console.log("update canvas:", dimensions.width, dimensions.height);
+                // console.log("update canvas:", dimensions.width, dimensions.height);
             }
         };
         const updatePositions = () => {
@@ -142,7 +143,6 @@ const ConstellationPane: FC = (): ReactElement => {
                     const topRightY = 20;
                     const topRight = new Pt(topRightX, topRightY);
                     form.font(15).fill("#fff").text(topRight, lastSelected.name);
-                    console.log(topRightX, topRightY, canvasRef.current?.width)
                     drawMultiLineText(form, topRight.$add(0, 15), lastSelected.description, 15, 400);
                 }
             },
@@ -160,6 +160,7 @@ const ConstellationPane: FC = (): ReactElement => {
                                     constellationName: pt.name,
                                 });
                             } else {
+                                console.log("constellation name", appContext.state.userState.constellationName)
                                 pt.selected = !pt.selected;
                                 setLastSelected(pt.selected ? pt : null)
                                 console.log("select: ", pt.name, lastSelected?.name);
