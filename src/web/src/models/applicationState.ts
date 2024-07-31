@@ -21,7 +21,8 @@ export const getDefaultState = (): ApplicationState => {
             constellationName: "Home",
             constellation: [],
             clusterBy: "political, economic, sociological, technological, legal, environmental, psychological",
-            cluster: []
+            cluster: [],
+            updated: Date.now(),
         },
         queryState: {query: undefined, responses: undefined},
     }

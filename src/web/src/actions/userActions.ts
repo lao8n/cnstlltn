@@ -67,6 +67,11 @@ export const setCluster = (cluster: Cluster[]) =>
         dispatch(setClusterAction(cluster));
     }
 
+export const setUpdated = (updated: number) => 
+    (dispatch: Dispatch<SetUpdatedAction>) => {
+        dispatch(setUpdatedAction(updated));
+    }
+
 export const getLoginConfig = (): ActionMethod<LoginConfig> =>
     async (dispatch: Dispatch<GetLoginConfigAction>) => {
         const loginConfig = await userService.getLoginConfig();
@@ -142,6 +147,16 @@ export interface SetClusterAction {
 const setClusterAction = (cluster: Cluster[]): SetClusterAction => ({
     type: ActionTypes.SET_CLUSTER,
     cluster: cluster,
+});
+
+export interface SetUpdatedAction {
+    type: ActionTypes.SET_UPDATED,
+    updated: number,
+}
+
+const setUpdatedAction = (updated: number): SetUpdatedAction => ({
+    type: ActionTypes.SET_UPDATED,
+        updated: updated,
 });
 
 export interface GetLoginConfigAction extends PayloadAction<string, LoginConfig> {

@@ -51,24 +51,32 @@ const handleLogout = (navigate : NavigateFunction, dispatch : Dispatch<SetUserAc
 }
 
 const Header: FC = (): ReactElement => {
-    const { state, dispatch }: AppContext = useContext(UserAppContext);
+    const appContext = useContext<AppContext>(UserAppContext)
     const navigate = useNavigate();
     const [logInOrOut, setLogInOrOut] = useState<() => void>(() => () => handleLogin(navigate));
     const [signInOrOut, setSignInOrOut] = useState(() => "Signin");
+
+    const handleClick = () => {
+        appContext.dispatch({
+            type: ActionTypes.SET_CONSTELLATION_NAME,
+            constellationName: "Home",
+        });
+    }
+
     useEffect(() => {
-        if(state.userState?.isLoggedIn){
-            setLogInOrOut(() => () => handleLogout(navigate, dispatch));
+        if(appContext.state.userState?.isLoggedIn){
+            setLogInOrOut(() => () => handleLogout(navigate, appContext.dispatch));
             setSignInOrOut(() => "SignOut");
         } else {
             setLogInOrOut(() => () => handleLogin(navigate));
             setSignInOrOut(() => "Signin");
         }
-    }, [state.userState?.isLoggedIn, dispatch, navigate]);
+    }, [appContext.state.userState?.isLoggedIn, appContext.dispatch, navigate]);
 
     return (
         <Stack horizontal>
             <Stack horizontal styles={logoStyles}>
-                <Link to="/constellation">
+                <Link to="/constellation" onClick={handleClick}>
                     <img src={`${process.env.PUBLIC_URL}/cnstlltn_logo.png`} alt="Logo" style={{width: '100px', height: 'auto'}}/>
                 </Link>
             </Stack>

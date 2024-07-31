@@ -1,5 +1,5 @@
 import { IIconProps, Stack, TextField } from '@fluentui/react';
-import React, { FC, ReactElement, useState, useContext, useEffect, FormEvent } from "react";
+import { FC, ReactElement, useState, useContext, FormEvent } from "react";
 import { queryFieldStyles, stackItemPadding } from '../ux/styles';
 import { Query, QueryResponse } from '../models/queryState';
 import { buttonStyles, selectedButtonStyles } from '../ux/styles';
@@ -8,7 +8,7 @@ import * as userActions from '../actions/userActions';
 import UserAppContext from '../components/userContext';
 import { AppContext } from '../models/applicationState';
 import { UserActions } from '../actions/userActions';
-
+import { ActionTypes } from '../actions/common';
 
 interface QueryPaneProps {
     query?: Query
@@ -61,6 +61,10 @@ const QueryPane: FC<QueryPaneProps> = (props: QueryPaneProps): ReactElement => {
                 responses,
             )
             console.log(createdConstellation)
+            appContext.dispatch({
+                type: ActionTypes.SET_UPDATED,
+                updated: Date.now(),
+            });
         }
     }
 
@@ -77,6 +81,10 @@ const QueryPane: FC<QueryPaneProps> = (props: QueryPaneProps): ReactElement => {
         console.log("saved Frameworks " + savedFrameworks)
         // set selected responses to empty
         setSelectedResponses(new Set());
+        appContext.dispatch({
+            type: ActionTypes.SET_UPDATED,
+            updated: Date.now(),
+        });
     };
     return (
         <Stack>

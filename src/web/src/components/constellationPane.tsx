@@ -1,5 +1,5 @@
 import { Stack } from '@fluentui/react';
-import React, { FC, ReactElement, useContext, useEffect, useState, useMemo, useRef, useCallback } from "react";
+import React, { FC, ReactElement, useContext, useEffect, useState, useMemo, useRef } from "react";
 import { clusterButtonStyles, stackItemPadding } from '../ux/styles';
 import { UserFramework, Cluster } from "../models/userState";
 import { AppContext } from "../models/applicationState";
@@ -31,11 +31,7 @@ const ConstellationPane: FC = (): ReactElement => {
     const clusters = useRef<Data[]>([]) as React.MutableRefObject<Data[]>;
     const [lastSelected, setLastSelected] = useState<Data | null>(null);
     const [dimensions, setDimensions] = useState({ width: 2000, height: 1200 })
-    const [updateTrigger, setUpdateTrigger] = useState(0);
-    const triggerUpdate = useCallback(() => {
-        // console.log("update triggered");
-        setUpdateTrigger(prevTrigger => prevTrigger + 1); // Increment to trigger re-render using functional update
-    }, []);
+
     useEffect(() => {
         console.log("get constellation")
         const getConstellation = async () => {
@@ -49,10 +45,13 @@ const ConstellationPane: FC = (): ReactElement => {
             return constellation
         };
         getConstellation();
-        triggerUpdate();
+        appContext.dispatch({
+            type: ActionTypes.SET_UPDATED,
+            updated: Date.now(),
+        });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [actions.constellation, appContext.dispatch, appContext.state.userState.userId, appContext.state.userState.constellationName, triggerUpdate]);
+    }, [actions.constellation, appContext.dispatch, appContext.state.userState.userId, appContext.state.userState.constellationName]);
 
     useEffect(() => {
         pts.current = initializeConstellation(
@@ -75,13 +74,16 @@ const ConstellationPane: FC = (): ReactElement => {
             return cluster
         };
         getCluster();
-        triggerUpdate();
+        appContext.dispatch({
+            type: ActionTypes.SET_UPDATED,
+            updated: Date.now(),
+        });
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [actions.cluster, appContext.dispatch,
         appContext.state.userState.userId,
         appContext.state.userState.constellationName,
-        appContext.state.userState.clusterBy,
-        triggerUpdate]);
+        appContext.state.userState.clusterBy]);
 
     useEffect(() => {
         clusters.current = initializeCluster(appContext.state.userState.cluster, canvasRef);
@@ -182,7 +184,7 @@ const ConstellationPane: FC = (): ReactElement => {
             window.removeEventListener("resize", handleResize);
             space.stop();
         };
-    }, [lastSelected, dimensions, pts, clusters, appContext, updateTrigger]);
+    }, [lastSelected, dimensions, pts, clusters, appContext, appContext.state.userState.updated]);
 
     return (
         <Stack>

@@ -29,6 +29,9 @@ export const appReducer: Reducer<ApplicationState, ApplicationActions> = (state:
         case ActionTypes.SET_CLUSTER:
             state.userState.cluster = action.cluster;
             break;
+        case ActionTypes.SET_UPDATED:
+            state.userState.updated = action.updated;
+            break;
         case ActionTypes.SAVE_SELECTED_FRAMEWORKS:
             break;
         default:
