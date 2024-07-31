@@ -34,6 +34,9 @@ export const appReducer: Reducer<ApplicationState, ApplicationActions> = (state:
             break;
         case ActionTypes.SAVE_SELECTED_FRAMEWORKS:
             break;
+        case ActionTypes.CLUSTER:
+            // do nothing
+            break;
         default:
             console.log("reducer state not updated")
             break;

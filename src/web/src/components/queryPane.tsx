@@ -1,5 +1,5 @@
 import { IIconProps, Stack, TextField } from '@fluentui/react';
-import { FC, ReactElement, useState, useContext, FormEvent } from "react";
+import { FC, ReactElement, useState, useContext, useEffect, FormEvent } from "react";
 import { queryFieldStyles, stackItemPadding } from '../ux/styles';
 import { Query, QueryResponse } from '../models/queryState';
 import { buttonStyles, selectedButtonStyles } from '../ux/styles';
@@ -51,6 +51,10 @@ const QueryPane: FC<QueryPaneProps> = (props: QueryPaneProps): ReactElement => {
             setSelectedResponses(new Set());
         }
     }
+
+    useEffect(() => {
+        setSelectedResponses(new Set());
+    }, [appContext.state.userState.constellationName])
 
     const createConstellation = async () => {
         if (newQuery) {

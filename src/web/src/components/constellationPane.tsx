@@ -90,11 +90,15 @@ const ConstellationPane: FC = (): ReactElement => {
     }, [appContext.state.userState.cluster])
 
     const clusterBy = async () => {
-        const clustered = await actions.constellation.cluster(
+        // this is a database thing but we want to trigger update
+        await actions.constellation.cluster(
             appContext.state.userState.userId,
             appContext.state.userState.constellationName,
             appContext.state.userState.clusterBy)
-        console.log("clustered " + clustered)
+        appContext.dispatch({
+            type: ActionTypes.SET_UPDATED,
+            updated: Date.now(),
+        });
     };
 
     useEffect(() => {
