@@ -5,6 +5,9 @@ import { mergeStyles } from '@fluentui/react';
 const theme = CnstlltnTheme
 
 export const queryFieldStyles = {
+    root: {
+        width: 300,
+    },
     field: {
         color: 'theme.palette.black',
     },
@@ -107,6 +110,12 @@ export const clusterButtonStyles = mergeStyles(buttonStyles, {
 })
 
 export const constellationName = mergeStyles({
+    font: "Segoe UI",
+    fontSize: '20px',
+    color: theme.palette.white,
+});
+
+export const clusterBy = mergeStyles({
     font: "Segoe UI",
     fontSize: '16px',
     color: theme.palette.white,

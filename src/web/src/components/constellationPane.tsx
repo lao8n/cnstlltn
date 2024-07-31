@@ -10,7 +10,7 @@ import { UserActions } from '../actions/userActions';
 import { ActionTypes } from '../actions/common';
 import { CanvasSpace, Circle, Pt, CanvasForm } from "pts";
 import { CnstlltnTheme } from "../ux/theme";
-import { canvasStackStyle, constellationName, queryFieldStyles } from '../ux/styles';
+import { canvasStackStyle, constellationName, queryFieldStyles, clusterBy } from '../ux/styles';
 
 type Data = {
     name: string;
@@ -219,7 +219,10 @@ const ConstellationPane: FC = (): ReactElement => {
                     </div>
                 </Stack.Item>
                 <Stack.Item grow={1} />
-                <Stack.Item>
+                <Stack.Item align="end">
+                    <div className={clusterBy}>
+                        Cluster by:
+                    </div>
                     <form onSubmit={onFormSubmit}>
                         <TextField
                             borderless
