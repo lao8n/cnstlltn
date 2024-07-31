@@ -46,6 +46,9 @@ const ConstellationPane: FC = (): ReactElement => {
     // 2. getCluster
     // -> 
     // 1. initializeConstellation
+    // 2. initializeCluster
+    // -> 
+    // 1. redrawConstellation
     useEffect(() => {
         console.log("get constellation")
         const getConstellation = async () => {
