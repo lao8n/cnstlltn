@@ -51,7 +51,7 @@ const ConstellationPane: FC = (): ReactElement => {
         });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [actions.constellation, appContext.dispatch, appContext.state.userState.userId, appContext.state.userState.constellationName]);
+    }, [actions.constellation, appContext.dispatch, appContext.state.userState.userId, appContext.state.userState.constellationName, appContext.state.userState.updated]);
 
     useEffect(() => {
         pts.current = initializeConstellation(
@@ -83,7 +83,8 @@ const ConstellationPane: FC = (): ReactElement => {
     }, [actions.cluster, appContext.dispatch,
         appContext.state.userState.userId,
         appContext.state.userState.constellationName,
-        appContext.state.userState.clusterBy]);
+        appContext.state.userState.clusterBy,
+        appContext.state.userState.updated]);
 
     useEffect(() => {
         clusters.current = initializeCluster(appContext.state.userState.cluster, canvasRef);
