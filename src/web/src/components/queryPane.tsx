@@ -54,7 +54,11 @@ const QueryPane: FC<QueryPaneProps> = (props: QueryPaneProps): ReactElement => {
 
     useEffect(() => {
         setSelectedResponses(new Set());
-    }, [appContext.state.userState.constellationName])
+        appContext.dispatch({
+            type: ActionTypes.SET_EMPTY_QUERY_RESPONSE_LIST
+        });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [appContext.state.userState.constellationName, appContext.dispatch])
 
     const createConstellation = async () => {
         if (newQuery) {

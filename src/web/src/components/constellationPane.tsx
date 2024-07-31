@@ -130,6 +130,7 @@ const ConstellationPane: FC = (): ReactElement => {
         }
         space.add({
             start: (bound) => {
+                console.log("starting position: ", dimensions.width, dimensions.height)
                 updatePositions();
             },
             animate: (time, ftime) => {

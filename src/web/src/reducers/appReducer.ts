@@ -20,6 +20,9 @@ export const appReducer: Reducer<ApplicationState, ApplicationActions> = (state:
                 console.log("response title ", response.title + " content " + response.content)
             })
             break;
+        case ActionTypes.SET_EMPTY_QUERY_RESPONSE_LIST:
+            state.queryState.responses = undefined;
+            break;
         case ActionTypes.SET_CONSTELLATION:
             state.userState.constellation = action.constellation;
             break;
@@ -30,6 +33,7 @@ export const appReducer: Reducer<ApplicationState, ApplicationActions> = (state:
             state.userState.cluster = action.cluster;
             break;
         case ActionTypes.SET_UPDATED:
+            console.log("set updated called");
             state.userState.updated = action.updated;
             break;
         case ActionTypes.SAVE_SELECTED_FRAMEWORKS:

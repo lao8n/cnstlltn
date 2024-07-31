@@ -32,3 +32,16 @@ export interface PostQueryResponseListAction extends PayloadAction<string, Query
 
 const postQueryResponseListAction =
     createPayloadAction<PostQueryResponseListAction>(ActionTypes.POST_QUERY_RESPONSE_LIST);
+
+export const setEmptyQueryResponseList = () =>
+    (dispatch: Dispatch<SetEmptyQueryResponseListAction>) => {
+        dispatch(setEmptyQueryResponseListAction());
+    }
+
+export interface SetEmptyQueryResponseListAction {
+    type: ActionTypes.SET_EMPTY_QUERY_RESPONSE_LIST,
+}
+
+const setEmptyQueryResponseListAction = (): SetEmptyQueryResponseListAction => ({
+    type: ActionTypes.SET_EMPTY_QUERY_RESPONSE_LIST,
+});
