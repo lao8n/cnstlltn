@@ -67,15 +67,6 @@ export const titleStackStyles: IStackStyles = {
     }
 }
 
-export const selectedButtonStyles = mergeStyles(buttonStyles, {
-    backgroundColor: theme.palette.themePrimary,
-    color: theme.palette.white,
-});
-
-export const clusterButtonStyles = mergeStyles(buttonStyles, {
-    alignItems: 'flex-end',
-})
-
 export const stackPadding: IStackTokens = {
     padding: 10
 }
@@ -105,6 +96,15 @@ export const buttonStyles = mergeStyles({
         backgroundColor: theme.palette.neutralPrimaryAlt
     }
 });
+
+export const selectedButtonStyles = mergeStyles(buttonStyles, {
+    backgroundColor: theme.palette.themePrimary,
+    color: theme.palette.white,
+});
+
+export const clusterButtonStyles = mergeStyles(buttonStyles, {
+    alignItems: 'flex-end',
+})
 
 export const constellationName = mergeStyles({
     font: "Segoe UI",

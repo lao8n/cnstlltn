@@ -1,4 +1,4 @@
-import {IIconProps, Stack, TextField } from '@fluentui/react';
+import { Stack, TextField } from '@fluentui/react';
 import React, { FC, ReactElement, useContext, useEffect, useState, useMemo, useRef, useCallback, FormEvent } from "react";
 import { stackItemPadding } from '../ux/styles';
 import { UserFramework, Cluster } from "../models/userState";
@@ -19,10 +19,6 @@ type Data = {
     position: Pt;
     selected: boolean;
 };
-
-const iconProps: IIconProps = {
-    iconName: 'SurveyQuestions'
-}
 
 const ConstellationPane: FC = (): ReactElement => {
     const appContext = useContext<AppContext>(UserAppContext)
@@ -227,7 +223,6 @@ const ConstellationPane: FC = (): ReactElement => {
                     <form onSubmit={onFormSubmit}>
                         <TextField
                             borderless
-                            iconProps={iconProps}
                             value={newQuery}
                             placeholder={appContext.state.userState.clusterBy}
                             onChange={onNewQueryChange}
