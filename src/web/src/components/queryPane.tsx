@@ -1,4 +1,4 @@
-import { IIconProps, Stack, TextField } from '@fluentui/react';
+import { Stack, TextField } from '@fluentui/react';
 import { FC, ReactElement, useState, useContext, useEffect, FormEvent } from "react";
 import { queryFieldStyles, stackItemPadding } from '../ux/styles';
 import { Query, QueryResponse } from '../models/queryState';
@@ -14,10 +14,6 @@ interface QueryPaneProps {
     query?: Query
     queryResponseList?: QueryResponse[];
     onCreate: (query: Query) => void
-}
-
-const iconProps: IIconProps = {
-    iconName: 'SurveyQuestions'
 }
 
 const QueryPane: FC<QueryPaneProps> = (props: QueryPaneProps): ReactElement => {
@@ -100,7 +96,6 @@ const QueryPane: FC<QueryPaneProps> = (props: QueryPaneProps): ReactElement => {
                 <form onSubmit={onFormSubmit}>
                     <TextField
                         borderless
-                        iconProps={iconProps}
                         value={newQuery}
                         placeholder={
                             appContext.state.userState.constellationName === "Home" ?

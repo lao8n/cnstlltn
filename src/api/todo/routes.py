@@ -23,7 +23,7 @@ async def query_ai(query: Query) -> List[QueryAiResponseBlock]:
     concept 1
     content 1
     concept 2
-    concent 2
+    content 2
     '
     make sure you do not return an intro paragraph, conclusion paragraph or anything that deviates from the above format. here is the prompt: return the key frameworks/ideas in
 

@@ -1,6 +1,6 @@
-import { Stack } from '@fluentui/react';
-import React, { FC, ReactElement, useContext, useEffect, useState, useMemo, useRef, useCallback } from "react";
-import { clusterButtonStyles, stackItemPadding } from '../ux/styles';
+import {IIconProps, Stack, TextField } from '@fluentui/react';
+import React, { FC, ReactElement, useContext, useEffect, useState, useMemo, useRef, useCallback, FormEvent } from "react";
+import { stackItemPadding } from '../ux/styles';
 import { UserFramework, Cluster } from "../models/userState";
 import { AppContext } from "../models/applicationState";
 import UserAppContext from "./userContext";
@@ -10,7 +10,7 @@ import { UserActions } from '../actions/userActions';
 import { ActionTypes } from '../actions/common';
 import { CanvasSpace, Circle, Pt, CanvasForm } from "pts";
 import { CnstlltnTheme } from "../ux/theme";
-import { canvasStackStyle } from '../ux/styles';
+import { canvasStackStyle, constellationName, queryFieldStyles } from '../ux/styles';
 
 type Data = {
     name: string;
@@ -19,6 +19,10 @@ type Data = {
     position: Pt;
     selected: boolean;
 };
+
+const iconProps: IIconProps = {
+    iconName: 'SurveyQuestions'
+}
 
 const ConstellationPane: FC = (): ReactElement => {
     const appContext = useContext<AppContext>(UserAppContext)
@@ -30,11 +34,17 @@ const ConstellationPane: FC = (): ReactElement => {
     const pts = useRef<Data[]>([]) as React.MutableRefObject<Data[]>;
     const clusters = useRef<Data[]>([]) as React.MutableRefObject<Data[]>;
     const [lastSelected, setLastSelected] = useState<Data | null>(null);
-    const [dimensions, setDimensions] = useState({ width: 2000, height: 1200 })
+    const [dimensions, setDimensions] = useState({ width: 1200, height: 800 })
     const [constellationRedrawn, setConstellationRedrawn] = useState(Date.now());
     const redrawConstellation = useCallback(() => {
         setConstellationRedrawn(Date.now()); 
     }, []);
+    const [newQuery, setNewQuery] = useState('');
+
+    const onNewQueryChange = (evt: FormEvent<HTMLInputElement | HTMLTextAreaElement>, value?: string) => {
+        setNewQuery(value || appContext.state.userState.clusterBy);
+        // TODO: actually do an action to update clusterby field in user state
+    }
 
     // 1. createConstellation
     // 2. saveSelectedResponses
@@ -101,9 +111,9 @@ const ConstellationPane: FC = (): ReactElement => {
         redrawConstellation();
     }, [appContext.state.userState.cluster, redrawConstellation])
 
-    const clusterBy = async () => {
-        // this is a database thing but we want to trigger update
-        await actions.constellation.cluster(
+    const onFormSubmit = async (evt: FormEvent<HTMLFormElement>) => {
+        evt.preventDefault();
+        actions.constellation.cluster(
             appContext.state.userState.userId,
             appContext.state.userState.constellationName,
             appContext.state.userState.clusterBy)
@@ -111,7 +121,7 @@ const ConstellationPane: FC = (): ReactElement => {
             type: ActionTypes.SET_UPDATED,
             updated: Date.now(),
         });
-    };
+    }
 
     useEffect(() => {
         const space = new CanvasSpace(canvasRef.current || "").setup({ bgcolor: CnstlltnTheme.palette.black, resize: true });
@@ -208,15 +218,22 @@ const ConstellationPane: FC = (): ReactElement => {
         <Stack>
             <Stack horizontal>
                 <Stack.Item tokens={stackItemPadding}>
-                    <div>{appContext.state.userState.constellationName}</div>
+                    <div className={constellationName}>
+                        {appContext.state.userState.constellationName}
+                    </div>
                 </Stack.Item>
                 <Stack.Item grow={1} />
                 <Stack.Item>
-                    <button
-                        className={clusterButtonStyles}
-                        onClick={clusterBy}>
-                        Cluster
-                    </button>
+                    <form onSubmit={onFormSubmit}>
+                        <TextField
+                            borderless
+                            iconProps={iconProps}
+                            value={newQuery}
+                            placeholder={appContext.state.userState.clusterBy}
+                            onChange={onNewQueryChange}
+                            styles={queryFieldStyles}
+                        />
+                    </form>
                 </Stack.Item>
             </Stack>
             <Stack.Item grow={1} styles={canvasStackStyle}>
