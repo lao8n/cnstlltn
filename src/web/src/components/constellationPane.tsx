@@ -219,7 +219,7 @@ const ConstellationPane: FC = (): ReactElement => {
                     </div>
                 </Stack.Item>
                 <Stack.Item grow={1} />
-                <Stack.Item align="end">
+                <Stack horizontal align="end">
                     <div className={clusterBy}>
                         Cluster by:
                     </div>
@@ -232,7 +232,7 @@ const ConstellationPane: FC = (): ReactElement => {
                             styles={queryFieldStyles}
                         />
                     </form>
-                </Stack.Item>
+                </Stack>
             </Stack>
             <Stack.Item grow={1} styles={canvasStackStyle}>
                 <canvas ref={canvasRef} id="pt"/>
