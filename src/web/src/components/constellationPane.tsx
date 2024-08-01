@@ -212,13 +212,12 @@ const ConstellationPane: FC = (): ReactElement => {
 
     return (
         <Stack>
-            <Stack horizontal>
-                <Stack.Item tokens={stackItemPadding}>
+            <Stack horizontal grow={1}>
+                <Stack.Item grow={1} tokens={stackItemPadding}>
                     <div className={constellationName}>
                         {appContext.state.userState.constellationName}
                     </div>
                 </Stack.Item>
-                <Stack.Item grow={1} />
                 <Stack.Item styles={clusterByStyle}>
                     <Stack horizontal>
                         <div className={clusterBy}>

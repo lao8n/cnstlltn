@@ -126,4 +126,5 @@ export const clusterBy = mergeStyles({
     font: "Segoe UI",
     fontSize: '16px',
     color: theme.palette.white,
+    alignContent: 'center',
 });
