@@ -5,9 +5,6 @@ import { mergeStyles } from '@fluentui/react';
 const theme = CnstlltnTheme
 
 export const queryFieldStyles = {
-    root: {
-        width: 300,
-    },
     field: {
         color: 'theme.palette.black',
     },
@@ -51,13 +48,6 @@ export const canvasStackStyle: IStackStyles = {
         height: '100%',
         minHeight: 800,
         maxHeight: 1500,
-    }
-}
-
-export const clusterByStyle: IStackStyles = {
-    root: {
-        minWidth: 600,
-        justifyContent: 'flex-end',
     }
 }
 
@@ -116,16 +106,19 @@ export const clusterButtonStyles = mergeStyles(buttonStyles, {
     alignItems: 'flex-end',
 })
 
-export const constellationName = mergeStyles({
+export const constellationNameStyle = mergeStyles({
     font: "Segoe UI",
     fontSize: '20px',
     color: theme.palette.white,
 });
 
-export const clusterBy = mergeStyles({
-    font: "Segoe UI",
-    fontSize: '16px', 
-    backgroundColor: theme.palette.black,
-    color: theme.palette.white,
-    alignContent: 'center',
-});
+export const clusterByStyle: IStackStyles = {
+    root: {
+        minWidth: 600,
+        justifyContent: 'flex-end',
+        backgroundColor: theme.palette.black,
+        color: theme.palette.white,
+        alignContent: 'center',
+        font: "Segoe UI",
+    }
+}
