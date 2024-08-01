@@ -56,7 +56,7 @@ export const canvasStackStyle: IStackStyles = {
 
 export const clusterByStyle: IStackStyles = {
     root: {
-        minWidth: 300,
+        minWidth: 600,
         justifyContent: 'flex-end',
     }
 }
@@ -124,7 +124,8 @@ export const constellationName = mergeStyles({
 
 export const clusterBy = mergeStyles({
     font: "Segoe UI",
-    fontSize: '16px',
+    fontSize: '16px', 
+    backgroundColor: theme.palette.black,
     color: theme.palette.white,
     alignContent: 'center',
 });
