@@ -1,4 +1,4 @@
-import { IStackItemTokens, IStackStyles, IStackTokens } from '@fluentui/react'
+import { IStackItemTokens, IStackStyles, IStackTokens, ITextFieldStyles } from '@fluentui/react'
 import { CnstlltnTheme } from './theme'
 import { mergeStyles } from '@fluentui/react';
 
@@ -112,13 +112,17 @@ export const constellationNameStyle = mergeStyles({
     color: theme.palette.white,
 });
 
-export const clusterByStyle: IStackStyles = {
+export const clusterByStyle: Partial<ITextFieldStyles> = {
     root: {
         minWidth: 600,
-        justifyContent: 'flex-end',
+    },
+    fieldGroup: {  // This targets the surrounding container of the input
         backgroundColor: theme.palette.black,
+    },
+    field: {  // This targets the input element itself
         color: theme.palette.white,
-        alignContent: 'center',
-        font: "Segoe UI",
+        fontFamily: "Segoe UI",
+        alignItems: 'center',
+        justifyContent: 'flex-end',
     }
 }

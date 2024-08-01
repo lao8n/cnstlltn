@@ -123,7 +123,7 @@ const ConstellationPane: FC = (): ReactElement => {
         const form = space.getForm();
         const maxDimensions = { width: 1200, height: 800 }
         const handleResize = () => {
-            // console.log("resizing to: ", canvasRef.current?.parentElement?.clientWidth, canvasRef.current?.parentElement?.clientHeight)
+            console.log("resizing to: ", canvasRef.current?.parentElement?.clientWidth, canvasRef.current?.parentElement?.clientHeight)
             if (canvasRef.current?.parentElement) {
                 const newWidth = Math.min(canvasRef.current.parentElement.clientWidth, maxDimensions.width)
                 const newHeight = Math.min(canvasRef.current.parentElement.clientHeight, maxDimensions.height)
