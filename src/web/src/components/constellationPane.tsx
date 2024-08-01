@@ -32,7 +32,7 @@ const ConstellationPane: FC = (): ReactElement => {
     const [dimensions, setDimensions] = useState({ width: 1200, height: 800 })
     const [constellationRedrawn, setConstellationRedrawn] = useState(Date.now());
     const redrawConstellation = useCallback(() => {
-        setConstellationRedrawn(Date.now()); 
+        setConstellationRedrawn(Date.now());
     }, []);
     const [newQuery, setNewQuery] = useState('');
 
@@ -67,7 +67,7 @@ const ConstellationPane: FC = (): ReactElement => {
             return constellation
         };
         getConstellation();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [actions.constellation, appContext.dispatch, appContext.state.userState.userId, appContext.state.userState.constellationName, appContext.state.userState.updated]);
 
     useEffect(() => {
@@ -94,12 +94,12 @@ const ConstellationPane: FC = (): ReactElement => {
         getCluster();
         redrawConstellation();
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [actions.cluster, appContext.dispatch,
-        appContext.state.userState.userId,
-        appContext.state.userState.constellationName,
-        appContext.state.userState.clusterBy,
-        appContext.state.userState.updated]);
+    appContext.state.userState.userId,
+    appContext.state.userState.constellationName,
+    appContext.state.userState.clusterBy,
+    appContext.state.userState.updated]);
 
     useEffect(() => {
         clusters.current = initializeCluster(appContext.state.userState.cluster, canvasRef);
@@ -121,13 +121,13 @@ const ConstellationPane: FC = (): ReactElement => {
     useEffect(() => {
         const space = new CanvasSpace(canvasRef.current || "").setup({ bgcolor: CnstlltnTheme.palette.black, resize: true });
         const form = space.getForm();
-        const maxDimensions = {width: 1200, height: 800}
+        const maxDimensions = { width: 1200, height: 800 }
         const handleResize = () => {
             // console.log("resizing to: ", canvasRef.current?.parentElement?.clientWidth, canvasRef.current?.parentElement?.clientHeight)
             if (canvasRef.current?.parentElement) {
                 const newWidth = Math.min(canvasRef.current.parentElement.clientWidth, maxDimensions.width)
                 const newHeight = Math.min(canvasRef.current.parentElement.clientHeight, maxDimensions.height)
-                setDimensions({width: newWidth, height: newHeight})
+                setDimensions({ width: newWidth, height: newHeight })
                 // Recalculate the positions based on new canvas size
                 updatePositions();
                 // console.log("update canvas:", dimensions.width, dimensions.height);
@@ -206,12 +206,12 @@ const ConstellationPane: FC = (): ReactElement => {
             window.removeEventListener("resize", handleResize);
             space.stop();
         };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [lastSelected, dimensions, pts, clusters, appContext.dispatch, appContext.state.userState.constellationName, constellationRedrawn]);
 
     return (
-        <Stack>
-            <Stack horizontal grow={1}>
+        <Stack grow={1}>
+            <Stack horizontal grow={0}>
                 <Stack.Item grow={1} tokens={stackItemPadding}>
                     <div className={constellationNameStyle}>
                         {appContext.state.userState.constellationName}
