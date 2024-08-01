@@ -57,7 +57,7 @@ export const canvasStackStyle: IStackStyles = {
 export const clusterByStyle: IStackStyles = {
     root: {
         minWidth: 300,
-        alignSelf: 'flex-end',
+        justifyContent: 'flex-end',
     }
 }
 

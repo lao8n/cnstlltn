@@ -230,7 +230,7 @@ const ConstellationPane: FC = (): ReactElement => {
                                 value={newQuery}
                                 placeholder={appContext.state.userState.clusterBy}
                                 onChange={onNewQueryChange}
-                                styles={queryFieldStyles}
+                                styles={clusterByStyle}
                             />
                         </form>
                     </Stack>
