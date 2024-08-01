@@ -1,6 +1,6 @@
 import { Stack, TextField } from '@fluentui/react';
 import React, { FC, ReactElement, useContext, useEffect, useState, useMemo, useRef, useCallback, FormEvent } from "react";
-import { canvasStackStyle, clusterByStyle, stackItemPadding, constellationNameStyle } from '../ux/styles';
+import { canvasStackStyle, clusterByStyle, stackItemPadding, constellationNameStyle, clusterByWordStyle } from '../ux/styles';
 import { UserFramework, Cluster } from "../models/userState";
 import { AppContext } from "../models/applicationState";
 import UserAppContext from "./userContext";
@@ -219,12 +219,11 @@ const ConstellationPane: FC = (): ReactElement => {
                 </Stack.Item>
                 <Stack.Item styles={clusterByStyle} tokens={stackItemPadding}>
                     <Stack horizontal>
-                        <div>
+                        <div className={clusterByWordStyle}>
                             {"Cluster by:  "}
                         </div>
                         <form onSubmit={onFormSubmit}>
                             <TextField
-                                borderless
                                 value={newQuery}
                                 placeholder={appContext.state.userState.clusterBy}
                                 onChange={onNewQueryChange}

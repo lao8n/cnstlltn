@@ -112,6 +112,12 @@ export const constellationNameStyle = mergeStyles({
     color: theme.palette.white,
 });
 
+export const clusterByWordStyle = mergeStyles({
+    font: "Segoe UI",
+    fontSize: '15px',
+    color: theme.palette.white,
+});
+
 export const clusterByStyle: Partial<ITextFieldStyles> = {
     root: {
         minWidth: 600,
