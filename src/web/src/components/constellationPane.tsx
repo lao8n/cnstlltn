@@ -1,6 +1,6 @@
 import { Stack, TextField } from '@fluentui/react';
 import React, { FC, ReactElement, useContext, useEffect, useState, useMemo, useRef, useCallback, FormEvent } from "react";
-import { stackItemPadding } from '../ux/styles';
+import { clusterByStyle, stackItemPadding } from '../ux/styles';
 import { UserFramework, Cluster } from "../models/userState";
 import { AppContext } from "../models/applicationState";
 import UserAppContext from "./userContext";
@@ -219,20 +219,22 @@ const ConstellationPane: FC = (): ReactElement => {
                     </div>
                 </Stack.Item>
                 <Stack.Item grow={1} />
-                <Stack horizontal align="end">
-                    <div className={clusterBy}>
-                        Cluster by:
-                    </div>
-                    <form onSubmit={onFormSubmit}>
-                        <TextField
-                            borderless
-                            value={newQuery}
-                            placeholder={appContext.state.userState.clusterBy}
-                            onChange={onNewQueryChange}
-                            styles={queryFieldStyles}
-                        />
-                    </form>
-                </Stack>
+                <Stack.Item styles={clusterByStyle}>
+                    <Stack horizontal>
+                        <div className={clusterBy}>
+                            Cluster by:
+                        </div>
+                        <form onSubmit={onFormSubmit}>
+                            <TextField
+                                borderless
+                                value={newQuery}
+                                placeholder={appContext.state.userState.clusterBy}
+                                onChange={onNewQueryChange}
+                                styles={queryFieldStyles}
+                            />
+                        </form>
+                    </Stack>
+                </Stack.Item>
             </Stack>
             <Stack.Item grow={1} styles={canvasStackStyle}>
                 <canvas ref={canvasRef} id="pt"/>
