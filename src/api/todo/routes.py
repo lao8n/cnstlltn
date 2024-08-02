@@ -18,7 +18,7 @@ client = OpenAI(
 @app.post("/query-ai", response_model=List[QueryAiResponseBlock], response_model_by_alias=False, status_code=201)
 async def query_ai(query: Query) -> List[QueryAiResponseBlock]:
     prompt_format = """
-    this prompt is to describe how i want to format your response. i will prompt with something like a book title and i want you to respond with the following format
+    this prompt is to describe how i want to format your response. i will prompt with something like a book title or an article and i want you to respond with the following format
     '
     concept 1
     content 1
@@ -143,7 +143,7 @@ async def cluster(request: Request, clusterby: str) ->  List[UserFramework]:
             json_data.append({"title": data.title, "content": data.content, "clusterby": ""})
         json_string = json.dumps(json_data)
         response = client.chat.completions.create(
-            model='gpt-4o-mini', # cheapest model
+            model='gpt-4', # mini doesn't work
             messages=[
                 {
                     "role": "system",

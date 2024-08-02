@@ -108,6 +108,7 @@ const ConstellationPane: FC = (): ReactElement => {
 
     const onFormSubmit = async (evt: FormEvent<HTMLFormElement>) => {
         evt.preventDefault();
+        console.log("cluster")
         actions.constellation.cluster(
             appContext.state.userState.userId,
             appContext.state.userState.constellationName,
@@ -220,7 +221,7 @@ const ConstellationPane: FC = (): ReactElement => {
                 <Stack.Item styles={clusterByStyle} tokens={stackItemPadding}>
                     <Stack horizontal>
                         <div className={clusterByWordStyle}>
-                            {"Cluster by:  "}
+                            {"Cluster by:&nbsp;&nbsp;&nbsp;"}
                         </div>
                         <form onSubmit={onFormSubmit}>
                             <TextField

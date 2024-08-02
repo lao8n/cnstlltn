@@ -116,7 +116,7 @@ export const clusterByWordStyle = mergeStyles({
     font: "Segoe UI",
     fontSize: '15px',
     color: theme.palette.white,
-    alignItems: 'center',
+    alignItems: 'flex-end',
 });
 
 export const clusterByStyle: Partial<ITextFieldStyles> = {
