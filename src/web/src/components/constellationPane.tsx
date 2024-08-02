@@ -124,7 +124,7 @@ const ConstellationPane: FC = (): ReactElement => {
     useEffect(() => {
         const space = new CanvasSpace(canvasRef.current || "").setup({ bgcolor: CnstlltnTheme.palette.black, resize: true });
         const form = space.getForm();
-        const maxDimensions = { width: 2000, height: 1500 }
+        const maxDimensions = { width: 1500, height: 1000 }
         const handleResize = () => {
             console.log("resizing to: ", canvasRef.current?.parentElement?.clientWidth, canvasRef.current?.parentElement?.clientHeight)
             if (canvasRef.current?.parentElement) {
@@ -150,7 +150,6 @@ const ConstellationPane: FC = (): ReactElement => {
         }
         space.add({
             start: (bound) => {
-                console.log("starting position: ", dimensions.width, dimensions.height)
                 updatePositions();
             },
             animate: (time, ftime) => {
@@ -172,16 +171,16 @@ const ConstellationPane: FC = (): ReactElement => {
                 });
                 if (lastSelected) {
                     const topRightX = (canvasRef.current?.width || 0) - 500;
-                    const topRightY = 20;
+                    const topRightY = 30;
                     const topRight = new Pt(topRightX, topRightY);
                     form.font(15).fill("#fff").text(topRight, lastSelected.name);
                     drawMultiLineText(form, topRight.$add(0, 15), lastSelected.description, 15, 400);
                 }
                 if (unclusteredContent !== 0) {
-                    const topRightX = (canvasRef.current?.width || 0) - 500;
+                    const topRightX = (canvasRef.current?.width || 0) - 250;
                     const topRightY = 10;
                     const topRight = new Pt(topRightX, topRightY);
-                    form.font(10).fill("#fff").text(topRight, `You have ${unclusteredContent} unclustered content. Try 'Cluster By' again.`);
+                    form.font(15).fill("#fff").text(topRight, `You have ${unclusteredContent} unclustered content. Try 'Cluster By' again.`);
                 }
             },
             action: (type, x, y) => {
@@ -193,6 +192,7 @@ const ConstellationPane: FC = (): ReactElement => {
                         if (Circle.withinBound(range, pt.position)) {
                             if (appContext.state.userState.constellationName === "Home") {
                                 console.log("constellation set to ", pt.name)
+                                setLastSelected(null)
                                 appContext.dispatch({
                                     type: ActionTypes.SET_CONSTELLATION_NAME,
                                     constellationName: pt.name,

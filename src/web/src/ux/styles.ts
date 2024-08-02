@@ -4,13 +4,6 @@ import { mergeStyles } from '@fluentui/react';
 
 const theme = CnstlltnTheme
 
-export const queryFieldStyles = {
-    field: {
-        color: 'theme.palette.black',
-    },
-};
-
-
 export const rootStackStyles: IStackStyles = {
     root: {
         width: '100vw',
@@ -120,6 +113,14 @@ export const clusterByWordStyle = mergeStyles({
     paddingTop: 5,
     paddingRight: 5,
 });
+
+export const queryFieldStyles = {
+    field: {
+        color: theme.palette.black,
+        fontFamily: "Segoe UI",
+    },
+};
+
 
 export const clusterByStyle: Partial<ITextFieldStyles> = {
     root: {
