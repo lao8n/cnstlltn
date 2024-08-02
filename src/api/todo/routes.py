@@ -36,7 +36,7 @@ async def query_ai(query: Query) -> List[QueryAiResponseBlock]:
     Note how none of the concepts or titles are numbered etc. 
     """
     response = client.chat.completions.create(
-        model='gpt-4',
+        model='gpt-4o', # best model
         messages=[
             {
                 "role": "system",
@@ -141,7 +141,7 @@ async def cluster(request: Request, clusterby: str) ->  List[UserFramework]:
             json_data.append({"title": data.title, "content": data.content, "clusterby": ""})
         json_string = json.dumps(json_data)
         response = client.chat.completions.create(
-            model='gpt-4',
+            model='gpt-4o-mini', # cheapest model
             messages=[
                 {
                     "role": "system",
