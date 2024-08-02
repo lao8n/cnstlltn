@@ -20,7 +20,7 @@ export const getDefaultState = (): ApplicationState => {
             userId: "",
             constellationName: "Home",
             constellation: [],
-            clusterBy: "political, economic, sociological, technological, legal, environmental, psychological",
+            clusterBy: "political, economic, sociological, technological, legal, environmental, psychological etc.",
             cluster: [],
             updated: Date.now(),
         },
