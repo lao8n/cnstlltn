@@ -221,7 +221,7 @@ const ConstellationPane: FC = (): ReactElement => {
                 <Stack.Item styles={clusterByStyle} tokens={stackItemPadding}>
                     <Stack horizontal>
                         <div className={clusterByWordStyle}>
-                            {"Cluster by:&nbsp;&nbsp;&nbsp;"}
+                            {"Cluster by:"}
                         </div>
                         <form onSubmit={onFormSubmit}>
                             <TextField

@@ -107,16 +107,18 @@ export const clusterButtonStyles = mergeStyles(buttonStyles, {
 })
 
 export const constellationNameStyle = mergeStyles({
-    font: "Segoe UI",
+    fontFamily: "Segoe UI",
     fontSize: '20px',
     color: theme.palette.white,
 });
 
 export const clusterByWordStyle = mergeStyles({
-    font: "Segoe UI",
+    fontFamily: "Segoe UI",
     fontSize: '15px',
     color: theme.palette.white,
-    alignItems: 'flex-end',
+    alignItems: 'right',
+    paddingTop: 5,
+    paddingRight: 5,
 });
 
 export const clusterByStyle: Partial<ITextFieldStyles> = {
