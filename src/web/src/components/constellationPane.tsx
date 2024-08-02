@@ -109,7 +109,7 @@ const ConstellationPane: FC = (): ReactElement => {
     const onFormSubmit = async (evt: FormEvent<HTMLFormElement>) => {
         evt.preventDefault();
         console.log("cluster")
-        actions.constellation.cluster(
+        await actions.constellation.cluster(
             appContext.state.userState.userId,
             appContext.state.userState.constellationName,
             appContext.state.userState.clusterBy)
@@ -122,7 +122,7 @@ const ConstellationPane: FC = (): ReactElement => {
     useEffect(() => {
         const space = new CanvasSpace(canvasRef.current || "").setup({ bgcolor: CnstlltnTheme.palette.black, resize: true });
         const form = space.getForm();
-        const maxDimensions = { width: 1200, height: 800 }
+        const maxDimensions = { width: 2000, height: 1500 }
         const handleResize = () => {
             console.log("resizing to: ", canvasRef.current?.parentElement?.clientWidth, canvasRef.current?.parentElement?.clientHeight)
             if (canvasRef.current?.parentElement) {
