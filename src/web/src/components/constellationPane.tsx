@@ -31,6 +31,7 @@ const ConstellationPane: FC = (): ReactElement => {
     const [lastSelected, setLastSelected] = useState<Data | null>(null);
     const [dimensions, setDimensions] = useState({ width: 1200, height: 800 })
     const [constellationRedrawn, setConstellationRedrawn] = useState(Date.now());
+    const [unclusteredContent, setUnclusteredContent] = useState(0);
     const redrawConstellation = useCallback(() => {
         setConstellationRedrawn(Date.now());
     }, []);
@@ -74,7 +75,8 @@ const ConstellationPane: FC = (): ReactElement => {
         pts.current = initializeConstellation(
             appContext.state.userState.constellation,
             appContext.state.userState.clusterBy,
-            canvasRef);
+            canvasRef,
+            setUnclusteredContent);
         redrawConstellation();
     }, [appContext.state.userState.constellation, appContext.state.userState.clusterBy, redrawConstellation])
 
@@ -175,6 +177,12 @@ const ConstellationPane: FC = (): ReactElement => {
                     form.font(15).fill("#fff").text(topRight, lastSelected.name);
                     drawMultiLineText(form, topRight.$add(0, 15), lastSelected.description, 15, 400);
                 }
+                if (unclusteredContent !== 0) {
+                    const topRightX = (canvasRef.current?.width || 0) - 500;
+                    const topRightY = 10;
+                    const topRight = new Pt(topRightX, topRightY);
+                    form.font(10).fill("#fff").text(topRight, `You have ${unclusteredContent} unclustered content. Try 'Cluster By' again.`);
+                }
             },
             action: (type, x, y) => {
                 const r = 10;
@@ -241,7 +249,8 @@ const ConstellationPane: FC = (): ReactElement => {
     );
 }
 
-function initializeConstellation(constellation: UserFramework[], clusterbyQuery: string, canvasRef: React.RefObject<HTMLCanvasElement>): Data[] {
+function initializeConstellation(constellation: UserFramework[], clusterbyQuery: string, canvasRef: React.RefObject<HTMLCanvasElement>, setUnclusteredContent: React.Dispatch<React.SetStateAction<number>>): Data[] {
+    setUnclusteredContent(0);
     return constellation.filter(framework => {
         // Check if the framework has the necessary coordinate data
         if (framework.clusterby[clusterbyQuery] &&
@@ -250,6 +259,7 @@ function initializeConstellation(constellation: UserFramework[], clusterbyQuery:
             return true;
         } else {
             console.log(`Missing coordinate data for framework: ${framework.title} ${framework.clusterby[clusterbyQuery]}`);
+            setUnclusteredContent(v => v + 1);
             return false;
         }
     }).map(framework => {
