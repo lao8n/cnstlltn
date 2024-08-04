@@ -122,6 +122,7 @@ const ConstellationPane: FC = (): ReactElement => {
     }
 
     const onDropdownChange = async () => {
+        console.log("on dropdown change")
         const suggestedCluster = await actions.constellation.getClusterSuggestion(
             appContext.state.userState.userId,
             appContext.state.userState.constellationName,
@@ -247,7 +248,7 @@ const ConstellationPane: FC = (): ReactElement => {
                                 onChange={onNewQueryChange}
                                 styles={clusterByStyle}
                             />
-                            <select onChange={onDropdownChange}>
+                            <select onClick={onDropdownChange}>
                                 <option value="option1">AI Suggested Clustering</option>
                             </select>
                         </form>
