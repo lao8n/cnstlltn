@@ -141,8 +141,9 @@ async def get_cluster_suggestion(request: Request) -> str:
             }
         ]
     )
-    print("suggest cluster response", response)
-    return response
+    content =  response.choices[0].message.content.strip()
+    print("suggest cluster response",content)
+    return content
 
 @app.post("/cluster", response_model=List[UserFramework], status_code=200)
 async def cluster(request: Request, clusterby: str) ->  List[UserFramework]: 
