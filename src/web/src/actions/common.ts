@@ -22,6 +22,7 @@ export enum ActionTypes {
     GET_CLUSTER_SUGGESTION = "GET_CLUSTER_SUGGESTION",
     CLUSTER = "CLUSTER",
     SET_CLUSTER = "SET_CLUSTER", 
+    SET_CLUSTER_BY = "SET_CLUSTER_BY",
     // misc
     SET_UPDATED = "SET_UPDATED",
     GET_LOGIN_CONFIG = "GET_LOGIN_CONFIG",
@@ -43,6 +44,7 @@ export type ApplicationActions =
     userActions.GetClusterSuggestionAction |
     userActions.ClusterAction |
     userActions.SetClusterAction |
+    userActions.SetClusterByAction | 
     // misc
     userActions.SetUpdatedAction |
     userActions.GetLoginConfigAction;

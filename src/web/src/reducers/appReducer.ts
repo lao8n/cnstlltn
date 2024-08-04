@@ -32,6 +32,9 @@ export const appReducer: Reducer<ApplicationState, ApplicationActions> = (state:
         case ActionTypes.SET_CLUSTER:
             state.userState.cluster = action.cluster;
             break;
+        case ActionTypes.SET_CLUSTER_BY:
+            state.userState.clusterBy = action.clusterBy;
+            break;
         case ActionTypes.SET_UPDATED:
             console.log("set updated called");
             state.userState.updated = action.updated;

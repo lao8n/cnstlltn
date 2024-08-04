@@ -124,7 +124,7 @@ export const queryFieldStyles = {
 
 export const clusterByStyle: Partial<ITextFieldStyles> = {
     root: {
-        minWidth: 600,
+        minWidth: 800,
     },
     fieldGroup: {  // This targets the surrounding container of the input
         backgroundColor: theme.palette.black,

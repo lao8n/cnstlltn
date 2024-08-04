@@ -29,17 +29,16 @@ const ConstellationPane: FC = (): ReactElement => {
     const pts = useRef<Data[]>([]) as React.MutableRefObject<Data[]>;
     const clusters = useRef<Data[]>([]) as React.MutableRefObject<Data[]>;
     const [lastSelected, setLastSelected] = useState<Data | null>(null);
-    const [dimensions, setDimensions] = useState({ width: 1200, height: 800 })
+    const [dimensions, setDimensions] = useState({ width: 1500, height: 800 })
     const [constellationRedrawn, setConstellationRedrawn] = useState(Date.now());
     const [unclusteredContent, setUnclusteredContent] = useState(0);
     const redrawConstellation = useCallback(() => {
         setConstellationRedrawn(Date.now());
     }, []);
-    const [newQuery, setNewQuery] = useState('');
+    const [clusterBy, setNewClusterBy] = useState('');
 
     const onNewQueryChange = (evt: FormEvent<HTMLInputElement | HTMLTextAreaElement>, value?: string) => {
-        setNewQuery(value || appContext.state.userState.clusterBy);
-        // TODO: actually do an action to update clusterby field in user state
+        setNewClusterBy(value || appContext.state.userState.clusterBy);
     }
 
     // 1. createConstellation
@@ -110,7 +109,13 @@ const ConstellationPane: FC = (): ReactElement => {
 
     const onFormSubmit = async (evt: FormEvent<HTMLFormElement>) => {
         evt.preventDefault();
-        console.log("cluster")
+        // first update clusterBy to newQuery
+        appContext.dispatch({
+            type: ActionTypes.SET_CLUSTER_BY,
+            clusterBy: clusterBy,
+        });
+        console.log("cluster by", clusterBy, appContext.state.userState.clusterBy)
+        // then use that value 
         await actions.constellation.cluster(
             appContext.state.userState.userId,
             appContext.state.userState.constellationName,
@@ -121,20 +126,20 @@ const ConstellationPane: FC = (): ReactElement => {
         });
     }
 
-    const onDropdownChange = async () => {
-        console.log("on dropdown change")
+    const onClusterClick = async () => {
+        console.log("on cluster click")
         const suggestedCluster = await actions.constellation.getClusterSuggestion(
             appContext.state.userState.userId,
             appContext.state.userState.constellationName,
         );
         console.log(suggestedCluster);
-        setNewQuery(suggestedCluster);
+        setNewClusterBy(suggestedCluster);
     }
 
     useEffect(() => {
         const space = new CanvasSpace(canvasRef.current || "").setup({ bgcolor: CnstlltnTheme.palette.black, resize: true });
         const form = space.getForm();
-        const maxDimensions = { width: 2000, height: 1000 }
+        const maxDimensions = { width: 2000, height: 1200 }
         const handleResize = () => {
             console.log("resizing to: ", canvasRef.current?.parentElement?.clientWidth, canvasRef.current?.parentElement?.clientHeight)
             if (canvasRef.current?.parentElement) {
@@ -243,14 +248,14 @@ const ConstellationPane: FC = (): ReactElement => {
                         </div>
                         <form onSubmit={onFormSubmit}>
                             <TextField
-                                value={newQuery}
+                                value={clusterBy}
                                 placeholder={appContext.state.userState.clusterBy}
                                 onChange={onNewQueryChange}
                                 styles={clusterByStyle}
                             />
-                            <select onClick={onDropdownChange}>
-                                <option value="option1">AI Suggested Clustering</option>
-                            </select>
+                            <button  type="button" onClick={onClusterClick}>
+                                AI Suggested Clustering
+                            </button>
                         </form>
                     </Stack>
                 </Stack.Item>
