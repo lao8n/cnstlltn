@@ -41,6 +41,8 @@ export const appReducer: Reducer<ApplicationState, ApplicationActions> = (state:
         case ActionTypes.CLUSTER:
             // do nothing
             break;
+        case ActionTypes.GET_CLUSTER_SUGGESTION:
+            break;
         default:
             console.log("reducer state not updated")
             break;

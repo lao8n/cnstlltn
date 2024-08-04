@@ -109,6 +109,41 @@ async def get_cluster(request: Request) -> List[Cluster]:
     print(cluster)
     return cluster
 
+@app.get("/get-cluster-suggestion", response_model=str, status_code=200)
+async def get_cluster_suggestion(request: Request) -> str:
+    user_id = request.headers.get("user-id")
+    constellation_name = request.query_params.get("constellationName")
+    user_data : List[UserFramework] =  await UserFramework.find(
+        UserFramework.userid == user_id,
+        UserFramework.constellation == constellation_name,
+    ).to_list()
+    prompt_format = f"""
+    this prompt is to describe how i want to format your response. i will prompt you with lots of concepts and content
+    and i want you to come up with roughly 5-10 categories that could neatly divide them up. 
+    you should return these categories as a single comma separated string for example you might suggest below:
+    political, economic, sociological, technological, legal, environmental, psychological etc
+    you should not return anything else except this single line string
+    """
+    json_data = []
+    for data in user_data:
+         json_data.append({"title": data.title, "content": data.content})
+    json_string = json.dumps(json_data)
+    response = client.chat.completions.create(
+        model='gpt-4o-mini',
+        messages=[
+            {
+                "role": "system",
+                "content": prompt_format,
+            },
+            {
+                "role": "user",
+                "content": json_string,
+            }
+        ]
+    )
+    print("suggest cluster response", response)
+    return response
+
 @app.post("/cluster", response_model=List[UserFramework], status_code=200)
 async def cluster(request: Request, clusterby: str) ->  List[UserFramework]: 
     user_id = request.headers.get("user-id")
@@ -116,7 +151,7 @@ async def cluster(request: Request, clusterby: str) ->  List[UserFramework]:
     user_data : List[UserFramework] =  await UserFramework.find(
         UserFramework.userid == user_id,
         UserFramework.constellation == constellation_name,
-    ).to_list();
+    ).to_list()
     print(user_data)
     len_user_data = len(user_data)
     prompt_format = f"""

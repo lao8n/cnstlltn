@@ -43,6 +43,16 @@ export class UserService {
         return response.data;
     }
 
+    public async getClusterSuggestion(userId: string, constellationName: string): Promise<string> {
+        const response = await this.client.request<string>({
+            method: 'GET',
+            url: `${this.baseUrl}/get-cluster-suggestion`,
+            headers: { 'USER-ID': userId },
+            params: { constellationName: constellationName },
+        });
+        return response.data;
+    }
+
     public async getLoginConfig(): Promise<LoginConfig> {
         const response = await this.client.request<LoginConfig>({
             method: 'GET',

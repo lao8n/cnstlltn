@@ -19,6 +19,7 @@ export enum ActionTypes {
     SET_CONSTELLATION_NAME = "SET_CONSTELLATION_NAME",
     // cluster
     GET_CLUSTER = "GET_CLUSTER",
+    GET_CLUSTER_SUGGESTION = "GET_CLUSTER_SUGGESTION",
     CLUSTER = "CLUSTER",
     SET_CLUSTER = "SET_CLUSTER", 
     // misc
@@ -39,6 +40,7 @@ export type ApplicationActions =
     userActions.SetConstellationNameAction |
     // cluster
     userActions.GetClusterAction |
+    userActions.GetClusterSuggestionAction |
     userActions.ClusterAction |
     userActions.SetClusterAction |
     // misc
