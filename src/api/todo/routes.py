@@ -109,7 +109,7 @@ async def get_cluster(request: Request) -> List[Cluster]:
     print(cluster)
     return cluster
 
-@app.get("/get-cluster-suggestion", response_model=str, status_code=200)
+@app.get("/get-cluster-suggestion", status_code=200)
 async def get_cluster_suggestion(request: Request) -> str:
     user_id = request.headers.get("user-id")
     constellation_name = request.query_params.get("constellationName")
@@ -122,7 +122,7 @@ async def get_cluster_suggestion(request: Request) -> str:
     and i want you to come up with roughly 5-10 categories that could neatly divide them up. 
     you should return these categories as a single comma separated string for example you might suggest below:
     political, economic, sociological, technological, legal, environmental, psychological etc
-    you should not return anything else except this single line string
+    you should not return anything else except this single line string\n
     """
     json_data = []
     for data in user_data:
