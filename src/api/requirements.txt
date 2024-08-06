@@ -9,3 +9,5 @@ azure-keyvault-secrets == 4.4.*
 opentelemetry-instrumentation-fastapi == 0.30b1
 azure-monitor-opentelemetry-exporter == 1.0.0b5
 openai
+pydantic
+pydantic-settings

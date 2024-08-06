@@ -4,7 +4,8 @@ from typing import Dict, Tuple
 from azure.identity import DefaultAzureCredential
 from azure.keyvault.secrets import SecretClient
 from beanie import Document
-from pydantic import BaseModel, BaseSettings, Field
+from pydantic import BaseModel, Field
+from pydantic_settings import BaseSettings
 
 def keyvault_name_as_attr(name: str) -> str:
     return name.replace("-", "_").upper()
@@ -52,23 +53,22 @@ class Framework(BaseModel):
     title: str
     content: str
 
-class Cluster(BaseModel):
-    cluster: str
+class Coordinates(BaseModel):
     coordinate: Tuple[float, float]
 
 class UserCluster(Document):
     userid: str
     constellation: str
     clusterby: str
+    islatest: bool
     cluster: str
-    coordinate: Tuple[float, float]
+    coordinate: Coordinates
+    frameworks: Dict[str, Coordinates] = Field(default_factory=dict) # object id as key
 
 class UserFramework(Document):
     userid: str # partition key
-    # unique id -> cosmos can automatically generate this
     constellation: str
     title: str
     content: str
-    clusterby: Dict[str, Cluster] = Field(default_factory=dict)
 
 __beanie_models__ = [UserFramework, UserCluster]

@@ -8,8 +8,8 @@ from .app import app
 from .models import (Query, QueryAiResponseBlock, Framework, UserFramework, Cluster, UserCluster, LoginConfig)
 from .app import settings
 from random import uniform
-from math import sqrt
 import json
+from . import cluster as cl
 
 client = OpenAI(
     api_key=settings.OPENAI_API_KEY
@@ -91,59 +91,28 @@ async def get_constellation(request: Request) -> List[UserFramework]:
     ).to_list();
     return constellation
 
-@app.get("/get-cluster", response_model=List[Cluster], status_code=200)
-async def get_cluster(request: Request) -> List[Cluster]:
-    print("getting cluster")
-    print(request.headers)
+@app.get("/get-cluster", response_model=List[UserCluster], status_code=200)
+async def get_cluster(request: Request) -> List[UserCluster]:
     user_id = request.headers.get("user-id")
     constellation_name = request.query_params.get("constellationName")
-    clusterby = request.query_params.get("clusterby")
-    print(constellation_name, clusterby)
-    clusters_data = await UserCluster.find(
-        UserCluster.userid == user_id,
-        UserFramework.constellation == constellation_name,
-        UserCluster.clusterby == clusterby
-    ).to_list()
-    print(clusters_data)
-    cluster = [Cluster(cluster=x.cluster, coordinate=x.coordinate) for x in clusters_data]
-    print(cluster)
-    return cluster
+    cluster_by = request.query_params.get("clusterby")
+    latest = request.query_params.get("latest")
+    user_clusters = await cl.get_cluster(user_id, constellation_name, cluster_by, latest)
+    return user_clusters
 
-@app.get("/get-cluster-suggestion", status_code=200)
-async def get_cluster_suggestion(request: Request) -> str:
+@app.get("/get_cluster_by_options", status_code=200)
+async def get_cluster_by_options(request: Request) -> List[str]:
     user_id = request.headers.get("user-id")
     constellation_name = request.query_params.get("constellationName")
-    user_data : List[UserFramework] =  await UserFramework.find(
-        UserFramework.userid == user_id,
-        UserFramework.constellation == constellation_name,
-    ).to_list()
-    prompt_format = f"""
-    this prompt is to describe how i want to format your response. i will prompt you with lots of concepts and content
-    and i want you to come up with roughly 5-10 categories that could neatly divide them up. 
-    you should return these categories as a single comma separated string for example you might suggest below:
-    political, economic, sociological, technological, legal, environmental, psychological etc
-    you should not return anything else except this single line string\n
-    """
-    json_data = []
-    for data in user_data:
-         json_data.append({"title": data.title, "content": data.content})
-    json_string = json.dumps(json_data)
-    response = client.chat.completions.create(
-        model='gpt-4o-mini',
-        messages=[
-            {
-                "role": "system",
-                "content": prompt_format,
-            },
-            {
-                "role": "user",
-                "content": json_string,
-            }
-        ]
-    )
-    content =  response.choices[0].message.content.strip()
-    print("suggest cluster response",content)
-    return content
+    options = await cl.get_cluster_by_options(user_id, constellation_name)
+    return options
+
+@app.get("/get-cluster-by-suggestion", status_code=200)
+async def get_cluster_by_suggestion(request: Request) -> str:
+    user_id = request.headers.get("user-id")
+    constellation_name = request.query_params.get("constellationName")
+    cluster_by_suggestion = await cl.get_cluster_by_suggestions(user_id, constellation_name)
+    return cluster_by_suggestion
 
 @app.post("/cluster", response_model=List[UserFramework], status_code=200)
 async def cluster(request: Request, clusterby: str) ->  List[UserFramework]: 
@@ -231,10 +200,6 @@ async def cluster(request: Request, clusterby: str) ->  List[UserFramework]:
         ).save()
     
     return user_data
-
-def chunk_list(data, chunk_size):
-    for i in range(0, len(data), chunk_size):
-        yield data[i:i + chunk_size]
 
 @app.get("/login-config", response_model=LoginConfig, status_code=200)
 def get_login_config() -> LoginConfig:
