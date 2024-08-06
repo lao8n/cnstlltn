@@ -1,7 +1,8 @@
 from typing import List
-from .models import (UserFramework, Coordinates, UserCluster)
+from api.todo.models import (UserFramework, UserCluster)
+from api.todo.models.user_cluster import Coordinates
 from openai import OpenAI
-from .app import settings
+from api.todo.app import settings
 import json
 from random import uniform
 from collections import defaultdict
@@ -75,13 +76,10 @@ async def get_cluster_by_suggestion(user_id, constellation_name) -> str:
     print("get_cluster_by_suggestion returns:", content)
     return content
 
-async def cluster_by(user_id, constellation_name, cluster_by, cluster_new_only) -> List[UserFramework]:
+async def cluster_by(user_id, constellation_name, cluster_by, cluster_new_only):
     print("get_cluster_by params:", user_id, constellation_name)
-
     await _set_not_latest(user_id, constellation_name)
-
     user_data, clusters, user_clusters = await _data_to_cluster(user_id, constellation_name, cluster_new_only)
-
     print(user_data, clusters, user_clusters)
     prompt_format = f"""
     this prompt is to describe how i want to format your response. i will prompt with something like a list of concepts
@@ -147,7 +145,7 @@ async def _set_not_latest(user_id, constellation_name):
         user_cluster.islatest = False
         await user_cluster.save()
 
-async def _data_to_cluster(user_id, constellation_name, cluster_new_only):
+async def _data_to_cluster(user_id: str, constellation_name: str, cluster_new_only: bool):
     user_data : List[UserFramework] = await UserFramework.find(
         UserFramework.userid == user_id,
         UserFramework.constellation == constellation_name,

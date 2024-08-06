@@ -4,12 +4,12 @@ from urllib.parse import urljoin
 from starlette.requests import Request
 
 from openai import OpenAI
-from .app import app
-from .models import (Query, QueryAiResponseBlock, Framework, UserFramework, Cluster, UserCluster, LoginConfig)
-from .app import settings
+from api.todo.app import app
+from api.todo.models.models import (Query, QueryAiResponseBlock, Framework, LoginConfig)
+from api.todo.models import (UserFramework, UserCluster)
+from api.todo.app import settings
 from random import uniform
-import json
-from . import cluster as cl
+from api.todo import cluster as cl
 
 client = OpenAI(
     api_key=settings.OPENAI_API_KEY
@@ -114,92 +114,13 @@ async def get_cluster_by_suggestion(request: Request) -> str:
     cluster_by_suggestion = await cl.get_cluster_by_suggestions(user_id, constellation_name)
     return cluster_by_suggestion
 
-@app.post("/cluster", response_model=List[UserFramework], status_code=200)
-async def cluster(request: Request, clusterby: str) ->  List[UserFramework]: 
+@app.post("/cluster-by", status_code=200)
+async def cluster_by(request: Request): 
     user_id = request.headers.get("user-id")
     constellation_name = request.query_params.get("constellationName")
-    user_data : List[UserFramework] =  await UserFramework.find(
-        UserFramework.userid == user_id,
-        UserFramework.constellation == constellation_name,
-    ).to_list()
-    print(user_data)
-    len_user_data = len(user_data)
-    prompt_format = f"""
-    this prompt is to describe how i want to format your response. i will prompt with something like a list of concepts
-    with a title and content and clusterby json format
-    [{{"title": "concept 1", "content": "description of concept 1", "clusterby": ""}}, 
-     {{"title": "concept 2", "content": "description of concept 2", "clusterby": ""}}, 
-     {{"title": "concept 3", "content": "description of concept 3", "clusterby": ""}}]
-    i then want you to return the same data but with the clusterby field filled in with the cluster that the concept belongs to
-    in valid json format - dropping the content field
-    [{{"title": "concept 1", "clusterby": "cluster 1"}}, 
-     {{"title": "concept 2", "clusterby": "cluster 2"}}, 
-     {{"title": "concept 3", "clusterby": "cluster 1"}}]
-    this should correspond in order exactly to the list of concepts in the prompt. therefore there should be 
-    {len_user_data} lines in total, one for each concept.
-    the following is a list of concepts and their descriptions, using {clusterby} assign a category to 
-    each one of them\n
-    """
-    clusters = {}
-    chunk_size = 10
-    for index, chunk in enumerate(chunk_list(user_data, chunk_size)):
-        json_data = []
-        for data in chunk:
-            json_data.append({"title": data.title, "content": data.content, "clusterby": ""})
-        json_string = json.dumps(json_data)
-        response = client.chat.completions.create(
-            model='gpt-4', # mini doesn't work
-            messages=[
-                {
-                    "role": "system",
-                    "content": prompt_format,
-                },
-                {
-                    "role": "user",
-                    "content": json_string,
-                }
-            ]
-        )
-        # Split response into blocks
-        json_response = response.choices[0].message.content.strip()
-        print(json_response)
-        response_blocks = json.loads(json_response)
-        print("response blocks")
-        print(response_blocks)
-
-        # generate clusters
-        for response_block in response_blocks:
-            cluster = response_block['clusterby'].title()
-            if cluster not in clusters:
-                clusters[cluster] = (uniform(0.1, 0.9), uniform(0.1, 0.9))
-
-        for j in range (len(response_blocks)):
-            i = index * chunk_size + j
-            cluster = response_blocks[j]['clusterby'].title()
-            x = clusters[cluster][0] + uniform(-1, 1) / 8
-            y = clusters[cluster][1] + uniform(-1, 1) / 8
-            user_data[i].clusterby[clusterby] = Cluster(cluster=cluster, coordinate=(x, y))
-            print(user_data[i], i)
-            await user_data[i].save()
-
-    # delete all clusters 
-    await UserCluster.find(
-        UserCluster.userid == user_id,
-        UserCluster.constellation == constellation_name,
-        UserCluster.clusterby == clusterby
-    ).delete_many()
-    print(clusters)
-    for key, coordinates in clusters.items():
-        print(key, coordinates)
-        await UserCluster(
-            userid=user_id, 
-            constellation=constellation_name, 
-            clusterby=clusterby, 
-            cluster=key, 
-            coordinate=coordinates
-        ).save()
-    
-    return user_data
+    cluster_by = request.query_params.get("clusterby")
+    cluster_new_only = request.query_params.get("clusterNewOnly")
+    cl.cluster_by(user_id, constellation_name, cluster_by, cluster_new_only)
 
 @app.get("/login-config", response_model=LoginConfig, status_code=200)
 def get_login_config() -> LoginConfig:

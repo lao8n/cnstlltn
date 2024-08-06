@@ -9,6 +9,9 @@ from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import BatchSpanProcessor
 import os
 from pathlib import Path
+from contextlib import asynccontextmanager
+from api.todo.models import __beanie_models__, UserFramework, UserCluster
+from api.todo.models.models import Settings
 
 # Use API_ALLOW_ORIGINS env var with comma separated urls like
 # `http://localhost:300, http://otherurl:100`
@@ -43,21 +46,34 @@ def originList(origins):
     
 origins = originList(origins)
 
-from .models import Settings, __beanie_models__
-
 settings = Settings()
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    client = motor.motor_asyncio.AsyncIOMotorClient(
+        settings.AZURE_COSMOS_CONNECTION_STRING
+    )
+    await init_beanie(
+        database=client[settings.AZURE_COSMOS_DATABASE_NAME],
+        document_models=[UserFramework, UserCluster],
+    )
+    yield
+    client.close()
+
 app = FastAPI(
     description="Cnstlltn App",
     version="0.0.1",
     title="Cnstlltn App",
-    docs_url="/",
-)
+    docs_url="/")
+
+app.router.lifespan = lifespan
+
 # class CustomCORSMiddleware(CORSMiddleware):
 #     async def dispatch(self, request: Request, call_next):
 #         response = await call_next(request)
 #         response.headers["Access-Control-Allow-Credentials"] = "true"
 #         return response
-    
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["https://portal.azure.com",
@@ -81,15 +97,4 @@ if settings.APPLICATIONINSIGHTS_CONNECTION_STRING:
 
     FastAPIInstrumentor.instrument_app(app, tracer_provider=tracerProvider)
 
-
-from . import routes  # NOQA
-
-@app.on_event("startup")
-async def startup_event():
-    client = motor.motor_asyncio.AsyncIOMotorClient(
-        settings.AZURE_COSMOS_CONNECTION_STRING
-    )
-    await init_beanie(
-        database=client[settings.AZURE_COSMOS_DATABASE_NAME],
-        document_models=__beanie_models__,
-    )
+from api.todo import routes  # NOQA

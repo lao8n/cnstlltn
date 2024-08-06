@@ -3,13 +3,12 @@ from typing import Dict, Tuple
 
 from azure.identity import DefaultAzureCredential
 from azure.keyvault.secrets import SecretClient
-from beanie import Document
-from pydantic import BaseModel, Field
+from beanie import Document, PydanticObjectId
+from pydantic import BaseModel, Field, ConfigDict
 from pydantic_settings import BaseSettings
 
 def keyvault_name_as_attr(name: str) -> str:
     return name.replace("-", "_").upper()
-
 
 class Settings(BaseSettings):
     def __init__(self, *args, **kwargs):
@@ -52,23 +51,3 @@ class LoginConfig(BaseModel):
 class Framework(BaseModel):
     title: str
     content: str
-
-class Coordinates(BaseModel):
-    coordinate: Tuple[float, float]
-
-class UserCluster(Document):
-    userid: str
-    constellation: str
-    clusterby: str
-    islatest: bool
-    cluster: str
-    coordinate: Coordinates
-    frameworks: Dict[str, Coordinates] = Field(default_factory=dict) # object id as key
-
-class UserFramework(Document):
-    userid: str # partition key
-    constellation: str
-    title: str
-    content: str
-
-__beanie_models__ = [UserFramework, UserCluster]
