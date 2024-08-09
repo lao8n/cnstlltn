@@ -1,6 +1,5 @@
 from typing import List
-from api.todo.models import (UserFramework, UserCluster)
-from api.todo.models.user_cluster import Coordinates
+from api.todo.models import (UserFramework, UserCluster, Coordinates)
 from openai import OpenAI
 from api.todo.app import settings
 import json

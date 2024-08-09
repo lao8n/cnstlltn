@@ -11,12 +11,14 @@ export interface UserState {
 export interface UserFramework {
     title: string;
     content: string;
-    clusterby: { [key: string]: Cluster};
 }
 
 export interface Cluster {
+    clusterBy: string;
+    isLatest: boolean;
     cluster: string;
     coordinate: [number, number];
+    frameworks: { [key: string]: [number, number]}
 }
 
 export interface LoginConfig {

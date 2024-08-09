@@ -10,8 +10,7 @@ from opentelemetry.sdk.trace.export import BatchSpanProcessor
 import os
 from pathlib import Path
 from contextlib import asynccontextmanager
-from api.todo.models import __beanie_models__, UserFramework, UserCluster
-from api.todo.models.models import Settings
+from api.todo.models import UserFramework, UserCluster, Settings
 
 # Use API_ALLOW_ORIGINS env var with comma separated urls like
 # `http://localhost:300, http://otherurl:100`

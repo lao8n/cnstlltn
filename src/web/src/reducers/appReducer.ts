@@ -41,7 +41,7 @@ export const appReducer: Reducer<ApplicationState, ApplicationActions> = (state:
             break;
         case ActionTypes.SAVE_SELECTED_FRAMEWORKS:
             break;
-        case ActionTypes.CLUSTER:
+        case ActionTypes.CLUSTER_BY:
             // do nothing
             break;
         case ActionTypes.GET_CLUSTER_SUGGESTION:

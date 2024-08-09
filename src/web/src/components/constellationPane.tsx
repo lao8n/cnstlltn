@@ -116,7 +116,7 @@ const ConstellationPane: FC = (): ReactElement => {
         });
         console.log("cluster by", clusterBy, appContext.state.userState.clusterBy)
         // then use that value 
-        await actions.constellation.cluster(
+        await actions.constellation.clusterBy(
             appContext.state.userState.userId,
             appContext.state.userState.constellationName,
             appContext.state.userState.clusterBy)
@@ -128,7 +128,7 @@ const ConstellationPane: FC = (): ReactElement => {
 
     const onClusterClick = async () => {
         console.log("on cluster click")
-        const suggestedCluster = await actions.constellation.getClusterSuggestion(
+        const suggestedCluster = await actions.constellation.getClusterBySuggestion(
             appContext.state.userState.userId,
             appContext.state.userState.constellationName,
         );

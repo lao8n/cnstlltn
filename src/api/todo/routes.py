@@ -5,8 +5,7 @@ from starlette.requests import Request
 
 from openai import OpenAI
 from api.todo.app import app
-from api.todo.models.models import (Query, QueryAiResponseBlock, Framework, LoginConfig)
-from api.todo.models import (UserFramework, UserCluster)
+from api.todo.models import (UserFramework, UserCluster, Query, QueryAiResponseBlock, Framework, LoginConfig)
 from api.todo.app import settings
 from random import uniform
 from api.todo import cluster as cl
@@ -49,8 +48,6 @@ async def query_ai(query: Query) -> List[QueryAiResponseBlock]:
         ]
     )
     # Split response into blocks
-    print("raw response")
-    print(response)
     response_blocks = response.choices[0].message.content.strip().split("\n\n")
 
     # Create QueryAiResponseBlock list
@@ -65,7 +62,6 @@ async def query_ai(query: Query) -> List[QueryAiResponseBlock]:
 @app.post("/save-frameworks", response_model=List[UserFramework], status_code=201)
 async def save_frameworks(request: Request, saveFrameworks: List[Framework]) -> List[UserFramework]:
     print("saving frameworks")
-    print(request.headers)
     user_id = request.headers.get("user-id")
     constellation_name = request.query_params.get("constellationName")
     results = []
@@ -82,7 +78,6 @@ async def save_frameworks(request: Request, saveFrameworks: List[Framework]) -> 
 @app.get("/get-constellation", response_model=List[UserFramework], status_code=200)
 async def get_constellation(request: Request) -> List[UserFramework]:
     print("getting constellation")
-    print(request.headers)
     user_id = request.headers.get("user-id")
     constellation_name = request.query_params.get("constellationName")
     constellation : List[UserFramework] =  await UserFramework.find(
@@ -95,12 +90,12 @@ async def get_constellation(request: Request) -> List[UserFramework]:
 async def get_cluster(request: Request) -> List[UserCluster]:
     user_id = request.headers.get("user-id")
     constellation_name = request.query_params.get("constellationName")
-    cluster_by = request.query_params.get("clusterby")
+    cluster_by = request.query_params.get("clusterBy")
     latest = request.query_params.get("latest")
     user_clusters = await cl.get_cluster(user_id, constellation_name, cluster_by, latest)
     return user_clusters
 
-@app.get("/get_cluster_by_options", status_code=200)
+@app.get("/get-cluster-by-options", status_code=200)
 async def get_cluster_by_options(request: Request) -> List[str]:
     user_id = request.headers.get("user-id")
     constellation_name = request.query_params.get("constellationName")
@@ -118,7 +113,7 @@ async def get_cluster_by_suggestion(request: Request) -> str:
 async def cluster_by(request: Request): 
     user_id = request.headers.get("user-id")
     constellation_name = request.query_params.get("constellationName")
-    cluster_by = request.query_params.get("clusterby")
+    cluster_by = request.query_params.get("clusterBy")
     cluster_new_only = request.query_params.get("clusterNewOnly")
     cl.cluster_by(user_id, constellation_name, cluster_by, cluster_new_only)
 

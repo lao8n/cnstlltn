@@ -19,8 +19,9 @@ export enum ActionTypes {
     SET_CONSTELLATION_NAME = "SET_CONSTELLATION_NAME",
     // cluster
     GET_CLUSTER = "GET_CLUSTER",
+    GET_CLUSTER_BY_OPTIONS = "GET_CLUSTER_BY_OPTIONS",
     GET_CLUSTER_SUGGESTION = "GET_CLUSTER_SUGGESTION",
-    CLUSTER = "CLUSTER",
+    CLUSTER_BY = "CLUSTER_BY",
     SET_CLUSTER = "SET_CLUSTER", 
     SET_CLUSTER_BY = "SET_CLUSTER_BY",
     // misc
@@ -35,14 +36,15 @@ export type ApplicationActions =
     userActions.SaveSelectedFrameworksAction |
     queryActions.PostQueryResponseListAction |
     queryActions.SetEmptyQueryResponseListAction | 
-    // constelation
+    // constellation
     userActions.GetConstellationAction |
     userActions.SetConstellationAction |
     userActions.SetConstellationNameAction |
     // cluster
     userActions.GetClusterAction |
+    userActions.GetClusterByOptionsAction |
     userActions.GetClusterSuggestionAction |
-    userActions.ClusterAction |
+    userActions.ClusterByAction |
     userActions.SetClusterAction |
     userActions.SetClusterByAction | 
     // misc
