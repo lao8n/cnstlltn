@@ -1,14 +1,22 @@
+// react imports
 import { Stack, TextField } from '@fluentui/react';
 import { FC, ReactElement, useState, useContext, useEffect, FormEvent } from "react";
+// ux imports
 import { queryFieldStyles, stackItemPadding } from '../ux/styles';
-import { Query, QueryResponse } from '../models/queryState';
 import { buttonStyles, selectedButtonStyles } from '../ux/styles';
-import { bindActionCreators } from '../actions/actionCreators';
-import * as userActions from '../actions/userActions';
-import UserAppContext from '../components/userContext';
+// state imports
 import { AppContext } from '../models/applicationState';
+import { Query, QueryResponse } from '../models/queryState';
+import UserAppContext from '../components/userContext';
+import { bindActionCreators } from '../actions/actionCreators';
 import { UserActions } from '../actions/userActions';
-import { ActionTypes } from '../actions/common';
+import * as userActions from '../actions/userActions';
+import { QueryActions } from '../actions/queryActions';
+import * as queryActions from '../actions/queryActions';
+import { ConstellationActions } from '../actions/constellationActions';
+import * as constellationActions from '../actions/constellationActions';
+import { DisplayActions } from '../actions/displayActions';
+import * as displayActions from '../actions/displayActions';
 
 interface QueryPaneProps {
     query?: Query
@@ -17,17 +25,22 @@ interface QueryPaneProps {
 }
 
 const QueryPane: FC<QueryPaneProps> = (props: QueryPaneProps): ReactElement => {
-    const [newQuery, setNewQuery] = useState('');
-    const [selectedResponses, setSelectedResponses] = useState<Set<number>>(new Set());
     const appContext = useContext<AppContext>(UserAppContext)
     const actions = {
-        queryResponseList: bindActionCreators(userActions, appContext.dispatch) as unknown as UserActions
+        user: bindActionCreators(userActions, appContext.dispatch) as unknown as UserActions,
+        query: bindActionCreators(queryActions, appContext.dispatch) as unknown as QueryActions,
+        constellation: bindActionCreators(constellationActions, appContext.dispatch) as unknown as ConstellationActions,
+        display: bindActionCreators(displayActions, appContext.dispatch) as unknown as DisplayActions
     };
 
+    // display
+    const [newQuery, setNewQuery] = useState('');
+    const [selectedResponses, setSelectedResponses] = useState<Set<number>>(new Set());
     const onNewQueryChange = (evt: FormEvent<HTMLInputElement | HTMLTextAreaElement>, value?: string) => {
         setNewQuery(value || '');
     }
 
+    // functions
     const toggleResponseSelection = (index: number) => {
         const newSelectedResponses = new Set(selectedResponses);
         if (newSelectedResponses.has(index)) {
@@ -37,7 +50,6 @@ const QueryPane: FC<QueryPaneProps> = (props: QueryPaneProps): ReactElement => {
         }
         setSelectedResponses(newSelectedResponses);
     };
-
     const onFormSubmit = async (evt: FormEvent<HTMLFormElement>) => {
         evt.preventDefault();
         if (newQuery && appContext.state.userState.constellationName !== "Home") {
@@ -47,49 +59,40 @@ const QueryPane: FC<QueryPaneProps> = (props: QueryPaneProps): ReactElement => {
             setSelectedResponses(new Set());
         }
     }
-
-    useEffect(() => {
-        setSelectedResponses(new Set());
-        appContext.dispatch({
-            type: ActionTypes.SET_EMPTY_QUERY_RESPONSE_LIST
-        });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [appContext.state.userState.constellationName, appContext.dispatch])
-
     const createConstellation = async () => {
         if (newQuery) {
             const responses: QueryResponse[] = [{ title: newQuery, content: "" }];
-            const createdConstellation = await actions.queryResponseList.saveSelectedFrameworks(
+            const createdConstellation = await actions.constellation.saveSelectedFrameworks(
                 appContext.state.userState.userId,
                 appContext.state.userState.constellationName,
                 responses,
             )
             console.log(createdConstellation)
-            appContext.dispatch({
-                type: ActionTypes.SET_UPDATED,
-                updated: Date.now(),
-            });
+            actions.display.setUpdated(Date.now());
         }
     }
-
     const saveSelectedResponses = async () => {
         const queryResponseList = props.queryResponseList || [];
         console.log("queryResponseList " + queryResponseList)
         const responsesToSave = Array.from(selectedResponses).map(index => queryResponseList[index]) ;
         // Now, you can save 'responsesToSave' to the database
         console.log("responses to save " + responsesToSave)
-        const savedFrameworks = await actions.queryResponseList.saveSelectedFrameworks(
+        const savedFrameworks = await actions.constellation.saveSelectedFrameworks(
             appContext.state.userState.userId,
             appContext.state.userState.constellationName,
             responsesToSave);
         console.log("saved Frameworks " + savedFrameworks)
         // set selected responses to empty
         setSelectedResponses(new Set());
-        appContext.dispatch({
-            type: ActionTypes.SET_UPDATED,
-            updated: Date.now(),
-        });
+        actions.display.setUpdated(Date.now());
     };
+
+    // effects
+    useEffect(() => {
+        setSelectedResponses(new Set());
+        actions.query.emptyQueryResponseList();
+    }, [actions.query, appContext.state.userState.constellationName])
+
     return (
         <Stack>
             <Stack.Item tokens={stackItemPadding}>

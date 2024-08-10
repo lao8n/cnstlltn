@@ -7,7 +7,6 @@ import { CnstlltnTheme } from "../ux/theme";
 // state imports
 import { AppContext } from "../models/applicationState";
 import UserAppContext from "./userContext";
-import { ActionTypes } from '../actions/common';
 import { bindActionCreators } from "../actions/actionCreators";
 import { UserActions } from '../actions/userActions';
 import * as userActions from '../actions/userActions';
@@ -34,6 +33,7 @@ const ConstellationPane: FC = (): ReactElement => {
         cluster: bindActionCreators(clusterActions, appContext.dispatch) as unknown as ClusterActions,
         display: bindActionCreators(displayActions, appContext.dispatch) as unknown as DisplayActions
     }), [appContext.dispatch]);
+
     // display
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const [dimensions, setDimensions] = useState({ width: 1500, height: 800 })
@@ -83,9 +83,7 @@ const ConstellationPane: FC = (): ReactElement => {
             actions.constellation.setConstellation(constellation);
         };
         getConstellation();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [actions.constellation,
-        appContext.dispatch,
         appContext.state.userState.userId,
         appContext.state.userState.constellationName,
         appContext.state.userState.updated]);
@@ -100,9 +98,7 @@ const ConstellationPane: FC = (): ReactElement => {
             actions.cluster.setClusters(clusters);
         };
         getCluster();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [actions.cluster,
-        appContext.dispatch,
         appContext.state.userState.userId,
         appContext.state.userState.constellationName,
         appContext.state.userState.clusterBy,
@@ -170,10 +166,7 @@ const ConstellationPane: FC = (): ReactElement => {
                         if (Circle.withinBound(range, pt.position)) {
                             if (appContext.state.userState.constellationName === "Home") {
                                 setLastSelected(null)
-                                appContext.dispatch({
-                                    type: ActionTypes.SET_CONSTELLATION_NAME,
-                                    constellationName: pt.name,
-                                });
+                                actions.constellation.setConstellationName(pt.name);
                             } else {
                                 pt.selected = !pt.selected;
                                 setLastSelected(pt.selected ? pt : null)
@@ -195,7 +188,6 @@ const ConstellationPane: FC = (): ReactElement => {
         dimensions,
         constellationPts,
         clusterPts,
-        appContext.dispatch,
         appContext.state.userState.constellationName,
         constellationRedrawn]);
 
