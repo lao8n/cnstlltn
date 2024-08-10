@@ -9,7 +9,6 @@ export const appReducer: Reducer<ApplicationState, ApplicationActions> = (state:
             state.userState = { ...state.userState, isLoggedIn: action.isLoggedIn, userId: action.userId };
             break;
         case ActionTypes.GET_LOGIN_CONFIG:
-            // do nothing
             break;
         // query
         case ActionTypes.POST_QUERY_RESPONSE_LIST:
@@ -49,11 +48,10 @@ export const appReducer: Reducer<ApplicationState, ApplicationActions> = (state:
             break;
         // display
         case ActionTypes.SET_UPDATED:
-            console.log("set updated called");
             state.userState.updated = action.updated;
             break;
         default:
-            console.log("reducer state not updated")
+            console.log("reducer state not updated {action.type}")
             break;
     }
     return { ...state};

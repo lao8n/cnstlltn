@@ -58,8 +58,7 @@ class UserFramework(Document):
     title: str
     content: str
 
-class Coordinates(BaseModel):
-    coordinate: Tuple[float, float]
+Coordinates = Tuple[float, float]
 
 class UserCluster(Document):
     userid: str

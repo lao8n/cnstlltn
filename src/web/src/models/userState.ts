@@ -9,6 +9,7 @@ export interface UserState {
 }
 
 export interface UserFramework {
+    id: string;
     title: string;
     content: string;
 }

@@ -1,140 +1,126 @@
+// react imports
 import { Stack, TextField } from '@fluentui/react';
 import React, { FC, ReactElement, useContext, useEffect, useState, useMemo, useRef, useCallback, FormEvent } from "react";
+// ux imports
 import { canvasStackStyle, clusterByStyle, stackItemPadding, constellationNameStyle, clusterByWordStyle } from '../ux/styles';
-import { UserFramework, Cluster } from "../models/userState";
+import { CnstlltnTheme } from "../ux/theme";
+// state imports
 import { AppContext } from "../models/applicationState";
 import UserAppContext from "./userContext";
-import { bindActionCreators } from "../actions/actionCreators";
-import * as userActions from '../actions/userActions';
-import { UserActions } from '../actions/userActions';
 import { ActionTypes } from '../actions/common';
-import { CanvasSpace, Circle, Pt, CanvasForm } from "pts";
-import { CnstlltnTheme } from "../ux/theme";
+import { bindActionCreators } from "../actions/actionCreators";
+import { UserActions } from '../actions/userActions';
+import * as userActions from '../actions/userActions';
+import { ConstellationActions } from '../actions/constellationActions';
+import * as constellationActions from '../actions/constellationActions';
+import { ClusterActions } from '../actions/clusterActions';
+import * as clusterActions from '../actions/clusterActions';
+import { DisplayActions } from '../actions/displayActions';
+import * as displayActions from '../actions/displayActions';
+// display imports
+import { CanvasSpace, Circle, Pt } from "pts";
+import { DisplayPoint } from '../display/models';
+import { setConstellationDisplayPoints, setClusterDisplayPoints, drawMultiLineText, drawConstellationPoints, drawClusterPoints, drawUnclusteredContentNotification } from '../display/display';
 
-type Data = {
-    name: string;
-    description: string;
-    coord: [number, number];
-    position: Pt;
-    selected: boolean;
-};
-
+// Update path
+// 1. createConstellation   -> userState.updated -> getConstellation -> setConstellationDisplayPoints -> redrawConstellation
+//    saveSelectedResponses                         getCluster          setClusterDisplayPoints
+//    clusterBy
 const ConstellationPane: FC = (): ReactElement => {
     const appContext = useContext<AppContext>(UserAppContext)
     const actions = useMemo(() => ({
-        constellation: bindActionCreators(userActions, appContext.dispatch) as unknown as UserActions,
-        cluster: bindActionCreators(userActions, appContext.dispatch) as unknown as UserActions,
+        user: bindActionCreators(userActions, appContext.dispatch) as unknown as UserActions,
+        constellation: bindActionCreators(constellationActions, appContext.dispatch) as unknown as ConstellationActions,
+        cluster: bindActionCreators(clusterActions, appContext.dispatch) as unknown as ClusterActions,
+        display: bindActionCreators(displayActions, appContext.dispatch) as unknown as DisplayActions
     }), [appContext.dispatch]);
-    const canvasRef = useRef<HTMLCanvasElement>(null); // Create a ref for the canvas
-    const pts = useRef<Data[]>([]) as React.MutableRefObject<Data[]>;
-    const clusters = useRef<Data[]>([]) as React.MutableRefObject<Data[]>;
-    const [lastSelected, setLastSelected] = useState<Data | null>(null);
+    // display
+    const canvasRef = useRef<HTMLCanvasElement>(null);
     const [dimensions, setDimensions] = useState({ width: 1500, height: 800 })
+    const constellationPts = useRef<DisplayPoint[]>([]) as React.MutableRefObject<DisplayPoint[]>;
+    const clusterPts = useRef<DisplayPoint[]>([]) as React.MutableRefObject<DisplayPoint[]>;
+    const [lastSelected, setLastSelected] = useState<DisplayPoint | null>(null);
     const [constellationRedrawn, setConstellationRedrawn] = useState(Date.now());
     const [unclusteredContent, setUnclusteredContent] = useState(0);
+    const [clusterBy, setNewClusterBy] = useState('');
+
+    // functions
     const redrawConstellation = useCallback(() => {
         setConstellationRedrawn(Date.now());
     }, []);
-    const [clusterBy, setNewClusterBy] = useState('');
 
     const onNewQueryChange = (evt: FormEvent<HTMLInputElement | HTMLTextAreaElement>, value?: string) => {
         setNewClusterBy(value || appContext.state.userState.clusterBy);
     }
 
-    // 1. createConstellation
-    // 2. saveSelectedResponses
-    // 3. clusterBy
-    // -> 
-    // 1. userState.updated
-    // -> 
-    // 1. getConstellation 
-    // 2. getCluster
-    // -> 
-    // 1. initializeConstellation
-    // 2. initializeCluster
-    // -> 
-    // 1. redrawConstellation
+    const onFormSubmit = async (evt: FormEvent<HTMLFormElement>) => {
+        evt.preventDefault();
+        actions.cluster.setClusterBy(clusterBy);
+        console.log("cluster by", clusterBy, appContext.state.userState.clusterBy)
+        await actions.cluster.clusterBy(
+            appContext.state.userState.userId,
+            appContext.state.userState.constellationName,
+            appContext.state.userState.clusterBy,
+            unclusteredContent !== 0) // if unclustered content then only cluster that
+        actions.display.setUpdated(Date.now());
+    }
+
+    const onClusterClick = async () => {
+        const suggestedCluster = await actions.cluster.getClusterBySuggestion(
+            appContext.state.userState.userId,
+            appContext.state.userState.constellationName,
+        );
+        setNewClusterBy(suggestedCluster);
+    }
+
+    // effects
     useEffect(() => {
         console.log("get constellation")
         const getConstellation = async () => {
             const constellation = await actions.constellation.getConstellation(
                 appContext.state.userState.userId,
                 appContext.state.userState.constellationName);
-            appContext.dispatch({
-                type: ActionTypes.SET_CONSTELLATION,
-                constellation: constellation,
-            });
-            return constellation
+            actions.constellation.setConstellation(constellation);
         };
         getConstellation();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [actions.constellation, appContext.dispatch, appContext.state.userState.userId, appContext.state.userState.constellationName, appContext.state.userState.updated]);
-
-    useEffect(() => {
-        pts.current = initializeConstellation(
-            appContext.state.userState.constellation,
-            appContext.state.userState.clusterBy,
-            canvasRef,
-            setUnclusteredContent);
-        redrawConstellation();
-    }, [appContext.state.userState.constellation, appContext.state.userState.clusterBy, redrawConstellation])
+    }, [actions.constellation,
+        appContext.dispatch,
+        appContext.state.userState.userId,
+        appContext.state.userState.constellationName,
+        appContext.state.userState.updated]);
 
     useEffect(() => {
         console.log("get cluster")
         const getCluster = async () => {
-            const cluster = await actions.cluster.getCluster(
+            const clusters = await actions.cluster.getClusters(
                 appContext.state.userState.userId,
                 appContext.state.userState.constellationName,
                 appContext.state.userState.clusterBy);
-            appContext.dispatch({
-                type: ActionTypes.SET_CLUSTER,
-                cluster: cluster,
-            });
-            return cluster
+            actions.cluster.setClusters(clusters);
         };
         getCluster();
-        redrawConstellation();
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [actions.cluster, appContext.dispatch,
-    appContext.state.userState.userId,
-    appContext.state.userState.constellationName,
-    appContext.state.userState.clusterBy,
-    appContext.state.userState.updated]);
+    }, [actions.cluster,
+        appContext.dispatch,
+        appContext.state.userState.userId,
+        appContext.state.userState.constellationName,
+        appContext.state.userState.clusterBy,
+        appContext.state.userState.updated]);
 
     useEffect(() => {
-        clusters.current = initializeCluster(appContext.state.userState.cluster, canvasRef);
+        constellationPts.current = setConstellationDisplayPoints(
+            appContext.state.userState.constellation,
+            appContext.state.userState.clusters,
+            canvasRef,
+            setUnclusteredContent);
         redrawConstellation();
-    }, [appContext.state.userState.cluster, redrawConstellation])
+    }, [appContext.state.userState.constellation, appContext.state.userState.clusters, redrawConstellation])
 
-    const onFormSubmit = async (evt: FormEvent<HTMLFormElement>) => {
-        evt.preventDefault();
-        // first update clusterBy to newQuery
-        appContext.dispatch({
-            type: ActionTypes.SET_CLUSTER_BY,
-            clusterBy: clusterBy,
-        });
-        console.log("cluster by", clusterBy, appContext.state.userState.clusterBy)
-        // then use that value 
-        await actions.constellation.clusterBy(
-            appContext.state.userState.userId,
-            appContext.state.userState.constellationName,
-            appContext.state.userState.clusterBy)
-        appContext.dispatch({
-            type: ActionTypes.SET_UPDATED,
-            updated: Date.now(),
-        });
-    }
-
-    const onClusterClick = async () => {
-        console.log("on cluster click")
-        const suggestedCluster = await actions.constellation.getClusterBySuggestion(
-            appContext.state.userState.userId,
-            appContext.state.userState.constellationName,
-        );
-        console.log(suggestedCluster);
-        setNewClusterBy(suggestedCluster);
-    }
+    useEffect(() => {
+        clusterPts.current = setClusterDisplayPoints(appContext.state.userState.clusters, canvasRef);
+        redrawConstellation();
+    }, [appContext.state.userState.clusters, redrawConstellation])
 
     useEffect(() => {
         const space = new CanvasSpace(canvasRef.current || "").setup({ bgcolor: CnstlltnTheme.palette.black, resize: true });
@@ -146,18 +132,16 @@ const ConstellationPane: FC = (): ReactElement => {
                 const newWidth = Math.min(canvasRef.current.parentElement.clientWidth, maxDimensions.width)
                 const newHeight = Math.min(canvasRef.current.parentElement.clientHeight, maxDimensions.height)
                 setDimensions({ width: newWidth, height: newHeight })
-                // Recalculate the positions based on new canvas size
                 updatePositions();
-                // console.log("update canvas:", dimensions.width, dimensions.height);
             }
         };
         const updatePositions = () => {
-            pts.current.forEach(pt => {
+            constellationPts.current.forEach(pt => {
                 const x = pt.coord[0] * (dimensions.width || 0);
                 const y = pt.coord[1] * (dimensions.height || 0);
                 pt.position = new Pt(x, y);
             })
-            clusters.current.forEach(pt => {
+            clusterPts.current.forEach(pt => {
                 const x = pt.coord[0] * (dimensions.width || 0);
                 const y = pt.coord[1] * (dimensions.height || 0);
                 pt.position = new Pt(x, y);
@@ -168,34 +152,13 @@ const ConstellationPane: FC = (): ReactElement => {
                 updatePositions();
             },
             animate: (time, ftime) => {
-                const r = 50;
-                const range = Circle.fromCenter(space.pointer, r);
-                pts.current.forEach(pt => {
-                    const colour = pt.selected ? "#ff0" : "#fff";
-                    if (Circle.withinBound(range, pt.position)) {
-                        const dist = (r - pt.position.$subtract(space.pointer).magnitude()) / r;
-                        const p = pt.position.$subtract(space.pointer).scale(1 + dist).add(space.pointer);
-                        form.fill(colour).point(p, dist * 15, "circle");
-                        form.font(dist * 15).fill("#fff").text(pt.position.$add(15, 15), pt.name);
-                    } else {
-                        form.fill(colour).point(pt.position, 3, "circle");
-                    }
-                });
-                clusters.current.forEach(cluster => {
-                    form.font(15).fill("#fff").text(cluster.position, cluster.name);
-                });
+                drawConstellationPoints(space, form, constellationPts);
+                drawClusterPoints(form, clusterPts);
                 if (lastSelected) {
-                    const topRightX = (canvasRef.current?.width || 0) - 450;
-                    const topRightY = 30;
-                    const topRight = new Pt(topRightX, topRightY);
-                    form.font(15).fill("#fff").text(topRight, lastSelected.name);
-                    drawMultiLineText(form, topRight.$add(0, 15), lastSelected.description, 15, 400);
+                    drawMultiLineText(form, canvasRef.current?.width || 0, lastSelected, 15, 400);
                 }
                 if (unclusteredContent !== 0) {
-                    const topRightX = (canvasRef.current?.width || 0) - 350;
-                    const topRightY = 10;
-                    const topRight = new Pt(topRightX, topRightY);
-                    form.font(12).fill("#fff").text(topRight, `You have ${unclusteredContent} unclustered content. Try 'Cluster By' again.`);
+                    drawUnclusteredContentNotification(form, canvasRef.current?.width || 0, unclusteredContent);
                 }
             },
             action: (type, x, y) => {
@@ -203,20 +166,17 @@ const ConstellationPane: FC = (): ReactElement => {
                 if (type === "up") { // Check if the mouse click is released, which indicates a click
                     const mousePt = new Pt(x, y); // Create a Pt from the mouse position
                     const range = Circle.fromCenter(mousePt, r);
-                    pts.current.forEach(pt => {
+                    constellationPts.current.forEach(pt => {
                         if (Circle.withinBound(range, pt.position)) {
                             if (appContext.state.userState.constellationName === "Home") {
-                                console.log("constellation set to ", pt.name)
                                 setLastSelected(null)
                                 appContext.dispatch({
                                     type: ActionTypes.SET_CONSTELLATION_NAME,
                                     constellationName: pt.name,
                                 });
                             } else {
-                                console.log("constellation name", appContext.state.userState.constellationName)
                                 pt.selected = !pt.selected;
                                 setLastSelected(pt.selected ? pt : null)
-                                console.log("select: ", pt.name, lastSelected?.name);
                             }
                         }
                     });
@@ -231,7 +191,13 @@ const ConstellationPane: FC = (): ReactElement => {
             space.stop();
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [lastSelected, dimensions, pts, clusters, appContext.dispatch, appContext.state.userState.constellationName, constellationRedrawn]);
+    }, [lastSelected,
+        dimensions,
+        constellationPts,
+        clusterPts,
+        appContext.dispatch,
+        appContext.state.userState.constellationName,
+        constellationRedrawn]);
 
     return (
         <Stack grow={1}>
@@ -265,70 +231,6 @@ const ConstellationPane: FC = (): ReactElement => {
             </Stack.Item>
         </Stack>
     );
-}
-
-function initializeConstellation(constellation: UserFramework[], clusterbyQuery: string, canvasRef: React.RefObject<HTMLCanvasElement>, setUnclusteredContent: React.Dispatch<React.SetStateAction<number>>): Data[] {
-    setUnclusteredContent(0);
-    return constellation.filter(framework => {
-        // Check if the framework has the necessary coordinate data
-        if (framework.clusterby[clusterbyQuery] &&
-            framework.clusterby[clusterbyQuery].coordinate &&
-            framework.clusterby[clusterbyQuery].coordinate.length >= 2) {
-            return true;
-        } else {
-            console.log(`Missing coordinate data for framework: ${framework.title} ${framework.clusterby[clusterbyQuery]}`);
-            setUnclusteredContent(v => v + 1);
-            return false;
-        }
-    }).map(framework => {
-        // Now we know that framework has valid coordinates
-        const cx = framework.clusterby[clusterbyQuery].coordinate[0]
-        const cy = framework.clusterby[clusterbyQuery].coordinate[1]
-        const x = cx * (canvasRef.current?.width || 0);
-        const y = cy * (canvasRef.current?.height || 0);
-        return {
-            name: framework.title,
-            description: framework.content,
-            coord: [cx, cy],
-            position: new Pt(x, y),
-            selected: false,
-        };
-    });
-}
-
-function initializeCluster(cluster: Cluster[], canvasRef: React.RefObject<HTMLCanvasElement>): Data[] {
-    return cluster.map(cluster => {
-        const cx = cluster.coordinate[0]
-        const cy = cluster.coordinate[1]
-        const x = cx * (canvasRef.current?.width || 0);
-        const y = cy * (canvasRef.current?.height || 0);
-        return {
-            name: cluster.cluster,
-            description: "",
-            coord: [cx, cy],
-            position: new Pt(x, y),
-            selected: false,
-        };
-    })
-}
-
-function drawMultiLineText(form : CanvasForm, startingPoint : Pt, text : string, lineHeight : number, maxWidth: number) {
-    const words = text.split(' ');
-    let line = '';
-    let y = startingPoint.y;
-
-    for (let i = 0; i < words.length; i++) {
-        const testLine = line + words[i] + ' ';
-        const testWidth = form.getTextWidth(testLine);
-        if (testWidth > maxWidth && i > 0) {
-            form.font(12).fill("#fff").text(new Pt(startingPoint.x, y), line);
-            line = words[i] + ' ';
-            y += lineHeight;
-        } else {
-            line = testLine;
-        }
-    }
-    form.font(12).fill("#fff").text(new Pt(startingPoint.x, y), line); // Render the last line
 }
 
 export default ConstellationPane

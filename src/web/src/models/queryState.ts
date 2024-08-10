@@ -5,7 +5,6 @@ export interface QueryState {
 
 export interface Query {
     userTxt: string;
-    // selected inputs
 }
 
 export interface QueryResponse {
