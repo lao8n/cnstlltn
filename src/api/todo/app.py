@@ -11,7 +11,7 @@ import os
 from pathlib import Path
 from contextlib import asynccontextmanager
 from api.todo.models import UserFramework, UserCluster, Settings
-
+from api.todo import routes  # NOQA
 # Use API_ALLOW_ORIGINS env var with comma separated urls like
 # `http://localhost:300, http://otherurl:100`
 # Requests coming to the api server from other urls will be rejected as per
@@ -47,17 +47,17 @@ origins = originList(origins)
 
 settings = Settings()
 
-# @asynccontextmanager
-# async def lifespan(app: FastAPI):
-#     client = motor.motor_asyncio.AsyncIOMotorClient(
-#         settings.AZURE_COSMOS_CONNECTION_STRING
-#     )
-#     await init_beanie(
-#         database=client[settings.AZURE_COSMOS_DATABASE_NAME],
-#         document_models=[UserFramework, UserCluster],
-#     )
-#     yield
-#     client.close()
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    client = motor.motor_asyncio.AsyncIOMotorClient(
+        settings.AZURE_COSMOS_CONNECTION_STRING
+    )
+    await init_beanie(
+        database=client[settings.AZURE_COSMOS_DATABASE_NAME],
+        document_models=[UserFramework, UserCluster],
+    )
+    yield
+    client.close()
 
 app = FastAPI(
     description="Cnstlltn App",
@@ -65,7 +65,7 @@ app = FastAPI(
     title="Cnstlltn App",
     docs_url="/")
 
-# app.router.lifespan = lifespan
+app.router.lifespan = lifespan
 
 # class CustomCORSMiddleware(CORSMiddleware):
 #     async def dispatch(self, request: Request, call_next):
@@ -96,15 +96,15 @@ if settings.APPLICATIONINSIGHTS_CONNECTION_STRING:
 
     FastAPIInstrumentor.instrument_app(app, tracer_provider=tracerProvider)
 
-from api.todo import routes  # NOQA
-from .models import Settings, __beanie_models__
+# from api.todo import routes  # NOQA
+# from .models import Settings, __beanie_models__
 
-@app.on_event("startup")
-async def startup_event():
-    client = motor.motor_asyncio.AsyncIOMotorClient(
-        settings.AZURE_COSMOS_CONNECTION_STRING
-    )
-    await init_beanie(
-        database=client[settings.AZURE_COSMOS_DATABASE_NAME],
-        document_models=__beanie_models__,
-    )
+# @app.on_event("startup")
+# async def startup_event():
+#     client = motor.motor_asyncio.AsyncIOMotorClient(
+#         settings.AZURE_COSMOS_CONNECTION_STRING
+#     )
+#     await init_beanie(
+#         database=client[settings.AZURE_COSMOS_DATABASE_NAME],
+#         document_models=__beanie_models__,
+#     )
