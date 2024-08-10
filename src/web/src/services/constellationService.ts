@@ -2,7 +2,7 @@ import { QueryResponse } from "../models/queryState";
 import axios, { AxiosInstance } from 'axios';
 import { UserFramework } from "../models/userState";
 
-export class UserService {
+export class ConstellationService {
     protected client: AxiosInstance;
     protected baseUrl: string;
 

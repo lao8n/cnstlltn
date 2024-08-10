@@ -1,6 +1,8 @@
 import * as queryActions from './queryActions';
 import * as userActions from './userActions';
-
+import * as constellationActions from './constellationActions'
+import * as clusterActions from './clusterActions'
+import * as displayActions from './displayActions'
 // 3 categories of data
 // 1. query data
 // 2. user data
@@ -9,44 +11,44 @@ import * as userActions from './userActions';
 export enum ActionTypes {
     // user 
     SET_USER = "SET_USER",
-    // frameworks
-    SAVE_SELECTED_FRAMEWORKS = "SAVE_SELECTED_FRAMEWORKS",
+    GET_LOGIN_CONFIG = "GET_LOGIN_CONFIG",
+    // query
     POST_QUERY_RESPONSE_LIST = "POST_QUERY_RESPONSE_LIST",
     SET_EMPTY_QUERY_RESPONSE_LIST = "SET_EMPTY_QUERY_RESPONSE_LIST",
     // constellation
+    SAVE_SELECTED_FRAMEWORKS = "SAVE_SELECTED_FRAMEWORKS",
     GET_CONSTELLATION = "GET_CONSTELLATION",
     SET_CONSTELLATION = "SET_CONSTELLATION",
     SET_CONSTELLATION_NAME = "SET_CONSTELLATION_NAME",
     // cluster
     GET_CLUSTER = "GET_CLUSTER",
     GET_CLUSTER_BY_OPTIONS = "GET_CLUSTER_BY_OPTIONS",
-    GET_CLUSTER_SUGGESTION = "GET_CLUSTER_SUGGESTION",
+    GET_CLUSTER_BY_SUGGESTION = "GET_CLUSTER_BY_SUGGESTION",
     CLUSTER_BY = "CLUSTER_BY",
     SET_CLUSTER = "SET_CLUSTER", 
     SET_CLUSTER_BY = "SET_CLUSTER_BY",
-    // misc
+    // display
     SET_UPDATED = "SET_UPDATED",
-    GET_LOGIN_CONFIG = "GET_LOGIN_CONFIG",
 }
 
 export type ApplicationActions =
-    // user 
+    // user
     userActions.SetUserAction |
-    // frameworks
-    userActions.SaveSelectedFrameworksAction |
+    userActions.GetLoginConfigAction |
+    // query
     queryActions.PostQueryResponseListAction |
     queryActions.SetEmptyQueryResponseListAction | 
     // constellation
-    userActions.GetConstellationAction |
-    userActions.SetConstellationAction |
-    userActions.SetConstellationNameAction |
+    constellationActions.SaveSelectedFrameworksAction | 
+    constellationActions.GetConstellationAction |
+    constellationActions.SetConstellationAction |
+    constellationActions.SetConstellationNameAction |
     // cluster
-    userActions.GetClusterAction |
-    userActions.GetClusterByOptionsAction |
-    userActions.GetClusterSuggestionAction |
-    userActions.ClusterByAction |
-    userActions.SetClusterAction |
-    userActions.SetClusterByAction | 
+    clusterActions.GetClusterAction |
+    clusterActions.GetClusterByOptionsAction |
+    clusterActions.GetClusterBySuggestionAction |
+    clusterActions.ClusterByAction |
+    clusterActions.SetClusterAction |
+    clusterActions.SetClusterByAction | 
     // misc
-    userActions.SetUpdatedAction |
-    userActions.GetLoginConfigAction;
+    displayActions.SetUpdatedAction;

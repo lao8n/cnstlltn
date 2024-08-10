@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from 'axios';
 import { UserFramework, Cluster } from "../models/userState";
 
-export class UserService {
+export class ClusterService {
     protected client: AxiosInstance;
     protected baseUrl: string;
 
@@ -30,7 +30,7 @@ export class UserService {
         return response.data;
     }
 
-    public async getClusterSuggestion(userId: string, constellationName: string): Promise<string> {
+    public async getClusterBySuggestion(userId: string, constellationName: string): Promise<string> {
         const response = await this.client.request<string>({
             method: 'GET',
             url: `${this.baseUrl}/get-cluster-by-suggestion`,
