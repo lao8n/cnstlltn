@@ -1,6 +1,6 @@
-fastapi == 0.112.*
-uvicorn == 0.30.*
-beanie == 1.11.*
+fastapi == 0.104.*
+uvicorn == 0.24.*
+beanie == 1.23.*
 python-dotenv == 0.21.*
 # 1.13.0b4 has a update supporting configurable timeouts on AzureDeveloperCredential
 # https://github.com/Azure/azure-sdk-for-python/blob/main/sdk/identity/azure-identity/CHANGELOG.md#1130b4-2023-04-11
