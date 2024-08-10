@@ -1,7 +1,7 @@
 import motor
 from azure.monitor.opentelemetry.exporter import AzureMonitorTraceExporter
 from beanie import init_beanie
-from fastapi import FastAPI, Request
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
 from opentelemetry.sdk.resources import SERVICE_NAME, Resource
@@ -11,7 +11,6 @@ import os
 from pathlib import Path
 from contextlib import asynccontextmanager
 from todo.models import UserFramework, UserCluster, Settings
-from todo import routes  # NOQA
 # Use API_ALLOW_ORIGINS env var with comma separated urls like
 # `http://localhost:300, http://otherurl:100`
 # Requests coming to the api server from other urls will be rejected as per
@@ -97,6 +96,7 @@ if settings.APPLICATIONINSIGHTS_CONNECTION_STRING:
     FastAPIInstrumentor.instrument_app(app, tracer_provider=tracerProvider)
 
 # from .models import Settings, __beanie_models__
+# from todo import routes  # NOQA
 
 # @app.on_event("startup")
 # async def startup_event():
