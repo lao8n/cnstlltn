@@ -1,7 +1,7 @@
 from typing import List
-from api.todo.models import (UserFramework, UserCluster, Coordinates)
+from todo.models import (UserFramework, UserCluster, Coordinates)
 from openai import OpenAI
-from api.todo.app import settings
+from todo.app import settings
 import json
 from random import uniform
 from collections import defaultdict

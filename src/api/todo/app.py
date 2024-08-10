@@ -10,8 +10,8 @@ from opentelemetry.sdk.trace.export import BatchSpanProcessor
 import os
 from pathlib import Path
 from contextlib import asynccontextmanager
-from api.todo.models import UserFramework, UserCluster, Settings
-from api.todo import routes  # NOQA
+from todo.models import UserFramework, UserCluster, Settings
+from todo import routes  # NOQA
 # Use API_ALLOW_ORIGINS env var with comma separated urls like
 # `http://localhost:300, http://otherurl:100`
 # Requests coming to the api server from other urls will be rejected as per
@@ -96,7 +96,6 @@ if settings.APPLICATIONINSIGHTS_CONNECTION_STRING:
 
     FastAPIInstrumentor.instrument_app(app, tracer_provider=tracerProvider)
 
-# from api.todo import routes  # NOQA
 # from .models import Settings, __beanie_models__
 
 # @app.on_event("startup")
