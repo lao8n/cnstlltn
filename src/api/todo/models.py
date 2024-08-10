@@ -58,7 +58,7 @@ class UserFramework(Document):
     title: str
     content: str
 
-Coordinates = Tuple[float, float]
+# Coordinates = Tuple[float, float]
 
 class UserCluster(Document):
     userid: str
@@ -66,7 +66,7 @@ class UserCluster(Document):
     clusterby: str
     islatest: bool
     cluster: str
-    coordinate: Coordinates
-    frameworks: Dict[str, Coordinates] = Field(default_factory=dict) # object id as key
+    coordinate: Tuple[float, float]
+    frameworks: Dict[str, Tuple[float, float]] = Field(default_factory=dict) # object id as key
 
 __beanie_models__ = [UserFramework, UserCluster]

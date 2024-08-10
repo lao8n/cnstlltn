@@ -1,5 +1,5 @@
 from typing import List
-from todo.models import (UserFramework, UserCluster, Coordinates)
+from todo.models import (UserFramework, UserCluster)
 from openai import OpenAI
 from todo.app import settings
 import json
@@ -171,7 +171,7 @@ async def _save_clusters(user_id, constellation_name, user_clusters, clusters, c
         for id in cluster_ids[user_cluster.cluster]:
             x = clusters[user_cluster.cluster][0] + uniform(-1, 1) / 8
             y = clusters[user_cluster.cluster][1] + uniform(-1, 1) / 8 
-            user_cluster.frameworks[id] = Coordinates(x, y)
+            user_cluster.frameworks[id] = (x, y)
         await user_cluster.save()
     # new user clusters
     for cluster in new_cluster_ids.keys():
@@ -186,7 +186,7 @@ async def _save_clusters(user_id, constellation_name, user_clusters, clusters, c
         for id in new_cluster_ids[user_cluster.cluster]:
             x = new_clusters[cluster][0] + uniform(-1, 1) / 8
             y = new_clusters[cluster][1] + uniform(-1, 1) / 8 
-            user_cluster.frameworks[id] = Coordinates(x, y)
+            user_cluster.frameworks[id] = (x, y)
         await user_cluster.save()
     
 def _chunk_list(data, chunk_size):
