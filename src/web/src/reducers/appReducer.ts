@@ -4,16 +4,14 @@ import { ApplicationState } from "../models/applicationState";
 
 export const appReducer: Reducer<ApplicationState, ApplicationActions> = (state: ApplicationState, action: ApplicationActions): ApplicationState => {
     switch (action.type) {
+        // user
         case ActionTypes.SET_USER:
             state.userState = { ...state.userState, isLoggedIn: action.isLoggedIn, userId: action.userId };
             break;
-        case ActionTypes.GET_CONSTELLATION:
-            // TODO maybe don't need this as we set constellation and set cluster already?
-            state.userState.constellation = action.payload;
+        case ActionTypes.GET_LOGIN_CONFIG:
+            // do nothing
             break;
-        case ActionTypes.GET_CLUSTER:
-            state.userState.cluster = action.payload;
-            break;
+        // query
         case ActionTypes.POST_QUERY_RESPONSE_LIST:
             state.queryState.responses = action.payload;
             state.queryState.responses?.forEach((response) => {
@@ -23,28 +21,36 @@ export const appReducer: Reducer<ApplicationState, ApplicationActions> = (state:
         case ActionTypes.SET_EMPTY_QUERY_RESPONSE_LIST:
             state.queryState.responses = undefined;
             break;
+        // constellation
+        case ActionTypes.SAVE_SELECTED_FRAMEWORKS:
+            break;
+        case ActionTypes.GET_CONSTELLATION:
+            break;
         case ActionTypes.SET_CONSTELLATION:
             state.userState.constellation = action.constellation;
             break;
         case ActionTypes.SET_CONSTELLATION_NAME:
             state.userState.constellationName = action.constellationName;
             break;
-        case ActionTypes.SET_CLUSTER:
-            state.userState.cluster = action.cluster;
+        // cluster
+        case ActionTypes.GET_CLUSTERS:
+            break;
+        case ActionTypes.SET_CLUSTERS:
+            state.userState.clusters = action.clusters;
+            break;
+        case ActionTypes.GET_CLUSTER_BY_OPTIONS:
+            break;
+        case ActionTypes.GET_CLUSTER_BY_SUGGESTION:
+            break;
+        case ActionTypes.CLUSTER_BY:
             break;
         case ActionTypes.SET_CLUSTER_BY:
             state.userState.clusterBy = action.clusterBy;
             break;
+        // display
         case ActionTypes.SET_UPDATED:
             console.log("set updated called");
             state.userState.updated = action.updated;
-            break;
-        case ActionTypes.SAVE_SELECTED_FRAMEWORKS:
-            break;
-        case ActionTypes.CLUSTER_BY:
-            // do nothing
-            break;
-        case ActionTypes.GET_CLUSTER_SUGGESTION:
             break;
         default:
             console.log("reducer state not updated")

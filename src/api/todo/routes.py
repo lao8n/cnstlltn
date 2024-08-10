@@ -86,13 +86,13 @@ async def get_constellation(request: Request) -> List[UserFramework]:
     ).to_list();
     return constellation
 
-@app.get("/get-cluster", response_model=List[UserCluster], status_code=200)
-async def get_cluster(request: Request) -> List[UserCluster]:
+@app.get("/get-clusters", response_model=List[UserCluster], status_code=200)
+async def get_clusters(request: Request) -> List[UserCluster]:
     user_id = request.headers.get("user-id")
     constellation_name = request.query_params.get("constellationName")
     cluster_by = request.query_params.get("clusterBy")
     latest = request.query_params.get("latest")
-    user_clusters = await cl.get_cluster(user_id, constellation_name, cluster_by, latest)
+    user_clusters = await cl.get_clusters(user_id, constellation_name, cluster_by, latest)
     return user_clusters
 
 @app.get("/get-cluster-by-options", status_code=200)

@@ -10,10 +10,10 @@ export class ClusterService {
         this.baseUrl = baseUrl;
     }
 
-    public async getCluster(userId: string, constellationName: string, clusterBy: string, latest: boolean): Promise<Cluster[]> {
+    public async getClusters(userId: string, constellationName: string, clusterBy: string, latest: boolean): Promise<Cluster[]> {
         const response = await this.client.request<Cluster[]>({
             method: 'GET',
-            url: `${this.baseUrl}/get-cluster`,
+            url: `${this.baseUrl}/get-clusters`,
             headers: { 'USER-ID': userId },
             params: { constellationName: constellationName, clusterBy: clusterBy, latest: latest },
         });

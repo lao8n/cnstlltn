@@ -4,7 +4,7 @@ export interface UserState {
     constellationName: string;
     constellation: UserFramework[];
     clusterBy: string;
-    cluster: Cluster[];
+    clusters: Cluster[];
     updated: number;
 }
 

@@ -3,10 +3,6 @@ import * as userActions from './userActions';
 import * as constellationActions from './constellationActions'
 import * as clusterActions from './clusterActions'
 import * as displayActions from './displayActions'
-// 3 categories of data
-// 1. query data
-// 2. user data
-// 3. display data
 
 export enum ActionTypes {
     // user 
@@ -21,11 +17,11 @@ export enum ActionTypes {
     SET_CONSTELLATION = "SET_CONSTELLATION",
     SET_CONSTELLATION_NAME = "SET_CONSTELLATION_NAME",
     // cluster
-    GET_CLUSTER = "GET_CLUSTER",
+    GET_CLUSTERS = "GET_CLUSTERS",
+    SET_CLUSTERS = "SET_CLUSTERS", 
     GET_CLUSTER_BY_OPTIONS = "GET_CLUSTER_BY_OPTIONS",
     GET_CLUSTER_BY_SUGGESTION = "GET_CLUSTER_BY_SUGGESTION",
     CLUSTER_BY = "CLUSTER_BY",
-    SET_CLUSTER = "SET_CLUSTER", 
     SET_CLUSTER_BY = "SET_CLUSTER_BY",
     // display
     SET_UPDATED = "SET_UPDATED",
@@ -44,11 +40,11 @@ export type ApplicationActions =
     constellationActions.SetConstellationAction |
     constellationActions.SetConstellationNameAction |
     // cluster
-    clusterActions.GetClusterAction |
+    clusterActions.GetClustersAction |
+    clusterActions.SetClustersAction |
     clusterActions.GetClusterByOptionsAction |
     clusterActions.GetClusterBySuggestionAction |
     clusterActions.ClusterByAction |
-    clusterActions.SetClusterAction |
     clusterActions.SetClusterByAction | 
-    // misc
+    // display
     displayActions.SetUpdatedAction;
