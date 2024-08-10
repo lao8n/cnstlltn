@@ -1,48 +1,43 @@
+// react imports
 import { Stack } from '@fluentui/react';
-import { withApplicationInsights } from '../components/telemetry';
-import { GoogleLogin, GoogleOAuthProvider, CredentialResponse } from '@react-oauth/google';
-import { ActionTypes } from "../actions/common";
 import { useNavigate } from 'react-router-dom';
-import React, { useContext, useState, useEffect, useMemo } from 'react';
+import { useContext, useState, useEffect, useMemo } from 'react';
+import { GoogleLogin, GoogleOAuthProvider, CredentialResponse } from '@react-oauth/google';
+// user state imports
+import { AppContext } from "../models/applicationState";
 import UserAppContext from '../components/userContext';
 import { bindActionCreators } from "../actions/actionCreators";
-import * as userActions from '../actions/userActions';
-import { AppContext } from "../models/applicationState";
 import { UserActions } from '../actions/userActions';
+import * as userActions from '../actions/userActions';
+// telemetry imports
+import { withApplicationInsights } from '../components/telemetry';
 
 const Login = () => {
   const appContext = useContext<AppContext>(UserAppContext)
+  const actions = useMemo(() => ({      
+    user: bindActionCreators(userActions, appContext.dispatch) as unknown as UserActions
+  }), [appContext.dispatch]);
   const navigate = useNavigate();
   const [googleClientId, setGoogleClientId] = useState("");
 
-  const actions = useMemo(() => ({      
-    login: bindActionCreators(userActions, appContext.dispatch) as unknown as UserActions
-}), [appContext.dispatch]);
-
+  // functions
   const handleLoginSuccess = (response: CredentialResponse) => {
     console.log('Login Success:', response);
-    // Extract the user information or token from the response
-    // Dispatch action to update user state
-    appContext.dispatch({
-      type: ActionTypes.SET_USER,
-      isLoggedIn: true,
-      userId: response.clientId || "", // Update based on actual response structure
-    });
-    // Redirect to another page if needed
+    actions.user.setUser(true, response.clientId || "")
     navigate('/constellation');
   };
-
   const handleLoginFailure = () => {
     console.log('Login Failed');
   };
 
+  // effects
   useEffect(() => {
     const fetchGoogleClientId = async () => {
-      const loginConfig = await actions.login.getLoginConfig()
+      const loginConfig = await actions.user.getLoginConfig()
       setGoogleClientId(loginConfig.googleClientId);
     };
     fetchGoogleClientId();
-  });
+  }, [actions.user]);
 
   return (
     <GoogleOAuthProvider clientId={googleClientId}>
