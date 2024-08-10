@@ -90,7 +90,7 @@ const QueryPane: FC<QueryPaneProps> = (props: QueryPaneProps): ReactElement => {
     // effects
     useEffect(() => {
         setSelectedResponses(new Set());
-        actions.query.emptyQueryResponseList();
+        actions.query.setEmptyQueryResponseList();
     }, [actions.query, appContext.state.userState.constellationName])
 
     return (

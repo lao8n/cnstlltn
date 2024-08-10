@@ -9,7 +9,7 @@ const queryService = new QueryService(config.api.baseUrl, '/query-ai');
 
 export interface QueryActions {
     postQueryResponseList(query: Query): Promise<QueryResponse[]>;
-    emptyQueryResponseList(): void;
+    setEmptyQueryResponseList(): void;
 }
 
 export const postQueryResponseList = (query: Query): ActionMethod<QueryResponse[]> =>
