@@ -1,81 +1,59 @@
-import { IconButton, IIconProps, IStackStyles, Stack } from '@fluentui/react';
-import { FC, useContext, useEffect, useState, ReactElement, Dispatch } from 'react';
-import { Link, NavigateFunction } from 'react-router-dom';
+// react imports
+import { FC, useContext, useEffect, useState, ReactElement, useMemo, useCallback } from 'react';
+import { IconButton, Stack } from '@fluentui/react';
+import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+// ux imports
+import { headerLogoStyles, headerToolStackClass, headerIconProps } from '../ux/styles';
+
+// state imports
 import { UserAppContext } from '../components/userContext';
 import { AppContext } from '../models/applicationState';
-import { useNavigate } from 'react-router-dom';
-import { CnstlltnTheme } from '../ux/theme';
-import { ActionTypes } from '../actions/common';
-import { SetUserAction } from '../actions/userActions';
-
-const theme = CnstlltnTheme
-
-const logoStyles: IStackStyles = {
-    root: {
-        width: '300px',
-        alignItems: 'center',
-        padding: '0 20px'
-    }
-}
-
-const toolStackClass: IStackStyles = {
-    root: {
-        alignItems: 'center',
-        height: 48,
-        paddingRight: 10
-    }
-}
-
-const iconProps: IIconProps = {
-    styles: {
-        root: {
-            fontSize: 16,
-            color: theme.palette.white
-        }
-    }
-}
-
-const handleLogin = (navigate : NavigateFunction) => {
-    console.log("handleLogin called");
-    navigate('/login');
-}
-
-const handleLogout = (navigate : NavigateFunction, dispatch : Dispatch<SetUserAction>) => {
-    console.log("handleLogout called");
-    dispatch({
-        type: ActionTypes.SET_USER,
-        isLoggedIn: false,
-        userId: "",
-    });
-    navigate(`/auth/logout?post_logout_redirect_uri=${window.location.origin}`);
-}
+import { bindActionCreators } from '../actions/actionCreators';
+import { UserActions } from '../actions/userActions';
+import * as userActions from '../actions/userActions';
+import { ConstellationActions } from '../actions/constellationActions';
+import * as constellationActions from '../actions/constellationActions';
 
 const Header: FC = (): ReactElement => {
     const appContext = useContext<AppContext>(UserAppContext)
+    const actions = useMemo(() => ({
+        constellation: bindActionCreators(constellationActions, appContext.dispatch) as unknown as ConstellationActions,
+        user: bindActionCreators(userActions, appContext.dispatch) as unknown as UserActions
+    }), [appContext.dispatch]);
     const navigate = useNavigate();
     const [logInOrOut, setLogInOrOut] = useState<() => void>(() => () => handleLogin(navigate));
     const [signInOrOut, setSignInOrOut] = useState(() => "Signin");
 
+    // functions
     const handleClick = () => {
-        appContext.dispatch({
-            type: ActionTypes.SET_CONSTELLATION_NAME,
-            constellationName: "Home",
-        });
+        actions.constellation.setConstellationName("Home");
     }
+    const handleLogin = useCallback((navigate) => {
+        console.log("handleLogin called");
+        navigate('/login');
+    }, []); 
 
+    const handleLogout = useCallback((navigate) => {
+        console.log("handleLogout called");
+        actions.user.setUser(false, "");
+        navigate(`/auth/logout?post_logout_redirect_uri=${window.location.origin}`);
+    }, [actions.user]);
+
+    // effects
     useEffect(() => {
         if(appContext.state.userState?.isLoggedIn){
-            setLogInOrOut(() => () => handleLogout(navigate, appContext.dispatch));
+            setLogInOrOut(() => () => handleLogout(navigate));
             setSignInOrOut(() => "SignOut");
         } else {
             setLogInOrOut(() => () => handleLogin(navigate));
             setSignInOrOut(() => "Signin");
         }
-    }, [appContext.state.userState?.isLoggedIn, appContext.dispatch, navigate]);
+    }, [appContext.state.userState?.isLoggedIn, actions.user, handleLogin, handleLogout, navigate]);
 
     return (
         <Stack horizontal>
-            <Stack horizontal styles={logoStyles}>
+            <Stack horizontal styles={headerLogoStyles}>
                 <Link to="/constellation" onClick={handleClick}>
                     <img src={`${process.env.PUBLIC_URL}/cnstlltn_logo.png`} alt="Logo" style={{width: '100px', height: 'auto'}}/>
                 </Link>
@@ -84,8 +62,8 @@ const Header: FC = (): ReactElement => {
                 <div></div>
             </Stack.Item>
             <Stack.Item>
-                <Stack horizontal styles={toolStackClass} grow={1}>
-                    <IconButton aria-label="Add" iconProps={{ iconName: signInOrOut, ...iconProps }} onClick={logInOrOut} />
+                <Stack horizontal styles={headerToolStackClass} grow={1}>
+                    <IconButton aria-label="Add" iconProps={{ iconName: signInOrOut, ...headerIconProps }} onClick={logInOrOut} />
                 </Stack>
             </Stack.Item>
         </Stack>

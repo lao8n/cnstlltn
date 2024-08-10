@@ -1,4 +1,4 @@
-import { IStackItemTokens, IStackStyles, IStackTokens, ITextFieldStyles } from '@fluentui/react'
+import { IStackItemTokens, IStackStyles, IStackTokens, ITextFieldStyles, IIconProps } from '@fluentui/react'
 import { CnstlltnTheme } from './theme'
 import { mergeStyles } from '@fluentui/react';
 
@@ -134,5 +134,30 @@ export const clusterByStyle: Partial<ITextFieldStyles> = {
         fontFamily: "Segoe UI",
         alignItems: 'center',
         justifyContent: 'flex-end',
+    }
+}
+
+export const headerLogoStyles: IStackStyles = {
+    root: {
+        width: '300px',
+        alignItems: 'center',
+        padding: '0 20px'
+    }
+}
+
+export const headerToolStackClass: IStackStyles = {
+    root: {
+        alignItems: 'center',
+        height: 48,
+        paddingRight: 10
+    }
+}
+
+export const headerIconProps: IIconProps = {
+    styles: {
+        root: {
+            fontSize: 16,
+            color: theme.palette.white
+        }
     }
 }
