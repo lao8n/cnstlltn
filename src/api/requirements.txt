@@ -1,4 +1,4 @@
-fastapi == 0.95.*
+fastapi == 1.*
 uvicorn == 0.19.*
 beanie == 1.11.*
 python-dotenv == 0.20.*
@@ -9,5 +9,5 @@ azure-keyvault-secrets == 4.4.*
 opentelemetry-instrumentation-fastapi == 0.30b1
 azure-monitor-opentelemetry-exporter == 1.0.0b5
 openai
-pydantic == 2.8.*
-pydantic-settings == 2.4.*
+pydantic == 2.*
+pydantic-settings == 2.*
