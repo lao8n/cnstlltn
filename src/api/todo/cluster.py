@@ -154,13 +154,13 @@ async def _data_to_cluster(user_id: str, constellation_name: str, cluster_new_on
     user_clusters = []
     # filter out data where we already have a cluster coordinate
     if cluster_new_only:
-        user_clusters = UserCluster.find(
+        user_clusters = await UserCluster.find(
             UserCluster.userid == user_id,
             UserCluster.constellation == constellation_name,
             UserCluster.clusterby == cluster_by,
-        )
+        ).to_list()
         framework_keys = set()
-        async for user_cluster in user_clusters:
+        for user_cluster in user_clusters:
             framework_keys.update(user_cluster.framework.keys())
             clusters[user_cluster.cluster] = user_cluster.coordinate
         user_data = [user_framework for user_framework in user_data if str(user_framework.id) not in framework_keys]
