@@ -9,7 +9,9 @@ export interface UserState {
 }
 
 export interface UserFramework {
-    id: string;
+    _id: string;
+    userid: string;
+    constellation: string;
     title: string;
     content: string;
 }
