@@ -5,6 +5,7 @@ import { DisplayPoint } from './models'
 export function setConstellationDisplayPoints(constellation: UserFramework[], clusters: Cluster[], canvasRef: React.RefObject<HTMLCanvasElement>, setUnclusteredContent: React.Dispatch<React.SetStateAction<number>>): DisplayPoint[] {
     setUnclusteredContent(0);
     const clustersMap = mapFrameworkToCluster(clusters);
+    console.log(clustersMap)
     return constellation.filter(framework => {
         if (clustersMap.has(framework.id)) {
             return true;

@@ -105,17 +105,22 @@ const ConstellationPane: FC = (): ReactElement => {
         appContext.state.userState.updated]);
 
     useEffect(() => {
+        console.log("set constellation display points")
+        console.log(appContext.state.userState.constellation)
         constellationPts.current = setConstellationDisplayPoints(
             appContext.state.userState.constellation,
             appContext.state.userState.clusters,
             canvasRef,
             setUnclusteredContent);
-        redrawConstellation();
         console.log(constellationPts.current)
+        redrawConstellation();
     }, [appContext.state.userState.constellation, appContext.state.userState.clusters, redrawConstellation])
 
     useEffect(() => {
+        console.log("set cluster display points")
+        console.log(appContext.state.userState.clusters)
         clusterPts.current = setClusterDisplayPoints(appContext.state.userState.clusters, canvasRef);
+        console.log(clusterPts.current)
         redrawConstellation();
     }, [appContext.state.userState.clusters, redrawConstellation])
 
@@ -149,9 +154,7 @@ const ConstellationPane: FC = (): ReactElement => {
                 updatePositions();
             },
             animate: (time, ftime) => {
-                console.log(constellationPts)
                 drawConstellationPoints(space, form, constellationPts);
-                console.log(drawClusterPoints)
                 drawClusterPoints(form, clusterPts);
                 if (lastSelected) {
                     drawMultiLineText(form, canvasRef.current?.width || 0, lastSelected, 15, 400);
