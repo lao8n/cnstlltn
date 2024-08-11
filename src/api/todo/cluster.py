@@ -133,7 +133,7 @@ async def cluster_by(user_id, constellation_name, cluster_by, cluster_new_only):
 
     print(cluster_ids, new_clusters, new_cluster_ids)
 
-    await _save_clusters(user_id, constellation_name, user_clusters, clusters, cluster_ids, new_clusters, new_cluster_ids)
+    await _save_clusters(user_id, constellation_name, cluster_by, user_clusters, clusters, cluster_ids, new_clusters, new_cluster_ids)
 
 async def _set_not_latest(user_id, constellation_name):
     user_clusters = UserCluster.find(
@@ -166,7 +166,7 @@ async def _data_to_cluster(user_id: str, constellation_name: str, cluster_new_on
         user_data = [user_framework for user_framework in user_data if str(user_framework.id) not in framework_keys]
     return user_data, clusters, user_clusters
 
-async def _save_clusters(user_id, constellation_name, user_clusters, clusters, cluster_ids, new_clusters, new_cluster_ids):
+async def _save_clusters(user_id, constellation_name, cluster_by, user_clusters, clusters, cluster_ids, new_clusters, new_cluster_ids):
     for user_cluster in user_clusters:
         user_cluster.islatest = True
         for id in cluster_ids[user_cluster.cluster]:
