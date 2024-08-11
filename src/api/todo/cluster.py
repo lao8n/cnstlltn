@@ -104,7 +104,7 @@ async def cluster_by(user_id, constellation_name, cluster_by, cluster_new_only):
     for chunk in _chunk_list(user_data, chunk_size):
         json_data = []
         for data in chunk:
-            json_data.append({"id": data.id, "title": data.title, "content": data.content, "clusterby": ""})
+            json_data.append({"id": str(data.id), "title": data.title, "content": data.content, "clusterby": ""})
         json_string = json.dumps(json_data)
         response = client.chat.completions.create(
             model='gpt-4', # mini doesn't work
