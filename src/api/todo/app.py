@@ -84,31 +84,31 @@ if settings.APPLICATIONINSIGHTS_CONNECTION_STRING:
 # from .models import Settings, __beanie_models__
 from todo import routes  # NOQA
 
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    print("starting up app")
-    client = motor.motor_asyncio.AsyncIOMotorClient(
-        settings.AZURE_COSMOS_CONNECTION_STRING
-    )
-    await init_beanie(
-        database=client[settings.AZURE_COSMOS_DATABASE_NAME],
-        connection_string=settings.AZURE_COSMOS_CONNECTION_STRING,
-        document_models=[UserFramework, UserCluster],
-    )
-    try:
-        yield
-    finally:
-        print("shutting down app")
-        client.close()
-
-app.router.lifespan = lifespan
-
-# @app.on_event("startup")
-# async def startup_event():
+# @asynccontextmanager
+# async def lifespan(app: FastAPI):
+#     print("starting up app")
 #     client = motor.motor_asyncio.AsyncIOMotorClient(
 #         settings.AZURE_COSMOS_CONNECTION_STRING
 #     )
 #     await init_beanie(
 #         database=client[settings.AZURE_COSMOS_DATABASE_NAME],
-#         document_models=__beanie_models__,
+#         connection_string=settings.AZURE_COSMOS_CONNECTION_STRING,
+#         document_models=[UserFramework, UserCluster],
 #     )
+#     try:
+#         yield
+#     finally:
+#         print("shutting down app")
+#         client.close()
+
+# app.router.lifespan = lifespan
+
+@app.on_event("startup")
+async def startup_event():
+    client = motor.motor_asyncio.AsyncIOMotorClient(
+        settings.AZURE_COSMOS_CONNECTION_STRING
+    )
+    await init_beanie(
+        database=client[settings.AZURE_COSMOS_DATABASE_NAME],
+        document_models=[UserFramework, UserCluster],
+    )
