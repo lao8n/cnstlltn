@@ -29,13 +29,13 @@ def app_client():
 @pytest.fixture(scope="session", autouse=True)
 async def initialize_database():
     settings.AZURE_COSMOS_DATABASE_NAME = TEST_DB_NAME
-    await init_beanie(
-        database=mongo_client[settings.AZURE_COSMOS_DATABASE_NAME],
-        document_models=[UserFramework, UserCluster],
-    )
-    mongo_client = motor.motor_asyncio.AsyncIOMotorClient(
+    client = motor.motor_asyncio.AsyncIOMotorClient(
         settings.AZURE_COSMOS_CONNECTION_STRING
     )
+    await init_beanie(
+        database=client[settings.AZURE_COSMOS_DATABASE_NAME],
+        document_models=[UserFramework, UserCluster],
+    )
     yield
-    await mongo_client.drop_database(TEST_DB_NAME)
+    await client.drop_database(TEST_DB_NAME)
     # mongo_client.close()

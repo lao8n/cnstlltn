@@ -6,6 +6,7 @@ license = "MIT"
 packages = [
     { include = "todo" },
 ]
+authors = ["cnstlltn"]
 
 [tool.poetry.dependencies]
 python = "^3.10"

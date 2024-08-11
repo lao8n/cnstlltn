@@ -92,7 +92,6 @@ from todo import routes  # NOQA
 #     )
 #     await init_beanie(
 #         database=client[settings.AZURE_COSMOS_DATABASE_NAME],
-#         connection_string=settings.AZURE_COSMOS_CONNECTION_STRING,
 #         document_models=[UserFramework, UserCluster],
 #     )
 #     try:

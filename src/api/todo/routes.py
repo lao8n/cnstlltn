@@ -115,7 +115,7 @@ async def cluster_by(request: Request):
     constellation_name = request.query_params.get("constellationName")
     cluster_by = request.query_params.get("clusterBy")
     cluster_new_only = request.query_params.get("clusterNewOnly")
-    cl.cluster_by(user_id, constellation_name, cluster_by, cluster_new_only)
+    await cl.cluster_by(user_id, constellation_name, cluster_by, cluster_new_only)
 
 @app.get("/login-config", response_model=LoginConfig, status_code=200)
 def get_login_config() -> LoginConfig:
