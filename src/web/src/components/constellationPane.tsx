@@ -1,6 +1,6 @@
 // react imports
 import { Stack, TextField } from '@fluentui/react';
-import React, { FC, ReactElement, useContext, useEffect, useState, useMemo, useRef, useCallback, FormEvent } from "react";
+import React, { FC, ReactElement, useContext, useEffect, useState, useMemo, useRef, useCallback, FormEvent, ChangeEvent } from "react";
 // ux imports
 import { canvasStackStyle, clusterByStyle, stackItemPadding, constellationNameStyle, clusterByWordStyle } from '../ux/styles';
 import { CnstlltnTheme } from "../ux/theme";
@@ -43,6 +43,7 @@ const ConstellationPane: FC = (): ReactElement => {
     const [constellationRedrawn, setConstellationRedrawn] = useState(Date.now());
     const [unclusteredContent, setUnclusteredContent] = useState(0);
     const [clusterBy, setNewClusterBy] = useState('');
+    const [clusterByOptions, setNewClusterByOptions] =  useState<string[]>([]);
 
     // functions
     const redrawConstellation = useCallback(() => {
@@ -50,8 +51,13 @@ const ConstellationPane: FC = (): ReactElement => {
     }, []);
 
     const onNewQueryChange = (evt: FormEvent<HTMLInputElement | HTMLTextAreaElement>, value?: string) => {
+        evt.preventDefault();
         setNewClusterBy(value || appContext.state.userState.clusterBy);
     }
+
+    const onDropdownChange = (event: ChangeEvent<HTMLSelectElement>) => {
+        setNewClusterBy(event.target.value);
+    };
 
     const onFormSubmit = async (evt: FormEvent<HTMLFormElement>) => {
         evt.preventDefault();
@@ -104,6 +110,20 @@ const ConstellationPane: FC = (): ReactElement => {
         appContext.state.userState.clusterBy,
         appContext.state.userState.updated]);
 
+    useEffect(() => {
+        console.log("get options")
+        const getOptions = async () => {
+            const options = await actions.cluster.getClusterByOptions(
+                appContext.state.userState.userId,
+                appContext.state.userState.constellationName
+            )
+            setNewClusterByOptions(options)
+        }
+        getOptions();
+    }, [actions.cluster,
+        appContext.state.userState.userId,
+        appContext.state.userState.constellationName]);
+    
     useEffect(() => {
         console.log("set constellation display points")
         console.log(appContext.state.userState.constellation)
@@ -220,6 +240,14 @@ const ConstellationPane: FC = (): ReactElement => {
                             <button  type="button" onClick={onClusterClick}>
                                 AI Suggested Clustering
                             </button>
+                            <select onChange={onDropdownChange}>
+                                <option value="">Select Cluster</option>
+                                {clusterByOptions.map((option, index) => (
+                                    <option key={index} value={option}>
+                                        {option}
+                                    </option>
+                                ))}
+                            </select>
                         </form>
                     </Stack>
                 </Stack.Item>

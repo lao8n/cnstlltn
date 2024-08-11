@@ -106,7 +106,7 @@ async def get_cluster_by_options(request: Request) -> List[str]:
 async def get_cluster_by_suggestion(request: Request) -> str:
     user_id = request.headers.get("user-id")
     constellation_name = request.query_params.get("constellationName")
-    cluster_by_suggestion = await cl.get_cluster_by_suggestions(user_id, constellation_name)
+    cluster_by_suggestion = await cl.get_cluster_by_suggestion(user_id, constellation_name)
     return cluster_by_suggestion
 
 @app.post("/cluster-by", status_code=200)
