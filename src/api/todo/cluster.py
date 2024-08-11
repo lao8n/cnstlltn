@@ -30,7 +30,7 @@ async def get_clusters(user_id, constellation_name, cluster_by, latest) -> List[
 
 async def get_cluster_by_options(user_id, constellation_name) -> List[str]:
     print("get_cluster params:", user_id, constellation_name)
-    user_clusters = await UserCluster.find(
+    user_clusters = UserCluster.find(
         UserCluster.userid == user_id,
         UserCluster.constellation == constellation_name,
     )
@@ -136,7 +136,7 @@ async def cluster_by(user_id, constellation_name, cluster_by, cluster_new_only):
     await _save_clusters(user_id, constellation_name, user_clusters, clusters, cluster_ids, new_clusters, new_cluster_ids)
 
 async def _set_not_latest(user_id, constellation_name):
-    user_clusters = await UserCluster.find(
+    user_clusters = UserCluster.find(
             UserCluster.userid == user_id,
             UserCluster.constellation == constellation_name,
             UserCluster.islatest == True,
@@ -154,7 +154,7 @@ async def _data_to_cluster(user_id: str, constellation_name: str, cluster_new_on
     user_clusters = []
     # filter out data where we already have a cluster coordinate
     if cluster_new_only:
-        user_clusters = await UserCluster.find(
+        user_clusters = UserCluster.find(
             UserCluster.userid == user_id,
             UserCluster.constellation == constellation_name,
             UserCluster.clusterby == cluster_by,
