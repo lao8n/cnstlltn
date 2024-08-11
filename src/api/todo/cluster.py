@@ -12,6 +12,7 @@ client = OpenAI(
 
 async def get_clusters(user_id, constellation_name, cluster_by, latest) -> List[UserCluster]:
     print("get_clusters params:", user_id, constellation_name, cluster_by, latest)
+    user_clusters = []
     if latest:
         user_clusters = await UserCluster.find(
             UserCluster.userid == user_id,

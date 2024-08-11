@@ -64,9 +64,9 @@ class UserCluster(Document):
     userid: str
     constellation: str
     clusterby: str
-    islatest: bool
     cluster: str
-    coordinate: Tuple[float, float]
+    islatest: bool = False
+    coordinate: Optional[Tuple[float, float]] = None
     frameworks: Dict[str, Tuple[float, float]] = Field(default_factory=dict) # object id as key
 
 __beanie_models__ = [UserFramework, UserCluster]
