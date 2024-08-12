@@ -236,7 +236,7 @@ const ConstellationPane: FC = (): ReactElement => {
                             <TextField
                                 value={clusterBy}
                                 placeholder={appContext.state.userState.clusterBy}
-                                onChange={onNewQueryChange}
+                                onInput={onNewQueryChange}
                                 styles={clusterByStyle}
                             />
                             <button  type="button" onClick={onClusterClick}>

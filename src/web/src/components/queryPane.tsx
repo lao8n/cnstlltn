@@ -103,7 +103,7 @@ const QueryPane: FC<QueryPaneProps> = (props: QueryPaneProps): ReactElement => {
                         placeholder={
                             appContext.state.userState.constellationName === "Home" ?
                                 "Enter name of new constellation" : "Enter the name of a book or a link to an article"}
-                        onChange={onNewQueryChange}
+                        onInput={onNewQueryChange}
                         styles={queryFieldStyles}
                     />
                 </form>
