@@ -29,7 +29,7 @@ async def get_clusters(user_id, constellation_name, cluster_by, latest) -> List[
     return user_clusters
 
 async def get_cluster_by_options(user_id, constellation_name) -> List[str]:
-    print("get_cluster params:", user_id, constellation_name)
+    print("get_cluster_by_options params:", user_id, constellation_name)
     user_clusters = UserCluster.find(
         UserCluster.userid == user_id,
         UserCluster.constellation == constellation_name,
@@ -38,7 +38,7 @@ async def get_cluster_by_options(user_id, constellation_name) -> List[str]:
     async for user_cluster in user_clusters:
         cluster_options.add(user_cluster.clusterby)
     cluster_options_list = list(cluster_options)
-    print("get_cluster_options returns:", cluster_options_list)
+    print("get_cluster_by_options returns:", cluster_options_list)
     return cluster_options_list
 
 async def get_cluster_by_suggestion(user_id, constellation_name) -> str:

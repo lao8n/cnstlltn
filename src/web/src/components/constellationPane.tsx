@@ -60,6 +60,7 @@ const ConstellationPane: FC = (): ReactElement => {
     };
 
     const onFormSubmit = async (evt: FormEvent<HTMLFormElement>) => {
+        evt.preventDefault();
         actions.cluster.setClusterBy(clusterBy);
         console.log("cluster by", clusterBy, appContext.state.userState.clusterBy)
         await actions.cluster.clusterBy(
