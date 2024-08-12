@@ -50,10 +50,9 @@ const ConstellationPane: FC = (): ReactElement => {
         setConstellationRedrawn(Date.now());
     }, []);
 
-    const onNewQueryChange = (evt: FormEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        const target = evt.target as HTMLInputElement;
-        console.log("cluster by updated: ", target.value);
-        setNewClusterBy(target.value || appContext.state.userState.clusterBy);
+    const onNewQueryChange = (evt: FormEvent<HTMLInputElement | HTMLTextAreaElement>, value?: string) => {
+        console.log("cluster by updated: ", value);
+        setNewClusterBy(value || appContext.state.userState.clusterBy);
     }
 
     const onDropdownChange = (event: ChangeEvent<HTMLSelectElement>) => {
