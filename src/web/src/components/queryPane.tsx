@@ -1,5 +1,5 @@
 // react imports
-import { Stack, TextField } from '@fluentui/react';
+import { SearchBox, Stack } from '@fluentui/react';
 import { FC, ReactElement, useState, useContext, useEffect, FormEvent, ChangeEvent } from "react";
 // ux imports
 import { queryFieldStyles, stackItemPadding } from '../ux/styles';
@@ -30,7 +30,7 @@ const QueryPane: FC = (): ReactElement => {
     // display
     const [newQuery, setNewQuery] = useState('');
     const [selectedResponses, setSelectedResponses] = useState<Set<number>>(new Set());
-    const onNewQueryChange = (event: FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
+    const onNewQueryChange = (_: ChangeEvent<HTMLInputElement> | undefined, newValue?: string) => {
         setNewQuery(newValue || '');
     }
 
@@ -91,18 +91,15 @@ const QueryPane: FC = (): ReactElement => {
     return (
         <Stack>
             <Stack.Item tokens={stackItemPadding}>
-                <form onSubmit={onFormSubmit}>
-                    <TextField
-                        borderless
+                <SearchBox
                         value={newQuery}
                         placeholder={
                             appContext.state.userState.constellationName === "Home" ?
                                 "Enter name of new constellation" : "Enter the name of a book or a link to an article"}
                         onChange={onNewQueryChange}
-                        onInput={onNewQueryChange}
+                        onSearch={onFormSubmit}
                         styles={queryFieldStyles}
                     />
-                </form>
             </Stack.Item>
             <Stack.Item tokens={stackItemPadding}>
                 {appContext.state.queryState.responses && appContext.state.queryState.responses.map((response, index) => (
