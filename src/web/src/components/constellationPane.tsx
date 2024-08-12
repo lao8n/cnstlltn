@@ -239,10 +239,10 @@ const ConstellationPane: FC = (): ReactElement => {
                                 onInput={onNewQueryChange}
                                 styles={clusterByStyle}
                             />
-                            <button  type="button" onClick={onClusterClick}>
+                            <button type="button" onClick={onClusterClick} style={{ flexShrink: 0 }}>
                                 AI Suggested Clustering
                             </button>
-                            <select onChange={onDropdownChange}>
+                            <select onChange={onDropdownChange} style={{flexGrow: 1}}>
                                 <option value="">Select Cluster</option>
                                 {clusterByOptions.map((option, index) => (
                                     <option key={index} value={option}>
