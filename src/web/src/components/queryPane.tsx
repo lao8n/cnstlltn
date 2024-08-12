@@ -18,13 +18,7 @@ import * as constellationActions from '../actions/constellationActions';
 import { DisplayActions } from '../actions/displayActions';
 import * as displayActions from '../actions/displayActions';
 
-interface QueryPaneProps {
-    query?: Query
-    queryResponseList?: QueryResponse[];
-    onCreate: (query: Query) => void
-}
-
-const QueryPane: FC<QueryPaneProps> = (props: QueryPaneProps): ReactElement => {
+const QueryPane: FC = (): ReactElement => {
     const appContext = useContext<AppContext>(UserAppContext)
     const actions = {
         user: bindActionCreators(userActions, appContext.dispatch) as unknown as UserActions,
@@ -36,8 +30,10 @@ const QueryPane: FC<QueryPaneProps> = (props: QueryPaneProps): ReactElement => {
     // display
     const [newQuery, setNewQuery] = useState('');
     const [selectedResponses, setSelectedResponses] = useState<Set<number>>(new Set());
-    const onNewQueryChange = (evt: FormEvent<HTMLInputElement | HTMLTextAreaElement>, value?: string) => {
-        setNewQuery(value || '');
+    const onNewQueryChange = (evt: FormEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const target = evt.target as HTMLInputElement
+        console.log("onNewQueryChange: ", target.value)
+        setNewQuery(target.value || '');
     }
 
     // functions
@@ -53,7 +49,8 @@ const QueryPane: FC<QueryPaneProps> = (props: QueryPaneProps): ReactElement => {
     const onFormSubmit = async (evt: FormEvent<HTMLFormElement>) => {
         evt.preventDefault();
         if (newQuery && appContext.state.userState.constellationName !== "Home") {
-            props.onCreate({ userTxt: newQuery });
+            const query: Query = {userTxt: newQuery}
+            await actions.query.postQueryResponseList(query) // reducer updates state
             setNewQuery('');
              // set selected responses to empty
             setSelectedResponses(new Set());
@@ -72,9 +69,9 @@ const QueryPane: FC<QueryPaneProps> = (props: QueryPaneProps): ReactElement => {
         }
     }
     const saveSelectedResponses = async () => {
-        const queryResponseList = props.queryResponseList || [];
-        console.log("queryResponseList " + queryResponseList)
-        const responsesToSave = Array.from(selectedResponses).map(index => queryResponseList[index]) ;
+        console.log("queryResponseList " + appContext.state.queryState.responses)
+        const responsesToSave = Array.from(selectedResponses).map(index => appContext.state.queryState.responses?.[index])
+            .filter(response => response !== undefined);
         // Now, you can save 'responsesToSave' to the database
         console.log("responses to save " + responsesToSave)
         const savedFrameworks = await actions.constellation.saveSelectedFrameworks(
@@ -104,12 +101,13 @@ const QueryPane: FC<QueryPaneProps> = (props: QueryPaneProps): ReactElement => {
                             appContext.state.userState.constellationName === "Home" ?
                                 "Enter name of new constellation" : "Enter the name of a book or a link to an article"}
                         onInput={onNewQueryChange}
+                        onChange={onNewQueryChange}
                         styles={queryFieldStyles}
                     />
                 </form>
             </Stack.Item>
             <Stack.Item tokens={stackItemPadding}>
-                {props.queryResponseList && props.queryResponseList.map((response, index) => (
+                {appContext.state.queryState.responses && appContext.state.queryState.responses.map((response, index) => (
                     <button 
                         key={index} 
                         className={selectedResponses.has(index) ? selectedButtonStyles: buttonStyles} 
