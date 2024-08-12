@@ -83,10 +83,10 @@ const QueryPane: FC = (): ReactElement => {
     };
 
     // effects
-    useEffect(() => {
-        setSelectedResponses(new Set());
-        actions.query.setEmptyQueryResponseList();
-    }, [actions.query, appContext.state.userState.constellationName])
+    // useEffect(() => {
+    //     setSelectedResponses(new Set());
+    //     actions.query.setEmptyQueryResponseList();
+    // }, [actions.query, appContext.state.userState.constellationName])
 
     return (
         <Stack>
