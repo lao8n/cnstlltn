@@ -77,7 +77,7 @@ async def get_cluster_by_suggestion(user_id, constellation_name) -> str:
     return content
 
 async def cluster_by(user_id, constellation_name, cluster_by, cluster_new_only):
-    print("get_cluster_by params:", user_id, constellation_name)
+    print("get_cluster_by params:", user_id, constellation_name, cluster_by, cluster_new_only)
     await _set_not_latest(user_id, constellation_name)
     user_data, clusters, user_clusters = await _data_to_cluster(user_id, constellation_name, cluster_new_only)
     print(user_data, clusters, user_clusters)

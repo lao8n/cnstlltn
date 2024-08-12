@@ -52,10 +52,12 @@ const ConstellationPane: FC = (): ReactElement => {
 
     const onNewQueryChange = (evt: FormEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const target = evt.target as HTMLInputElement;
+        console.log("cluster by updated: ", target.value);
         setNewClusterBy(target.value || appContext.state.userState.clusterBy);
     }
 
     const onDropdownChange = (event: ChangeEvent<HTMLSelectElement>) => {
+        console.log("drop down change: ", event.target.value);
         setNewClusterBy(event.target.value);
     };
 
@@ -72,6 +74,7 @@ const ConstellationPane: FC = (): ReactElement => {
     }
 
     const onClusterClick = async () => {
+        console.log("on cluster click")
         const suggestedCluster = await actions.cluster.getClusterBySuggestion(
             appContext.state.userState.userId,
             appContext.state.userState.constellationName,
