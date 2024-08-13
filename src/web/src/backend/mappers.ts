@@ -14,7 +14,6 @@ export function mapDbClusterToCluster(dbCluster: DbCluster): Cluster {
 export function mapDbUserFrameworkToUserFramework(dbUserFramework: DbUserFramework): UserFramework {
     return {
         id: dbUserFramework._id,
-        userId: dbUserFramework.userid,
         constellation: dbUserFramework.constellation,
         title: dbUserFramework.title,
         content: dbUserFramework.content,
