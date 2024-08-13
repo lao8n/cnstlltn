@@ -130,7 +130,7 @@ export const clusterByStyle: Partial<ITextFieldStyles> = {
         backgroundColor: theme.palette.black,
     },
     field: {  // This targets the input element itself
-        color: theme.palette.white,
+        color: theme.palette.black,
         fontFamily: "Segoe UI",
         alignItems: 'center',
         justifyContent: 'flex-end',

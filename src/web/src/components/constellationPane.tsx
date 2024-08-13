@@ -51,7 +51,7 @@ const ConstellationPane: FC = (): ReactElement => {
     }, []);
 
     const onTypeClusterBy = (_: ChangeEvent<HTMLInputElement> | undefined, newValue?: string) => {
-        console.log("onTypeClusterBy:", newValue)
+        // console.log("onTypeClusterBy:", newValue)
         setNewClusterBy(newValue || appContext.state.userState.clusterBy);
     }
 

@@ -31,7 +31,7 @@ const QueryPane: FC = (): ReactElement => {
     const [newQuery, setNewQuery] = useState('');
     const [selectedResponses, setSelectedResponses] = useState<Set<number>>(new Set());
     const onTypeQuery = (_: ChangeEvent<HTMLInputElement> | undefined, newValue?: string) => {
-        console.log("onTypeQuery:", newValue)
+        // console.log("onTypeQuery:", newValue)
         setNewQuery(newValue || '');
     }
 
