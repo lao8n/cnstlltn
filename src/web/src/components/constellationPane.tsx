@@ -51,7 +51,7 @@ const ConstellationPane: FC = (): ReactElement => {
 
     const onTypeClusterBy = (_: ChangeEvent<HTMLInputElement> | undefined, newValue?: string) => {
         // console.log("onTypeClusterBy:", newValue)
-        setNewClusterBy(newValue || appContext.state.userState.clusterBy);
+        setNewClusterBy(newValue || clusterBy);
     }
 
     const onDropdownChange = (event: ChangeEvent<HTMLSelectElement>) => {
@@ -104,7 +104,9 @@ const ConstellationPane: FC = (): ReactElement => {
                 appContext.state.userState.clusterBy === '');
             actions.cluster.setClusters(clusters);
             // this is the case that we have gotten the latest clustering
-            if(appContext.state.userState.clusterBy === '' && clusters.length > 0){ 
+            console.log("cluster by", appContext.state.userState.clusterBy)
+            if (appContext.state.userState.clusterBy === '' && clusters.length > 0) { 
+                console.log("latest cluster by:", clusters[0].clusterBy, clusters)
                 setNewClusterBy(clusters[0].clusterBy)
             }
         };
