@@ -31,6 +31,7 @@ const QueryPane: FC = (): ReactElement => {
     const [newQuery, setNewQuery] = useState('');
     const [selectedResponses, setSelectedResponses] = useState<Set<number>>(new Set());
     const onNewQueryChange = (_: ChangeEvent<HTMLInputElement> | undefined, newValue?: string) => {
+        console.log("onNewQueryChange: ", newValue)
         setNewQuery(newValue || '');
     }
 
@@ -83,10 +84,10 @@ const QueryPane: FC = (): ReactElement => {
     };
 
     // effects
-    // useEffect(() => {
-    //     setSelectedResponses(new Set());
-    //     actions.query.setEmptyQueryResponseList();
-    // }, [actions.query, appContext.state.userState.constellationName])
+    useEffect(() => {
+        setSelectedResponses(new Set());
+        actions.query.setEmptyQueryResponseList();
+    }, [actions.query, appContext.state.userState.constellationName])
 
     return (
         <Stack>
