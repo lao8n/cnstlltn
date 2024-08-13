@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
-import { UserFramework, Cluster } from "../models/userState";
+import { DbCluster, DbUserFramework } from '../backend/models';
 
 export class ClusterService {
     protected client: AxiosInstance;
@@ -10,8 +10,8 @@ export class ClusterService {
         this.baseUrl = baseUrl;
     }
 
-    public async getClusters(userId: string, constellationName: string, clusterBy: string, latest: boolean): Promise<Cluster[]> {
-        const response = await this.client.request<Cluster[]>({
+    public async getClusters(userId: string, constellationName: string, clusterBy: string, latest: boolean): Promise<DbCluster[]> {
+        const response = await this.client.request<DbCluster[]>({
             method: 'GET',
             url: `${this.baseUrl}/get-clusters`,
             headers: { 'USER-ID': userId },
@@ -40,8 +40,8 @@ export class ClusterService {
         return response.data;
     }
 
-    public async clusterBy(userId: string, constellationName: string, clusterBy: string, clusterNewOnly: boolean): Promise<UserFramework[]> {
-        const response = await this.client.request<UserFramework[]>({
+    public async clusterBy(userId: string, constellationName: string, clusterBy: string, clusterNewOnly: boolean): Promise<DbUserFramework[]> {
+        const response = await this.client.request<DbUserFramework[]>({
             method: 'POST',
             url: `${this.baseUrl}/cluster-by`,
             headers: { 'USER-ID': userId },

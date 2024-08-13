@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { Stack, Text } from '@fluentui/react';
 import { withApplicationInsights } from '../components/telemetry';
 import { UserAppContext } from '../components/userContext';
-import { AppContext } from '../models/applicationState';
+import { AppContext } from '../state/applicationState';
 import ConstellationPane from '../components/constellationPane';
 import { canvasStackStyle } from '../ux/styles';
 

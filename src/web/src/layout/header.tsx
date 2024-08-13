@@ -8,7 +8,7 @@ import { headerLogoStyles, headerToolStackClass, headerIconProps } from '../ux/s
 
 // state imports
 import { UserAppContext } from '../components/userContext';
-import { AppContext } from '../models/applicationState';
+import { AppContext } from '../state/applicationState';
 import { bindActionCreators } from '../actions/actionCreators';
 import { UserActions } from '../actions/userActions';
 import * as userActions from '../actions/userActions';

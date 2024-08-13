@@ -5,8 +5,8 @@ import { FC, ReactElement, useState, useContext, useEffect, useMemo, ChangeEvent
 import { queryFieldStyles, stackItemPadding } from '../ux/styles';
 import { buttonStyles, selectedButtonStyles } from '../ux/styles';
 // state imports
-import { AppContext } from '../models/applicationState';
-import { Query, QueryResponse } from '../models/queryState';
+import { AppContext } from '../state/applicationState';
+import { Query, QueryResponse } from '../state/queryState';
 import UserAppContext from '../components/userContext';
 import { bindActionCreators } from '../actions/actionCreators';
 import { UserActions } from '../actions/userActions';

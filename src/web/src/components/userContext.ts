@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import { AppContext, getDefaultState } from '../models/applicationState';
+import { AppContext, getDefaultState } from '../state/applicationState';
 
 const initialState = getDefaultState();
 const dispatch = () => { return };

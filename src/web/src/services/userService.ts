@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
-import { LoginConfig } from "../models/userState";
+import { LoginConfig } from "../state/userState";
 
 export class UserService {
     protected client: AxiosInstance;

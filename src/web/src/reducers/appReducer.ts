@@ -1,6 +1,7 @@
 import { Reducer } from "react";
 import { ActionTypes, ApplicationActions } from "../actions/common";
-import { ApplicationState } from "../models/applicationState";
+import { ApplicationState } from "../state/applicationState";
+import { mapDbClusterToCluster, mapDbUserFrameworkToUserFramework } from "../backend/mappers";
 
 export const appReducer: Reducer<ApplicationState, ApplicationActions> = (state: ApplicationState, action: ApplicationActions): ApplicationState => {
     switch (action.type) {
@@ -26,7 +27,7 @@ export const appReducer: Reducer<ApplicationState, ApplicationActions> = (state:
         case ActionTypes.GET_CONSTELLATION:
             break;
         case ActionTypes.SET_CONSTELLATION:
-            state.userState.constellation = action.constellation;
+            state.userState.constellation = action.constellation.map(dbUserFramework => mapDbUserFrameworkToUserFramework(dbUserFramework));
             break;
         case ActionTypes.SET_CONSTELLATION_NAME:
             state.userState.constellationName = action.constellationName;
@@ -35,7 +36,7 @@ export const appReducer: Reducer<ApplicationState, ApplicationActions> = (state:
         case ActionTypes.GET_CLUSTERS:
             break;
         case ActionTypes.SET_CLUSTERS:
-            state.userState.clusters = action.clusters;
+            state.userState.clusters = action.clusters.map(dbCluster => mapDbClusterToCluster(dbCluster));
             break;
         case ActionTypes.GET_CLUSTER_BY_OPTIONS:
             break;

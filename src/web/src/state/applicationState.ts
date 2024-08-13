@@ -1,5 +1,5 @@
-import { UserState } from "../models/userState";
-import { QueryState } from "../models/queryState";
+import { UserState } from "./userState";
+import { QueryState } from "./queryState";
 import { Dispatch } from "react";
 import { ApplicationActions } from "../actions/common";
 

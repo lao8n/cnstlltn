@@ -5,7 +5,7 @@ import React, { FC, ReactElement, useContext, useEffect, useState, useMemo, useR
 import { canvasStackStyle, clusterByStyle, stackItemPadding, constellationNameStyle, clusterByWordStyle } from '../ux/styles';
 import { CnstlltnTheme } from "../ux/theme";
 // state imports
-import { AppContext } from "../models/applicationState";
+import { AppContext } from "../state/applicationState";
 import UserAppContext from "./userContext";
 import { bindActionCreators } from "../actions/actionCreators";
 import { UserActions } from '../actions/userActions';
@@ -106,8 +106,8 @@ const ConstellationPane: FC = (): ReactElement => {
             // this is the case that we have gotten the latest clustering
             console.log("cluster by", appContext.state.userState.clusterBy)
             if (appContext.state.userState.clusterBy === '' && clusters.length > 0) { 
-                console.log("latest cluster by:", clusters[0].clusterBy, clusters)
-                setNewClusterBy(clusters[0].clusterBy)
+                console.log("latest cluster by:", clusters[0].clusterby, clusters)
+                setNewClusterBy(clusters[0].clusterby)
             }
         };
         getCluster();

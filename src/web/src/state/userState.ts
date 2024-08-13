@@ -12,8 +12,8 @@ export interface UserState {
 }
 
 export interface UserFramework {
-    _id: string;
-    userid: string;
+    id: string;
+    userId: string;
     constellation: string;
     title: string;
     content: string;

@@ -1,4 +1,4 @@
-import { Query, QueryResponse } from "../models/queryState";
+import { Query, QueryResponse } from "../state/queryState";
 import axios, { AxiosInstance } from 'axios';
 
 export class QueryService {

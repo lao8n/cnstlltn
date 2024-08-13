@@ -1,4 +1,4 @@
-import { UserFramework, Cluster } from "../models/userState";
+import { UserFramework, Cluster } from "../state/userState";
 import { CanvasForm, CanvasSpace, Pt, Circle } from "pts";
 import { DisplayPoint } from './models'
 
@@ -7,7 +7,7 @@ export function setConstellationDisplayPoints(constellation: UserFramework[], cl
     const clustersMap = mapFrameworkToCluster(clusters);
     console.log(clustersMap)
     return constellation.filter(framework => {
-        if (clustersMap.has(framework._id)) {
+        if (clustersMap.has(framework.id)) {
             return true;
         } else {
             console.log(`Missing coordinate data for framework: ${framework}`);
@@ -15,8 +15,8 @@ export function setConstellationDisplayPoints(constellation: UserFramework[], cl
             return false;
         }
     }).map(framework => {
-        const cluster = clustersMap.get(framework._id);
-        const coords = cluster?.frameworks[framework._id];
+        const cluster = clustersMap.get(framework.id);
+        const coords = cluster?.frameworks[framework.id];
         const cx = (coords?.[0] || 0);
         const cy = (coords?.[1] || 0);
         const x = cx * (canvasRef.current?.width || 0);

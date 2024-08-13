@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useContext, useState, useEffect, useMemo } from 'react';
 import { GoogleLogin, GoogleOAuthProvider, CredentialResponse } from '@react-oauth/google';
 // user state imports
-import { AppContext } from "../models/applicationState";
+import { AppContext } from "../state/applicationState";
 import UserAppContext from '../components/userContext';
 import { bindActionCreators } from "../actions/actionCreators";
 import { UserActions } from '../actions/userActions';

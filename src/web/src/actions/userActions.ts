@@ -1,5 +1,5 @@
 import { Dispatch } from "react";
-import { LoginConfig } from "../models/userState";
+import { LoginConfig } from "../state/userState";
 import { ActionTypes } from "./common"
 import { ActionMethod, PayloadAction, createPayloadAction } from "./actionCreators";
 import { UserService } from "../services/userService";
