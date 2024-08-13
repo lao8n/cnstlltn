@@ -30,8 +30,8 @@ const QueryPane: FC = (): ReactElement => {
     // display
     const [newQuery, setNewQuery] = useState('');
     const [selectedResponses, setSelectedResponses] = useState<Set<number>>(new Set());
-    const onTypeQueryChange = (_: ChangeEvent<HTMLInputElement> | undefined, newValue?: string) => {
-        console.log("onTypeQueryChange: ", newValue)
+    const onTypeQueryChange = (event: ChangeEvent<HTMLInputElement> | undefined, newValue?: string) => {
+        console.log("onTypeQueryChange: ", newValue, " target ", event?.target.value)
         setNewQuery(newValue || '');
     }
 

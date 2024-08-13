@@ -49,8 +49,8 @@ const ConstellationPane: FC = (): ReactElement => {
     const redrawConstellation = useCallback(() => {
         setConstellationRedrawn(Date.now());
     }, []);
-    const onTypeClusterByChange = (_: ChangeEvent<HTMLInputElement> | undefined, newValue?: string) => {
-        console.log("onTypeClusterByChange: ", newValue)
+    const onTypeClusterByChange = (event: ChangeEvent<HTMLInputElement> | undefined, newValue?: string) => {
+        console.log("onTypeClusterByChange: value", newValue, " target ", event?.target.value)
         setNewClusterBy(newValue || appContext.state.userState.clusterBy);
     }
 
@@ -232,25 +232,25 @@ const ConstellationPane: FC = (): ReactElement => {
                             {"Cluster by:"}
                         </div>
                         <Stack>
-                        <SearchBox
-                            value={clusterBy}
-                            placeholder={appContext.state.userState.clusterBy}
-                            onChange={onTypeClusterByChange}
-                            onSearch={onSearchSubmit}
-                            styles={clusterByStyle}>
-                            </SearchBox>
+                            <SearchBox
+                                value={clusterBy}
+                                placeholder={appContext.state.userState.clusterBy}
+                                onChange={onTypeClusterByChange}
+                                onSearch={onSearchSubmit}
+                                styles={clusterByStyle}>
+                                </SearchBox>
                             <Stack horizontal>
-                            <button type="button" onClick={onClusterClick} style={{ flexShrink: 0 }}>
-                                AI Suggested Clustering
-                            </button>
-                            <select onChange={onDropdownChange} style={{flexGrow: 1}}>
-                                <option value="">Select Cluster</option>
-                                {clusterByOptions.map((option, index) => (
-                                    <option key={index} value={option}>
-                                        {option}
-                                    </option>
-                                ))}
-                            </select>
+                                <button type="button" onClick={onClusterClick} style={{ flexShrink: 0 }}>
+                                    AI Suggested Clustering
+                                </button>
+                                <select onChange={onDropdownChange} style={{flexGrow: 1}}>
+                                    <option value="">Select Cluster</option>
+                                    {clusterByOptions.map((option, index) => (
+                                        <option key={index} value={option}>
+                                            {option}
+                                        </option>
+                                    ))}
+                                </select>
                             </Stack>
                         </Stack>
                     </Stack>
