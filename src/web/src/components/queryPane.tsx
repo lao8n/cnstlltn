@@ -1,10 +1,8 @@
 // react imports
-import { FC, ReactElement, useState, useContext, useEffect, FormEvent } from "react";
-import { Stack } from '@fluentui/react';
-import { SearchBox, InputOnChangeData } from "@fluentui/react-components";
-import type { SearchBoxChangeEvent } from "@fluentui/react-components";
+import { SearchBox, Stack } from '@fluentui/react';
+import { FC, ReactElement, useState, useContext, useEffect, FormEvent, ChangeEvent } from "react";
 // ux imports
-import { queryFieldStyle, stackItemPadding } from '../ux/styles';
+import { queryFieldStyles, stackItemPadding } from '../ux/styles';
 import { buttonStyles, selectedButtonStyles } from '../ux/styles';
 // state imports
 import { AppContext } from '../models/applicationState';
@@ -32,9 +30,8 @@ const QueryPane: FC = (): ReactElement => {
     // display
     const [newQuery, setNewQuery] = useState('');
     const [selectedResponses, setSelectedResponses] = useState<Set<number>>(new Set());
-    const onTypeQueryChange = (event: SearchBoxChangeEvent, data: InputOnChangeData) => {
-        console.log("onTypeQueryChange: ", data.value, data)
-        setNewQuery(data.value || '');
+    const onNewQueryChange = (_: ChangeEvent<HTMLInputElement> | undefined, newValue?: string) => {
+        setNewQuery(newValue || '');
     }
 
     // functions
@@ -47,7 +44,7 @@ const QueryPane: FC = (): ReactElement => {
         }
         setSelectedResponses(newSelectedResponses);
     };
-    const onSearchSubmit = async (evt: FormEvent<HTMLInputElement>) => {
+    const onFormSubmit = async (evt: FormEvent<HTMLFormElement>) => {
         evt.preventDefault();
         if (newQuery && appContext.state.userState.constellationName !== "Home") {
             const query: Query = {userTxt: newQuery}
@@ -99,9 +96,9 @@ const QueryPane: FC = (): ReactElement => {
                         placeholder={
                             appContext.state.userState.constellationName === "Home" ?
                                 "Enter name of new constellation" : "Enter the name of a book or a link to an article"}
-                        onChange={onTypeQueryChange}
-                        onSubmit={onSearchSubmit}
-                        style={queryFieldStyle}
+                        onChange={onNewQueryChange}
+                        onSearch={onFormSubmit}
+                        styles={queryFieldStyles}
                     />
             </Stack.Item>
             <Stack.Item tokens={stackItemPadding}>

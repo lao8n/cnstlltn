@@ -1,5 +1,5 @@
 // react imports
-import { SearchBox, Stack } from '@fluentui/react';
+import { Stack, TextField } from '@fluentui/react';
 import React, { FC, ReactElement, useContext, useEffect, useState, useMemo, useRef, useCallback, FormEvent, ChangeEvent } from "react";
 // ux imports
 import { canvasStackStyle, clusterByStyle, stackItemPadding, constellationNameStyle, clusterByWordStyle } from '../ux/styles';
@@ -49,9 +49,10 @@ const ConstellationPane: FC = (): ReactElement => {
     const redrawConstellation = useCallback(() => {
         setConstellationRedrawn(Date.now());
     }, []);
-    const onTypeClusterByChange = (event: ChangeEvent<HTMLInputElement> | undefined, newValue?: string) => {
-        console.log("onTypeClusterByChange: value", newValue, " target ", event?.target.value)
-        setNewClusterBy(newValue || appContext.state.userState.clusterBy);
+
+    const onNewQueryChange = (evt: FormEvent<HTMLInputElement | HTMLTextAreaElement>, value?: string) => {
+        console.log("cluster by updated: ", value);
+        setNewClusterBy(value || appContext.state.userState.clusterBy);
     }
 
     const onDropdownChange = (event: ChangeEvent<HTMLSelectElement>) => {
@@ -59,7 +60,7 @@ const ConstellationPane: FC = (): ReactElement => {
         setNewClusterBy(event.target.value);
     };
 
-    const onSearchSubmit = async (evt: FormEvent<HTMLFormElement>) => {
+    const onFormSubmit = async (evt: FormEvent<HTMLFormElement>) => {
         evt.preventDefault();
         actions.cluster.setClusterBy(clusterBy);
         console.log("cluster by", clusterBy, appContext.state.userState.clusterBy)
@@ -231,28 +232,25 @@ const ConstellationPane: FC = (): ReactElement => {
                         <div className={clusterByWordStyle}>
                             {"Cluster by:"}
                         </div>
-                        <Stack>
-                            <SearchBox
+                        <form onSubmit={onFormSubmit}>
+                            <TextField
                                 value={clusterBy}
                                 placeholder={appContext.state.userState.clusterBy}
-                                onChange={onTypeClusterByChange}
-                                onSearch={onSearchSubmit}
-                                styles={clusterByStyle}>
-                                </SearchBox>
-                            <Stack horizontal>
-                                <button type="button" onClick={onClusterClick} style={{ flexShrink: 0 }}>
-                                    AI Suggested Clustering
-                                </button>
-                                <select onChange={onDropdownChange} style={{flexGrow: 1}}>
-                                    <option value="">Select Cluster</option>
-                                    {clusterByOptions.map((option, index) => (
-                                        <option key={index} value={option}>
-                                            {option}
-                                        </option>
-                                    ))}
-                                </select>
-                            </Stack>
-                        </Stack>
+                                onInput={onNewQueryChange}
+                                styles={clusterByStyle}
+                            />
+                            <button type="button" onClick={onClusterClick} style={{ flexShrink: 0 }}>
+                                AI Suggested Clustering
+                            </button>
+                            <select onChange={onDropdownChange} style={{flexGrow: 1}}>
+                                <option value="">Select Cluster</option>
+                                {clusterByOptions.map((option, index) => (
+                                    <option key={index} value={option}>
+                                        {option}
+                                    </option>
+                                ))}
+                            </select>
+                        </form>
                     </Stack>
                 </Stack.Item>
             </Stack>
