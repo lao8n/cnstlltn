@@ -1,10 +1,12 @@
 import { useContext } from 'react';
-import { Stack, Text } from '@fluentui/react';
+import { Stack } from '@fluentui/react';
 import { withApplicationInsights } from '../components/telemetry';
 import { UserAppContext } from '../components/userContext';
 import { AppContext } from '../state/applicationState';
 import ConstellationPane from '../components/constellationPane';
-import { canvasStackStyle } from '../ux/styles';
+import { canvasStackStyle, sidebarStackStyles } from '../ux/styles';
+import WelcomePane from '../components/welcomePane';
+import QueryPane from '../components/queryPane';
 
 const Constellation = () => {
     const appContext : AppContext = useContext(UserAppContext);
@@ -12,14 +14,17 @@ const Constellation = () => {
   if (!appContext.state.userState?.isLoggedIn) {
     return (
       <Stack grow={1}>
-          <Text>Login to access constellation</Text>
+        <WelcomePane/>
         </Stack>
       );
     }
   
     return (
-      <Stack grow={1} styles={canvasStackStyle}>
-        <ConstellationPane/>
+      <Stack horizontal grow={1} styles={canvasStackStyle}>
+        <ConstellationPane />
+        <Stack.Item styles={sidebarStackStyles}>
+            <QueryPane/>
+        </Stack.Item>
       </Stack >
     );
   };

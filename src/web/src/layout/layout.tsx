@@ -5,8 +5,7 @@ import Home from '../pages/home';
 import Constellation from '../pages/constellation';
 import Login from '../pages/login';
 import { Stack } from '@fluentui/react';
-import { headerStackStyles, mainStackStyles, rootStackStyles, sidebarStackStyles } from '../ux/styles';
-import QueryPane from '../components/queryPane';
+import { headerStackStyles, mainStackStyles, rootStackStyles } from '../ux/styles';
 
 const Layout: FC = (): ReactElement => {
     return (
@@ -14,18 +13,13 @@ const Layout: FC = (): ReactElement => {
             <Stack.Item styles={headerStackStyles}>
                 <Header></Header>
             </Stack.Item>
-            <Stack horizontal grow={1}>
-                <Stack.Item grow={1} styles={mainStackStyles}>
-                    <Routes>
-                        <Route path="/login" element={<Login />} />
-                        <Route path="/constellation" element={<Constellation/> } />
-                        <Route path="/" element={<Home />} />
-                    </Routes>
-                </Stack.Item>
-                <Stack.Item styles={sidebarStackStyles}>
-                    <QueryPane/>
-                </Stack.Item>
-            </Stack>
+            <Stack.Item grow={1} styles={mainStackStyles}>
+                <Routes>
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/constellation" element={<Constellation/> } />
+                    <Route path="/" element={<Home />} />
+                </Routes>
+            </Stack.Item>
         </Stack>
     );
 }

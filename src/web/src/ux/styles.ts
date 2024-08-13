@@ -105,6 +105,13 @@ export const constellationNameStyle = mergeStyles({
     color: theme.palette.white,
 });
 
+export const welcomeLineStyle = mergeStyles({
+    fontFamily: "Segoe UI",
+    fontSize: '20px',
+    color: theme.palette.white,
+});
+
+
 export const clusterByWordStyle = mergeStyles({
     fontFamily: "Segoe UI",
     fontSize: '15px',
