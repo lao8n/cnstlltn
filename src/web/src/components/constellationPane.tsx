@@ -39,7 +39,6 @@ const ConstellationPane: FC = (): ReactElement => {
     const [dimensions, setDimensions] = useState({ width: 1500, height: 800 })
     const constellationPts = useRef<DisplayPoint[]>([]) as React.MutableRefObject<DisplayPoint[]>;
     const clusterPts = useRef<DisplayPoint[]>([]) as React.MutableRefObject<DisplayPoint[]>;
-    const [lastSelected, setLastSelected] = useState<DisplayPoint | null>(null);
     const [constellationRedrawn, setConstellationRedrawn] = useState(Date.now());
     const [unclusteredContent, setUnclusteredContent] = useState(0);
     const [clusterBy, setNewClusterBy] = useState('');
@@ -183,8 +182,8 @@ const ConstellationPane: FC = (): ReactElement => {
             animate: (time, ftime) => {
                 drawConstellationPoints(space, form, constellationPts);
                 drawClusterPoints(form, clusterPts);
-                if (lastSelected) {
-                    drawMultiLineText(form, canvasRef.current?.width || 0, lastSelected, 15, 400);
+                if (appContext.state.userState.selectedContent !== null) {
+                    drawMultiLineText(form, canvasRef.current?.width || 0, appContext.state.userState.selectedContent, 15, 400);
                 }
                 if (unclusteredContent !== 0) {
                     drawUnclusteredContentNotification(form, canvasRef.current?.width || 0, unclusteredContent);
@@ -198,12 +197,12 @@ const ConstellationPane: FC = (): ReactElement => {
                     constellationPts.current.forEach(pt => {
                         if (Circle.withinBound(range, pt.position)) {
                             if (appContext.state.userState.constellationName === "Home") {
-                                setLastSelected(null)
+                                actions.display.setSelectedContent(null);
                                 actions.cluster.setClusterBy('');
                                 actions.constellation.setConstellationName(pt.name);
                             } else {
                                 pt.selected = !pt.selected;
-                                setLastSelected(pt.selected ? pt : null)
+                                actions.display.setSelectedContent(pt.selected ? pt : null)
                             }
                         }
                     });
@@ -217,13 +216,16 @@ const ConstellationPane: FC = (): ReactElement => {
             window.removeEventListener("resize", handleResize);
             space.stop();
         };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [lastSelected,
+    }, [actions.constellation,
+        actions.display,
+        actions.cluster,
         dimensions,
         constellationPts,
         clusterPts,
         appContext.state.userState.constellationName,
-        constellationRedrawn]);
+        appContext.state.userState.selectedContent,
+        constellationRedrawn,
+        unclusteredContent]);
 
     return (
         <Stack grow={1}>

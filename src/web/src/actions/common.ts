@@ -25,6 +25,7 @@ export enum ActionTypes {
     SET_CLUSTER_BY = "SET_CLUSTER_BY",
     // display
     SET_UPDATED = "SET_UPDATED",
+    SET_SELECTED_CONTENT = "SET_SELECTED_CONTENT",
 }
 
 export type ApplicationActions =
@@ -47,4 +48,5 @@ export type ApplicationActions =
     clusterActions.ClusterByAction |
     clusterActions.SetClusterByAction | 
     // display
-    displayActions.SetUpdatedAction;
+    displayActions.SetUpdatedAction |
+    displayActions.SetSelectedContentAction;

@@ -50,6 +50,9 @@ export const appReducer: Reducer<ApplicationState, ApplicationActions> = (state:
         case ActionTypes.SET_UPDATED:
             state.userState.updated = action.updated;
             break;
+        case ActionTypes.SET_SELECTED_CONTENT:
+            state.userState.selectedContent = action.selected;
+            break;
         default:
             console.log("reducer state not updated {action.type}")
             break;

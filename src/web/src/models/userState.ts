@@ -1,3 +1,5 @@
+import { DisplayPoint } from '../display/models';
+
 export interface UserState {
     isLoggedIn: boolean;
     userId: string;
@@ -6,6 +8,7 @@ export interface UserState {
     clusterBy: string;
     clusters: Cluster[];
     updated: number;
+    selectedContent: DisplayPoint | null;
 }
 
 export interface UserFramework {

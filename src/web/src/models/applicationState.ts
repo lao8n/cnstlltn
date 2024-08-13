@@ -23,6 +23,7 @@ export const getDefaultState = (): ApplicationState => {
             clusterBy: "",
             clusters: [],
             updated: Date.now(),
+            selectedContent: null,
         },
         queryState: {query: undefined, responses: undefined},
     }

@@ -16,6 +16,8 @@ import { ConstellationActions } from '../actions/constellationActions';
 import * as constellationActions from '../actions/constellationActions';
 import { ClusterActions } from '../actions/clusterActions';
 import * as clusterActions from '../actions/clusterActions';
+import { DisplayActions } from '../actions/displayActions';
+import * as displayActions from '../actions/displayActions';
 
 const Header: FC = (): ReactElement => {
     const appContext = useContext<AppContext>(UserAppContext)
@@ -23,6 +25,7 @@ const Header: FC = (): ReactElement => {
         user: bindActionCreators(userActions, appContext.dispatch) as unknown as UserActions,
         constellation: bindActionCreators(constellationActions, appContext.dispatch) as unknown as ConstellationActions,
         cluster: bindActionCreators(clusterActions, appContext.dispatch) as unknown as ClusterActions,
+        display: bindActionCreators(displayActions, appContext.dispatch) as unknown as DisplayActions
     }), [appContext.dispatch]);
     const navigate = useNavigate();
     const [logInOrOut, setLogInOrOut] = useState<() => void>(() => () => handleLogin(navigate));
@@ -31,6 +34,7 @@ const Header: FC = (): ReactElement => {
     // functions
     const handleReturnToHome = () => {
         actions.cluster.setClusterBy('');
+        actions.display.setSelectedContent(null);
         actions.constellation.setConstellationName("Home");
     }
     const handleLogin = useCallback((navigate) => {
