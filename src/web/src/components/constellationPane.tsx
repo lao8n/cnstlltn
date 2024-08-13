@@ -50,7 +50,7 @@ const ConstellationPane: FC = (): ReactElement => {
         setConstellationRedrawn(Date.now());
     }, []);
     const onTypeClusterByChange = (_: ChangeEvent<HTMLInputElement> | undefined, newValue?: string) => {
-        console.log("onNewQueryChange: ", newValue)
+        console.log("onTypeClusterByChange: ", newValue)
         setNewClusterBy(newValue || appContext.state.userState.clusterBy);
     }
 
@@ -231,24 +231,28 @@ const ConstellationPane: FC = (): ReactElement => {
                         <div className={clusterByWordStyle}>
                             {"Cluster by:"}
                         </div>
+                        <Stack>
                         <SearchBox
                             value={clusterBy}
                             placeholder={appContext.state.userState.clusterBy}
                             onChange={onTypeClusterByChange}
                             onSearch={onSearchSubmit}
                             styles={clusterByStyle}>
-                        <button type="button" onClick={onClusterClick} style={{ flexShrink: 0 }}>
+                            </SearchBox>
+                            <Stack horizontal>
+                            <button type="button" onClick={onClusterClick} style={{ flexShrink: 0 }}>
                                 AI Suggested Clustering
-                        </button>
-                        <select onChange={onDropdownChange} style={{flexGrow: 1}}>
-                            <option value="">Select Cluster</option>
-                            {clusterByOptions.map((option, index) => (
-                                <option key={index} value={option}>
-                                    {option}
-                                </option>
-                            ))}
-                        </select>
-                        </SearchBox>
+                            </button>
+                            <select onChange={onDropdownChange} style={{flexGrow: 1}}>
+                                <option value="">Select Cluster</option>
+                                {clusterByOptions.map((option, index) => (
+                                    <option key={index} value={option}>
+                                        {option}
+                                    </option>
+                                ))}
+                            </select>
+                            </Stack>
+                        </Stack>
                     </Stack>
                 </Stack.Item>
             </Stack>
