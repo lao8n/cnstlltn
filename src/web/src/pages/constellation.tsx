@@ -22,7 +22,7 @@ const Constellation = () => {
     return (
       <Stack horizontal grow={1} styles={canvasStackStyle}>
         <ConstellationPane />
-        <Stack.Item styles={sidebarStackStyles}>
+        <Stack.Item grow={1} styles={sidebarStackStyles}>
             <QueryPane/>
         </Stack.Item>
       </Stack >

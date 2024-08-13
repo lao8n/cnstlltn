@@ -1,0 +1,22 @@
+{
+	"_id" : "1a",
+	"userid" : "welcome_user",
+	"constellation" : "welcome_constellation",
+	"clusterby" : "welcome_cluster_by",
+	"cluster" : "Problem",
+	"islatest" : false,
+	"coordinate" : [
+		0.2784107345127083,
+		0.296828731832767
+	],
+	"frameworks" : {
+		"a1" : [
+			0.37635282443574514,
+			0.2867815752420077
+		],
+		"a2" : [
+			0.30357820933434576,
+			0.7289300248909657
+		]
+	}
+}

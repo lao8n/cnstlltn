@@ -31,9 +31,9 @@ const WelcomePane: FC = (): ReactElement => {
     }), [appContext.dispatch]);
 
     // hard-coded info
-    const userId = "welcome user";
-    const constellationName = "welcome constellation";
-    const clusterBy = "reasons to use"
+    const userId = "welcome_user";
+    const constellationName = "welcome_constellation";
+    const clusterBy = "welcome_cluster_by"
 
     // display
     const canvasRef = useRef<HTMLCanvasElement>(null);
