@@ -109,6 +109,7 @@ export const welcomeLineStyle = mergeStyles({
     fontFamily: "Segoe UI",
     fontSize: '20px',
     color: theme.palette.white,
+    padding: '10px'
 });
 
 

@@ -219,15 +219,13 @@ const ConstellationPane: FC = (): ReactElement => {
             space.stop();
         };
     }, [actions.constellation,
-        actions.display,
         actions.cluster,
+        actions.display,
         dimensions,
-        constellationPts,
-        clusterPts,
         appContext.state.userState.constellationName,
         appContext.state.userState.selectedContent,
-        constellationRedrawn,
-        unclusteredContent]);
+        unclusteredContent,
+        constellationRedrawn]);
 
     return (
         <Stack grow={1}>
