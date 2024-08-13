@@ -72,7 +72,7 @@ const QueryPane: FC = (): ReactElement => {
     const saveSelectedResponses = async () => {
         console.log("queryResponseList " + appContext.state.queryState.responses)
         const responsesToSave = Array.from(selectedResponses).map(index => appContext.state.queryState.responses?.[index])
-            .filter(response => response !== undefined);
+            .filter((response): response is QueryResponse => response !== undefined);
         // Now, you can save 'responsesToSave' to the database
         console.log("responses to save " + responsesToSave)
         const savedFrameworks = await actions.constellation.saveSelectedFrameworks(
