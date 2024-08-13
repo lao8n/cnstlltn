@@ -45,8 +45,7 @@ const QueryPane: FC = (): ReactElement => {
         }
         setSelectedResponses(newSelectedResponses);
     };
-    const onSubmit = async (evt: FormEvent<HTMLFormElement>) => {
-        evt.preventDefault();
+    const onSubmit = async () => {
         if (newQuery && appContext.state.userState.constellationName !== "Home") {
             const query: Query = {userTxt: newQuery}
             await actions.query.postQueryResponseList(query) // reducer updates state
