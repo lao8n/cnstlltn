@@ -1,6 +1,7 @@
 import { IStackItemTokens, IStackStyles, IStackTokens, ITextFieldStyles, IIconProps } from '@fluentui/react'
 import { CnstlltnTheme } from './theme'
 import { mergeStyles } from '@fluentui/react';
+import { CSSProperties } from 'react';
 
 const theme = CnstlltnTheme
 
@@ -121,6 +122,10 @@ export const queryFieldStyles = {
     },
 };
 
+export const queryFieldStyle : CSSProperties = {
+    color: theme.palette.black,
+    fontFamily: "Segoe UI",
+};
 
 export const clusterByStyle: Partial<ITextFieldStyles> = {
     root: {
