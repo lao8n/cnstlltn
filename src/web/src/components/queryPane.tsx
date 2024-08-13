@@ -1,6 +1,6 @@
 // react imports
 import { SearchBox, Stack } from '@fluentui/react';
-import { FC, ReactElement, useState, useContext, useEffect, FormEvent, ChangeEvent } from "react";
+import { FC, ReactElement, useState, useContext, useEffect, useMemo, FormEvent, ChangeEvent } from "react";
 // ux imports
 import { queryFieldStyles, stackItemPadding } from '../ux/styles';
 import { buttonStyles, selectedButtonStyles } from '../ux/styles';
@@ -20,12 +20,12 @@ import * as displayActions from '../actions/displayActions';
 
 const QueryPane: FC = (): ReactElement => {
     const appContext = useContext<AppContext>(UserAppContext)
-    const actions = {
+    const actions = useMemo(() => ({
         user: bindActionCreators(userActions, appContext.dispatch) as unknown as UserActions,
         query: bindActionCreators(queryActions, appContext.dispatch) as unknown as QueryActions,
         constellation: bindActionCreators(constellationActions, appContext.dispatch) as unknown as ConstellationActions,
         display: bindActionCreators(displayActions, appContext.dispatch) as unknown as DisplayActions
-    };
+    }), [appContext.dispatch]);
 
     // display
     const [newQuery, setNewQuery] = useState('');
