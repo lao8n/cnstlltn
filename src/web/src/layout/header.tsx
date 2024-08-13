@@ -42,6 +42,7 @@ const Header: FC = (): ReactElement => {
 
     // effects
     useEffect(() => {
+        console.log("login or out")
         if(appContext.state.userState?.isLoggedIn){
             setLogInOrOut(() => () => handleLogout(navigate));
             setSignInOrOut(() => "SignOut");

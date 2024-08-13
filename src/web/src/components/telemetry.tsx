@@ -8,6 +8,7 @@ type TelemetryProps = PropsWithChildren<unknown>;
 const Telemetry: FC<TelemetryProps> = (props: TelemetryProps): ReactElement => {
 
     useEffect(() => {
+        console.log("telemetry insights")
         getApplicationInsights();
     }, []);
 

@@ -32,6 +32,7 @@ const Login = () => {
 
   // effects
   useEffect(() => {
+    console.log("fetch google client id")
     const fetchGoogleClientId = async () => {
       const loginConfig = await actions.user.getLoginConfig()
       setGoogleClientId(loginConfig.googleClientId);
