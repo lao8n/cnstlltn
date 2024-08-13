@@ -1,6 +1,8 @@
 // react imports
-import { SearchBox, Stack } from '@fluentui/react';
-import { FC, ReactElement, useState, useContext, useEffect, FormEvent, ChangeEvent } from "react";
+import { FC, ReactElement, useState, useContext, useEffect, FormEvent } from "react";
+import { Stack } from '@fluentui/react';
+import { SearchBox, InputOnChangeData } from "@fluentui/react-components";
+import type { SearchBoxChangeEvent } from "@fluentui/react-components";
 // ux imports
 import { queryFieldStyles, stackItemPadding } from '../ux/styles';
 import { buttonStyles, selectedButtonStyles } from '../ux/styles';
@@ -30,9 +32,9 @@ const QueryPane: FC = (): ReactElement => {
     // display
     const [newQuery, setNewQuery] = useState('');
     const [selectedResponses, setSelectedResponses] = useState<Set<number>>(new Set());
-    const onTypeQueryChange = (event: ChangeEvent<HTMLInputElement> | undefined, newValue?: string) => {
-        console.log("onTypeQueryChange: ", newValue, " event ", event)
-        setNewQuery(newValue || '');
+    const onTypeQueryChange = (event: SearchBoxChangeEvent, data: InputOnChangeData) => {
+        console.log("onTypeQueryChange: ", data.value)
+        setNewQuery(data.avlue || '');
     }
 
     // functions
