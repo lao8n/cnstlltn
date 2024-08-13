@@ -88,19 +88,20 @@ const QueryPane: FC = (): ReactElement => {
         console.log("set empty query response list")
         setSelectedResponses(new Set());
         actions.query.setEmptyQueryResponseList();
-    }, [actions.query, appContext.state.userState.constellationName])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [actions.query.setEmptyQueryResponseList, appContext.state.userState.constellationName])
 
     return (
         <Stack>
             <Stack.Item tokens={stackItemPadding}>
                 <SearchBox
-                        value={newQuery}
-                        placeholder={
-                            appContext.state.userState.constellationName === "Home" ?
-                                "Enter name of new constellation" : "Enter the name of a book or a link to an article"}
-                        onChange={onNewQueryChange}
-                        onSearch={onFormSubmit}
-                        styles={queryFieldStyles}
+                    value={newQuery}
+                    placeholder={
+                        appContext.state.userState.constellationName === "Home" ?
+                            "Enter name of new constellation" : "Enter the name of a book or a link to an article"}
+                    onChange={onNewQueryChange}
+                    onSearch={onFormSubmit}
+                    styles={queryFieldStyles}
                     />
             </Stack.Item>
             <Stack.Item tokens={stackItemPadding}>
