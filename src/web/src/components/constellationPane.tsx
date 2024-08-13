@@ -1,6 +1,6 @@
 // react imports
 import { SearchBox, Stack } from '@fluentui/react';
-import React, { FC, ReactElement, useContext, useEffect, useState, useMemo, useRef, useCallback, FormEvent, ChangeEvent } from "react";
+import React, { FC, ReactElement, useContext, useEffect, useState, useMemo, useRef, useCallback, ChangeEvent } from "react";
 // ux imports
 import { canvasStackStyle, clusterByStyle, stackItemPadding, constellationNameStyle, clusterByWordStyle } from '../ux/styles';
 import { CnstlltnTheme } from "../ux/theme";
@@ -123,7 +123,8 @@ const ConstellationPane: FC = (): ReactElement => {
         getOptions();
     }, [actions.cluster,
         appContext.state.userState.userId,
-        appContext.state.userState.constellationName]);
+        appContext.state.userState.constellationName,
+        appContext.state.userState.updated]);
     
     useEffect(() => {
         console.log("set constellation display points")
@@ -241,10 +242,10 @@ const ConstellationPane: FC = (): ReactElement => {
                             />
                             <Stack horizontal>
                                 <button type="button" onClick={onClusterClick} style={{ flexShrink: 0 }}>
-                                    AI Suggested Clustering
+                                    Clustering Suggestion
                                 </button>
                                 <select onChange={onDropdownChange} style={{flexGrow: 1}}>
-                                    <option value="">Select Cluster</option>
+                                    <option value="">Load Cluster By</option>
                                     {clusterByOptions.map((option, index) => (
                                         <option key={index} value={option}>
                                             {option}
