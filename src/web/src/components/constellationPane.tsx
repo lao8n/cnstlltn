@@ -101,7 +101,8 @@ const ConstellationPane: FC = (): ReactElement => {
             const clusters = await actions.cluster.getClusters(
                 appContext.state.userState.userId,
                 appContext.state.userState.constellationName,
-                appContext.state.userState.clusterBy);
+                appContext.state.userState.clusterBy,
+                appContext.state.userState.clusterBy === '');
             actions.cluster.setClusters(clusters);
         };
         getCluster();
@@ -194,6 +195,7 @@ const ConstellationPane: FC = (): ReactElement => {
                         if (Circle.withinBound(range, pt.position)) {
                             if (appContext.state.userState.constellationName === "Home") {
                                 setLastSelected(null)
+                                actions.cluster.setClusterBy('');
                                 actions.constellation.setConstellationName(pt.name);
                             } else {
                                 pt.selected = !pt.selected;
@@ -245,7 +247,7 @@ const ConstellationPane: FC = (): ReactElement => {
                                     Clustering Suggestion
                                 </button>
                                 <select onChange={onDropdownChange} style={{flexGrow: 1}}>
-                                    <option value="">Load Cluster By</option>
+                                    <option value="">Select Clustering</option>
                                     {clusterByOptions.map((option, index) => (
                                         <option key={index} value={option}>
                                             {option}

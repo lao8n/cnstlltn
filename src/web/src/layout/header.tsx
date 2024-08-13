@@ -14,19 +14,23 @@ import { UserActions } from '../actions/userActions';
 import * as userActions from '../actions/userActions';
 import { ConstellationActions } from '../actions/constellationActions';
 import * as constellationActions from '../actions/constellationActions';
+import { ClusterActions } from '../actions/clusterActions';
+import * as clusterActions from '../actions/clusterActions';
 
 const Header: FC = (): ReactElement => {
     const appContext = useContext<AppContext>(UserAppContext)
     const actions = useMemo(() => ({
+        user: bindActionCreators(userActions, appContext.dispatch) as unknown as UserActions,
         constellation: bindActionCreators(constellationActions, appContext.dispatch) as unknown as ConstellationActions,
-        user: bindActionCreators(userActions, appContext.dispatch) as unknown as UserActions
+        cluster: bindActionCreators(clusterActions, appContext.dispatch) as unknown as ClusterActions,
     }), [appContext.dispatch]);
     const navigate = useNavigate();
     const [logInOrOut, setLogInOrOut] = useState<() => void>(() => () => handleLogin(navigate));
     const [signInOrOut, setSignInOrOut] = useState(() => "Signin");
 
     // functions
-    const handleClick = () => {
+    const handleReturnToHome = () => {
+        actions.cluster.setClusterBy('');
         actions.constellation.setConstellationName("Home");
     }
     const handleLogin = useCallback((navigate) => {
@@ -55,7 +59,7 @@ const Header: FC = (): ReactElement => {
     return (
         <Stack horizontal>
             <Stack horizontal styles={headerLogoStyles}>
-                <Link to="/constellation" onClick={handleClick}>
+                <Link to="/constellation" onClick={handleReturnToHome}>
                     <img src={`${process.env.PUBLIC_URL}/cnstlltn_logo.png`} alt="Logo" style={{width: '100px', height: 'auto'}}/>
                 </Link>
             </Stack>

@@ -6,7 +6,7 @@ import { ActionMethod, PayloadAction, createPayloadAction } from "./actionCreato
 import config from "../config";
 
 export interface ClusterActions {
-    getClusters(userId: string, constellationName: string, clusterBy: string): Promise<Cluster[]>;
+    getClusters(userId: string, constellationName: string, clusterBy: string, latest: boolean): Promise<Cluster[]>;
     setClusters(clusters: Cluster[]): void;
     getClusterByOptions(userId: string, constellationName: string): Promise<string[]>;
     getClusterBySuggestion(userId: string, constellationName: string): Promise<string>;
