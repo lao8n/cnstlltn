@@ -49,7 +49,7 @@ const ConstellationPane: FC = (): ReactElement => {
     const redrawConstellation = useCallback(() => {
         setConstellationRedrawn(Date.now());
     }, []);
-    const onNewQueryChange = (_: ChangeEvent<HTMLInputElement> | undefined, newValue?: string) => {
+    const onTypeClusterByChange = (_: ChangeEvent<HTMLInputElement> | undefined, newValue?: string) => {
         console.log("onNewQueryChange: ", newValue)
         setNewClusterBy(newValue || appContext.state.userState.clusterBy);
     }
@@ -59,7 +59,7 @@ const ConstellationPane: FC = (): ReactElement => {
         setNewClusterBy(event.target.value);
     };
 
-    const onFormSubmit = async (evt: FormEvent<HTMLFormElement>) => {
+    const onSearchSubmit = async (evt: FormEvent<HTMLFormElement>) => {
         evt.preventDefault();
         actions.cluster.setClusterBy(clusterBy);
         console.log("cluster by", clusterBy, appContext.state.userState.clusterBy)
@@ -234,8 +234,8 @@ const ConstellationPane: FC = (): ReactElement => {
                         <SearchBox
                             value={clusterBy}
                             placeholder={appContext.state.userState.clusterBy}
-                            onChange={onNewQueryChange}
-                            onSearch={onFormSubmit}
+                            onChange={onTypeClusterByChange}
+                            onSearch={onSearchSubmit}
                             styles={clusterByStyle}>
                         <button type="button" onClick={onClusterClick} style={{ flexShrink: 0 }}>
                                 AI Suggested Clustering
