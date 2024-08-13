@@ -104,6 +104,10 @@ const ConstellationPane: FC = (): ReactElement => {
                 appContext.state.userState.clusterBy,
                 appContext.state.userState.clusterBy === '');
             actions.cluster.setClusters(clusters);
+            // this is the case that we have gotten the latest clustering
+            if(appContext.state.userState.clusterBy === '' && clusters.length > 0){ 
+                setNewClusterBy(clusters[0].clusterBy)
+            }
         };
         getCluster();
     }, [actions.cluster,
