@@ -49,6 +49,7 @@ const WelcomePane: FC = (): ReactElement => {
             const constellation = await actions.constellation.getConstellation(
                 userId,
                 constellationName);
+            console.log(constellation)
             actions.constellation.setConstellation(constellation);
         };
         getConstellation();
@@ -62,7 +63,8 @@ const WelcomePane: FC = (): ReactElement => {
                 userId,
                 constellationName,
                 clusterBy,
-                false);
+                true);
+            console.log(clusters)
             actions.cluster.setClusters(clusters);
             // this is the case that we have gotten the latest clustering
         };
