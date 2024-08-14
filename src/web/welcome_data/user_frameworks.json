@@ -1,0 +1,72 @@
+[
+    {
+        "_id" : ObjectId("66bd1c1c41696f63dd08fefb"),
+        "userid" : "welcome_user",
+        "constellation" : "welcome_constellation",
+        "title" : "World is too complicated",
+        "content" : "Whether it is the politics of Israel-Palestine, the technology behind AI, the legality of Supreme Court justice decisions, the economics of the yen carry trade, the sociology of trans women in sports or the environmental impacts of climate change the world is an extremely complicated place. You don't have time to get a PhD in all these subjects and even if you did you would end up with a very narrow view of things as everything is interconnected"
+    },
+    {
+        "_id" : ObjectId("66bd1c1d41696f63dd08fefc"),
+        "userid" : "welcome_user",
+        "constellation" : "welcome_constellation",
+        "title" : "Reliance on experts",
+        "content" : "In the face of all this complexity it is natural to rely on experts. However, their track record is not good, in Expert Political Judgement Tetlock describes their predictions as no better than 'dart-throwing monkeys'. Experts can also, just like all of us, be heavily affected by incentives - consider all the research showing smoking doesn't cause lung cancer. But if we don't have time to become experts ourselves what can we do?"
+    },
+    {
+        "_id" : ObjectId("66bd1c1d41696f63dd08fefd"),
+        "userid" : "welcome_user",
+        "constellation" : "welcome_constellation",
+        "title" : "Notion, Google Keep or Evernote",
+        "content" : "These tools are, to varying degrees, not LLM-first but designed primarily around manual input of notes and search-based lookup."
+    },
+    {
+        "_id" : ObjectId("66bd1c1d41696f63dd08fefe"),
+        "userid" : "welcome_user",
+        "constellation" : "welcome_constellation",
+        "title" : "Read books",
+        "content" : "Of course you can! We read all the time and love tracking our books in goodreads, but the problem with books is they take a long time to get through, and knowledge retention is very low - human brains are very unreliable data storage devices. It takes a lot of mental effort to remember ideas, and even more to integrate them with other ideas"
+    },
+    {
+        "_id" : ObjectId("66bd1c1d41696f63dd08feff"),
+        "userid" : "welcome_user",
+        "constellation" : "welcome_constellation",
+        "title" : "Traditional and social media",
+        "content" : "Whether print or television, traditional media's demise is well-documented. As discussed by venture capitalist Marc Andreessen, the structural change from monopolistic national and city-wide newspapers and tv channels to fierce online and cable competition has led to a shift from centrist coverage to increasingly partisan media. Social media has also proven partisan, with big YouTube and X personalities, taking predictably cookie-cutter left and right positions. To get a fuller picture you can try to watch both CNN and Fox but integrating all these perspectives is difficult."
+    },
+    {
+        "_id" : ObjectId("66bd1c1d41696f63dd08ff00"),
+        "userid" : "welcome_user",
+        "constellation" : "welcome_constellation",
+        "title" : "ChatGPT",
+        "content" : "LLM tools are amazing and the technology behind cnstlltn. However, they come with a few drawbacks: 1. It is hard to avoid prompting and only getting very shallow answers back 2. There is no easy way to take notes 3. Books, videos and podcasts are still, often, the most compelling way to learn something"
+    },
+    {
+        "_id" : ObjectId("66bd1c1d41696f63dd08ff01"),
+        "userid" : "welcome_user",
+        "constellation" : "welcome_constellation",
+        "title" : "Prompt for notes",
+        "content" : "Suppose you read a book, you could write notes along the way but that is a lot of manual work. Instead, with Cnstlltn you can prompt for possible notes and then click and select the ones that you want to save to your constellation. Rather, than just taking someone elses notes or summary you are the filter so that only ideas you find compelling are included. We find this a surprisingly addictive experience!"
+    },
+    {
+        "_id" : ObjectId("66bd1c1d41696f63dd08ff02"),
+        "userid" : "welcome_user",
+        "constellation" : "welcome_constellation",
+        "title" : "Visualise your cnstlltn",
+        "content" : "If you have tens or even hundreds of ideas on a topic it can be hard to organise them in your mind. Cnstlltn allows you to visualise them dynamically in clusters, where you can re-cluster them as you want - diving in to the detail by clicking on a point as you can on this welcome page."
+    },
+    {
+        "_id" : ObjectId("66bd1c1d41696f63dd08ff03"),
+        "userid" : "welcome_user",
+        "constellation" : "welcome_constellation",
+        "title" : "Apply your ideas",
+        "content" : "Cnstlltn is ultimately about giving you tools for thinking. By clicking on clusters and points in your constellation you can then apply them systematically to a topic or idea, giving you a depth of answer that is not possible with naive prompting."
+    },
+    {
+        "_id" : ObjectId("66bd328a38142568ac7892f7"),
+        "userid" : "welcome_user",
+        "constellation" : "welcome_constellation",
+        "title" : "Test your own thinking",
+        "content" : "In our partisan world it is very easy to be in a bubble. But as any Charlie Munger aficionado will council 'I'm not entitled to have an opinion on this subject unless I can state the arguments against my position better than the people do who are supporting it'. Cnstlltn can help you keep to this 'iron prescription', for example, suppose you have a constellation on topic X with 30 ideas and concepts you find compelling. You can then prompt cnstlltn to give you the best counter-arguments to your ideas - and over time your thinking can become more battle tested."
+    }
+]
