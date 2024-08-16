@@ -2,8 +2,8 @@
 import { SearchBox, Stack } from '@fluentui/react';
 import { FC, ReactElement, useState, useContext, useEffect, useMemo, ChangeEvent } from "react";
 // ux imports
-import { queryFieldStyles, stackItemPadding } from '../ux/styles';
-import { buttonStyles, selectedButtonStyles } from '../ux/styles';
+import { stackItemPadding } from '../ux/tokens';
+import { buttonStyles, selectedButtonStyles, queryFieldStyles } from '../ux/components';
 // state imports
 import { AppContext } from '../state/applicationState';
 import { Query, QueryResponse } from '../state/queryState';

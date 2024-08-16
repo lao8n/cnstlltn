@@ -15,7 +15,7 @@ const Constellation = () => {
     return (
       <Stack>
         <WelcomePane/>
-        </Stack>
+      </Stack>
       );
     }
   

@@ -2,7 +2,9 @@
 import { SearchBox, Stack } from '@fluentui/react';
 import React, { FC, ReactElement, useContext, useEffect, useState, useMemo, useRef, useCallback, ChangeEvent } from "react";
 // ux imports
-import { canvasStackStyle, clusterByStyle, stackItemPadding, constellationNameStyle, clusterByWordStyle } from '../ux/styles';
+import { canvasStackStyle } from '../ux/styles';
+import { clusterByStyle, constellationNameStyle, clusterByWordStyle } from '../ux/components';
+import { stackItemPadding } from '../ux/tokens';
 import { CnstlltnTheme } from "../ux/theme";
 // state imports
 import { AppContext } from "../state/applicationState";

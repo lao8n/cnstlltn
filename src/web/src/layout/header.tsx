@@ -4,7 +4,7 @@ import { IconButton, Stack } from '@fluentui/react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 // ux imports
-import { headerLogoStyles, headerToolStackClass, headerIconProps } from '../ux/styles';
+import { headerLogoStyles, headerToolStackClass, headerIconProps } from '../ux/components';
 
 // state imports
 import { UserAppContext } from '../components/userContext';

@@ -1,6 +1,5 @@
-import { IStackItemTokens, IStackStyles, IStackTokens, ITextFieldStyles, IIconProps } from '@fluentui/react'
+import { IStackStyles } from '@fluentui/react'
 import { CnstlltnTheme } from './theme'
-import { mergeStyles } from '@fluentui/react';
 
 const theme = CnstlltnTheme
 
@@ -31,10 +30,8 @@ export const mainStackStyles: IStackStyles = {
     root: {
         background: theme.palette.black,
         color: theme.palette.white,
-        flexGrow: 1,  // This allows the Stack.Item to grow and fill available space
         overflow: 'hidden', // This prevents any overflow caused by growing content
         display: 'flex',    // Optional: If you want to ensure child elements align as flexbox
-        flexDirection: 'column',
     }
 }
 
@@ -61,115 +58,5 @@ export const titleStackStyles: IStackStyles = {
     root: {
         alignItems: 'center',
         background: theme.palette.neutralPrimaryAlt,
-    }
-}
-
-export const stackPadding: IStackTokens = {
-    padding: 10
-}
-
-export const stackGaps: IStackTokens = {
-    childrenGap: 10
-}
-
-export const stackItemPadding: IStackItemTokens = {
-    padding: 10,
-}
-
-export const stackItemMargin: IStackItemTokens = {
-    margin: 10
-}
-
-// Define styles for the button
-export const buttonStyles = mergeStyles({
-    backgroundColor: theme.palette.neutralPrimary,
-    color: theme.palette.black,
-    margin: '5px',
-    padding: '5px 10px',
-    cursor: 'pointer',
-    border: 'none',
-    transition: 'background-color 0.3s',
-    '&:hover': {
-        backgroundColor: theme.palette.neutralPrimaryAlt
-    }
-});
-
-export const selectedButtonStyles = mergeStyles(buttonStyles, {
-    backgroundColor: theme.palette.themePrimary,
-    color: theme.palette.white,
-});
-
-export const clusterButtonStyles = mergeStyles(buttonStyles, {
-    alignItems: 'flex-end',
-})
-
-export const constellationNameStyle = mergeStyles({
-    fontFamily: "Segoe UI",
-    fontSize: '20px',
-    color: theme.palette.white,
-});
-
-export const welcomeLineStyle = mergeStyles({
-    fontFamily: "Segoe UI",
-    fontSize: '20px',
-    color: theme.palette.white,
-    padding: '10px'
-});
-
-
-export const clusterByWordStyle = mergeStyles({
-    fontFamily: "Segoe UI",
-    fontSize: '15px',
-    color: theme.palette.white,
-    alignItems: 'right',
-    paddingTop: 5,
-    paddingRight: 5,
-});
-
-export const queryFieldStyles = {
-    field: {
-        color: theme.palette.black,
-        fontFamily: "Segoe UI",
-    },
-};
-
-
-export const clusterByStyle: Partial<ITextFieldStyles> = {
-    root: {
-        minWidth: 800,
-    },
-    fieldGroup: {  // This targets the surrounding container of the input
-        backgroundColor: theme.palette.black,
-    },
-    field: {  // This targets the input element itself
-        color: theme.palette.black,
-        fontFamily: "Segoe UI",
-        alignItems: 'center',
-        justifyContent: 'flex-end',
-    }
-}
-
-export const headerLogoStyles: IStackStyles = {
-    root: {
-        width: '300px',
-        alignItems: 'center',
-        padding: '0 20px'
-    }
-}
-
-export const headerToolStackClass: IStackStyles = {
-    root: {
-        alignItems: 'center',
-        height: 48,
-        paddingRight: 10
-    }
-}
-
-export const headerIconProps: IIconProps = {
-    styles: {
-        root: {
-            fontSize: 16,
-            color: theme.palette.white
-        }
     }
 }
