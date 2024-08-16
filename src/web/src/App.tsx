@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import Layout from './layout/layout';
+import Layout from './pages/layout';
 import './App.css';
 import { CnstlltnTheme } from './ux/theme';
 import { UserAppProvider } from './components/user';

@@ -1,8 +1,8 @@
 import { FC, ReactElement } from 'react';
-import Header from './header';
+import Header from '../components/header';
 import { Routes, Route } from 'react-router-dom';
-import Constellation from '../pages/constellation';
-import Login from '../pages/login';
+import Constellation from './constellation';
+import Login from './login';
 import { Stack } from '@fluentui/react';
 import { headerStackStyles, mainStackStyles, rootStackStyles } from '../ux/styles';
 
