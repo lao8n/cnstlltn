@@ -17,6 +17,7 @@ import { ConstellationActions } from '../state/actions/constellationActions';
 import * as constellationActions from '../state/actions/constellationActions';
 import { DisplayActions } from '../state/actions/displayActions';
 import * as displayActions from '../state/actions/displayActions';
+import { queryStackStyle } from '../ux/styles';
 
 const QueryPane: FC = (): ReactElement => {
     const appContext = useContext<AppContext>(UserAppContext)
@@ -90,7 +91,7 @@ const QueryPane: FC = (): ReactElement => {
     }, [actions.query, appContext.state.userState.constellationName])
 
     return (
-        <Stack>
+        <Stack styles={queryStackStyle}>
             <Stack.Item tokens={stackItemPadding}>
                 <SearchBox
                     value={newQuery}

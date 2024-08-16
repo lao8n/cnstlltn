@@ -40,7 +40,6 @@ export const welcomeLineStyle = mergeStyles({
     padding: '10px'
 });
 
-
 export const clusterByWordStyle = mergeStyles({
     fontFamily: "Segoe UI",
     fontSize: '15px',

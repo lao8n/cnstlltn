@@ -4,29 +4,26 @@ import { withApplicationInsights } from '../telemetry/telemetry';
 import { UserAppContext } from '../state/userContext';
 import { AppContext } from '../state/applicationState';
 import ConstellationPane from '../components/constellationPane';
-import { canvasStackStyle, sidebarStackStyles } from '../ux/styles';
+import { constellationQueryStackStyle } from '../ux/styles';
 import WelcomePane from '../components/welcomePane';
 import QueryPane from '../components/queryPane';
 
 const Constellation = () => {
-    const appContext : AppContext = useContext(UserAppContext);
+  const appContext : AppContext = useContext(UserAppContext);
 
   if (!appContext.state.userState?.isLoggedIn) {
     return (
-      <Stack>
-        <WelcomePane/>
-      </Stack>
+      <WelcomePane/>
       );
-    }
+  }
   
-    return (
-      <Stack horizontal grow={1} styles={canvasStackStyle}>
-        <ConstellationPane />
-        <Stack.Item grow={1} styles={sidebarStackStyles}>
-            <QueryPane/>
-        </Stack.Item>
-      </Stack >
-    );
-  };
+  // myabe need to add grow{1} below here
+  return (
+    <Stack horizontal styles={constellationQueryStackStyle}>
+      <ConstellationPane />
+      <QueryPane/>
+    </Stack >
+  );
+};
   
-  export default withApplicationInsights(Constellation, 'Constellation');
+export default withApplicationInsights(Constellation, 'Constellation');

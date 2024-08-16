@@ -2,7 +2,7 @@
 import { SearchBox, Stack } from '@fluentui/react';
 import React, { FC, ReactElement, useContext, useEffect, useState, useMemo, useRef, useCallback, ChangeEvent } from "react";
 // ux imports
-import { canvasStackStyle } from '../ux/styles';
+import { canvasStackStyle, constellationStackStyle } from '../ux/styles';
 import { clusterByStyle, constellationNameStyle, clusterByWordStyle } from '../ux/components';
 import { stackItemPadding } from '../ux/tokens';
 import { CnstlltnTheme } from "../ux/theme";
@@ -230,7 +230,7 @@ const ConstellationPane: FC = (): ReactElement => {
         constellationRedrawn]);
 
     return (
-        <Stack grow={1}>
+        <Stack grow={1} styles={constellationStackStyle}>
             <Stack horizontal grow={0}>
                 <Stack.Item grow={1} tokens={stackItemPadding}>
                     <div className={constellationNameStyle}>

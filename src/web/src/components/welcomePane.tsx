@@ -2,7 +2,7 @@
 import { Stack } from "@fluentui/react";
 import React, { FC, ReactElement, useContext, useEffect, useState, useMemo, useRef } from "react";
 // ux imports
-import { canvasStackStyle } from "../ux/styles";
+import { constellationStackStyle } from "../ux/styles";
 import { welcomeLineStyle } from "../ux/components";
 // state imports
 import { AppContext } from "../state/applicationState";
@@ -159,7 +159,7 @@ const WelcomePane: FC = (): ReactElement => {
             <div className={welcomeLineStyle}>
                 Tools for thinking
             </div>
-            <Stack.Item grow={1} styles={canvasStackStyle}>
+            <Stack.Item grow={1} styles={constellationStackStyle}>
                 <canvas ref={canvasRef} id="pt"/>
             </Stack.Item>
         </Stack>

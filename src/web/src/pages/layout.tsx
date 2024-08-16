@@ -4,15 +4,15 @@ import { Routes, Route } from 'react-router-dom';
 import Constellation from './constellation';
 import Login from './login';
 import { Stack } from '@fluentui/react';
-import { headerStackStyles, mainStackStyles, rootStackStyles } from '../ux/styles';
+import { headerStackStyle, routeStackStyle, layoutStackStyle } from '../ux/styles';
 
 const Layout: FC = (): ReactElement => {
     return (
-        <Stack styles={rootStackStyles}>
-            <Stack.Item styles={headerStackStyles}>
+        <Stack styles={layoutStackStyle}>
+            <Stack.Item styles={headerStackStyle}>
                 <Header></Header>
             </Stack.Item>
-            <Stack.Item styles={mainStackStyles}>
+            <Stack.Item styles={routeStackStyle}>
                 <Routes>
                     <Route path="/login" element={<Login />} />
                     <Route path="/constellation" element={<Constellation/> } />
