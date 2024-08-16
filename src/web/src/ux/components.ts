@@ -4,6 +4,40 @@ import { CnstlltnTheme } from './theme'
 
 const theme = CnstlltnTheme
 
+// header
+export const headerLogoStyles: IStackStyles = {
+    root: {
+        height: 48,
+        alignItems: 'center',
+        paddingLeft: 10,
+    }
+}
+
+export const headerToolStackClass: IStackStyles = {
+    root: {
+        alignItems: 'center',
+        height: 48,
+        paddingRight: 10
+    }
+}
+
+export const headerFillStyle: IStackStyles = {
+    root: {
+        display: 'flex',
+        width: '100%',
+    }
+}
+
+export const headerIconProps: IIconProps = {
+    styles: {
+        root: {
+            fontSize: 16,
+            color: theme.palette.white
+        }
+    }
+}
+
+
 export const canvasClassStyle = mergeStyles({
     width: '100%',
     height: '100%',
@@ -76,37 +110,5 @@ export const clusterByStyle: Partial<ITextFieldStyles> = {
         fontFamily: "Segoe UI",
         alignItems: 'center',
         justifyContent: 'flex-end',
-    }
-}
-
-export const headerLogoStyles: IStackStyles = {
-    root: {
-        width: '300px',
-        alignItems: 'center',
-        padding: '0 20px'
-    }
-}
-
-export const headerToolStackClass: IStackStyles = {
-    root: {
-        alignItems: 'center',
-        height: 48,
-        paddingRight: 10
-    }
-}
-
-export const headerFillStyle: IStackStyles = {
-    root: {
-        display: 'flex',
-        width: '100%',
-    }
-}
-
-export const headerIconProps: IIconProps = {
-    styles: {
-        root: {
-            fontSize: 16,
-            color: theme.palette.white
-        }
     }
 }
