@@ -45,10 +45,18 @@ export const constellationStackStyle: IStackStyles = {
     }
 }
 
-export const canvasStackStyle: IStackStyles = {
+export const welcomeStackStyle: IStackStyles = {
     root: {
         width: '100%',
         height: '100%',
+        overflow: 'hidden',
+    }
+}
+
+
+export const canvasStackStyle: IStackStyles = {
+    root: {
+        width: '100%',
         overflow: 'hidden',
     }
 }

@@ -4,7 +4,7 @@ import { withApplicationInsights } from '../telemetry/telemetry';
 import { UserAppContext } from '../state/userContext';
 import { AppContext } from '../state/applicationState';
 import ConstellationPane from '../components/constellationPane';
-import { constellationQueryStackStyle } from '../ux/styles';
+import { constellationQueryStackStyle, welcomeStackStyle } from '../ux/styles';
 import WelcomePane from '../components/welcomePane';
 import QueryPane from '../components/queryPane';
 
