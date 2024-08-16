@@ -4,7 +4,7 @@ import { IconButton, Stack } from '@fluentui/react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 // ux imports
-import { headerLogoStyles, headerToolStackClass, headerIconProps, headerFillStyle } from '../ux/components';
+import { headerLogoStyles, headerLoginStyle, headerIconProps, headerFillStyle } from '../ux/components';
 
 // state imports
 import { UserAppContext } from '../state/userContext';
@@ -68,12 +68,9 @@ const Header: FC = (): ReactElement => {
                 </Link>
             </Stack.Item>
             <Stack.Item styles={headerFillStyle}>
-                <div></div>
             </Stack.Item>
-            <Stack.Item>
-                <Stack horizontal styles={headerToolStackClass}>
-                    <IconButton aria-label="Add" iconProps={{ iconName: signInOrOut, ...headerIconProps }} onClick={logInOrOut} />
-                </Stack>
+            <Stack.Item styles={headerLoginStyle}>
+                <IconButton aria-label="Add" iconProps={{ iconName: signInOrOut }} onClick={logInOrOut} />
             </Stack.Item>
         </Stack>
     );

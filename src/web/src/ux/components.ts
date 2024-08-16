@@ -13,14 +13,6 @@ export const headerLogoStyles: IStackStyles = {
     }
 }
 
-export const headerToolStackClass: IStackStyles = {
-    root: {
-        alignItems: 'center',
-        height: 48,
-        paddingRight: 10
-    }
-}
-
 export const headerFillStyle: IStackStyles = {
     root: {
         display: 'flex',
@@ -28,15 +20,13 @@ export const headerFillStyle: IStackStyles = {
     }
 }
 
-export const headerIconProps: IIconProps = {
-    styles: {
-        root: {
-            fontSize: 16,
-            color: theme.palette.white
-        }
+export const headerLoginStyle: IStackStyles = {
+    root: {
+        alignItems: 'center',
+        height: 48,
+        paddingRight: 10
     }
 }
-
 
 export const canvasClassStyle = mergeStyles({
     width: '100%',
