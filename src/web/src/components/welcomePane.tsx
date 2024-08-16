@@ -37,7 +37,7 @@ const WelcomePane: FC = (): ReactElement => {
 
     // display
     const canvasRef = useRef<HTMLCanvasElement>(null);
-    const [dimensions, setDimensions] = useState({ width: 1500, height: 800 })
+    const [dimensions, setDimensions] = useState({ width: 0, height: 0 })
     const constellationPts = useRef<DisplayPoint[]>([]) as React.MutableRefObject<DisplayPoint[]>;
     const clusterPts = useRef<DisplayPoint[]>([]) as React.MutableRefObject<DisplayPoint[]>;
     const [, setUnclusteredContent] = useState(0);
@@ -99,6 +99,7 @@ const WelcomePane: FC = (): ReactElement => {
             if (canvasRef.current?.parentElement) {
                 const newWidth = Math.min(canvasRef.current.parentElement.clientWidth, maxDimensions.width)
                 const newHeight = Math.min(canvasRef.current.parentElement.clientHeight, maxDimensions.height)
+                console.log("set dimensions: ", newWidth, newHeight)
                 setDimensions({ width: newWidth, height: newHeight })
                 updatePositions();
             }
@@ -117,6 +118,7 @@ const WelcomePane: FC = (): ReactElement => {
         }
         space.add({
             start: (bound) => {
+                setDimensions({width: canvasRef.current?.width || 0, height: canvasRef.current?.height || 0})
                 updatePositions();
             },
             animate: (time, ftime) => {
