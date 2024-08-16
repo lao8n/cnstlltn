@@ -3,10 +3,10 @@ import { Stack } from '@fluentui/react';
 import { withApplicationInsights } from '../telemetry/telemetry';
 import { UserAppContext } from '../state/userContext';
 import { AppContext } from '../state/applicationState';
-import ConstellationPane from '../components/constellationPane';
-import { constellationQueryStackStyle } from '../ux/styles';
-import WelcomePane from '../components/welcomePane';
-import QueryPane from '../components/queryPane';
+import ConstellationPane from '../layouts/constellationPane';
+import { constellationQueryStackStyle } from '../ux/layouts';
+import WelcomePane from '../layouts/welcomePane';
+import QueryPane from '../layouts/queryPane';
 
 const Constellation = () => {
   const appContext : AppContext = useContext(UserAppContext);

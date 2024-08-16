@@ -23,6 +23,7 @@ export const routeStackStyle: IStackStyles = {
     root: {
         background: theme.palette.black,
         color: theme.palette.white,
+        display: 'flex',
         width: '100%',
         height: '100%',
         overflow: 'hidden', // This prevents any overflow caused by growing content
@@ -31,6 +32,7 @@ export const routeStackStyle: IStackStyles = {
 
 export const constellationQueryStackStyle: IStackStyles = {
     root: {
+        display: 'flex',
         width: '100%',
         height: '100%',
         overflow: 'hidden',
@@ -39,6 +41,7 @@ export const constellationQueryStackStyle: IStackStyles = {
 
 export const constellationStackStyle: IStackStyles = {
     root: {
+        display: 'flex',
         width: '100%',
         height: '100%',
         overflow: 'hidden',
@@ -47,6 +50,7 @@ export const constellationStackStyle: IStackStyles = {
 
 export const welcomeStackStyle: IStackStyles = {
     root: {
+        display: 'flex',
         width: '100%',
         height: '100%',
         overflow: 'hidden',
@@ -56,6 +60,7 @@ export const welcomeStackStyle: IStackStyles = {
 
 export const canvasStackStyle: IStackStyles = {
     root: {
+        display: 'flex',
         width: '100%',
         height: '100%',
         overflow: 'hidden',

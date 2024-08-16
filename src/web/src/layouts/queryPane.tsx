@@ -17,7 +17,7 @@ import { ConstellationActions } from '../state/actions/constellationActions';
 import * as constellationActions from '../state/actions/constellationActions';
 import { DisplayActions } from '../state/actions/displayActions';
 import * as displayActions from '../state/actions/displayActions';
-import { queryStackStyle } from '../ux/styles';
+import { queryStackStyle } from '../ux/layouts';
 
 const QueryPane: FC = (): ReactElement => {
     const appContext = useContext<AppContext>(UserAppContext)

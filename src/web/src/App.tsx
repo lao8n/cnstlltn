@@ -3,7 +3,7 @@ import { BrowserRouter } from 'react-router-dom';
 import Layout from './pages/layout';
 import './App.css';
 import { CnstlltnTheme } from './ux/theme';
-import { UserAppProvider } from './components/user';
+import { UserAppProvider } from './layouts/user';
 import { initializeIcons } from '@fluentui/react/lib/Icons';
 import { ThemeProvider } from '@fluentui/react';
 import Telemetry from './telemetry/telemetry';
