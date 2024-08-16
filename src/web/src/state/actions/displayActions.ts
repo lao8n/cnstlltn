@@ -1,6 +1,6 @@
 import { Dispatch } from "react";
 import { ActionTypes } from "./common"
-import { DisplayPoint } from "../../display/models";
+import { DisplayPoint } from "../../frontend/models";
 
 export interface DisplayActions {
     setUpdated(updated: number): void;

@@ -1,4 +1,4 @@
-import { DisplayPoint } from '../display/models';
+import { DisplayPoint } from "../frontend/models";
 
 export interface UserState {
     isLoggedIn: boolean;

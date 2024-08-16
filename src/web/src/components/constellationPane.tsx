@@ -20,8 +20,8 @@ import { DisplayActions } from '../state/actions/displayActions';
 import * as displayActions from '../state/actions/displayActions';
 // display imports
 import { CanvasSpace, Circle, Pt } from "pts";
-import { DisplayPoint } from '../display/models';
-import { setConstellationDisplayPoints, setClusterDisplayPoints, drawMultiLineText, drawConstellationPoints, drawClusterPoints, drawUnclusteredContentNotification } from '../display/display';
+import { DisplayPoint } from '../frontend/models';
+import { setConstellationDisplayPoints, setClusterDisplayPoints, drawMultiLineText, drawConstellationPoints, drawClusterPoints, drawUnclusteredContentNotification } from '../frontend/display';
 
 // Update path
 // 1. createConstellation   -> userState.updated -> getConstellation -> setConstellationDisplayPoints -> redrawConstellation
