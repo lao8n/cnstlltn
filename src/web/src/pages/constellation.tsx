@@ -13,7 +13,7 @@ const Constellation = () => {
 
   if (!appContext.state.userState?.isLoggedIn) {
     return (
-      <Stack grow={1}>
+      <Stack>
         <WelcomePane/>
         </Stack>
       );
