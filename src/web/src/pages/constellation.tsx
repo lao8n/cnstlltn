@@ -4,7 +4,7 @@ import { withApplicationInsights } from '../telemetry/telemetry';
 import { UserAppContext } from '../state/userContext';
 import { AppContext } from '../state/applicationState';
 import ConstellationPane from '../components/constellationPane';
-import { constellationQueryStackStyle, welcomeStackStyle } from '../ux/styles';
+import { constellationQueryStackStyle } from '../ux/styles';
 import WelcomePane from '../components/welcomePane';
 import QueryPane from '../components/queryPane';
 
@@ -13,7 +13,9 @@ const Constellation = () => {
 
   if (!appContext.state.userState?.isLoggedIn) {
     return (
-      <WelcomePane/>
+      <Stack styles={constellationQueryStackStyle}>
+        <WelcomePane/>  
+      </Stack>
       );
   }
   

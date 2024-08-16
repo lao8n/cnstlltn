@@ -2,7 +2,7 @@
 import { Stack } from "@fluentui/react";
 import React, { FC, ReactElement, useContext, useEffect, useState, useMemo, useRef } from "react";
 // ux imports
-import { canvasStackStyle, constellationStackStyle, welcomeStackStyle } from "../ux/styles";
+import { canvasStackStyle, welcomeStackStyle } from "../ux/styles";
 import { welcomeLineStyle } from "../ux/components";
 // state imports
 import { AppContext } from "../state/applicationState";
