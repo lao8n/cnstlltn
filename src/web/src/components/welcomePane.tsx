@@ -159,7 +159,7 @@ const WelcomePane: FC = (): ReactElement => {
             <div className={welcomeLineStyle}>
                 Tools for thinking
             </div>
-            <Stack.Item grow={1} styles={canvasStackStyle}>
+            <Stack.Item grow={0} styles={canvasStackStyle}>
                 <canvas ref={canvasRef} id="pt"/>
             </Stack.Item>
         </Stack>
