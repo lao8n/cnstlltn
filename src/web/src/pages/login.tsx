@@ -9,6 +9,8 @@ import UserAppContext from '../components/userContext';
 import { bindActionCreators } from "../actions/actionCreators";
 import { UserActions } from '../actions/userActions';
 import * as userActions from '../actions/userActions';
+import { DisplayActions } from '../actions/displayActions';
+import * as displayActions from '../actions/displayActions';
 // telemetry imports
 import { withApplicationInsights } from '../components/telemetry';
 
@@ -16,6 +18,7 @@ const Login = () => {
   const appContext = useContext<AppContext>(UserAppContext)
   const actions = useMemo(() => ({      
     user: bindActionCreators(userActions, appContext.dispatch) as unknown as UserActions
+    display: bindActionCreators(displayActions, appContext.dispatch) as unknown as DisplayActions
   }), [appContext.dispatch]);
   const navigate = useNavigate();
   const [googleClientId, setGoogleClientId] = useState("");
@@ -24,6 +27,7 @@ const Login = () => {
   const handleLoginSuccess = (response: CredentialResponse) => {
     console.log('Login Success:', response);
     actions.user.setUser(true, response.clientId || "")
+    actions.display.setSelectedContent(null); // if you selected on welcome screen deselect this
     navigate('/constellation');
   };
   const handleLoginFailure = () => {
