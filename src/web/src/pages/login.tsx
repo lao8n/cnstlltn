@@ -17,7 +17,7 @@ import { withApplicationInsights } from '../components/telemetry';
 const Login = () => {
   const appContext = useContext<AppContext>(UserAppContext)
   const actions = useMemo(() => ({      
-    user: bindActionCreators(userActions, appContext.dispatch) as unknown as UserActions
+    user: bindActionCreators(userActions, appContext.dispatch) as unknown as UserActions,
     display: bindActionCreators(displayActions, appContext.dispatch) as unknown as DisplayActions
   }), [appContext.dispatch]);
   const navigate = useNavigate();
@@ -26,7 +26,7 @@ const Login = () => {
   // functions
   const handleLoginSuccess = (response: CredentialResponse) => {
     console.log('Login Success:', response);
-    actions.user.setUser(true, response.clientId || "")
+    actions.user.setUser(true, response.clientId || "");
     actions.display.setSelectedContent(null); // if you selected on welcome screen deselect this
     navigate('/constellation');
   };
