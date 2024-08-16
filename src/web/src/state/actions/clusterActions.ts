@@ -1,9 +1,9 @@
 import { Dispatch } from "react";
 import { ActionTypes } from "./common"
-import { ClusterService } from "../services/clusterService";
+import { ClusterService } from "../../backend/clusterService";
 import { ActionMethod, PayloadAction, createPayloadAction } from "./actionCreators";
-import config from "../config";
-import { DbCluster, DbUserFramework } from "../backend/models";
+import config from "../../config";
+import { DbCluster, DbUserFramework } from "../../backend/models";
 
 export interface ClusterActions {
     getClusters(userId: string, constellationName: string, clusterBy: string, latest: boolean): Promise<DbCluster[]>;

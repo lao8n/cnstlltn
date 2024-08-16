@@ -1,10 +1,10 @@
 import { Dispatch } from "react";
 import { ActionTypes } from "./common"
 import { ActionMethod, PayloadAction, createPayloadAction } from "./actionCreators";
-import { QueryResponse } from "../state/queryState";
-import { ConstellationService } from "../services/constellationService"
-import config from "../config";
-import { DbUserFramework } from "../backend/models";
+import { QueryResponse } from "../queryState";
+import { ConstellationService } from "../../backend/constellationService"
+import config from "../../config";
+import { DbUserFramework } from "../../backend/models";
 
 const constellationService = new ConstellationService(config.api.baseUrl);
 

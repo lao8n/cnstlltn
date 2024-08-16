@@ -1,7 +1,7 @@
 import { UserState } from "./userState";
 import { QueryState } from "./queryState";
 import { Dispatch } from "react";
-import { ApplicationActions } from "../actions/common";
+import { ApplicationActions } from "./actions/common";
 
 export interface AppContext {
     state: ApplicationState

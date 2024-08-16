@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
-import { DbCluster, DbUserFramework } from '../backend/models';
+import { DbCluster, DbUserFramework } from './models';
 
 export class ClusterService {
     protected client: AxiosInstance;

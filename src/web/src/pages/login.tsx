@@ -6,11 +6,11 @@ import { GoogleLogin, GoogleOAuthProvider, CredentialResponse } from '@react-oau
 // user state imports
 import { AppContext } from "../state/applicationState";
 import UserAppContext from '../components/userContext';
-import { bindActionCreators } from "../actions/actionCreators";
-import { UserActions } from '../actions/userActions';
-import * as userActions from '../actions/userActions';
-import { DisplayActions } from '../actions/displayActions';
-import * as displayActions from '../actions/displayActions';
+import { bindActionCreators } from "../state/actions/actionCreators";
+import { UserActions } from '../state/actions/userActions';
+import * as userActions from '../state/actions/userActions';
+import { DisplayActions } from '../state/actions/displayActions';
+import * as displayActions from '../state/actions/displayActions';
 // telemetry imports
 import { withApplicationInsights } from '../components/telemetry';
 

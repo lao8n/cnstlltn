@@ -8,15 +8,15 @@ import { buttonStyles, selectedButtonStyles, queryFieldStyles } from '../ux/comp
 import { AppContext } from '../state/applicationState';
 import { Query, QueryResponse } from '../state/queryState';
 import UserAppContext from '../components/userContext';
-import { bindActionCreators } from '../actions/actionCreators';
-import { UserActions } from '../actions/userActions';
-import * as userActions from '../actions/userActions';
-import { QueryActions } from '../actions/queryActions';
-import * as queryActions from '../actions/queryActions';
-import { ConstellationActions } from '../actions/constellationActions';
-import * as constellationActions from '../actions/constellationActions';
-import { DisplayActions } from '../actions/displayActions';
-import * as displayActions from '../actions/displayActions';
+import { bindActionCreators } from '../state/actions/actionCreators';
+import { UserActions } from '../state/actions/userActions';
+import * as userActions from '../state/actions/userActions';
+import { QueryActions } from '../state/actions/queryActions';
+import * as queryActions from '../state/actions/queryActions';
+import { ConstellationActions } from '../state/actions/constellationActions';
+import * as constellationActions from '../state/actions/constellationActions';
+import { DisplayActions } from '../state/actions/displayActions';
+import * as displayActions from '../state/actions/displayActions';
 
 const QueryPane: FC = (): ReactElement => {
     const appContext = useContext<AppContext>(UserAppContext)

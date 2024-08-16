@@ -1,9 +1,9 @@
 import { Dispatch } from "react";
-import { LoginConfig } from "../state/userState";
+import { LoginConfig } from "../userState";
 import { ActionTypes } from "./common"
 import { ActionMethod, PayloadAction, createPayloadAction } from "./actionCreators";
-import { UserService } from "../services/userService";
-import config from "../config";
+import { UserService } from "../../backend/userService";
+import config from "../../config";
 
 const userService = new UserService(config.api.baseUrl);
 

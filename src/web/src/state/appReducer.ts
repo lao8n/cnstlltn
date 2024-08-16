@@ -1,5 +1,5 @@
 import { Reducer } from "react";
-import { ActionTypes, ApplicationActions } from "../actions/common";
+import { ActionTypes, ApplicationActions } from "./actions/common";
 import { ApplicationState } from "../state/applicationState";
 import { mapDbClusterToCluster, mapDbUserFrameworkToUserFramework } from "../backend/mappers";
 

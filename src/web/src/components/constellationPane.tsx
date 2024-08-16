@@ -9,15 +9,15 @@ import { CnstlltnTheme } from "../ux/theme";
 // state imports
 import { AppContext } from "../state/applicationState";
 import UserAppContext from "./userContext";
-import { bindActionCreators } from "../actions/actionCreators";
-import { UserActions } from '../actions/userActions';
-import * as userActions from '../actions/userActions';
-import { ConstellationActions } from '../actions/constellationActions';
-import * as constellationActions from '../actions/constellationActions';
-import { ClusterActions } from '../actions/clusterActions';
-import * as clusterActions from '../actions/clusterActions';
-import { DisplayActions } from '../actions/displayActions';
-import * as displayActions from '../actions/displayActions';
+import { bindActionCreators } from "../state/actions/actionCreators";
+import { UserActions } from '../state/actions/userActions';
+import * as userActions from '../state/actions/userActions';
+import { ConstellationActions } from '../state/actions/constellationActions';
+import * as constellationActions from '../state/actions/constellationActions';
+import { ClusterActions } from '../state/actions/clusterActions';
+import * as clusterActions from '../state/actions/clusterActions';
+import { DisplayActions } from '../state/actions/displayActions';
+import * as displayActions from '../state/actions/displayActions';
 // display imports
 import { CanvasSpace, Circle, Pt } from "pts";
 import { DisplayPoint } from '../display/models';

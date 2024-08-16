@@ -1,7 +1,7 @@
 import { Dispatch } from "react";
-import config from "../config";
-import { QueryService } from "../services/queryService";
-import { Query, QueryResponse } from "../state/queryState";
+import config from "../../config";
+import { QueryService } from "../../backend/queryService";
+import { Query, QueryResponse } from "../queryState";
 import { ActionMethod, createPayloadAction, PayloadAction } from "./actionCreators";
 import { ActionTypes } from "./common";
 

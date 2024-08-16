@@ -1,6 +1,6 @@
 import { QueryResponse } from "../state/queryState";
 import axios, { AxiosInstance } from 'axios';
-import { DbUserFramework } from "../backend/models";
+import { DbUserFramework } from "./models";
 
 export class ConstellationService {
     protected client: AxiosInstance;
