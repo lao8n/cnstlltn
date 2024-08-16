@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { headerLogoStyles, headerToolStackClass, headerIconProps } from '../ux/components';
 
 // state imports
-import { UserAppContext } from '../components/userContext';
+import { UserAppContext } from '../state/userContext';
 import { AppContext } from '../state/applicationState';
 import { bindActionCreators } from '../state/actions/actionCreators';
 import { UserActions } from '../state/actions/userActions';

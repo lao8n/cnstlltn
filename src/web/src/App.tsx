@@ -6,7 +6,7 @@ import { CnstlltnTheme } from './ux/theme';
 import { UserAppProvider } from './components/user';
 import { initializeIcons } from '@fluentui/react/lib/Icons';
 import { ThemeProvider } from '@fluentui/react';
-import Telemetry from './components/telemetry';
+import Telemetry from './telemetry/telemetry';
 
 export const App: FC = () => {
   initializeIcons();

@@ -7,7 +7,7 @@ import { buttonStyles, selectedButtonStyles, queryFieldStyles } from '../ux/comp
 // state imports
 import { AppContext } from '../state/applicationState';
 import { Query, QueryResponse } from '../state/queryState';
-import UserAppContext from '../components/userContext';
+import UserAppContext from '../state/userContext';
 import { bindActionCreators } from '../state/actions/actionCreators';
 import { UserActions } from '../state/actions/userActions';
 import * as userActions from '../state/actions/userActions';

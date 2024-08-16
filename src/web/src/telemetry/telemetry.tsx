@@ -1,6 +1,6 @@
 import { FC, ReactElement, useEffect, ComponentType, ComponentClass, PropsWithChildren } from 'react';
-import { TelemetryProvider } from './telemetryContext';
-import { reactPlugin, getApplicationInsights } from '../services/telemetryService';
+import { TelemetryProvider } from '../components/telemetryContext';
+import { reactPlugin, getApplicationInsights } from './telemetryService';
 import { withAITracking } from '@microsoft/applicationinsights-react-js';
 
 type TelemetryProps = PropsWithChildren<unknown>;

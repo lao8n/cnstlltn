@@ -5,14 +5,14 @@ import { useContext, useState, useEffect, useMemo } from 'react';
 import { GoogleLogin, GoogleOAuthProvider, CredentialResponse } from '@react-oauth/google';
 // user state imports
 import { AppContext } from "../state/applicationState";
-import UserAppContext from '../components/userContext';
+import UserAppContext from '../state/userContext';
 import { bindActionCreators } from "../state/actions/actionCreators";
 import { UserActions } from '../state/actions/userActions';
 import * as userActions from '../state/actions/userActions';
 import { DisplayActions } from '../state/actions/displayActions';
 import * as displayActions from '../state/actions/displayActions';
 // telemetry imports
-import { withApplicationInsights } from '../components/telemetry';
+import { withApplicationInsights } from '../telemetry/telemetry';
 
 const Login = () => {
   const appContext = useContext<AppContext>(UserAppContext)

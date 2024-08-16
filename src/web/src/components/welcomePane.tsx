@@ -6,7 +6,7 @@ import { canvasStackStyle } from "../ux/styles";
 import { welcomeLineStyle } from "../ux/components";
 // state imports
 import { AppContext } from "../state/applicationState";
-import UserAppContext from "./userContext";
+import UserAppContext from "../state/userContext";
 import { bindActionCreators } from "../state/actions/actionCreators";
 import { UserActions } from '../state/actions/userActions';
 import * as userActions from '../state/actions/userActions';

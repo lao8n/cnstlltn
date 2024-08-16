@@ -1,5 +1,5 @@
 import { FC, PropsWithChildren, ReactElement, useReducer } from 'react';
-import UserAppContext from './userContext';
+import UserAppContext from '../state/userContext';
 import { AppContext, ApplicationState, getDefaultState } from '../state/applicationState';
 import appReducer from '../state/appReducer';
 

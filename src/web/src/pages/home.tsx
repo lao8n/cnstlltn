@@ -1,5 +1,5 @@
 import { Stack } from '@fluentui/react';
-import { withApplicationInsights } from '../components/telemetry';
+import { withApplicationInsights } from '../telemetry/telemetry';
 
 const Home = () => {
     return (

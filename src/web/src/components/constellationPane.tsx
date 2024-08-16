@@ -8,7 +8,7 @@ import { stackItemPadding } from '../ux/tokens';
 import { CnstlltnTheme } from "../ux/theme";
 // state imports
 import { AppContext } from "../state/applicationState";
-import UserAppContext from "./userContext";
+import UserAppContext from "../state/userContext";
 import { bindActionCreators } from "../state/actions/actionCreators";
 import { UserActions } from '../state/actions/userActions';
 import * as userActions from '../state/actions/userActions';
