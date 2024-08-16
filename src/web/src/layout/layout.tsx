@@ -12,7 +12,7 @@ const Layout: FC = (): ReactElement => {
             <Stack.Item styles={headerStackStyles}>
                 <Header></Header>
             </Stack.Item>
-            <Stack.Item grow={1} styles={mainStackStyles}>
+            <Stack.Item styles={mainStackStyles}>
                 <Routes>
                     <Route path="/login" element={<Login />} />
                     <Route path="/constellation" element={<Constellation/> } />
