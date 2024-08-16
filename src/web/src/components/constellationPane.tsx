@@ -230,9 +230,9 @@ const ConstellationPane: FC = (): ReactElement => {
         constellationRedrawn]);
 
     return (
-        <Stack grow={1} styles={constellationStackStyle}>
-            <Stack horizontal grow={1}>
-                <Stack.Item grow={1} tokens={stackItemPadding}>
+        <Stack styles={constellationStackStyle}>
+            <Stack horizontal>
+                <Stack.Item tokens={stackItemPadding}>
                     <div className={constellationNameStyle}>
                         {appContext.state.userState.constellationName}
                     </div>
@@ -267,7 +267,7 @@ const ConstellationPane: FC = (): ReactElement => {
                     </Stack>
                 </Stack.Item>
             </Stack>
-            <Stack.Item grow={1} styles={canvasStackStyle}>
+            <Stack.Item styles={canvasStackStyle}>
                 <canvas ref={canvasRef} id="pt"/>
             </Stack.Item>
         </Stack>

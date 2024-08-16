@@ -155,11 +155,11 @@ const WelcomePane: FC = (): ReactElement => {
         appContext.state.userState.selectedContent]);
 
     return (
-        <Stack grow={1} styles={welcomeStackStyle}>
+        <Stack styles={welcomeStackStyle}>
             <div className={welcomeLineStyle}>
                 Tools for thinking
             </div>
-            <Stack.Item grow={0} styles={canvasStackStyle}>
+            <Stack.Item styles={canvasStackStyle}>
                 <canvas ref={canvasRef} id="pt"/>
             </Stack.Item>
         </Stack>

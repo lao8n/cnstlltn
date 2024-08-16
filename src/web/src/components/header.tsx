@@ -67,11 +67,11 @@ const Header: FC = (): ReactElement => {
                     <img src={`${process.env.PUBLIC_URL}/cnstlltn_logo.png`} alt="Logo" style={{width: '100px', height: 'auto'}}/>
                 </Link>
             </Stack>
-            <Stack.Item grow={1}>
+            <Stack.Item>
                 <div></div>
             </Stack.Item>
             <Stack.Item>
-                <Stack horizontal styles={headerToolStackClass} grow={1}>
+                <Stack horizontal styles={headerToolStackClass}>
                     <IconButton aria-label="Add" iconProps={{ iconName: signInOrOut, ...headerIconProps }} onClick={logInOrOut} />
                 </Stack>
             </Stack.Item>
