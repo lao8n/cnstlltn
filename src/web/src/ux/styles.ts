@@ -23,32 +23,32 @@ export const routeStackStyle: IStackStyles = {
     root: {
         background: theme.palette.black,
         color: theme.palette.white,
-        // width: '100%',
-        // height: '100%',
+        width: '100%',
+        height: '100%',
         overflow: 'hidden', // This prevents any overflow caused by growing content
     }
 }
 
 export const constellationQueryStackStyle: IStackStyles = {
     root: {
-        // width: '100%',
-        // height: '100%',
+        width: '100%',
+        height: '100%',
         overflow: 'hidden',
     }
 }
 
 export const constellationStackStyle: IStackStyles = {
     root: {
-        // width: '100%',
-        // height: '100%',
+        width: '100%',
+        height: '100%',
         overflow: 'hidden',
     }
 }
 
 export const welcomeStackStyle: IStackStyles = {
     root: {
-        // width: '100%',
-        // height: '100%',
+        width: '100%',
+        height: '100%',
         overflow: 'hidden',
     }
 }
@@ -56,7 +56,8 @@ export const welcomeStackStyle: IStackStyles = {
 
 export const canvasStackStyle: IStackStyles = {
     root: {
-        // width: '100%',
+        width: '100%',
+        height: '100%',
         overflow: 'hidden',
     }
 }
