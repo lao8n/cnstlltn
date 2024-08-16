@@ -31,6 +31,10 @@ export const mainStackStyles: IStackStyles = {
     root: {
         background: theme.palette.black,
         color: theme.palette.white,
+        flexGrow: 1,  // This allows the Stack.Item to grow and fill available space
+        overflow: 'hidden', // This prevents any overflow caused by growing content
+        display: 'flex',    // Optional: If you want to ensure child elements align as flexbox
+        flexDirection: 'column',
     }
 }
 
