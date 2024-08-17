@@ -8,6 +8,7 @@ const theme = CnstlltnTheme
 export const headerLogoStyles: IStackStyles = {
     root: {
         height: 48,
+        display: 'flex',
         alignItems: 'center',
         paddingLeft: 10,
     }
@@ -16,12 +17,13 @@ export const headerLogoStyles: IStackStyles = {
 export const headerFillStyle: IStackStyles = {
     root: {
         display: 'flex',
-        width: '100%',
+        flexGrow: 1,
     }
 }
 
 export const headerLoginStyle: IStackStyles = {
     root: {
+        display: 'flex',
         alignItems: 'center',
         height: 48,
         paddingRight: 10

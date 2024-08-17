@@ -42,7 +42,7 @@ export const constellationQueryStackStyle: IStackStyles = {
 export const constellationStackStyle: IStackStyles = {
     root: {
         display: 'flex',
-        width: '100%',
+        flexGrow: 1,
         height: '100%',
         overflow: 'hidden',
     }
