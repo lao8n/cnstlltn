@@ -17,6 +17,7 @@ import { ClusterActions } from '../state/actions/clusterActions';
 import * as clusterActions from '../state/actions/clusterActions';
 import { DisplayActions } from '../state/actions/displayActions';
 import * as displayActions from '../state/actions/displayActions';
+import { headerStackStyle } from '../ux/layouts';
 
 const Header: FC = (): ReactElement => {
     const appContext = useContext<AppContext>(UserAppContext)
@@ -60,7 +61,7 @@ const Header: FC = (): ReactElement => {
     }, [appContext.state.userState?.isLoggedIn, actions.user, handleLogin, handleLogout, navigate]);
 
     return (
-        <Stack horizontal>
+        <Stack horizontal styles={headerStackStyle}>
             <Stack.Item styles={headerLogoStyles}>
                 <Link to="/constellation" onClick={handleReturnToHome}>
                     <img src={`${process.env.PUBLIC_URL}/cnstlltn_logo.png`} alt="Logo" style={headerLogoButtonStyle} />

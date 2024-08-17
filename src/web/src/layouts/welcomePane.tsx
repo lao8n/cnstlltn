@@ -3,7 +3,7 @@ import { Stack } from "@fluentui/react";
 import React, { FC, ReactElement, useContext, useEffect, useState, useMemo, useRef } from "react";
 // ux imports
 import { canvasStackStyle, welcomeStackStyle } from "../ux/layouts";
-import { canvasClassStyle, welcomeLineStyle } from "../ux/components";
+import { canvasStyle, welcomeLineStyle } from "../ux/components";
 // state imports
 import { AppContext } from "../state/applicationState";
 import UserAppContext from "../state/userContext";
@@ -160,7 +160,7 @@ const WelcomePane: FC = (): ReactElement => {
                 Tools for thinking
             </div>
             <Stack.Item styles={canvasStackStyle}>
-                <canvas ref={canvasRef} className={canvasClassStyle} id="pt"/>
+                <canvas ref={canvasRef} style={canvasStyle} id="pt"/>
             </Stack.Item>
         </Stack>
     )
