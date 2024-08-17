@@ -10,7 +10,7 @@ export function setConstellationDisplayPoints(constellation: UserFramework[], cl
         if (clustersMap.has(framework.id)) {
             return true;
         } else {
-            console.log(`Missing coordinate data for framework: ${framework}`);
+            console.log(`Missing coordinate data for framework: ${framework.title}`);
             setUnclusteredContent(v => v + 1);
             return false;
         }

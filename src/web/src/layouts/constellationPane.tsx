@@ -142,8 +142,7 @@ const ConstellationPane: FC = (): ReactElement => {
             canvasRef,
             setUnclusteredContent);
         console.log(constellationPts.current)
-        redrawConstellation();
-    }, [appContext.state.userState.constellation, appContext.state.userState.clusters, redrawConstellation])
+    }, [appContext.state.userState.constellation, appContext.state.userState.clusters])
 
     useEffect(() => {
         console.log("set cluster display points")
