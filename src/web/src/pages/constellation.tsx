@@ -1,6 +1,5 @@
 import { useContext } from 'react';
 import { Stack } from '@fluentui/react';
-import { withApplicationInsights } from '../telemetry/telemetry';
 import { UserAppContext } from '../state/userContext';
 import { AppContext } from '../state/applicationState';
 import ConstellationPane from '../layouts/constellationPane';
@@ -30,5 +29,3 @@ export const Constellation = () => {
     </Stack >
   );
 };
-  
-// export default withApplicationInsights(Constellation, 'Constellation');

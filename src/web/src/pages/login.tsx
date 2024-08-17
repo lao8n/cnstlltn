@@ -11,12 +11,10 @@ import { UserActions } from '../state/actions/userActions';
 import * as userActions from '../state/actions/userActions';
 import { DisplayActions } from '../state/actions/displayActions';
 import * as displayActions from '../state/actions/displayActions';
-// telemetry imports
-import { withApplicationInsights } from '../telemetry/telemetry';
 // ux
 import { loginStackStyle } from '../ux/pages';
 
-const Login = () => {
+export const Login = () => {
   const appContext = useContext<AppContext>(UserAppContext)
   const actions = useMemo(() => ({      
     user: bindActionCreators(userActions, appContext.dispatch) as unknown as UserActions,
@@ -57,5 +55,3 @@ const Login = () => {
     </Stack>
   );
 };
-
-export default withApplicationInsights(Login, 'Login');
