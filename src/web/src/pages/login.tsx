@@ -47,14 +47,14 @@ const Login = () => {
   }, [actions.user]);
 
   return (
-    <GoogleOAuthProvider clientId={googleClientId}>
-      <Stack styles={loginStackStyle}>
+    <Stack styles={loginStackStyle}>
+      <GoogleOAuthProvider clientId={googleClientId}>
         <GoogleLogin
           onSuccess={handleLoginSuccess}
           onError={handleLoginFailure}
         />
-      </Stack>
     </GoogleOAuthProvider>
+    </Stack>
   );
 };
 

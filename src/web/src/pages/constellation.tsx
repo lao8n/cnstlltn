@@ -8,7 +8,7 @@ import { constellationQueryStackStyle } from '../ux/pages';
 import WelcomePane from '../layouts/welcomePane';
 import QueryPane from '../layouts/queryPane';
 
-const Constellation = () => {
+export const Constellation = () => {
   const appContext : AppContext = useContext(UserAppContext);
 
   if (!appContext.state.userState?.isLoggedIn) {
@@ -31,4 +31,4 @@ const Constellation = () => {
   );
 };
   
-export default withApplicationInsights(Constellation, 'Constellation');
+// export default withApplicationInsights(Constellation, 'Constellation');
