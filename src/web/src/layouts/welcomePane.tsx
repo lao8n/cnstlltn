@@ -91,24 +91,22 @@ const WelcomePane: FC = (): ReactElement => {
     }, [appContext.state.userState.clusters])
     
     useEffect(() => {
-        const space = new CanvasSpace(canvasRef.current || "").setup({
+        const canvas = canvasRef.current;
+        const space = new CanvasSpace(canvas || "").setup({
             bgcolor: CnstlltnTheme.palette.black,
             resize: true
         });
         const form = space.getForm();
-        const handleResize = () => {
-            updatePositions();
-        };
         const updatePositions = () => {
-            console.log("update positions:", canvasRef.current?.parentElement?.clientWidth, canvasRef.current?.parentElement?.clientHeight)
+            console.log("update positions:", canvas?.parentElement?.clientWidth, canvas?.parentElement?.clientHeight)
             constellationPts.current.forEach(pt => {
-                const x = pt.coord[0] * (canvasRef.current?.parentElement?.clientWidth || 0);
-                const y = pt.coord[1] * (canvasRef.current?.parentElement?.clientHeight || 0);
+                const x = pt.coord[0] * (canvas?.parentElement?.clientWidth || 0);
+                const y = pt.coord[1] * (canvas?.parentElement?.clientHeight || 0);
                 pt.position = new Pt(x, y);
             })
             clusterPts.current.forEach(pt => {
-                const x = pt.coord[0] * (canvasRef.current?.parentElement?.clientWidth || 0);
-                const y = pt.coord[1] * (canvasRef.current?.parentElement?.clientHeight || 0);
+                const x = pt.coord[0] * (canvas?.parentElement?.clientWidth || 0);
+                const y = pt.coord[1] * (canvas?.parentElement?.clientHeight || 0);
                 pt.position = new Pt(x, y);
             })
         }
@@ -120,7 +118,7 @@ const WelcomePane: FC = (): ReactElement => {
                 drawConstellationPoints(space, form, constellationPts);
                 drawClusterPoints(form, clusterPts);
                 if (appContext.state.userState.selectedContent !== null) {
-                    drawMultiLineText(form, canvasRef.current?.width || 0, appContext.state.userState.selectedContent, 15, 400);
+                    drawMultiLineText(form, canvas?.width || 0, appContext.state.userState.selectedContent, 15, 400);
                 }
             },
             action: (type, x, y) => {
@@ -139,10 +137,16 @@ const WelcomePane: FC = (): ReactElement => {
             }
         });
         space.bindMouse().bindTouch().play();
-        window.addEventListener("resize", handleResize);
-
+        const resizeObserver = new ResizeObserver(() => {
+            updatePositions();
+        });
+        if (canvas?.parentElement) {
+            resizeObserver.observe(canvas.parentElement);
+        }
         return () => {
-            window.removeEventListener("resize", handleResize);
+            if (canvas?.parentElement) {
+                resizeObserver.unobserve(canvas?.parentElement);
+            }
             space.stop();
         };
     }, [actions.display,
