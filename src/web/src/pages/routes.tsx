@@ -4,11 +4,11 @@ import { Routes, Route } from 'react-router-dom';
 import Constellation from './constellation';
 import Login from './login';
 import { Stack } from '@fluentui/react';
-import { routeStackStyle, layoutStackStyle } from '../ux/layouts';
+import { routeStackStyle, routesLayoutStackStyle } from '../ux/pages';
 
-const Layout: FC = (): ReactElement => {
+const RoutesLayout: FC = (): ReactElement => {
     return (
-        <Stack styles={layoutStackStyle}>
+        <Stack styles={routesLayoutStackStyle}>
             <Stack.Item>
                 <Header></Header>
             </Stack.Item>
@@ -23,4 +23,4 @@ const Layout: FC = (): ReactElement => {
     );
 }
 
-export default Layout;
+export default RoutesLayout;

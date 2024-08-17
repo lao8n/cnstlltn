@@ -14,10 +14,10 @@ import * as clusterActions from '../state/actions/clusterActions';
 import { DisplayActions } from '../state/actions/displayActions';
 import * as displayActions from '../state/actions/displayActions';
 // ux imports
-import { canvasStackStyle, constellationStackStyle } from '../ux/layouts';
-import { canvasStyle, clusterByStyle, constellationNameStyle, clusterByWordStyle } from '../ux/components';
+import { canvasStackStyle, canvasStyle, clusterByStyle, constellationNameStyle, clusterByWordStyle } from '../ux/components';
 import { stackItemPadding } from '../ux/tokens';
 import { CnstlltnTheme } from "../ux/theme";
+import { constellationHeaderStackStyle, constellationStackStyle } from '../ux/constellation';
 // display imports
 import { CanvasSpace, Circle, Pt } from "pts";
 import { DisplayPoint } from '../frontend/models';
@@ -231,7 +231,7 @@ const ConstellationPane: FC = (): ReactElement => {
 
     return (
         <Stack styles={constellationStackStyle}>
-            <Stack horizontal>
+            <Stack horizontal styles={constellationHeaderStackStyle}>
                 <Stack.Item tokens={stackItemPadding}>
                     <div className={constellationNameStyle}>
                         {appContext.state.userState.constellationName}

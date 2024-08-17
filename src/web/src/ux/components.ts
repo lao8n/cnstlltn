@@ -1,8 +1,18 @@
 import { ITextFieldStyles } from '@fluentui/react'
 import { mergeStyles } from '@fluentui/react';
 import { CnstlltnTheme } from './theme'
+import { IStackStyles } from '@fluentui/react'
 
 const theme = CnstlltnTheme
+
+export const canvasStackStyle: IStackStyles = {
+    root: {
+        display: 'flex',
+        width: '100%',
+        height: '100%',
+        overflow: 'hidden',
+    }
+}
 
 export const canvasStyle = {
     width: '100%',

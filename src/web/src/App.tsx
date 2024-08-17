@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import Layout from './pages/layout';
+import RoutesLayout from './pages/routes';
 import './App.css';
 import { CnstlltnTheme } from './ux/theme';
 import { UserAppProvider } from './layouts/user';
@@ -16,7 +16,7 @@ export const App: FC = () => {
       <UserAppProvider>
         <BrowserRouter>
           <Telemetry>
-            <Layout />
+            <RoutesLayout />
           </Telemetry>
         </BrowserRouter>
       </UserAppProvider>

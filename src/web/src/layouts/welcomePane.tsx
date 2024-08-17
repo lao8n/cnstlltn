@@ -14,8 +14,8 @@ import * as clusterActions from '../state/actions/clusterActions';
 import { DisplayActions } from '../state/actions/displayActions';
 import * as displayActions from '../state/actions/displayActions';
 // ux imports
-import { canvasStackStyle, welcomeStackStyle } from "../ux/layouts";
-import { canvasStyle, welcomeLineStyle } from "../ux/components";
+import { welcomeStackStyle } from "../ux/layouts";
+import { canvasStackStyle, canvasStyle, welcomeLineStyle } from "../ux/components";
 // display imports
 import { DisplayPoint } from "../frontend/models";
 import { drawClusterPoints, drawConstellationPoints, drawMultiLineText, setClusterDisplayPoints, setConstellationDisplayPoints } from "../frontend/display";

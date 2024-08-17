@@ -4,7 +4,7 @@ import { withApplicationInsights } from '../telemetry/telemetry';
 import { UserAppContext } from '../state/userContext';
 import { AppContext } from '../state/applicationState';
 import ConstellationPane from '../layouts/constellationPane';
-import { constellationQueryStackStyle } from '../ux/layouts';
+import { constellationQueryStackStyle } from '../ux/pages';
 import WelcomePane from '../layouts/welcomePane';
 import QueryPane from '../layouts/queryPane';
 
@@ -21,8 +21,12 @@ const Constellation = () => {
   
   return (
     <Stack horizontal styles={constellationQueryStackStyle}>
-      <ConstellationPane/>
-      <QueryPane/>
+      <Stack.Item>
+        <ConstellationPane/>
+      </Stack.Item>
+      <Stack.Item>
+        <QueryPane/>
+      </Stack.Item>
     </Stack >
   );
 };
