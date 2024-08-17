@@ -1,9 +1,6 @@
 // react imports
 import { Stack } from "@fluentui/react";
 import React, { FC, ReactElement, useContext, useEffect, useState, useMemo, useRef } from "react";
-// ux imports
-import { canvasStackStyle, welcomeStackStyle } from "../ux/layouts";
-import { canvasStyle, welcomeLineStyle } from "../ux/components";
 // state imports
 import { AppContext } from "../state/applicationState";
 import UserAppContext from "../state/userContext";
@@ -16,6 +13,9 @@ import { ClusterActions } from '../state/actions/clusterActions';
 import * as clusterActions from '../state/actions/clusterActions';
 import { DisplayActions } from '../state/actions/displayActions';
 import * as displayActions from '../state/actions/displayActions';
+// ux imports
+import { canvasStackStyle, welcomeStackStyle } from "../ux/layouts";
+import { canvasStyle, welcomeLineStyle } from "../ux/components";
 // display imports
 import { DisplayPoint } from "../frontend/models";
 import { drawClusterPoints, drawConstellationPoints, drawMultiLineText, setClusterDisplayPoints, setConstellationDisplayPoints } from "../frontend/display";

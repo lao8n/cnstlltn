@@ -12,14 +12,6 @@ export const layoutStackStyle: IStackStyles = {
     }
 }
 
-export const headerStackStyle: IStackStyles = {
-    root: {
-        height: 48,
-        background: theme.palette.themePrimary,
-        justifyContent: 'space-between',
-    }
-}
-
 export const routeStackStyle: IStackStyles = {
     root: {
         background: theme.palette.black,
@@ -43,9 +35,27 @@ export const constellationQueryStackStyle: IStackStyles = {
 export const constellationStackStyle: IStackStyles = {
     root: {
         display: 'flex',
-        flexGrow: 1,
+        width: '100%',
         height: '100%',
         overflow: 'hidden',
+    }
+}
+
+export const queryStackStyle: IStackStyles = {
+    root: {
+        width: 500,
+        background: theme.palette.neutralPrimary,
+        boxShadow: theme.effects.elevation8,
+    }
+}
+
+export const loginStackStyle: IStackStyles = {
+    root: {
+        display: 'flex',
+        width: '100%',
+        height: '100%',
+        justifyContent: 'centre',
+        alignContent: 'centre',
     }
 }
 
@@ -58,20 +68,11 @@ export const welcomeStackStyle: IStackStyles = {
     }
 }
 
-
 export const canvasStackStyle: IStackStyles = {
     root: {
         display: 'flex',
         width: '100%',
         height: '100%',
         overflow: 'hidden',
-    }
-}
-
-export const queryStackStyle: IStackStyles = {
-    root: {
-        width: 500,
-        background: theme.palette.neutralPrimary,
-        boxShadow: theme.effects.elevation8,
     }
 }

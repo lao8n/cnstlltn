@@ -1,11 +1,6 @@
 // react imports
 import { SearchBox, Stack } from '@fluentui/react';
 import React, { FC, ReactElement, useContext, useEffect, useState, useMemo, useRef, useCallback, ChangeEvent } from "react";
-// ux imports
-import { canvasStackStyle, constellationStackStyle } from '../ux/layouts';
-import { canvasStyle, clusterByStyle, constellationNameStyle, clusterByWordStyle } from '../ux/components';
-import { stackItemPadding } from '../ux/tokens';
-import { CnstlltnTheme } from "../ux/theme";
 // state imports
 import { AppContext } from "../state/applicationState";
 import UserAppContext from "../state/userContext";
@@ -18,6 +13,11 @@ import { ClusterActions } from '../state/actions/clusterActions';
 import * as clusterActions from '../state/actions/clusterActions';
 import { DisplayActions } from '../state/actions/displayActions';
 import * as displayActions from '../state/actions/displayActions';
+// ux imports
+import { canvasStackStyle, constellationStackStyle } from '../ux/layouts';
+import { canvasStyle, clusterByStyle, constellationNameStyle, clusterByWordStyle } from '../ux/components';
+import { stackItemPadding } from '../ux/tokens';
+import { CnstlltnTheme } from "../ux/theme";
 // display imports
 import { CanvasSpace, Circle, Pt } from "pts";
 import { DisplayPoint } from '../frontend/models';

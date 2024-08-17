@@ -3,6 +3,14 @@ import { CnstlltnTheme } from './theme'
 
 const theme = CnstlltnTheme
 
+export const headerStackStyle: IStackStyles = {
+    root: {
+        height: 48,
+        background: theme.palette.themePrimary,
+        justifyContent: 'space-between',
+    }
+}
+
 export const headerLogoStyles: IStackStyles = {
     root: {
         height: 48,

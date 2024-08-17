@@ -19,7 +19,6 @@ const Constellation = () => {
       );
   }
   
-  // myabe need to add grow{1} below here
   return (
     <Stack horizontal styles={constellationQueryStackStyle}>
       <ConstellationPane/>

@@ -13,6 +13,8 @@ import { DisplayActions } from '../state/actions/displayActions';
 import * as displayActions from '../state/actions/displayActions';
 // telemetry imports
 import { withApplicationInsights } from '../telemetry/telemetry';
+// ux
+import { loginStackStyle } from '../ux/layouts';
 
 const Login = () => {
   const appContext = useContext<AppContext>(UserAppContext)
@@ -46,15 +48,11 @@ const Login = () => {
 
   return (
     <GoogleOAuthProvider clientId={googleClientId}>
-      <Stack verticalAlign="center" horizontalAlign="center">
-        <Stack.Item>
-          <Stack horizontalAlign="center" tokens={{ childrenGap: 10 }}>
-            <GoogleLogin
-              onSuccess={handleLoginSuccess}
-              onError={handleLoginFailure}
-            />
-          </Stack>
-        </Stack.Item>
+      <Stack styles={loginStackStyle}>
+        <GoogleLogin
+          onSuccess={handleLoginSuccess}
+          onError={handleLoginFailure}
+        />
       </Stack>
     </GoogleOAuthProvider>
   );
