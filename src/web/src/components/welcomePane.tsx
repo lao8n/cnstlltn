@@ -160,7 +160,7 @@ const WelcomePane: FC = (): ReactElement => {
                 Tools for thinking
             </div>
             <Stack.Item styles={canvasStackStyle}>
-                <canvas ref={canvasRef} className={canvasStyle} id="pt"/>
+                <canvas ref={canvasRef} style={canvasStyle} id="pt"/>
             </Stack.Item>
         </Stack>
     )
