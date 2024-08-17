@@ -82,8 +82,8 @@ const ConstellationPane: FC = (): ReactElement => {
 
     // effects
     useEffect(() => {
-        console.log("get constellation & cluster")
-        const getConstellationCluster = async () => {
+        console.log("get constellation & cluster & update display points")
+        const updateConstellationAndClusters = async () => {
             const constellation = await actions.constellation.getConstellation(
                 appContext.state.userState.userId,
                 appContext.state.userState.constellationName);
@@ -92,38 +92,33 @@ const ConstellationPane: FC = (): ReactElement => {
                 appContext.state.userState.constellationName,
                 appContext.state.userState.clusterBy,
                 appContext.state.userState.clusterBy === '');
-            console.log("get constellation:", constellation, clusters)
+            console.log("get constellation & clusters:", constellation, clusters)
             actions.constellation.setConstellation(constellation);
             actions.cluster.setClusters(clusters);
             // this is the case that we have gotten the latest clustering
             if (appContext.state.userState.clusterBy === '' && clusters.length > 0) { 
-                console.log("latest cluster by:", clusters[0].clusterby, clusters)
-                setNewClusterBy(clusters[0].clusterby)
+                console.log("latest cluster by:", clusters[0].clusterBy, clusters)
+                setNewClusterBy(clusters[0].clusterBy)
             }
-        };
-        getConstellationCluster();
+            let count = 0;
+            clusterPts.current = setClusterDisplayPoints(clusters, canvasRef);
+            [constellationPts.current, count] = setConstellationDisplayPoints(
+                constellation,
+                clusters,
+                canvasRef);
+            setUnclusteredContent(count);
+            redrawConstellation();
+            };
+        updateConstellationAndClusters();
         console.log("get constellation & cluster finish");
     }, [actions.constellation,
         actions.cluster,
         appContext.state.userState.userId,
         appContext.state.userState.constellationName,
         appContext.state.userState.clusterBy,
-        appContext.state.userState.updated]);
+        appContext.state.userState.updated,
+        redrawConstellation]);
     
-    useEffect(() => {
-        console.log("set constellation & cluster display points")
-        console.log(appContext.state.userState.constellation)
-        let count = 0;
-        [constellationPts.current, count] = setConstellationDisplayPoints(
-            appContext.state.userState.constellation,
-            appContext.state.userState.clusters,
-            canvasRef);
-        console.log("count: ", count);
-        setUnclusteredContent(count);
-        clusterPts.current = setClusterDisplayPoints(appContext.state.userState.clusters, canvasRef);
-        redrawConstellation();
-    }, [appContext.state.userState.constellation, appContext.state.userState.clusters, redrawConstellation])
-
     useEffect(() => {
         console.log("get options")
         const getOptions = async () => {
@@ -171,6 +166,8 @@ const ConstellationPane: FC = (): ReactElement => {
                 if (unclusteredContent !== 0) {
                     console.log("unclustered content notification: ", unclusteredContent);
                     drawUnclusteredContentNotification(form, canvas?.width || 0, unclusteredContent);
+                } else {
+                    console.log("unclustered is zero");
                 }
             },
             action: (type, x, y) => {

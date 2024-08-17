@@ -4,14 +4,15 @@ import { ActionMethod, PayloadAction, createPayloadAction } from "./actionCreato
 import { QueryResponse } from "../queryState";
 import { ConstellationService } from "../../backend/constellationService"
 import config from "../../config";
-import { DbUserFramework } from "../../backend/models";
+import { UserFramework } from "../userState";
+import { mapDbUserFrameworkToUserFramework } from "../../backend/mappers";
 
 const constellationService = new ConstellationService(config.api.baseUrl);
 
 export interface ConstellationActions {
     saveSelectedFrameworks(userId: string, constellationName: string, frameworks: QueryResponse[]): Promise<QueryResponse[]>;
-    getConstellation(userId: string, constellationName: string): Promise<DbUserFramework[]>;
-    setConstellation(constellation: DbUserFramework[]): void;
+    getConstellation(userId: string, constellationName: string): Promise<UserFramework[]>;
+    setConstellation(constellation: UserFramework[]): void;
     setConstellationName(constellationName: string): void;
 }
 
@@ -29,31 +30,32 @@ export interface SaveSelectedFrameworksAction extends PayloadAction<string, Quer
 const saveSelectedFrameworksAction =
     createPayloadAction<SaveSelectedFrameworksAction>(ActionTypes.SAVE_SELECTED_FRAMEWORKS);
 
-export const getConstellation = (userId: string, constellationName: string): ActionMethod<DbUserFramework[]> =>
+export const getConstellation = (userId: string, constellationName: string): ActionMethod<UserFramework[]> =>
     async (dispatch: Dispatch<GetConstellationAction>) => {
-        const constellation = await constellationService.getConstellation(userId, constellationName);
+        const constellationDb = await constellationService.getConstellation(userId, constellationName);
+        const constellation = constellationDb.map(dbUserFramework => mapDbUserFrameworkToUserFramework(dbUserFramework));
         dispatch(getConstellationAction(constellation))
         return constellation;
     }
 
-export interface GetConstellationAction extends PayloadAction<string, DbUserFramework[]> {
+export interface GetConstellationAction extends PayloadAction<string, UserFramework[]> {
     type: ActionTypes.GET_CONSTELLATION
 }
 
 const getConstellationAction =
     createPayloadAction<GetConstellationAction>(ActionTypes.GET_CONSTELLATION);
 
-export const setConstellation = (constellation: DbUserFramework[]) =>
+export const setConstellation = (constellation: UserFramework[]) =>
     (dispatch: Dispatch<SetConstellationAction>) => {
         dispatch(setConstellationAction(constellation));
     }
 
 export interface SetConstellationAction {
     type: ActionTypes.SET_CONSTELLATION,
-    constellation: DbUserFramework[]
+    constellation: UserFramework[]
 }
 
-const setConstellationAction = (constellation: DbUserFramework[]): SetConstellationAction => ({
+const setConstellationAction = (constellation: UserFramework[]): SetConstellationAction => ({
     type: ActionTypes.SET_CONSTELLATION,
     constellation: constellation,
 });

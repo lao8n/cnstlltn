@@ -3,40 +3,42 @@ import { ActionTypes } from "./common"
 import { ClusterService } from "../../backend/clusterService";
 import { ActionMethod, PayloadAction, createPayloadAction } from "./actionCreators";
 import config from "../../config";
-import { DbCluster, DbUserFramework } from "../../backend/models";
+import { Cluster, UserFramework } from "../userState";
+import { mapDbClusterToCluster, mapDbUserFrameworkToUserFramework } from "../../backend/mappers";
 
 export interface ClusterActions {
-    getClusters(userId: string, constellationName: string, clusterBy: string, latest: boolean): Promise<DbCluster[]>;
-    setClusters(clusters: DbCluster[]): void;
+    getClusters(userId: string, constellationName: string, clusterBy: string, latest: boolean): Promise<Cluster[]>;
+    setClusters(clusters: Cluster[]): void;
     getClusterByOptions(userId: string, constellationName: string): Promise<string[]>;
     getClusterBySuggestion(userId: string, constellationName: string): Promise<string>;
-    clusterBy(userId: string, constellationName: string, clusterBy: string, clusterNewOnly: boolean): Promise<DbUserFramework[]>;
+    clusterBy(userId: string, constellationName: string, clusterBy: string, clusterNewOnly: boolean): Promise<UserFramework[]>;
     setClusterBy(clusterBy: string): void;
 }
 
 const clusterService = new ClusterService(config.api.baseUrl)
 
-export const getClusters = (userId: string, constellationName: string, clusterBy: string, latest: boolean): ActionMethod<DbCluster[]> =>
+export const getClusters = (userId: string, constellationName: string, clusterBy: string, latest: boolean): ActionMethod<Cluster[]> =>
     async (dispatch: Dispatch<GetClustersAction>) => {
-        const cluster = await clusterService.getClusters(userId, constellationName, clusterBy, latest);
+        const clusterDb = await clusterService.getClusters(userId, constellationName, clusterBy, latest);
+        const cluster = clusterDb.map(clusterDb => mapDbClusterToCluster(clusterDb));
         dispatch(getClustersAction(cluster))
         return cluster;
     }
-export interface GetClustersAction extends PayloadAction<string, DbCluster[]> {
+export interface GetClustersAction extends PayloadAction<string, Cluster[]> {
     type: ActionTypes.GET_CLUSTERS
 }
 const getClustersAction =
     createPayloadAction<GetClustersAction>(ActionTypes.GET_CLUSTERS);
 
-export const setClusters = (clusters: DbCluster[]) =>
+export const setClusters = (clusters: Cluster[]) =>
     (dispatch: Dispatch<SetClustersAction>) => {
         dispatch(setClustersAction(clusters));
     }
 export interface SetClustersAction {
     type: ActionTypes.SET_CLUSTERS,
-    clusters: DbCluster[]
+    clusters: Cluster[]
 }
-const setClustersAction = (clusters: DbCluster[]): SetClustersAction => ({
+const setClustersAction = (clusters: Cluster[]): SetClustersAction => ({
     type: ActionTypes.SET_CLUSTERS,
     clusters: clusters,
 });
@@ -65,13 +67,14 @@ export interface GetClusterBySuggestionAction extends PayloadAction<string, stri
 const getClusterBySuggestionAction =
     createPayloadAction<GetClusterBySuggestionAction>(ActionTypes.GET_CLUSTER_BY_SUGGESTION);
 
-export const clusterBy = (userId: string, constellationName: string, clusterBy: string, clusterNewOnly: boolean): ActionMethod<DbUserFramework[]> => 
+export const clusterBy = (userId: string, constellationName: string, clusterBy: string, clusterNewOnly: boolean): ActionMethod<UserFramework[]> => 
     async (dispatch: Dispatch<ClusterByAction>) => {
-        const clusters = await clusterService.clusterBy(userId, constellationName, clusterBy, clusterNewOnly)
-        dispatch(clusterAction(clusters))
-        return clusters;
+        const constellationsDb = await clusterService.clusterBy(userId, constellationName, clusterBy, clusterNewOnly)
+        const constellations = constellationsDb.map(constellationDb => mapDbUserFrameworkToUserFramework(constellationDb));
+        dispatch(clusterAction(constellations))
+        return constellations;
     }
-export interface ClusterByAction extends PayloadAction<string, DbUserFramework[]> {
+export interface ClusterByAction extends PayloadAction<string, UserFramework[]> {
     type: ActionTypes.CLUSTER_BY
 }
 const clusterAction = 
