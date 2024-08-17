@@ -92,7 +92,10 @@ const WelcomePane: FC = (): ReactElement => {
     }, [appContext.state.userState.clusters])
     
     useEffect(() => {
-        const space = new CanvasSpace(canvasRef.current || "").setup({ bgcolor: CnstlltnTheme.palette.black, resize: true });
+        const space = new CanvasSpace(canvasRef.current || "").setup({
+            bgcolor: CnstlltnTheme.palette.black,
+            resize: true
+        });
         const form = space.getForm();
         const maxDimensions = { width: 2000, height: 1200 }
         const handleResize = () => {
@@ -106,6 +109,7 @@ const WelcomePane: FC = (): ReactElement => {
             }
         };
         const updatePositions = () => {
+            console.log("update positions")
             constellationPts.current.forEach(pt => {
                 const x = pt.coord[0] * (dimensions.width || 0);
                 const y = pt.coord[1] * (dimensions.height || 0);
@@ -119,7 +123,8 @@ const WelcomePane: FC = (): ReactElement => {
         }
         space.add({
             start: (bound) => {
-                setDimensions({width: canvasRef.current?.width || 0, height: canvasRef.current?.height || 0})
+                console.log("call start");
+                // setDimensions({ width: canvasRef.current?.width || 0, height: canvasRef.current?.height || 0 })
                 updatePositions();
             },
             animate: (time, ftime) => {
@@ -136,6 +141,7 @@ const WelcomePane: FC = (): ReactElement => {
                     const range = Circle.fromCenter(mousePt, r);
                     constellationPts.current.forEach(pt => {
                         if (Circle.withinBound(range, pt.position)) {
+                            console.log("clicked:", pt.name);
                             pt.selected = !pt.selected;
                             actions.display.setSelectedContent(pt.selected ? pt : null)
                         }
