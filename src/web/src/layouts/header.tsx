@@ -4,8 +4,7 @@ import { IconButton, Stack } from '@fluentui/react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 // ux imports
-import { headerLogoStyles, headerLoginStyle, headerFillStyle } from '../ux/components';
-
+import { headerLogoStyles, headerLoginStyle, headerLoginButtonStyle, headerLogoButtonStyle } from '../ux/header';
 // state imports
 import { UserAppContext } from '../state/userContext';
 import { AppContext } from '../state/applicationState';
@@ -64,13 +63,11 @@ const Header: FC = (): ReactElement => {
         <Stack horizontal>
             <Stack.Item styles={headerLogoStyles}>
                 <Link to="/constellation" onClick={handleReturnToHome}>
-                    <img src={`${process.env.PUBLIC_URL}/cnstlltn_logo.png`} alt="Logo" style={{width: '100px', height: 'auto'}}/>
+                    <img src={`${process.env.PUBLIC_URL}/cnstlltn_logo.png`} alt="Logo" style={headerLogoButtonStyle} />
                 </Link>
             </Stack.Item>
-            <Stack.Item styles={headerFillStyle}>
-            </Stack.Item>
             <Stack.Item styles={headerLoginStyle}>
-                <IconButton aria-label="Add" iconProps={{ iconName: signInOrOut }} onClick={logInOrOut} />
+                <IconButton aria-label="Add" iconProps={{ iconName: signInOrOut }} onClick={logInOrOut} styles={headerLoginButtonStyle} />
             </Stack.Item>
         </Stack>
     );

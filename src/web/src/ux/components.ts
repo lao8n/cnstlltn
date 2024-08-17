@@ -1,41 +1,13 @@
-import { IStackStyles, ITextFieldStyles } from '@fluentui/react'
+import { ITextFieldStyles } from '@fluentui/react'
 import { mergeStyles } from '@fluentui/react';
 import { CnstlltnTheme } from './theme'
 
 const theme = CnstlltnTheme
 
-// header
-export const headerLogoStyles: IStackStyles = {
-    root: {
-        height: 48,
-        display: 'flex',
-        alignItems: 'center',
-        paddingLeft: 10,
-    }
-}
-
-export const headerFillStyle: IStackStyles = {
-    root: {
-        display: 'flex',
-        flexGrow: 1,
-    }
-}
-
-export const headerLoginStyle: IStackStyles = {
-    root: {
-        display: 'flex',
-        alignItems: 'center',
-        height: 48,
-        paddingRight: 10
-    }
-}
-
 export const canvasClassStyle = mergeStyles({
     width: '100%',
     height: '100%',
 });
-
-
 
 // Define styles for the button
 export const buttonStyles = mergeStyles({

@@ -16,6 +16,7 @@ export const headerStackStyle: IStackStyles = {
     root: {
         height: 48,
         background: theme.palette.themePrimary,
+        justifyContent: 'space-between',
     }
 }
 
