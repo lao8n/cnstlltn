@@ -38,7 +38,6 @@ const ConstellationPane: FC = (): ReactElement => {
 
     // display
     const canvasRef = useRef<HTMLCanvasElement>(null);
-    const [dimensions, setDimensions] = useState({ width: 1500, height: 800 })
     const constellationPts = useRef<DisplayPoint[]>([]) as React.MutableRefObject<DisplayPoint[]>;
     const clusterPts = useRef<DisplayPoint[]>([]) as React.MutableRefObject<DisplayPoint[]>;
     const [constellationRedrawn, setConstellationRedrawn] = useState(Date.now());
@@ -155,27 +154,21 @@ const ConstellationPane: FC = (): ReactElement => {
     }, [appContext.state.userState.clusters, redrawConstellation])
 
     useEffect(() => {
-        const space = new CanvasSpace(canvasRef.current || "").setup({ bgcolor: CnstlltnTheme.palette.black, resize: true });
+        const canvas = canvasRef.current;
+        const space = new CanvasSpace(canvas || "").setup({
+            bgcolor: CnstlltnTheme.palette.black,
+            resize: true
+        });
         const form = space.getForm();
-        const maxDimensions = { width: 2000, height: 1200 }
-        const handleResize = () => {
-            console.log("resizing to: ", canvasRef.current?.parentElement?.clientWidth, canvasRef.current?.parentElement?.clientHeight)
-            if (canvasRef.current?.parentElement) {
-                const newWidth = Math.min(canvasRef.current.parentElement.clientWidth, maxDimensions.width)
-                const newHeight = Math.min(canvasRef.current.parentElement.clientHeight, maxDimensions.height)
-                setDimensions({ width: newWidth, height: newHeight })
-                updatePositions();
-            }
-        };
         const updatePositions = () => {
             constellationPts.current.forEach(pt => {
-                const x = pt.coord[0] * (dimensions.width || 0);
-                const y = pt.coord[1] * (dimensions.height || 0);
+                const x = pt.coord[0] * (canvas?.parentElement?.clientWidth || 0);
+                const y = pt.coord[1] * (canvas?.parentElement?.clientHeight || 0);
                 pt.position = new Pt(x, y);
             })
             clusterPts.current.forEach(pt => {
-                const x = pt.coord[0] * (dimensions.width || 0);
-                const y = pt.coord[1] * (dimensions.height || 0);
+                const x = pt.coord[0] * (canvas?.parentElement?.clientWidth || 0);
+                const y = pt.coord[1] * (canvas?.parentElement?.clientHeight || 0);
                 pt.position = new Pt(x, y);
             })
         }
@@ -187,16 +180,16 @@ const ConstellationPane: FC = (): ReactElement => {
                 drawConstellationPoints(space, form, constellationPts);
                 drawClusterPoints(form, clusterPts);
                 if (appContext.state.userState.selectedContent !== null) {
-                    drawMultiLineText(form, canvasRef.current?.width || 0, appContext.state.userState.selectedContent, 15, 400);
+                    drawMultiLineText(form, canvas?.width || 0, appContext.state.userState.selectedContent, 15, 400);
                 }
                 if (unclusteredContent !== 0) {
-                    drawUnclusteredContentNotification(form, canvasRef.current?.width || 0, unclusteredContent);
+                    drawUnclusteredContentNotification(form, canvas?.width || 0, unclusteredContent);
                 }
             },
             action: (type, x, y) => {
                 const r = 10;
                 if (type === "up") { // Check if the mouse click is released, which indicates a click
-                    const mousePt = new Pt(x, y); // Create a Pt from the mouse position
+                    const mousePt = new Pt(x, y);
                     const range = Circle.fromCenter(mousePt, r);
                     constellationPts.current.forEach(pt => {
                         if (Circle.withinBound(range, pt.position)) {
@@ -214,16 +207,21 @@ const ConstellationPane: FC = (): ReactElement => {
             }
         });
         space.bindMouse().bindTouch().play();
-        window.addEventListener("resize", handleResize);
-
+        const resizeObserver = new ResizeObserver(() => {
+            updatePositions();
+        });
+        if (canvas?.parentElement) {
+            resizeObserver.observe(canvas.parentElement);
+        }
         return () => {
-            window.removeEventListener("resize", handleResize);
+            if (canvas?.parentElement) {
+                resizeObserver.unobserve(canvas?.parentElement);
+            }
             space.stop();
         };
     }, [actions.constellation,
         actions.cluster,
         actions.display,
-        dimensions,
         appContext.state.userState.constellationName,
         appContext.state.userState.selectedContent,
         unclusteredContent,

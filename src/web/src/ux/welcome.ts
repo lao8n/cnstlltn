@@ -3,7 +3,6 @@ import { CnstlltnTheme } from './theme'
 
 const theme = CnstlltnTheme
 
-
 export const welcomeStackStyle: IStackStyles = {
     root: {
         display: 'flex',

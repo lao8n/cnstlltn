@@ -98,7 +98,6 @@ const WelcomePane: FC = (): ReactElement => {
         });
         const form = space.getForm();
         const updatePositions = () => {
-            console.log("update positions:", canvas?.parentElement?.clientWidth, canvas?.parentElement?.clientHeight)
             constellationPts.current.forEach(pt => {
                 const x = pt.coord[0] * (canvas?.parentElement?.clientWidth || 0);
                 const y = pt.coord[1] * (canvas?.parentElement?.clientHeight || 0);
@@ -128,7 +127,6 @@ const WelcomePane: FC = (): ReactElement => {
                     const range = Circle.fromCenter(mousePt, r);
                     constellationPts.current.forEach(pt => {
                         if (Circle.withinBound(range, pt.position)) {
-                            console.log("clicked:", pt.name);
                             pt.selected = !pt.selected;
                             actions.display.setSelectedContent(pt.selected ? pt : null)
                         }
