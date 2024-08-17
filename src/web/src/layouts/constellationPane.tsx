@@ -92,6 +92,7 @@ const ConstellationPane: FC = (): ReactElement => {
                 appContext.state.userState.constellationName,
                 appContext.state.userState.clusterBy,
                 appContext.state.userState.clusterBy === '');
+            console.log("get constellation:", constellation, clusters)
             actions.constellation.setConstellation(constellation);
             actions.cluster.setClusters(clusters);
             // this is the case that we have gotten the latest clustering
@@ -101,6 +102,7 @@ const ConstellationPane: FC = (): ReactElement => {
             }
         };
         getConstellationCluster();
+        console.log("get constellation & cluster finish");
     }, [actions.constellation,
         actions.cluster,
         appContext.state.userState.userId,
@@ -165,6 +167,7 @@ const ConstellationPane: FC = (): ReactElement => {
                     drawMultiLineText(form, canvas?.width || 0, appContext.state.userState.selectedContent, 15, 400);
                 }
                 if (unclusteredContent !== 0) {
+                    console.log("unclustered content notification: ", unclusteredContent);
                     drawUnclusteredContentNotification(form, canvas?.width || 0, unclusteredContent);
                 }
             },
