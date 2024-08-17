@@ -32,6 +32,23 @@ export const constellationQueryStackStyle: IStackStyles = {
     }
 }
 
+export const constellationStackStyle: IStackStyles = {
+    root: {
+        display: 'flex',
+        width: '100%',
+        height: '100%',
+        overflow: 'hidden',
+    }
+}
+
+export const queryStackStyle: IStackStyles = {
+    root: {
+        display: 'flex',
+        height: '100%',
+        overflow: 'hidden',
+    }
+}
+
 export const loginStackStyle: IStackStyles = {
     root: {
         display: 'flex',

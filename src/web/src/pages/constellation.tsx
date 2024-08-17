@@ -3,9 +3,10 @@ import { Stack } from '@fluentui/react';
 import { UserAppContext } from '../state/userContext';
 import { AppContext } from '../state/applicationState';
 import ConstellationPane from '../layouts/constellationPane';
-import { constellationQueryStackStyle } from '../ux/pages';
+import { constellationQueryStackStyle, queryStackStyle } from '../ux/pages';
 import WelcomePane from '../layouts/welcomePane';
 import QueryPane from '../layouts/queryPane';
+import { constellationStackStyle } from '../ux/constellation';
 
 export const Constellation = () => {
   const appContext : AppContext = useContext(UserAppContext);
@@ -20,10 +21,10 @@ export const Constellation = () => {
   
   return (
     <Stack horizontal styles={constellationQueryStackStyle}>
-      <Stack.Item>
+      <Stack.Item styles={constellationStackStyle}>
         <ConstellationPane/>
       </Stack.Item>
-      <Stack.Item>
+      <Stack.Item styles={queryStackStyle}>
         <QueryPane/>
       </Stack.Item>
     </Stack >
