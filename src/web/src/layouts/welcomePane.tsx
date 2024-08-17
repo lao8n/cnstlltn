@@ -75,11 +75,12 @@ const WelcomePane: FC = (): ReactElement => {
     useEffect(() => {
         console.log("set constellation display points")
         console.log(appContext.state.userState.constellation)
-        constellationPts.current = setConstellationDisplayPoints(
+        let count = 0;
+        [constellationPts.current, count] = setConstellationDisplayPoints(
             appContext.state.userState.constellation,
             appContext.state.userState.clusters,
-            canvasRef,
-            setUnclusteredContent);
+            canvasRef);
+        setUnclusteredContent(count);
         console.log(constellationPts.current)
     }, [appContext.state.userState.constellation, appContext.state.userState.clusters])
 

@@ -2,16 +2,16 @@ import { UserFramework, Cluster } from "../state/userState";
 import { CanvasForm, CanvasSpace, Pt, Circle } from "pts";
 import { DisplayPoint } from './models'
 
-export function setConstellationDisplayPoints(constellation: UserFramework[], clusters: Cluster[], canvasRef: React.RefObject<HTMLCanvasElement>, setUnclusteredContent: React.Dispatch<React.SetStateAction<number>>): DisplayPoint[] {
-    setUnclusteredContent(0);
+export function setConstellationDisplayPoints(constellation: UserFramework[], clusters: Cluster[], canvasRef: React.RefObject<HTMLCanvasElement>): [DisplayPoint[], number] {
+    let count = 0;
     const clustersMap = mapFrameworkToCluster(clusters);
     console.log("constellation: ", constellation, "clustersMap ", clustersMap)
-    return constellation.filter(framework => {
+    const displayPoints = constellation.filter(framework => {
         if (clustersMap.has(framework.id)) {
             return true;
         } else {
             console.log(`Missing coordinate data for framework: ${framework.title}`);
-            setUnclusteredContent(v => v + 1);
+            count++;
             return false;
         }
     }).map(framework => {
@@ -27,8 +27,9 @@ export function setConstellationDisplayPoints(constellation: UserFramework[], cl
             coord: [cx, cy],
             position: new Pt(x, y),
             selected: false,
-        };
+        } as DisplayPoint;
     });
+    return [displayPoints, count];
 }
 
 function mapFrameworkToCluster(clusters: Cluster[]): Map<string, Cluster>{
