@@ -14,8 +14,8 @@ import * as clusterActions from '../state/actions/clusterActions';
 import { DisplayActions } from '../state/actions/displayActions';
 import * as displayActions from '../state/actions/displayActions';
 // ux imports
-import { welcomeStackStyle } from "../ux/layouts";
-import { canvasStackStyle, canvasStyle, welcomeLineStyle } from "../ux/components";
+import { welcomeStackStyle, welcomeLineStyle } from "../ux/welcome";
+import { canvasStackStyle, canvasStyle } from "../ux/components";
 // display imports
 import { DisplayPoint } from "../frontend/models";
 import { drawClusterPoints, drawConstellationPoints, drawMultiLineText, setClusterDisplayPoints, setConstellationDisplayPoints } from "../frontend/display";
@@ -38,7 +38,6 @@ const WelcomePane: FC = (): ReactElement => {
 
     // display
     const canvasRef = useRef<HTMLCanvasElement>(null);
-    const [dimensions, setDimensions] = useState({ width: 0, height: 0 })
     const constellationPts = useRef<DisplayPoint[]>([]) as React.MutableRefObject<DisplayPoint[]>;
     const clusterPts = useRef<DisplayPoint[]>([]) as React.MutableRefObject<DisplayPoint[]>;
     const [, setUnclusteredContent] = useState(0);
@@ -97,34 +96,24 @@ const WelcomePane: FC = (): ReactElement => {
             resize: true
         });
         const form = space.getForm();
-        const maxDimensions = { width: 2000, height: 1200 }
         const handleResize = () => {
-            console.log("resizing to: ", canvasRef.current?.parentElement?.clientWidth, canvasRef.current?.parentElement?.clientHeight)
-            if (canvasRef.current?.parentElement) {
-                const newWidth = Math.min(canvasRef.current.parentElement.clientWidth, maxDimensions.width)
-                const newHeight = Math.min(canvasRef.current.parentElement.clientHeight, maxDimensions.height)
-                console.log("set dimensions: ", newWidth, newHeight)
-                setDimensions({ width: newWidth, height: newHeight })
-                updatePositions();
-            }
+            updatePositions();
         };
         const updatePositions = () => {
-            console.log("update positions")
+            console.log("update positions:", canvasRef.current?.parentElement?.clientWidth, canvasRef.current?.parentElement?.clientHeight)
             constellationPts.current.forEach(pt => {
-                const x = pt.coord[0] * (dimensions.width || 0);
-                const y = pt.coord[1] * (dimensions.height || 0);
+                const x = pt.coord[0] * (canvasRef.current?.parentElement?.clientWidth || 0);
+                const y = pt.coord[1] * (canvasRef.current?.parentElement?.clientHeight || 0);
                 pt.position = new Pt(x, y);
             })
             clusterPts.current.forEach(pt => {
-                const x = pt.coord[0] * (dimensions.width || 0);
-                const y = pt.coord[1] * (dimensions.height || 0);
+                const x = pt.coord[0] * (canvasRef.current?.parentElement?.clientWidth || 0);
+                const y = pt.coord[1] * (canvasRef.current?.parentElement?.clientHeight || 0);
                 pt.position = new Pt(x, y);
             })
         }
         space.add({
             start: (bound) => {
-                console.log("call start");
-                // setDimensions({ width: canvasRef.current?.width || 0, height: canvasRef.current?.height || 0 })
                 updatePositions();
             },
             animate: (time, ftime) => {
@@ -157,7 +146,6 @@ const WelcomePane: FC = (): ReactElement => {
             space.stop();
         };
     }, [actions.display,
-        dimensions,
         appContext.state.userState.selectedContent]);
 
     return (

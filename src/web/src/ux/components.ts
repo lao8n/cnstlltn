@@ -1,7 +1,5 @@
-import { ITextFieldStyles } from '@fluentui/react'
-import { mergeStyles } from '@fluentui/react';
+import { IStackStyles, ITextFieldStyles, mergeStyles } from '@fluentui/react'
 import { CnstlltnTheme } from './theme'
-import { IStackStyles } from '@fluentui/react'
 
 const theme = CnstlltnTheme
 
@@ -48,13 +46,6 @@ export const constellationNameStyle = mergeStyles({
     fontFamily: "Segoe UI",
     fontSize: '20px',
     color: theme.palette.white,
-});
-
-export const welcomeLineStyle = mergeStyles({
-    fontFamily: "Segoe UI",
-    fontSize: '20px',
-    color: theme.palette.white,
-    padding: '10px'
 });
 
 export const clusterByWordStyle = mergeStyles({

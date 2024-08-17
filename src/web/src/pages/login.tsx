@@ -14,7 +14,7 @@ import * as displayActions from '../state/actions/displayActions';
 // telemetry imports
 import { withApplicationInsights } from '../telemetry/telemetry';
 // ux
-import { loginStackStyle } from '../ux/layouts';
+import { loginStackStyle } from '../ux/pages';
 
 const Login = () => {
   const appContext = useContext<AppContext>(UserAppContext)

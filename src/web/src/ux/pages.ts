@@ -19,7 +19,7 @@ export const routeStackStyle: IStackStyles = {
         display: 'flex',
         width: '100%',
         height: '100%',
-        overflow: 'hidden', // This prevents any overflow caused by growing content
+        overflow: 'hidden',
     }
 }
 
@@ -29,5 +29,15 @@ export const constellationQueryStackStyle: IStackStyles = {
         width: '100%',
         height: '100%',
         overflow: 'hidden',
+    }
+}
+
+export const loginStackStyle: IStackStyles = {
+    root: {
+        display: 'flex',
+        width: '100%',
+        height: '100%',
+        justifyContent: 'centre',
+        alignContent: 'centre',
     }
 }
