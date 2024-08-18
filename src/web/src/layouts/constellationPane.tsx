@@ -60,7 +60,6 @@ const ConstellationPane: FC = (): ReactElement => {
     };
 
     const onSubmit = async () => {
-        actions.cluster.setClusterBy(clusterBy);
         console.log("cluster by", clusterBy, appContext.state.userState.clusterBy)
         await actions.cluster.clusterBy(
             appContext.state.userState.userId,
@@ -68,6 +67,7 @@ const ConstellationPane: FC = (): ReactElement => {
             appContext.state.userState.clusterBy,
             unclusteredContent !== 0) // if unclustered content then only cluster that
         console.log("cluster by await finished")
+        actions.cluster.setClusterBy(clusterBy);
         actions.display.setUpdated(Date.now());
         console.log("cluster by set updated")
     }
@@ -182,6 +182,7 @@ const ConstellationPane: FC = (): ReactElement => {
                                 actions.display.setSelectedContent(null);
                                 actions.cluster.setClusterBy('');
                                 actions.constellation.setConstellationName(pt.name);
+                                actions.display.setUpdated(Date.now());
                             } else {
                                 pt.selected = !pt.selected;
                                 actions.display.setSelectedContent(pt.selected ? pt : null)
