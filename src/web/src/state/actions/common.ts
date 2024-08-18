@@ -21,7 +21,6 @@ export enum ActionTypes {
     SET_CLUSTERS = "SET_CLUSTERS", 
     GET_CLUSTER_BY_OPTIONS = "GET_CLUSTER_BY_OPTIONS",
     GET_CLUSTER_BY_SUGGESTION = "GET_CLUSTER_BY_SUGGESTION",
-    CLUSTER_BY = "CLUSTER_BY",
     SET_CLUSTER_BY = "SET_CLUSTER_BY",
     // display
     SET_UPDATED = "SET_UPDATED",
@@ -45,7 +44,6 @@ export type ApplicationActions =
     clusterActions.SetClustersAction |
     clusterActions.GetClusterByOptionsAction |
     clusterActions.GetClusterBySuggestionAction |
-    clusterActions.ClusterByAction |
     clusterActions.SetClusterByAction | 
     // display
     displayActions.SetUpdatedAction |

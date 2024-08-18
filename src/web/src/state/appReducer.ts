@@ -41,8 +41,6 @@ export const appReducer: Reducer<ApplicationState, ApplicationActions> = (state:
             break;
         case ActionTypes.GET_CLUSTER_BY_SUGGESTION:
             break;
-        case ActionTypes.CLUSTER_BY:
-            break;
         case ActionTypes.SET_CLUSTER_BY:
             state.userState.clusterBy = action.clusterBy;
             break;
