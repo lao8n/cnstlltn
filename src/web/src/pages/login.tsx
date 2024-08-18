@@ -53,13 +53,14 @@ export const Login = () => {
   }, [actions.user]);
 
   return (
-    <Stack styles={loginStackStyle}>
-      <GoogleOAuthProvider clientId={googleClientId}>
-        <GoogleLogin
-          onSuccess={handleLoginSuccess}
-          onError={handleLoginFailure}
-        />
+    <GoogleOAuthProvider clientId={googleClientId}>
+      <Stack styles={loginStackStyle}>
+        <GoogleOAuthProvider clientId={googleClientId}>
+          <GoogleLogin
+            onSuccess={handleLoginSuccess}
+            onError={handleLoginFailure}
+          />
+        </GoogleOAuthProvider>
+      </Stack>
     </GoogleOAuthProvider>
-    </Stack>
-  );
 };
