@@ -80,7 +80,7 @@ async def cluster_by(user_id, constellation_name, cluster_by, cluster_new_only):
     print("get_cluster_by params:", user_id, constellation_name, cluster_by, cluster_new_only)
     await _set_not_latest(user_id, constellation_name)
     user_data, clusters, user_clusters = await _data_to_cluster(user_id, constellation_name, cluster_new_only)
-    print(user_data, clusters, user_clusters)
+    print("data to cluster output:", user_data, clusters, user_clusters)
     prompt_format = f"""
     this prompt is to describe how i want to format your response. i will prompt with something like a list of concepts
     with an id, title and content and clusterby json format
@@ -126,7 +126,7 @@ async def cluster_by(user_id, constellation_name, cluster_by, cluster_new_only):
             id = response_block['id']
             cluster = response_block['clusterby'].title()
             if cluster not in clusters:
-                new_clusters[cluster] = (uniform(0.1, 0.9), uniform(0.1, 0.9))
+                new_clusters[cluster] = (uniform(0.05, 0.8), uniform(0.05, 0.8))
                 new_cluster_ids[cluster].append(id)
             else:
                 cluster_ids[cluster].append(id)
@@ -134,6 +134,7 @@ async def cluster_by(user_id, constellation_name, cluster_by, cluster_new_only):
     print(cluster_ids, new_clusters, new_cluster_ids)
 
     await _save_clusters(user_id, constellation_name, cluster_by, user_clusters, clusters, cluster_ids, new_clusters, new_cluster_ids)
+    return
 
 async def _set_not_latest(user_id, constellation_name):
     user_clusters = UserCluster.find(
@@ -144,6 +145,7 @@ async def _set_not_latest(user_id, constellation_name):
     async for user_cluster in user_clusters:
         user_cluster.islatest = False
         await user_cluster.save()
+    return
 
 async def _data_to_cluster(user_id: str, constellation_name: str, cluster_new_only: bool):
     user_data : List[UserFramework] = await UserFramework.find(
@@ -164,6 +166,7 @@ async def _data_to_cluster(user_id: str, constellation_name: str, cluster_new_on
             framework_keys.update(user_cluster.framework.keys())
             clusters[user_cluster.cluster] = user_cluster.coordinate
         user_data = [user_framework for user_framework in user_data if str(user_framework.id) not in framework_keys]
+        print("data_to_cluster", user_data)
     return user_data, clusters, user_clusters
 
 async def _save_clusters(user_id, constellation_name, cluster_by, user_clusters, clusters, cluster_ids, new_clusters, new_cluster_ids):
@@ -189,6 +192,7 @@ async def _save_clusters(user_id, constellation_name, cluster_by, user_clusters,
             y = new_clusters[cluster][1] + uniform(-1, 1) / 8 
             user_cluster.frameworks[id] = (x, y)
         await user_cluster.save()
+    return
     
 def _chunk_list(data, chunk_size):
     for i in range(0, len(data), chunk_size):

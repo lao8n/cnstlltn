@@ -67,7 +67,9 @@ const ConstellationPane: FC = (): ReactElement => {
             appContext.state.userState.constellationName,
             appContext.state.userState.clusterBy,
             unclusteredContent !== 0) // if unclustered content then only cluster that
+        console.log("cluster by await finished")
         actions.display.setUpdated(Date.now());
+        console.log("cluster by set updated")
     }
 
     const onClusterClick = async () => {
@@ -175,6 +177,8 @@ const ConstellationPane: FC = (): ReactElement => {
                     constellationPts.current.forEach(pt => {
                         if (Circle.withinBound(range, pt.position)) {
                             if (appContext.state.userState.constellationName === "Home") {
+                                actions.constellation.setConstellation([]);
+                                actions.cluster.setClusters([]);
                                 actions.display.setSelectedContent(null);
                                 actions.cluster.setClusterBy('');
                                 actions.constellation.setConstellationName(pt.name);
