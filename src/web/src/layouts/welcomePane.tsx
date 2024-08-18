@@ -44,52 +44,29 @@ const WelcomePane: FC = (): ReactElement => {
 
     // effects
     useEffect(() => {
-        console.log("get constellation")
-        const getConstellation = async () => {
+        const getConstellationAndClusters = async () => {
             const constellation = await actions.constellation.getConstellation(
                 userId,
                 constellationName);
-            console.log(constellation)
-            actions.constellation.setConstellation(constellation);
-        };
-        getConstellation();
-    }, [actions.constellation,
-        appContext.state.userState.updated]);
-    
-    useEffect(() => {
-        console.log("get cluster")
-        const getCluster = async () => {
             const clusters = await actions.cluster.getClusters(
                 userId,
                 constellationName,
                 clusterBy,
                 true);
-            console.log(clusters)
+            actions.constellation.setConstellation(constellation);
             actions.cluster.setClusters(clusters);
-            // this is the case that we have gotten the latest clustering
-        };
-        getCluster();
-    }, [actions.cluster,
+            let count = 0;
+            clusterPts.current = setClusterDisplayPoints(clusters, canvasRef);
+            [constellationPts.current, count] = setConstellationDisplayPoints(
+                constellation,
+                clusters,
+                canvasRef);
+            setUnclusteredContent(count);
+        }
+        getConstellationAndClusters();
+    }, [actions.constellation,
+        actions.cluster,
         appContext.state.userState.updated]);
-    
-    useEffect(() => {
-        console.log("set constellation display points")
-        console.log(appContext.state.userState.constellation)
-        let count = 0;
-        [constellationPts.current, count] = setConstellationDisplayPoints(
-            appContext.state.userState.constellation,
-            appContext.state.userState.clusters,
-            canvasRef);
-        setUnclusteredContent(count);
-        console.log(constellationPts.current)
-    }, [appContext.state.userState.constellation, appContext.state.userState.clusters])
-
-    useEffect(() => {
-        console.log("set cluster display points")
-        console.log(appContext.state.userState.clusters)
-        clusterPts.current = setClusterDisplayPoints(appContext.state.userState.clusters, canvasRef);
-        console.log(clusterPts.current)
-    }, [appContext.state.userState.clusters])
     
     useEffect(() => {
         const canvas = canvasRef.current;
