@@ -51,7 +51,8 @@ export const queryStackStyle: IStackStyles = {
 
 export const loginStackStyle: IStackStyles = {
     root: {
-        justifyItems: 'center',
-        alignContent: 'center',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
     }
 }

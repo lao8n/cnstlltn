@@ -67,8 +67,17 @@ export interface GetClusterBySuggestionAction extends PayloadAction<string, stri
 const getClusterBySuggestionAction =
     createPayloadAction<GetClusterBySuggestionAction>(ActionTypes.GET_CLUSTER_BY_SUGGESTION);
 
-export const clusterBy = async (userId: string, constellationName: string, clusterBy: string, clusterNewOnly: boolean): Promise<void> =>
-    await clusterService.clusterBy(userId, constellationName, clusterBy, clusterNewOnly);
+export const clusterBy = (userId: string, constellationName: string, clusterBy: string, clusterNewOnly: boolean): ActionMethod<void> =>
+    async (dispatch: Dispatch<ClusterByAction>) => {
+        await clusterService.clusterBy(userId, constellationName, clusterBy, clusterNewOnly);
+        dispatch(clusterByAction())
+        return;
+    }
+export interface ClusterByAction extends PayloadAction<string, void> {
+    type: ActionTypes.CLUSTER_BY
+}
+const clusterByAction =
+    createPayloadAction<ClusterByAction>(ActionTypes.CLUSTER_BY);
 
 export const setClusterBy = (clusterBy: string) =>
     (dispatch: Dispatch<SetClusterByAction>) => {

@@ -113,8 +113,8 @@ export function drawUnclusteredContentNotification(form: CanvasForm, width: numb
 }
 
 export function drawNoConstellationContentNotification(form: CanvasForm, width: number, height: number, constellationName: string, lineHeight: number) {
-    const middleX = width / 2 - 100;
-    let middleY = height / 2 - 10;
+    const middleX = width / 2 - 150;
+    let middleY = height / 2 - 100;
     let text: string[] = [
         `Hey! You have no constellations.`,
         `These are ways to organise your notes into topics.`,
@@ -123,8 +123,8 @@ export function drawNoConstellationContentNotification(form: CanvasForm, width: 
     if (constellationName !== 'Home') {
         text = [
             `Hey! You have no content in your constellation`,
-            `Prompt the AI for possible notes, select the ones you are interested in and,`,
-            `save them to your constellation.`
+            `Prompt the AI for possible notes in the right-hand panel.`,
+            `Then select the ones you are interested in and save them to your constellation.`
         ]
     }
     for (let i = 0; i < text.length; i++) {

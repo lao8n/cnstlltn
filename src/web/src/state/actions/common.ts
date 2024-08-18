@@ -19,6 +19,7 @@ export enum ActionTypes {
     // cluster
     GET_CLUSTERS = "GET_CLUSTERS",
     SET_CLUSTERS = "SET_CLUSTERS", 
+    CLUSTER_BY = "CLUSTER_BY",
     GET_CLUSTER_BY_OPTIONS = "GET_CLUSTER_BY_OPTIONS",
     GET_CLUSTER_BY_SUGGESTION = "GET_CLUSTER_BY_SUGGESTION",
     SET_CLUSTER_BY = "SET_CLUSTER_BY",
@@ -42,6 +43,7 @@ export type ApplicationActions =
     // cluster
     clusterActions.GetClustersAction |
     clusterActions.SetClustersAction |
+    clusterActions.ClusterByAction |
     clusterActions.GetClusterByOptionsAction |
     clusterActions.GetClusterBySuggestionAction |
     clusterActions.SetClusterByAction | 

@@ -51,7 +51,6 @@ const ConstellationPane: FC = (): ReactElement => {
     }, []);
 
     const onTypeClusterBy = (_: ChangeEvent<HTMLInputElement> | undefined, newValue?: string) => {
-        // console.log("onTypeClusterBy:", newValue)
         setNewClusterBy(newValue || clusterBy);
     }
 
@@ -68,9 +67,7 @@ const ConstellationPane: FC = (): ReactElement => {
             appContext.state.userState.constellationName,
             appContext.state.userState.clusterBy,
             unclusteredContent !== 0) // if unclustered content then only cluster that
-        console.log("finished cluster by");
         actions.display.setUpdated(Date.now());
-        console.log("updated");
     }
 
     const onClusterClick = async () => {
