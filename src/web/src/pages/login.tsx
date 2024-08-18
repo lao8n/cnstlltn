@@ -63,4 +63,5 @@ export const Login = () => {
         </GoogleOAuthProvider>
       </Stack>
     </GoogleOAuthProvider>
+  )
 };
