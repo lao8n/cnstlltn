@@ -68,7 +68,9 @@ const ConstellationPane: FC = (): ReactElement => {
             appContext.state.userState.constellationName,
             appContext.state.userState.clusterBy,
             unclusteredContent !== 0) // if unclustered content then only cluster that
+        console.log("finished cluster by");
         actions.display.setUpdated(Date.now());
+        console.log("updated");
     }
 
     const onClusterClick = async () => {
@@ -162,7 +164,6 @@ const ConstellationPane: FC = (): ReactElement => {
                     drawMultiLineText(form, canvas?.width || 0, appContext.state.userState.selectedContent, 15, 400);
                 }
                 if (unclusteredContent !== 0) {
-                    console.log("unclustered content notification: ", unclusteredContent);
                     drawUnclusteredContentNotification(form, canvas?.width || 0, unclusteredContent);
                 } 
             },
