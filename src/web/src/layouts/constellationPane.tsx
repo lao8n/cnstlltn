@@ -21,7 +21,7 @@ import { constellationHeaderStackStyle, constellationStackStyle } from '../ux/co
 // display imports
 import { CanvasSpace, Circle, Pt } from "pts";
 import { DisplayPoint } from '../frontend/models';
-import { setConstellationDisplayPoints, setClusterDisplayPoints, drawMultiLineText, drawConstellationPoints, drawClusterPoints, drawUnclusteredContentNotification } from '../frontend/display';
+import { setConstellationDisplayPoints, setClusterDisplayPoints, drawMultiLineText, drawConstellationPoints, drawClusterPoints, drawUnclusteredContentNotification, drawNoConstellationContentNotification } from '../frontend/display';
 
 // Update path
 // 1. createConstellation   -> userState.updated -> getConstellation -> setConstellationDisplayPoints -> redrawConstellation
@@ -166,6 +166,9 @@ const ConstellationPane: FC = (): ReactElement => {
                 if (unclusteredContent !== 0) {
                     drawUnclusteredContentNotification(form, canvas?.width || 0, unclusteredContent);
                 } 
+                if (constellationPts.current.length === 0) {
+                    drawNoConstellationContentNotification(form, canvas?.width || 0, canvas?.height || 0, appContext.state.userState.constellationName, 15);
+                }
             },
             action: (type, x, y) => {
                 const r = 10;

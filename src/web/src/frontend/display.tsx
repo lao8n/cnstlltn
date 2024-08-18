@@ -111,3 +111,24 @@ export function drawUnclusteredContentNotification(form: CanvasForm, width: numb
     const topRight = new Pt(topRightX, topRightY);
     form.font(12).fill("#fff").text(topRight, `You have ${unclusteredContent} unclustered content. Try 'Cluster By' again.`);
 }
+
+export function drawNoConstellationContentNotification(form: CanvasForm, width: number, height: number, constellationName: string, lineHeight: number) {
+    const middleX = width / 2 - 100;
+    let middleY = height / 2 - 10;
+    let text: string[] = [
+        `Hey! You have no constellations.`,
+        `These are ways to organise your notes into topics.`,
+        `Add one by using the panel on the right-hand side`
+    ]
+    if (constellationName !== 'Home') {
+        text = [
+            `Hey! You have no content in your constellation`,
+            `Prompt the AI for possible notes, select the ones you are interested in and,`,
+            `save them to your constellation.`
+        ]
+    }
+    for (let i = 0; i < text.length; i++) {
+        form.font(12).fill("#fff").text(new Pt(middleX, middleY), text[i]);
+        middleY += lineHeight;
+    }
+}
