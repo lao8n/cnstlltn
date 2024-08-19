@@ -46,6 +46,9 @@ const WelcomePane: FC = (): ReactElement => {
     const updatePositionsCallback = useCallback(() => {
         updatePositions(canvasRef, constellationPts, clusterPts);
     }, []);
+    // const drawMultiLineTextCallback = useCallback(() => {
+    //     drawMultiLineText()
+    // })
 
     // effects
     useEffect(() => {
@@ -67,13 +70,12 @@ const WelcomePane: FC = (): ReactElement => {
                 clusters,
                 canvasRef);
             setUnclusteredContent(count);
-            updatePositionsCallback();
+            // updatePositionsCallback();
         }
         getConstellationAndClusters();
     }, [actions.constellation,
         actions.cluster,
-        appContext.state.userState.updated,
-        updatePositionsCallback]);
+        appContext.state.userState.updated]);
     
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -82,6 +84,7 @@ const WelcomePane: FC = (): ReactElement => {
             resize: true
         });
         const form = space.getForm();
+        console.log("animate use effect");
         space.add({
             start: (bound) => {
                 updatePositionsCallback();
@@ -90,7 +93,7 @@ const WelcomePane: FC = (): ReactElement => {
                 drawConstellationPoints(space, form, constellationPts);
                 drawClusterPoints(form, clusterPts);
                 if (appContext.state.userState.selectedContent !== null) {
-                    console.log("selected content:", appContext.state.userState.selectedContent);
+                    console.log("selected content:", appContext.state.userState.selectedContent, canvas?.width, );
                     drawMultiLineText(form, canvas?.width || 0, appContext.state.userState.selectedContent, 15, 400);
                 }
             },
@@ -122,8 +125,7 @@ const WelcomePane: FC = (): ReactElement => {
             space.stop();
         };
     }, [actions.display,
-        appContext.state.userState.selectedContent,
-        updatePositions]);
+        appContext.state.userState.selectedContent]);
 
     return (
         <Stack styles={welcomeStackStyle}>
