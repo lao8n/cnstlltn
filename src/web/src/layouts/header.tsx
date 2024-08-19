@@ -71,7 +71,7 @@ const Header: FC = (): ReactElement => {
             </Stack.Item>
             <Stack horizontal>
                 <Stack.Item styles={headerUpdatesStyle}>
-                    <IconButton aria-label="Updates" iconProps={{ iconName: "Alert" }} onClick={handleUpdates} styles={headerUpdatesButtonStyle} />
+                    <IconButton aria-label="Updates" iconProps={{ iconName: "Info" }} onClick={handleUpdates} styles={headerUpdatesButtonStyle} />
                 </Stack.Item>
                 <Stack.Item styles={headerLoginStyle}>
                     <IconButton aria-label="Login" iconProps={{ iconName: signInOrOut }} onClick={logInOrOut} styles={headerLoginButtonStyle} />
