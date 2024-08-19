@@ -4,7 +4,7 @@ import { IconButton, Stack } from '@fluentui/react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 // ux imports
-import { headerLogoStyles, headerLoginStyle, headerLoginButtonStyle, headerLogoButtonStyle } from '../ux/header';
+import { headerLogoStyles, headerLoginStyle, headerLoginButtonStyle, headerLogoButtonStyle, headerUpdatesStyle, headerUpdatesButtonStyle } from '../ux/header';
 // state imports
 import { UserAppContext } from '../state/userContext';
 import { AppContext } from '../state/applicationState';
@@ -37,15 +37,17 @@ const Header: FC = (): ReactElement => {
         actions.display.setSelectedContent(null);
         actions.constellation.setConstellationName("Home");
     }
+    const handleUpdates = () => {
+        navigate(`/updates`)
+    }
     const handleLogin = useCallback((navigate) => {
         console.log("handleLogin called");
         navigate('/login');
     }, []); 
-
     const handleLogout = useCallback((navigate) => {
         console.log("handleLogout called");
         actions.user.setUser(false, "");
-        navigate(`/auth/logout?post_logout_redirect_uri=${window.location.origin}`);
+        navigate(`/auth/logout?post_logout_redirect_uri=${window.location.origin}/`);
     }, [actions.user]);
 
     // effects
@@ -67,9 +69,14 @@ const Header: FC = (): ReactElement => {
                     <img src={`${process.env.PUBLIC_URL}/cnstlltn_logo.png`} alt="Logo" style={headerLogoButtonStyle} />
                 </Link>
             </Stack.Item>
-            <Stack.Item styles={headerLoginStyle}>
-                <IconButton aria-label="Add" iconProps={{ iconName: signInOrOut }} onClick={logInOrOut} styles={headerLoginButtonStyle} />
-            </Stack.Item>
+            <Stack horizontal>
+                <Stack.Item styles={headerUpdatesStyle}>
+                    <IconButton aria-label="Updates" iconProps={{ iconName: "Alert" }} onClick={handleUpdates} styles={headerUpdatesButtonStyle} />
+                </Stack.Item>
+                <Stack.Item styles={headerLoginStyle}>
+                    <IconButton aria-label="Login" iconProps={{ iconName: signInOrOut }} onClick={logInOrOut} styles={headerLoginButtonStyle} />
+                </Stack.Item>
+            </Stack>
         </Stack>
     );
 }

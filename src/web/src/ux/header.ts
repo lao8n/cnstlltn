@@ -25,6 +25,14 @@ export const headerLogoButtonStyle = {
     height: 'auto',
 };
 
+export const headerUpdatesStyle: IStackStyles = {
+    root: {
+        display: 'flex',
+        alignItems: 'center',
+        height: 48,
+    }
+}
+
 export const headerLoginStyle: IStackStyles = {
     root: {
         display: 'flex',
@@ -32,6 +40,12 @@ export const headerLoginStyle: IStackStyles = {
         height: 48,
         paddingRight: 10
     }
+}
+
+export const headerUpdatesButtonStyle: IButtonStyles = {
+    root: {
+        color: theme.palette.white
+    },
 }
 
 export const headerLoginButtonStyle: IButtonStyles = {

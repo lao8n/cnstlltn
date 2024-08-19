@@ -3,7 +3,7 @@ import { CnstlltnTheme } from './theme'
 
 const theme = CnstlltnTheme
 
-export const routesLayoutStackStyle: IStackStyles = {
+export const routesLayoutPageStyle: IStackStyles = {
     root: {
         width: '100vw',
         height: '100vh',
@@ -12,7 +12,7 @@ export const routesLayoutStackStyle: IStackStyles = {
     }
 }
 
-export const routeStackStyle: IStackStyles = {
+export const routePageStyle: IStackStyles = {
     root: {
         background: theme.palette.black,
         color: theme.palette.white,
@@ -23,7 +23,7 @@ export const routeStackStyle: IStackStyles = {
     }
 }
 
-export const constellationQueryStackStyle: IStackStyles = {
+export const constellationQueryPageStyle: IStackStyles = {
     root: {
         display: 'flex',
         width: '100%',
@@ -32,7 +32,7 @@ export const constellationQueryStackStyle: IStackStyles = {
     }
 }
 
-export const constellationStackStyle: IStackStyles = {
+export const constellationPageStyle: IStackStyles = {
     root: {
         display: 'flex',
         width: '100%',
@@ -41,7 +41,7 @@ export const constellationStackStyle: IStackStyles = {
     }
 }
 
-export const queryStackStyle: IStackStyles = {
+export const queryPageStyle: IStackStyles = {
     root: {
         display: 'flex',
         height: '100%',
@@ -49,11 +49,18 @@ export const queryStackStyle: IStackStyles = {
     }
 }
 
-export const loginStackStyle: IStackStyles = {
+export const loginPageStyle: IStackStyles = {
     root: {
         width: '100%',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
+    }
+}
+
+export const updatesPageStyle: IStackStyles = {
+    root: {
+        width: '100%',
+        display: 'flex',
     }
 }
