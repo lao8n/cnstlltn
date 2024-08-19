@@ -1,6 +1,6 @@
 // react imports
 import { Stack } from "@fluentui/react";
-import React, { FC, ReactElement, useContext, useEffect, useState, useMemo, useRef } from "react";
+import React, { FC, ReactElement, useContext, useEffect, useState, useMemo, useRef, useCallback } from "react";
 // state imports
 import { AppContext } from "../state/applicationState";
 import UserAppContext from "../state/userContext";
@@ -42,6 +42,25 @@ const WelcomePane: FC = (): ReactElement => {
     const clusterPts = useRef<DisplayPoint[]>([]) as React.MutableRefObject<DisplayPoint[]>;
     const [, setUnclusteredContent] = useState(0);
 
+    // functions
+    const updatePositions = useCallback(() => {
+        if (!constellationPts.current || constellationPts.current.length === 0) {
+            console.log("No data in constellationPts yet.");
+            return;
+        }
+        console.log("update positions:", canvasRef.current?.parentElement?.clientWidth, canvasRef.current?.parentElement?.clientHeight);
+        constellationPts.current.forEach(pt => {
+            const x = pt.coord[0] * (canvasRef.current?.parentElement?.clientWidth || 0);
+            const y = pt.coord[1] * (canvasRef.current?.parentElement?.clientHeight || 0);
+            pt.position = new Pt(x, y);
+        });
+        clusterPts.current.forEach(pt => {
+            const x = pt.coord[0] * (canvasRef.current?.parentElement?.clientWidth || 0);
+            const y = pt.coord[1] * (canvasRef.current?.parentElement?.clientHeight || 0);
+            pt.position = new Pt(x, y);
+        });
+    }, [canvasRef.current, constellationPts.current, clusterPts.current]);
+
     // effects
     useEffect(() => {
         const getConstellationAndClusters = async () => {
@@ -75,20 +94,6 @@ const WelcomePane: FC = (): ReactElement => {
             resize: true
         });
         const form = space.getForm();
-        const updatePositions = () => {
-            console.log("update positions:", canvas?.parentElement?.clientWidth, canvas?.parentElement?.clientHeight);
-            constellationPts.current.forEach(pt => {
-                const x = pt.coord[0] * (canvas?.parentElement?.clientWidth || 0);
-                const y = pt.coord[1] * (canvas?.parentElement?.clientHeight || 0);
-                pt.position = new Pt(x, y);
-            })
-            console.log(constellationPts.current)
-            clusterPts.current.forEach(pt => {
-                const x = pt.coord[0] * (canvas?.parentElement?.clientWidth || 0);
-                const y = pt.coord[1] * (canvas?.parentElement?.clientHeight || 0);
-                pt.position = new Pt(x, y);
-            })
-        }
         space.add({
             start: (bound) => {
                 updatePositions();
@@ -128,7 +133,8 @@ const WelcomePane: FC = (): ReactElement => {
             space.stop();
         };
     }, [actions.display,
-        appContext.state.userState.selectedContent]);
+        appContext.state.userState.selectedContent,
+        updatePositions]);
 
     return (
         <Stack styles={welcomeStackStyle}>
