@@ -59,7 +59,7 @@ const WelcomePane: FC = (): ReactElement => {
             const y = pt.coord[1] * (canvasRef.current?.parentElement?.clientHeight || 0);
             pt.position = new Pt(x, y);
         });
-    }, [canvasRef.current, constellationPts.current, clusterPts.current]);
+    }, []);
 
     // effects
     useEffect(() => {
@@ -81,6 +81,7 @@ const WelcomePane: FC = (): ReactElement => {
                 clusters,
                 canvasRef);
             setUnclusteredContent(count);
+            updatePositions();
         }
         getConstellationAndClusters();
     }, [actions.constellation,
