@@ -70,7 +70,7 @@ const WelcomePane: FC = (): ReactElement => {
                 clusters,
                 canvasRef);
             setUnclusteredContent(count);
-            // updatePositionsCallback();
+            updatePositionsCallback();
         }
         getConstellationAndClusters();
     }, [actions.constellation,
@@ -84,7 +84,6 @@ const WelcomePane: FC = (): ReactElement => {
             resize: true
         });
         const form = space.getForm();
-        console.log("animate use effect");
         space.add({
             start: (bound) => {
                 updatePositionsCallback();

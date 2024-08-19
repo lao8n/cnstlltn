@@ -121,8 +121,7 @@ const ConstellationPane: FC = (): ReactElement => {
         appContext.state.userState.constellationName,
         appContext.state.userState.clusterBy,
         appContext.state.userState.updated,
-        redrawConstellation,
-        updatePositionsCallback]);
+        redrawConstellation]);
     
     useEffect(() => {
         console.log("get options")
