@@ -42,7 +42,6 @@ function mapFrameworkToCluster(clusters: Cluster[]): Map<string, Cluster>{
     return clustersMap;
 }
 
-
 export function setClusterDisplayPoints(clusters: Cluster[], canvasRef: React.RefObject<HTMLCanvasElement>): DisplayPoint[] {
     return clusters.map(cluster => {
         const cx = cluster.coordinate[0]
@@ -57,6 +56,24 @@ export function setClusterDisplayPoints(clusters: Cluster[], canvasRef: React.Re
             selected: false,
         };
     })
+}
+
+export function updatePositions(canvasRef: React.RefObject<HTMLCanvasElement>, constellationPts: React.MutableRefObject<DisplayPoint[]>, clusterPts: React.MutableRefObject<DisplayPoint[]>) {
+    if (!constellationPts.current || constellationPts.current.length === 0) {
+        console.log("No data in constellationPts yet.");
+        return;
+    }
+    console.log("update positions:", canvasRef.current?.parentElement?.clientWidth, canvasRef.current?.parentElement?.clientHeight);
+    constellationPts.current.forEach(pt => {
+        const x = pt.coord[0] * (canvasRef.current?.parentElement?.clientWidth || 0);
+        const y = pt.coord[1] * (canvasRef.current?.parentElement?.clientHeight || 0);
+        pt.position = new Pt(x, y);
+    });
+    clusterPts.current.forEach(pt => {
+        const x = pt.coord[0] * (canvasRef.current?.parentElement?.clientWidth || 0);
+        const y = pt.coord[1] * (canvasRef.current?.parentElement?.clientHeight || 0);
+        pt.position = new Pt(x, y);
+    });
 }
 
 export function drawConstellationPoints(space : CanvasSpace, form: CanvasForm, constellationPts: React.MutableRefObject<DisplayPoint[]>) {
