@@ -126,7 +126,7 @@ async def cluster_by(user_id, constellation_name, cluster_by, cluster_new_only):
             id = response_block['id']
             cluster = response_block['clusterby'].title()
             if cluster not in clusters:
-                new_clusters[cluster] = (uniform(0.05, 0.8), uniform(0.05, 0.8))
+                new_clusters[cluster] = (uniform(0.1, 0.8), uniform(0.1, 0.8))
                 new_cluster_ids[cluster].append(id)
             else:
                 cluster_ids[cluster].append(id)
@@ -165,8 +165,9 @@ async def _data_to_cluster(user_id: str, constellation_name: str, cluster_new_on
         for user_cluster in user_clusters:
             framework_keys.update(user_cluster.framework.keys())
             clusters[user_cluster.cluster] = user_cluster.coordinate
-        user_data = [user_framework for user_framework in user_data if str(user_framework.id) not in framework_keys]
-        print("data_to_cluster", user_data)
+        new_user_data = [user_framework for user_framework in user_data if str(user_framework.id) not in framework_keys]
+        print("data_to_cluster", new_user_data, " user_clusters ", user_clusters, " framework_keys", framework_keys)
+        user_data = new_user_data
     return user_data, clusters, user_clusters
 
 async def _save_clusters(user_id, constellation_name, cluster_by, user_clusters, clusters, cluster_ids, new_clusters, new_cluster_ids):

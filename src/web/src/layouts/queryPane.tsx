@@ -97,7 +97,7 @@ const QueryPane: FC = (): ReactElement => {
                     value={newQuery}
                     placeholder={
                         appContext.state.userState.constellationName === "Home" ?
-                            "Enter name of new constellation" : "Enter the name of a book or a link to an article"}
+                            "Enter name of new constellation" : "Prompt for notes or copy in an article or transcript"}
                     onChange={onTypeQuery}
                     onSearch={onSubmit}
                     styles={queryFieldStyles}

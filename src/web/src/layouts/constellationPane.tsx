@@ -121,7 +121,8 @@ const ConstellationPane: FC = (): ReactElement => {
         appContext.state.userState.constellationName,
         appContext.state.userState.clusterBy,
         appContext.state.userState.updated,
-        redrawConstellation]);
+        redrawConstellation,
+        updatePositionsCallback]);
     
     useEffect(() => {
         console.log("get options")
@@ -153,13 +154,13 @@ const ConstellationPane: FC = (): ReactElement => {
                 drawConstellationPoints(space, form, constellationPts);
                 drawClusterPoints(form, clusterPts);
                 if (appContext.state.userState.selectedContent !== null) {
-                    drawMultiLineText(form, canvas?.width || 0, appContext.state.userState.selectedContent, 15, 400);
+                    drawMultiLineText(form,  canvasRef.current?.parentElement?.clientWidth || 0, appContext.state.userState.selectedContent, 15, 400);
                 }
                 if (unclusteredContent !== 0) {
-                    drawUnclusteredContentNotification(form, canvas?.width || 0, unclusteredContent);
+                    drawUnclusteredContentNotification(form,  canvasRef.current?.parentElement?.clientWidth || 0, unclusteredContent);
                 } 
                 if (constellationPts.current.length === 0) {
-                    drawNoConstellationContentNotification(form, canvas?.width || 0, canvas?.height || 0, appContext.state.userState.constellationName, 15);
+                    drawNoConstellationContentNotification(form,  canvasRef.current?.parentElement?.clientWidth || 0,  canvasRef.current?.parentElement?.clientHeight || 0, appContext.state.userState.constellationName, 15);
                 }
             },
             action: (type, x, y) => {
@@ -204,7 +205,8 @@ const ConstellationPane: FC = (): ReactElement => {
         appContext.state.userState.constellationName,
         appContext.state.userState.selectedContent,
         unclusteredContent,
-        constellationRedrawn]);
+        constellationRedrawn,
+        updatePositionsCallback]);
 
     return (
         <Stack styles={constellationStackStyle}>

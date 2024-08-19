@@ -75,7 +75,8 @@ const WelcomePane: FC = (): ReactElement => {
         getConstellationAndClusters();
     }, [actions.constellation,
         actions.cluster,
-        appContext.state.userState.updated]);
+        appContext.state.userState.updated,
+        updatePositionsCallback]);
     
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -92,8 +93,7 @@ const WelcomePane: FC = (): ReactElement => {
                 drawConstellationPoints(space, form, constellationPts);
                 drawClusterPoints(form, clusterPts);
                 if (appContext.state.userState.selectedContent !== null) {
-                    console.log("selected content:", appContext.state.userState.selectedContent, canvas?.width, );
-                    drawMultiLineText(form, canvas?.width || 0, appContext.state.userState.selectedContent, 15, 400);
+                    drawMultiLineText(form, canvasRef.current?.parentElement?.clientWidth || 0, appContext.state.userState.selectedContent, 15, 400);
                 }
             },
             action: (type, x, y) => {
@@ -124,7 +124,8 @@ const WelcomePane: FC = (): ReactElement => {
             space.stop();
         };
     }, [actions.display,
-        appContext.state.userState.selectedContent]);
+        appContext.state.userState.selectedContent,
+        updatePositionsCallback]);
 
     return (
         <Stack styles={welcomeStackStyle}>
