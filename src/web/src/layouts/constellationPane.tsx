@@ -21,7 +21,7 @@ import { constellationHeaderStackStyle, constellationStackStyle } from '../ux/co
 // display imports
 import { CanvasSpace, Circle, Pt } from "pts";
 import { DisplayPoint } from '../frontend/models';
-import { setConstellationDisplayPoints, setClusterDisplayPoints, drawMultiLineText, drawConstellationPoints, drawClusterPoints, drawUnclusteredContentNotification, drawNoConstellationContentNotification } from '../frontend/display';
+import { setConstellationDisplayPoints, setClusterDisplayPoints, drawMultiLineText, drawConstellationPoints, drawClusterPoints, drawUnclusteredContentNotification, drawNoConstellationContentNotification, updatePositions } from '../frontend/display';
 
 // Update path
 // 1. createConstellation   -> userState.updated -> getConstellation -> setConstellationDisplayPoints -> redrawConstellation
@@ -48,6 +48,10 @@ const ConstellationPane: FC = (): ReactElement => {
     // functions
     const redrawConstellation = useCallback(() => {
         setConstellationRedrawn(Date.now());
+    }, []);
+
+    const updatePositionsCallback = useCallback(() => {
+        updatePositions(canvasRef, constellationPts, clusterPts);
     }, []);
 
     const onTypeClusterBy = (_: ChangeEvent<HTMLInputElement> | undefined, newValue?: string) => {
@@ -107,6 +111,7 @@ const ConstellationPane: FC = (): ReactElement => {
                 clusters,
                 canvasRef);
             setUnclusteredContent(count);
+            updatePositionsCallback();
             redrawConstellation();
         };
         updateConstellationAndClusters();
@@ -116,7 +121,8 @@ const ConstellationPane: FC = (): ReactElement => {
         appContext.state.userState.constellationName,
         appContext.state.userState.clusterBy,
         appContext.state.userState.updated,
-        redrawConstellation]);
+        redrawConstellation,
+        updatePositionsCallback]);
     
     useEffect(() => {
         console.log("get options")
@@ -140,21 +146,9 @@ const ConstellationPane: FC = (): ReactElement => {
             resize: true
         });
         const form = space.getForm();
-        const updatePositions = () => {
-            constellationPts.current.forEach(pt => {
-                const x = pt.coord[0] * (canvas?.parentElement?.clientWidth || 0);
-                const y = pt.coord[1] * (canvas?.parentElement?.clientHeight || 0);
-                pt.position = new Pt(x, y);
-            })
-            clusterPts.current.forEach(pt => {
-                const x = pt.coord[0] * (canvas?.parentElement?.clientWidth || 0);
-                const y = pt.coord[1] * (canvas?.parentElement?.clientHeight || 0);
-                pt.position = new Pt(x, y);
-            })
-        }
         space.add({
             start: (bound) => {
-                updatePositions();
+                updatePositionsCallback();
             },
             animate: (time, ftime) => {
                 drawConstellationPoints(space, form, constellationPts);
@@ -194,7 +188,7 @@ const ConstellationPane: FC = (): ReactElement => {
         });
         space.bindMouse().bindTouch().play();
         const resizeObserver = new ResizeObserver(() => {
-            updatePositions();
+            updatePositionsCallback();
         });
         if (canvas?.parentElement) {
             resizeObserver.observe(canvas.parentElement);
