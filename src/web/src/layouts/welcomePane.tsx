@@ -82,6 +82,7 @@ const WelcomePane: FC = (): ReactElement => {
                 const y = pt.coord[1] * (canvas?.parentElement?.clientHeight || 0);
                 pt.position = new Pt(x, y);
             })
+            console.log(constellationPts.current)
             clusterPts.current.forEach(pt => {
                 const x = pt.coord[0] * (canvas?.parentElement?.clientWidth || 0);
                 const y = pt.coord[1] * (canvas?.parentElement?.clientHeight || 0);
