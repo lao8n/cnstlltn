@@ -20,7 +20,7 @@ export const Updates = () => {
                 Current Major Bugs
             </Stack.Item>
             <Stack.Item styles={updateTextStyle}>
-                -
+                - If you have a constellation with existing content and then try an already existing cluster by it creates loads of new clusters. Current solution is just cluster by again.
             </Stack.Item>
             <Stack.Item styles={updateHeadingStyle}>
                 Currently Worked On Features
