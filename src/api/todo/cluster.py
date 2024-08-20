@@ -159,6 +159,7 @@ async def _data_to_cluster(user_id: str, constellation_name: str, cluster_by: st
             UserCluster.constellation == constellation_name,
             UserCluster.clusterby == cluster_by,
         ).to_list()
+        print("user_clusters", user_clusters)
         framework_keys = set()
         for user_cluster in user_clusters:
             framework_keys.update(user_cluster.frameworks.keys())

@@ -68,7 +68,7 @@ const ConstellationPane: FC = (): ReactElement => {
         await actions.cluster.clusterBy(
             appContext.state.userState.userId,
             appContext.state.userState.constellationName,
-            appContext.state.userState.clusterBy,
+            clusterBy,
             unclusteredContent !== 0) // if unclustered content then only cluster that
         console.log("cluster by await finished")
         actions.cluster.setClusterBy(clusterBy);
