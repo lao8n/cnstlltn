@@ -32,7 +32,7 @@ export const Login = () => {
   // functions
   const handleLoginSuccess = (response: CredentialResponse) => {
     console.log('Login Success:', response);
-    actions.user.setUser(true, response.clientId || "");
+    actions.user.setUser(true, response.credential || "");
     actions.constellation.setConstellation([]);
     actions.cluster.setClusters([]);
     actions.display.setSelectedContent(null); // if you selected on welcome screen deselect this

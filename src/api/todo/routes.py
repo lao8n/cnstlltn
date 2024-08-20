@@ -9,7 +9,6 @@ from todo.models import (UserFramework, UserCluster, Query, QueryAiResponseBlock
 from todo.app import settings
 from random import uniform
 from todo import cluster as cl
-
 client = OpenAI(
     api_key=settings.OPENAI_API_KEY
 )
