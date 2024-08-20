@@ -108,5 +108,5 @@ async def startup_event():
     )
     await init_beanie(
         database=client[settings.AZURE_COSMOS_DATABASE_NAME],
-        document_models=[__beanie_models__],
+        document_models=__beanie_models__,
     )

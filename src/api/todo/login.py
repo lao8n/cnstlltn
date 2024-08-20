@@ -1,7 +1,6 @@
 from todo.models import (LoginConfig)
 from todo.app import app, settings
-from fastapi import FastAPI, HTTPException, status
-from pydantic import BaseModel
+from fastapi import HTTPException, status
 from google.auth.transport import requests
 from google.oauth2 import id_token
 from todo.models import Token, UserId
