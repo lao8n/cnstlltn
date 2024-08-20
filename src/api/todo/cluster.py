@@ -121,7 +121,6 @@ async def cluster_by(user_id, constellation_name, cluster_by, cluster_new_only):
         )
         json_response = response.choices[0].message.content.strip()
         response_blocks = json.loads(json_response)
-        print(response_blocks)
         for response_block in response_blocks:
             id = response_block['id']
             cluster = response_block['clusterby'].title()
@@ -130,9 +129,8 @@ async def cluster_by(user_id, constellation_name, cluster_by, cluster_new_only):
                 new_cluster_ids[cluster].append(id)
             else:
                 cluster_ids[cluster].append(id)
-
-    print(cluster_ids, new_clusters, new_cluster_ids)
-
+    print("user_clusters:", user_clusters, " clusters ", clusters, " cluster_ids ", cluster_ids)
+    print("new_clusters", new_clusters, "new_cluster_ids", new_cluster_ids)
     await _save_clusters(user_id, constellation_name, cluster_by, user_clusters, clusters, cluster_ids, new_clusters, new_cluster_ids)
     return
 
@@ -166,7 +164,6 @@ async def _data_to_cluster(user_id: str, constellation_name: str, cluster_by: st
             framework_keys.update(user_cluster.frameworks.keys())
             clusters[user_cluster.cluster] = user_cluster.coordinate
         new_user_data = [user_framework for user_framework in user_data if str(user_framework.id) not in framework_keys]
-        print("data_to_cluster", new_user_data, " user_clusters ", user_clusters, " framework_keys", framework_keys)
         user_data = new_user_data
     return user_data, clusters, user_clusters
 
