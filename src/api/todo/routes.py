@@ -16,7 +16,7 @@ client = OpenAI(
 @app.post("/query-ai", response_model=List[QueryAiResponseBlock], response_model_by_alias=False, status_code=201)
 async def query_ai(query: Query) -> List[QueryAiResponseBlock]:
     prompt_format = """
-    this prompt is to describe how i want to format your response. i will prompt with something like a book title or an article and i want you to respond with the following format
+    this prompt is to describe how i want to format your response. i will prompt with something like a book title or an idea or concept and i want you to respond with the following format
     '
     concept 1
     content 1

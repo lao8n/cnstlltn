@@ -159,7 +159,7 @@ const ConstellationPane: FC = (): ReactElement => {
                 if (unclusteredContent !== 0) {
                     drawUnclusteredContentNotification(form,  canvasRef.current?.parentElement?.clientWidth || 0, unclusteredContent);
                 } 
-                if (constellationPts.current.length === 0) {
+                if (unclusteredContent === 0 && constellationPts.current.length === 0) {
                     drawNoConstellationContentNotification(form,  canvasRef.current?.parentElement?.clientWidth || 0,  canvasRef.current?.parentElement?.clientHeight || 0, appContext.state.userState.constellationName, 15);
                 }
             },
@@ -174,6 +174,7 @@ const ConstellationPane: FC = (): ReactElement => {
                                 actions.constellation.setConstellation([]);
                                 actions.cluster.setClusters([]);
                                 actions.display.setSelectedContent(null);
+                                setUnclusteredContent(0);
                                 actions.cluster.setClusterBy('');
                                 actions.constellation.setConstellationName(pt.name);
                                 actions.display.setUpdated(Date.now());
