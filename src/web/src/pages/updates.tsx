@@ -20,7 +20,7 @@ export const Updates = () => {
                 Current Major Bugs
             </Stack.Item>
             <Stack.Item styles={updateTextStyle}>
-                - Google sign in is not using the correct ID
+                - [Fixed] Google sign in is not using the correct ID
                 - [Fixed] If you have a constellation with existing content and then try an already existing cluster by it creates loads of new clusters. Current solution is just cluster by again.
             </Stack.Item>
             <Stack.Item styles={updateHeadingStyle}>
