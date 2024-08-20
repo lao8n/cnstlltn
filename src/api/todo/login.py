@@ -11,12 +11,12 @@ def get_login_config() -> LoginConfig:
     return LoginConfig(googleClientId=settings.GOOGLE_LOGIN_CLIENT_ID)
 
 @app.post("/login/google")
-def google_login(token: Token) -> str:
+async def google_login(token: Token) -> str:
     try:
         id_info = id_token.verify_oauth2_token(token.token, requests.Request(), settings.GOOGLE_LOGIN_CLIENT_ID)
         google_user_id = id_info['sub']
         print("google user id: ", google_user_id)
-        userid = get_or_create_user(google_user_id)
+        userid = await get_or_create_user(str(google_user_id))
         print("userid: ", userid)
         return userid
     except ValueError:
