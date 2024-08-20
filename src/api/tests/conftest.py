@@ -5,7 +5,7 @@ import pytest
 from fastapi.testclient import TestClient
 from todo.app import app, settings
 from beanie import init_beanie
-from todo.models import UserCluster, UserFramework
+from todo.models import __beanie_models__
 TEST_DB_NAME = "test_db"
 
 @pytest.fixture(scope="session")
@@ -34,7 +34,7 @@ async def initialize_database():
     )
     await init_beanie(
         database=client[settings.AZURE_COSMOS_DATABASE_NAME],
-        document_models=[UserFramework, UserCluster],
+        document_models=[__beanie_models__],
     )
     yield
     await client.drop_database(TEST_DB_NAME)

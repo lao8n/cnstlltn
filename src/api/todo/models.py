@@ -61,8 +61,6 @@ class UserFramework(Document):
     title: str
     content: str
 
-# Coordinates = Tuple[float, float]
-
 class UserCluster(Document):
     userid: str
     constellation: str

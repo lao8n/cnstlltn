@@ -4,14 +4,8 @@ param tags object = {}
 
 param collections array = [
   {
-    name: 'TodoList'
-    id: 'TodoList'
-    shardKey: 'Hash'
-    indexKey: '_id'
-  }
-  {
-    name: 'TodoItem'
-    id: 'TodoItem'
+    name: 'UserId'
+    id: 'UserId'
     shardKey: 'Hash'
     indexKey: '_id'
   }
