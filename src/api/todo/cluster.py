@@ -79,7 +79,7 @@ async def get_cluster_by_suggestion(user_id, constellation_name) -> str:
 async def cluster_by(user_id, constellation_name, cluster_by, cluster_new_only):
     print("get_cluster_by params:", user_id, constellation_name, cluster_by, cluster_new_only)
     await _set_not_latest(user_id, constellation_name)
-    user_data, clusters, user_clusters = await _data_to_cluster(user_id, constellation_name, cluster_new_only)
+    user_data, clusters, user_clusters = await _data_to_cluster(user_id, constellation_name, cluster_by, cluster_new_only)
     print("data to cluster output:", user_data, clusters, user_clusters)
     prompt_format = f"""
     this prompt is to describe how i want to format your response. i will prompt with something like a list of concepts
@@ -147,7 +147,7 @@ async def _set_not_latest(user_id, constellation_name):
         await user_cluster.save()
     return
 
-async def _data_to_cluster(user_id: str, constellation_name: str, cluster_new_only: bool):
+async def _data_to_cluster(user_id: str, constellation_name: str, cluster_by: str, cluster_new_only: bool):
     user_data : List[UserFramework] = await UserFramework.find(
         UserFramework.userid == user_id,
         UserFramework.constellation == constellation_name,
@@ -163,7 +163,7 @@ async def _data_to_cluster(user_id: str, constellation_name: str, cluster_new_on
         ).to_list()
         framework_keys = set()
         for user_cluster in user_clusters:
-            framework_keys.update(user_cluster.framework.keys())
+            framework_keys.update(user_cluster.frameworks.keys())
             clusters[user_cluster.cluster] = user_cluster.coordinate
         new_user_data = [user_framework for user_framework in user_data if str(user_framework.id) not in framework_keys]
         print("data_to_cluster", new_user_data, " user_clusters ", user_clusters, " framework_keys", framework_keys)
