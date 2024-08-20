@@ -1,5 +1,5 @@
 import { FC, ReactElement } from 'react';
-import Header from '../layouts/header';
+import Header from '../panes/header';
 import { Routes, Route } from 'react-router-dom';
 import { Constellation } from './constellation';
 import { Login } from './login';

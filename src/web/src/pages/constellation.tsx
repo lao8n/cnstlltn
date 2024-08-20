@@ -2,10 +2,10 @@ import { useContext } from 'react';
 import { Stack } from '@fluentui/react';
 import { UserAppContext } from '../state/userContext';
 import { AppContext } from '../state/applicationState';
-import ConstellationPane from '../layouts/constellationPane';
+import ConstellationPane from '../panes/constellationPane';
 import { constellationQueryPageStyle, queryPageStyle } from '../ux/pages';
-import WelcomePane from '../layouts/welcomePane';
-import QueryPane from '../layouts/queryPane';
+import WelcomePane from '../panes/welcomePane';
+import QueryPane from '../panes/queryPane';
 import { constellationStackStyle } from '../ux/constellation';
 
 export const Constellation = () => {
