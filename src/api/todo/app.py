@@ -81,7 +81,7 @@ if settings.APPLICATIONINSIGHTS_CONNECTION_STRING:
     FastAPIInstrumentor.instrument_app(app, tracer_provider=tracerProvider)
 
 # from .models import Settings, __beanie_models__
-from todo import routes  # NOQA
+from todo import routes, login  # NOQA
 
 # @asynccontextmanager
 # async def lifespan(app: FastAPI):
