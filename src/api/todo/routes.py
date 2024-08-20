@@ -116,7 +116,3 @@ async def cluster_by(request: Request):
     cluster_new_only = request.query_params.get("clusterNewOnly")
     await cl.cluster_by(user_id, constellation_name, cluster_by, cluster_new_only)
     return
-
-@app.get("/login-config", response_model=LoginConfig, status_code=200)
-def get_login_config() -> LoginConfig:
-    return LoginConfig(googleClientId=settings.GOOGLE_LOGIN_CLIENT_ID)

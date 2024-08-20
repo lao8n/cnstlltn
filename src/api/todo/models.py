@@ -38,6 +38,9 @@ class Settings(BaseSettings):
         env_file = ".env"
         env_file_encoding = "utf-8"
 
+class Token(BaseModel):
+    token: str
+
 class Query(BaseModel):
     userTxt: str
 
@@ -69,4 +72,8 @@ class UserCluster(Document):
     coordinate: Tuple[float, float] = (0, 0)
     frameworks: Dict[str, Tuple[float, float]] = Field(default_factory=dict) # object id as key
 
-__beanie_models__ = [UserFramework, UserCluster]
+class UserId(Document):
+    userid: str
+    googleid: str
+
+__beanie_models__ = [UserFramework, UserCluster, UserId]

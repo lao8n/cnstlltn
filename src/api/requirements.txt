@@ -11,3 +11,5 @@ azure-monitor-opentelemetry-exporter == 1.0.0b5
 openai
 pydantic == 2.*
 pydantic-settings == 2.*
+google-auth
+uuid

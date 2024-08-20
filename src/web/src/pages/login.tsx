@@ -30,9 +30,10 @@ export const Login = () => {
   const [googleClientId, setGoogleClientId] = useState("");
 
   // functions
-  const handleLoginSuccess = (response: CredentialResponse) => {
+  const handleLoginSuccess = async (response: CredentialResponse) => {
     console.log('Login Success:', response);
-    actions.user.setUser(true, response.credential || "");
+    const userid = await actions.user.getGoogleUserId(response.credential || "");
+    actions.user.setUser(true, userid);
     actions.constellation.setConstellation([]);
     actions.cluster.setClusters([]);
     actions.display.setSelectedContent(null); // if you selected on welcome screen deselect this

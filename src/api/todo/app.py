@@ -9,8 +9,7 @@ from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import BatchSpanProcessor
 import os
 from pathlib import Path
-from contextlib import asynccontextmanager
-from todo.models import UserFramework, UserCluster, Settings
+from todo.models import __beanie_models__, Settings
 # Use API_ALLOW_ORIGINS env var with comma separated urls like
 # `http://localhost:300, http://otherurl:100`
 # Requests coming to the api server from other urls will be rejected as per
@@ -109,5 +108,5 @@ async def startup_event():
     )
     await init_beanie(
         database=client[settings.AZURE_COSMOS_DATABASE_NAME],
-        document_models=[UserFramework, UserCluster],
+        document_models=[__beanie_models__],
     )

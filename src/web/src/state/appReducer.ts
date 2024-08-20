@@ -5,6 +5,8 @@ import { ApplicationState } from "../state/applicationState";
 export const appReducer: Reducer<ApplicationState, ApplicationActions> = (state: ApplicationState, action: ApplicationActions): ApplicationState => {
     switch (action.type) {
         // user
+        case ActionTypes.GET_GOOGLE_USER_ID:
+            break;
         case ActionTypes.SET_USER:
             state.userState = { ...state.userState, isLoggedIn: action.isLoggedIn, userId: action.userId };
             break;

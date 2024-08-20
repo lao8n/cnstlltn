@@ -8,9 +8,23 @@ import config from "../../config";
 const userService = new UserService(config.api.baseUrl);
 
 export interface UserActions {
+    getGoogleUserId(idToken: string): Promise<string>;
     setUser(isLoggedIn: boolean, userId: string): void;
     getLoginConfig(): Promise<LoginConfig>;
 }
+
+export const getGoogleUserId = (idToken: string): ActionMethod<string> =>
+    async (dispatch: Dispatch<GetGoogleUserIdAction>) => {
+        const userid = await userService.getGoogleUserId(idToken);
+        dispatch(getGoogleUserIdAction(userid))
+        return userid;
+    }
+
+export interface GetGoogleUserIdAction extends PayloadAction<string, string> {
+    type: ActionTypes.GET_GOOGLE_USER_ID;
+}
+
+const getGoogleUserIdAction = createPayloadAction<GetGoogleUserIdAction>(ActionTypes.GET_GOOGLE_USER_ID);
 
 export const setUser = (isLoggedIn: boolean, userId: string) =>
     (dispatch: Dispatch<SetUserAction>) => {

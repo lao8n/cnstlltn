@@ -8,6 +8,7 @@ export enum ActionTypes {
     // user 
     SET_USER = "SET_USER",
     GET_LOGIN_CONFIG = "GET_LOGIN_CONFIG",
+    GET_GOOGLE_USER_ID = "GET_GOOGLE_USER_ID",
     // query
     POST_QUERY_RESPONSE_LIST = "POST_QUERY_RESPONSE_LIST",
     SET_EMPTY_QUERY_RESPONSE_LIST = "SET_EMPTY_QUERY_RESPONSE_LIST",
@@ -30,6 +31,7 @@ export enum ActionTypes {
 
 export type ApplicationActions =
     // user
+    userActions.GetGoogleUserIdAction |
     userActions.SetUserAction |
     userActions.GetLoginConfigAction |
     // query

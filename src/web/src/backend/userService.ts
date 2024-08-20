@@ -17,5 +17,16 @@ export class UserService {
         });
         return response.data;
     }
+
+    public async getGoogleUserId(idToken: string): Promise<string> {
+        const response = await this.client.request<string>({
+            method: 'POST',
+            url: `${this.baseUrl}/login/google`,
+            data: {
+                token: idToken
+            }
+        });
+        return response.data;
+    }
 }
 
