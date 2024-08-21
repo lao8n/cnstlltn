@@ -94,8 +94,10 @@ const QueryPane: FC = (): ReactElement => {
 
     // effects
     useEffect(() => {
-        console.log("set empty query response list")
+        console.log("query pane reset")
         setSelectedResponses(new Set());
+        setIsSecondSearchVisible(false);
+        setNewSource('');
         actions.query.setEmptyQueryResponseList();
     }, [actions.query, appContext.state.userState.constellationName])
 
@@ -110,7 +112,7 @@ const QueryPane: FC = (): ReactElement => {
                         </button>
                         </Stack.Item>
                     )}
-                    <Stack.Item>
+                    <Stack.Item styles={queryBarStyle}>
                         <SearchBox
                             value={newQuery}
                             className="inputField"
