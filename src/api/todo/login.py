@@ -41,6 +41,8 @@ async def get_or_create_user(google_user_id: str) -> str:
         title="Cnstlltn Playground",
         content="",
     ).first_or_none()
+    print("new user:", new_user)
+    print("saved user framework:", saved_user_framework)
     if saved_user_framework:
         user_cluster = UserCluster(
             userid=new_user.userid,
@@ -48,8 +50,8 @@ async def get_or_create_user(google_user_id: str) -> str:
             clusterby="Cnstlltn Tutorial",
             islatest=True,
             cluster="Cnstlltn Tutorial",
-            coordinate=[0.5, 0.4],
-            frameworks={saved_user_framework.id: [0.55, 0.35]}
+            coordinate=(0.5, 0.4),
+            frameworks={saved_user_framework.id: (0.55, 0.35)}
         )
         await user_cluster.save()
     return new_user.userid

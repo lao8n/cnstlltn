@@ -141,7 +141,10 @@ export function drawNoConstellationContentNotification(form: CanvasForm, width: 
         text = [
             `Hey! You have no content in your constellation`,
             `Prompt the AI for possible notes in the right-hand panel.`,
-            `Then select the ones you are interested in and save them to your constellation.`
+            `Then select the ones you are interested in and save them to your constellation.`,
+            `Good prompts to try include a book you like such as Jared Diamond's Guns, Germs and Steel`,
+            `Or you could try a concepts and arguments such as Causes of the First World War`, 
+            `Prompting is an art - but feel free to add lots of detail`
         ]
     }
     for (let i = 0; i < text.length; i++) {
