@@ -31,10 +31,16 @@ const QueryPane: FC = (): ReactElement => {
 
     // display
     const [newQuery, setNewQuery] = useState('');
+    const [newSource, setNewSource] = useState('');
     const [selectedResponses, setSelectedResponses] = useState<Set<number>>(new Set());
+    const [isSecondSearchVisible, setIsSecondSearchVisible] = useState(false);
     const onTypeQuery = (_: ChangeEvent<HTMLInputElement> | undefined, newValue?: string) => {
         // console.log("onTypeQuery:", newValue)
         setNewQuery(newValue || '');
+    }
+    const onTypeSource = (_: ChangeEvent<HTMLInputElement> | undefined, newValue?: string) => {
+        // console.log("onTypeQuery:", newValue)
+        setNewSource(newValue || '');
     }
 
     // functions
@@ -46,6 +52,9 @@ const QueryPane: FC = (): ReactElement => {
             newSelectedResponses.add(index);
         }
         setSelectedResponses(newSelectedResponses);
+    };
+    const toggleSecondSearch = () => {
+        setIsSecondSearchVisible(!isSecondSearchVisible);
     };
     const onSubmit = async () => {
         if (newQuery && appContext.state.userState.constellationName !== "Home") {
@@ -93,27 +102,39 @@ const QueryPane: FC = (): ReactElement => {
     return (
         <Stack styles={queryStackStyle}>
             <Stack.Item tokens={stackItemPadding}>
-                <SearchBox
-                    value={newQuery}
-                    className="inputField"
-                    placeholder={
-                        appContext.state.userState.constellationName === "Home" ?
-                            "Enter name of new constellation" : "Prompt for notes or copy in an article or transcript"}
-                    onChange={onTypeQuery}
-                    onSearch={onSubmit}
-                    styles={queryFieldStyles}
-                />
-                <form onSubmit={onSubmit}>
-                    <input type="text"
-                        value={newQuery}
-                        placeholder='{
-                            appContext.state.userState.constellationName === "Home" ?
-                                "Enter name of new constellation" : "Prompt for notes"}'
-                        onChange={onTypeQuery}
-                        className="inputField"
-                        style={queryFieldStyle}
-                    />
-                </form>
+                <Stack horizontal>
+                    {appContext.state.userState.constellationName !== "Home" && (
+                        <Stack.Item>
+                        <button onClick={toggleSecondSearch} style={{ marginRight: '10px' }}>
+                            {isSecondSearchVisible ? '▲' : '▼'}
+                        </button>
+                        </Stack.Item>
+                    )}
+                    <Stack.Item>
+                        <SearchBox
+                            value={newQuery}
+                            className="inputField"
+                            placeholder={
+                                appContext.state.userState.constellationName === "Home" ?
+                                    "Enter name of new constellation" : "Prompt for notes"}
+                            onChange={onTypeQuery}
+                            onSearch={onSubmit}
+                            styles={queryFieldStyles}
+                            />
+                    </Stack.Item>
+                </Stack>
+                {appContext.state.userState.constellationName !== "Home" && isSecondSearchVisible && (
+                    <Stack.Item>
+                        <SearchBox
+                            value={newSource}
+                            className="inputField"
+                            placeholder="Add source article or video transcript"
+                            onChange={onTypeSource}
+                            onSearch={onSubmit}
+                            styles={queryFieldStyles}
+                        />
+                    </Stack.Item>
+                )}
             </Stack.Item>
             <Stack.Item tokens={stackItemPadding}>
                 {appContext.state.queryState.responses && appContext.state.queryState.responses.map((response, index) => (
