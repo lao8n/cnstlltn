@@ -32,6 +32,9 @@ export const Updates = () => {
             </Stack.Item>
             <Stack.Item styles={updateTextStyle}>
                 <Stack.Item>
+                    Add a playground constellation and a better introduction
+                </Stack.Item>
+                <Stack.Item>
                 - [Released] Adding a separate input bar for source text such as a youtube transcript or an article
                 </Stack.Item>
             </Stack.Item>
