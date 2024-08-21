@@ -32,7 +32,7 @@ export const Updates = () => {
             </Stack.Item>
             <Stack.Item styles={updateTextStyle}>
                 <Stack.Item>
-                - Adding a separate input bar for source text such as a youtube transcript or an article
+                - [Released] Adding a separate input bar for source text such as a youtube transcript or an article
                 </Stack.Item>
             </Stack.Item>
         </Stack>
