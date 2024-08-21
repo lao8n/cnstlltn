@@ -1,4 +1,4 @@
-from todo.models import (LoginConfig)
+from todo.models import (LoginConfig, UserFramework, UserCluster)
 from todo.app import app, settings
 from fastapi import HTTPException, status
 from google.auth.transport import requests
@@ -28,4 +28,28 @@ async def get_or_create_user(google_user_id: str) -> str:
         return user.userid
     new_user = UserId(userid=str(uuid.uuid4()), googleid=google_user_id)
     await new_user.insert()
+    user_framework = UserFramework(
+        userid=new_user.userid,
+        constellation="Home",
+        title="Cnstlltn Playground",
+        content="",
+    )
+    await user_framework.save()
+    saved_user_framework = await UserFramework.find(
+        userid=user_framework.userid,
+        constellation="Home",
+        title="Cnstlltn Playground",
+        content="",
+    ).first_or_none()
+    if saved_user_framework:
+        user_cluster = UserCluster(
+            userid=new_user.userid,
+            constellation="Home",
+            clusterby="Cnstlltn Tutorial",
+            islatest=True,
+            cluster="Cnstlltn Tutorial",
+            coordinate=[0.5, 0.4],
+            frameworks={saved_user_framework.id: [0.55, 0.35]}
+        )
+        await user_cluster.save()
     return new_user.userid

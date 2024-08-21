@@ -159,7 +159,7 @@ const ConstellationPane: FC = (): ReactElement => {
                 if (unclusteredContent !== 0) {
                     drawUnclusteredContentNotification(form,  canvasRef.current?.parentElement?.clientWidth || 0, unclusteredContent);
                 } 
-                if (unclusteredContent === 0 && constellationPts.current.length === 0) {
+                if (unclusteredContent === 0 && constellationPts.current.length === 0){
                     drawNoConstellationContentNotification(form,  canvasRef.current?.parentElement?.clientWidth || 0,  canvasRef.current?.parentElement?.clientHeight || 0, appContext.state.userState.constellationName, 15);
                 }
             },

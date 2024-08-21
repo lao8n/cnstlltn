@@ -118,7 +118,7 @@ const QueryPane: FC = (): ReactElement => {
                             className="inputField"
                             placeholder={
                                 appContext.state.userState.constellationName === "Home" ?
-                                    "Enter name of new constellation" : "Prompt for notes"}
+                                    "Enter name for new constellation" : "Prompt for notes"}
                             onChange={onTypeQuery}
                             onSearch={onSubmit}
                             styles={queryFieldStyles}
@@ -154,7 +154,7 @@ const QueryPane: FC = (): ReactElement => {
                     appContext.state.userState.constellationName === "Home" ?
                         createConstellation : saveSelectedResponses}>
                     {appContext.state.userState.constellationName === "Home" ?
-                        "Create Constellation" : "Save to Constellation"}
+                        "Create new constellation" : "Save to constellation"}
                 </button>
             </Stack.Item>
         </Stack>
