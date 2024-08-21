@@ -43,6 +43,7 @@ class Token(BaseModel):
 
 class Query(BaseModel):
     userTxt: str
+    source: str
 
 class QueryAiResponseBlock(BaseModel):
     title: str    

@@ -15,6 +15,9 @@ client = OpenAI(
 
 @app.post("/query-ai", response_model=List[QueryAiResponseBlock], response_model_by_alias=False, status_code=201)
 async def query_ai(query: Query) -> List[QueryAiResponseBlock]:
+    print("query-ai")
+    print("user text: ", query.userTxt)
+    print("source: ", query.source)
     prompt_format = """
     this prompt is to describe how i want to format your response. i will prompt with something like a book title or an idea or concept and i want you to respond with the following format
     '
@@ -33,6 +36,8 @@ async def query_ai(query: Query) -> List[QueryAiResponseBlock]:
 
     Note how none of the concepts or titles are numbered etc. 
     """
+    if query.source != "":
+        prompt_format += "I have also included source material which you should use as the basis of your answer"
     response = client.chat.completions.create(
         model='gpt-4o', # best model
         messages=[
@@ -42,7 +47,7 @@ async def query_ai(query: Query) -> List[QueryAiResponseBlock]:
             },
             {
                 "role": "user",
-                "content": query.userTxt,
+                "content": query.userTxt + query.source,
             }
         ]
     )

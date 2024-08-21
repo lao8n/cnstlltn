@@ -5,6 +5,7 @@ export interface QueryState {
 
 export interface Query {
     userTxt: string;
+    source: string
 }
 
 export interface QueryResponse {

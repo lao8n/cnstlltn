@@ -58,7 +58,7 @@ const QueryPane: FC = (): ReactElement => {
     };
     const onSubmit = async () => {
         if (newQuery && appContext.state.userState.constellationName !== "Home") {
-            const query: Query = {userTxt: newQuery}
+            const query: Query = {userTxt: newQuery, source: newSource}
             await actions.query.postQueryResponseList(query) // reducer updates state
              // set selected responses to empty
             setSelectedResponses(new Set());
