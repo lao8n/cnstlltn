@@ -61,6 +61,10 @@ export const queryFieldStyles = {
     field: {
         color: theme.palette.black,
         fontFamily: "Segoe UI",
+        '::placeholder': {
+            color: theme.palette.black,
+            opacity: 0.8,
+        }
     },
 };
 
