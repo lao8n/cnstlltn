@@ -15,7 +15,7 @@ import { DisplayActions } from '../state/actions/displayActions';
 import * as displayActions from '../state/actions/displayActions';
 // ux imports
 import { canvasStackStyle, canvasStyle, clusterByStyle, constellationNameStyle, clusterByWordStyle } from '../ux/components';
-import { stackItemPadding } from '../ux/tokens';
+import { stackItemPadding } from '../ux/constellation';
 import { CnstlltnTheme } from "../ux/theme";
 import { constellationHeaderStackStyle, constellationStackStyle } from '../ux/constellation';
 // display imports

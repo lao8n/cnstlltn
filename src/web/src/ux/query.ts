@@ -1,4 +1,4 @@
-import { IStackStyles } from '@fluentui/react'
+import { IStackStyles, IStackItemTokens } from '@fluentui/react'
 import { CnstlltnTheme } from './theme'
 
 const theme = CnstlltnTheme
@@ -9,4 +9,14 @@ export const queryStackStyle: IStackStyles = {
         background: theme.palette.neutralPrimary,
         boxShadow: theme.effects.elevation8,
     }
+}
+
+export const queryBarStyle: IStackStyles = {
+    root: {
+        width: '100%',
+    }
+}
+
+export const stackItemPadding: IStackItemTokens = {
+    padding: 10,
 }

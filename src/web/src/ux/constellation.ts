@@ -1,4 +1,4 @@
-import { IStackStyles } from '@fluentui/react'
+import { IStackStyles, IStackItemTokens } from '@fluentui/react'
 
 export const constellationStackStyle: IStackStyles = {
     root: {
@@ -13,4 +13,8 @@ export const constellationHeaderStackStyle: IStackStyles = {
     root: {
         justifyContent: 'space-between',
     }
+}
+
+export const stackItemPadding: IStackItemTokens = {
+    padding: 10,
 }

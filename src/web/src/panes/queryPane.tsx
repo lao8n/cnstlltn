@@ -14,11 +14,11 @@ import { ConstellationActions } from '../state/actions/constellationActions';
 import * as constellationActions from '../state/actions/constellationActions';
 import { DisplayActions } from '../state/actions/displayActions';
 import * as displayActions from '../state/actions/displayActions';
-import { queryStackStyle } from '../ux/query';
+import { queryBarStyle, queryStackStyle } from '../ux/query';
 // ux imports
 import '../ux/components.css'
-import { stackItemPadding } from '../ux/tokens';
-import { buttonStyles, selectedButtonStyles, queryFieldStyles, queryFieldStyle } from '../ux/components';
+import { stackItemPadding } from '../ux/query';
+import { buttonStyles, selectedButtonStyles, queryFieldStyles } from '../ux/components';
 
 const QueryPane: FC = (): ReactElement => {
     const appContext = useContext<AppContext>(UserAppContext)
@@ -102,10 +102,10 @@ const QueryPane: FC = (): ReactElement => {
     return (
         <Stack styles={queryStackStyle}>
             <Stack.Item tokens={stackItemPadding}>
-                <Stack horizontal>
+                <Stack horizontal styles={queryBarStyle}>
                     {appContext.state.userState.constellationName !== "Home" && (
-                        <Stack.Item>
-                        <button onClick={toggleSecondSearch} style={{ marginRight: '10px' }}>
+                        <Stack.Item align="stretch">
+                        <button onClick={toggleSecondSearch} style={{ height: '100%', marginRight: '1px' }}>
                             {isSecondSearchVisible ? '▲' : '▼'}
                         </button>
                         </Stack.Item>
@@ -128,10 +128,11 @@ const QueryPane: FC = (): ReactElement => {
                         <SearchBox
                             value={newSource}
                             className="inputField"
-                            placeholder="Add source article or video transcript"
+                            placeholder="Copy-paste source article or video transcript"
                             onChange={onTypeSource}
                             onSearch={onSubmit}
                             styles={queryFieldStyles}
+                            iconProps={{styles: {root: { display: 'none' }}}} // hides search icon
                         />
                     </Stack.Item>
                 )}
