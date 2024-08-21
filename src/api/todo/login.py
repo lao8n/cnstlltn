@@ -35,12 +35,12 @@ async def get_or_create_user(google_user_id: str) -> str:
         content="",
     )
     await user_framework.save()
-    saved_user_framework = await UserFramework.find(
+    saved_user_framework = await UserFramework.find_one(
         userid=user_framework.userid,
         constellation="Home",
         title="Cnstlltn Playground",
         content="",
-    ).first_or_none()
+    )
     print("new user:", new_user)
     print("saved user framework:", saved_user_framework)
     if saved_user_framework:
