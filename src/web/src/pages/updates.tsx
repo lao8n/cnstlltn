@@ -6,7 +6,7 @@ export const Updates = () => {
     return(
         <Stack styles={updatesPageStyle}>
             <Stack.Item styles={updateHeadingStyle}>
-                Updates - last updated 08/20/2024
+                Updates - last updated 08/21/2024
             </Stack.Item>
             <Stack.Item styles={updateTextStyle}>
                 This page is for updates on cnstlltn. As we are still in pre-alpha there will be lots of bugs so please send any you see over to cnstlltn@outlook.com. We also welcome any feedback you wish to share including feature requests etc.
@@ -20,14 +20,20 @@ export const Updates = () => {
                 Current Major Bugs
             </Stack.Item>
             <Stack.Item styles={updateTextStyle}>
+                <Stack.Item>
                 - [Fixed] If you have a constellation with existing content and then try an already existing cluster by it creates loads of new clusters.
+                </Stack.Item>
+                <Stack.Item>
                 - [Fixed] Google sign in is not using the correct ID
+                </Stack.Item>
             </Stack.Item>
             <Stack.Item styles={updateHeadingStyle}>
                 Currently Worked On Features
             </Stack.Item>
             <Stack.Item styles={updateTextStyle}>
-                -
+                <Stack.Item>
+                - Adding a separate input bar for source text such as a youtube transcript or an article
+                </Stack.Item>
             </Stack.Item>
         </Stack>
     );
