@@ -1,9 +1,6 @@
 // react imports
 import { SearchBox, Stack } from '@fluentui/react';
 import { FC, ReactElement, useState, useContext, useEffect, useMemo, ChangeEvent } from "react";
-// ux imports
-import { stackItemPadding } from '../ux/tokens';
-import { buttonStyles, selectedButtonStyles, queryFieldStyles } from '../ux/components';
 // state imports
 import { AppContext } from '../state/applicationState';
 import { Query, QueryResponse } from '../state/queryState';
@@ -18,6 +15,10 @@ import * as constellationActions from '../state/actions/constellationActions';
 import { DisplayActions } from '../state/actions/displayActions';
 import * as displayActions from '../state/actions/displayActions';
 import { queryStackStyle } from '../ux/query';
+// ux imports
+import '../ux/components.css'
+import { stackItemPadding } from '../ux/tokens';
+import { buttonStyles, selectedButtonStyles, queryFieldStyles, queryFieldStyle } from '../ux/components';
 
 const QueryPane: FC = (): ReactElement => {
     const appContext = useContext<AppContext>(UserAppContext)
@@ -94,13 +95,25 @@ const QueryPane: FC = (): ReactElement => {
             <Stack.Item tokens={stackItemPadding}>
                 <SearchBox
                     value={newQuery}
+                    className="inputField"
                     placeholder={
                         appContext.state.userState.constellationName === "Home" ?
                             "Enter name of new constellation" : "Prompt for notes or copy in an article or transcript"}
                     onChange={onTypeQuery}
                     onSearch={onSubmit}
                     styles={queryFieldStyles}
+                />
+                <form onSubmit={onSubmit}>
+                    <input type="text"
+                        value={newQuery}
+                        placeholder='{
+                            appContext.state.userState.constellationName === "Home" ?
+                                "Enter name of new constellation" : "Prompt for notes"}'
+                        onChange={onTypeQuery}
+                        className="inputField"
+                        style={queryFieldStyle}
                     />
+                </form>
             </Stack.Item>
             <Stack.Item tokens={stackItemPadding}>
                 {appContext.state.queryState.responses && appContext.state.queryState.responses.map((response, index) => (

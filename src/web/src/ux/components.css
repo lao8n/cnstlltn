@@ -1,0 +1,4 @@
+.inputField::placeholder {
+    color: black;
+    opacity: 0.8;
+}

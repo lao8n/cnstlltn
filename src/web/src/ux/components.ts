@@ -68,6 +68,12 @@ export const queryFieldStyles = {
     },
 };
 
+export const queryFieldStyle: React.CSSProperties = {
+    color: 'black', // Use a specific color code or a variable from a theme
+    fontFamily: 'Segoe UI'
+    
+};
+
 
 export const clusterByStyle: Partial<ITextFieldStyles> = {
     root: {
