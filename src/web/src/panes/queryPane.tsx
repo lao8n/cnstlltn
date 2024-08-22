@@ -14,7 +14,7 @@ import { ConstellationActions } from '../state/actions/constellationActions';
 import * as constellationActions from '../state/actions/constellationActions';
 import { DisplayActions } from '../state/actions/displayActions';
 import * as displayActions from '../state/actions/displayActions';
-import { queryBarStyle, queryStackStyle } from '../ux/query';
+import { badInputNotifications, queryBarStyle, queryStackStyle } from '../ux/query';
 // ux imports
 import '../ux/components.css'
 import { stackItemPadding } from '../ux/query';
@@ -165,20 +165,20 @@ const QueryPane: FC = (): ReactElement => {
                     </Stack.Item>
                 )}
             </Stack.Item>
-            {emptyQuery && 
+            {emptyQuery &&
                 (
-                appContext.state.userState.constellationName === "Home" ? 
-                    <Stack.Item>
+                    appContext.state.userState.constellationName === "Home" ?
+                        <Stack.Item styles={badInputNotifications}>
                         Hey, try to typing a constellation title in the box above and then click create below.
                     </Stack.Item> :
-                    <Stack.Item>
+                    <Stack.Item styles={badInputNotifications}>
                         Hey, add a prompt first before searching for notes. Try 'Poor Charlie's Almanac'.
                     </Stack.Item>
                 )
             }
             {
                 emptySelection && appContext.state.userState.constellationName !== "Home" && (
-                    <Stack.Item>
+                    <Stack.Item styles={badInputNotifications}>
                         Click on the notes you want to save before trying to save to constellation.
                     </Stack.Item>
                 )

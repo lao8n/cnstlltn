@@ -17,6 +17,14 @@ export const queryBarStyle: IStackStyles = {
     }
 }
 
+export const badInputNotifications: IStackStyles = {
+    root: {
+        padding: 10,
+        color: theme.palette.black
+    }
+}
+
+
 export const stackItemPadding: IStackItemTokens = {
     padding: 10,
 }
