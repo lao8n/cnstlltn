@@ -144,7 +144,7 @@ export function drawNoConstellationContentNotification(form: CanvasForm, width: 
             `Then select the ones you are interested in and save them to your constellation.`,
             `Good prompts to try include a book you like such as Jared Diamond's Guns, Germs and Steel`,
             `Or you could try a concepts and arguments such as Causes of the First World War`, 
-            `Prompting is an art - but feel free to add lots of detail`
+            `Prompting is an art rather than a science but usually the more detail the better!!`
         ]
     }
     for (let i = 0; i < text.length; i++) {

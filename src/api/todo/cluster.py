@@ -36,7 +36,7 @@ async def get_cluster_by_options(user_id, constellation_name) -> List[str]:
     )
     cluster_options = set()
     async for user_cluster in user_clusters:
-        if user_cluster.clusterby != "Constellation Tutorial":
+        if user_cluster.clusterby != "Cnstlltn Tutorial":
             cluster_options.add(user_cluster.clusterby)
     cluster_options_list = list(cluster_options)
     print("get_cluster_by_options returns:", cluster_options_list)
