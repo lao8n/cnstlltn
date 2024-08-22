@@ -36,7 +36,7 @@ async def get_or_create_user(google_user_id: str) -> str:
     )
     await user_framework.save()
     saved_user_framework = await UserFramework.find_one(
-        userid=user_framework.userid,
+        userid=new_user.userid,
         constellation="Home",
         title="Cnstlltn Playground",
         content="",
