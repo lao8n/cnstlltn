@@ -79,14 +79,7 @@ async def save_frameworks(request: Request, saveFrameworks: List[Framework]) -> 
         )        
         results.append(userFramework)
         await userFramework.save()
-        saved_user_framework = await UserFramework.find_one(
-            UserFramework.userid==user_id,
-            UserFramework.constellation==constellation_name,
-            UserFramework.title==framework.title, 
-            UserFramework.content==framework.content
-        )
-        print("id comparisons: ", userFramework.id, saved_user_framework.id)
-        ids.append(str(saved_user_framework.id))
+        ids.append(str(userFramework.id))
     user_cluster = await UserCluster.find_one(
         UserCluster.userid == user_id,
         UserCluster.constellation==constellation_name,

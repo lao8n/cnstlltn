@@ -35,24 +35,16 @@ async def get_or_create_user(google_user_id: str) -> str:
         content="",
     )
     await user_framework.save()
-    saved_user_framework = await UserFramework.find_one(
-        UserFramework.userid==new_user.userid,
-        UserFramework.constellation=="Home",
-        UserFramework.title=="Cnstlltn Playground",
-        UserFramework.content=="",
-    )
     print("new user:", new_user)
-    print("saved user framework:", saved_user_framework)
-    if saved_user_framework:
-        user_cluster = UserCluster(
-            userid=new_user.userid,
-            constellation="Home",
-            clusterby="Cnstlltn Tutorial",
-            islatest=True,
-            cluster="Cnstlltn Tutorial",
-            coordinate=(0.5, 0.4)
-        )
-        user_cluster.frameworks[str(saved_user_framework.id)] = (0.55, 0.35)
-        print("user cluster:", user_cluster)
-        await user_cluster.save()
+    user_cluster = UserCluster(
+        userid=new_user.userid,
+        constellation="Home",
+        clusterby="Cnstlltn Tutorial",
+        islatest=True,
+        cluster="Cnstlltn Tutorial",
+        coordinate=(0.5, 0.4)
+    )
+    user_cluster.frameworks[str(user_framework.id)] = (0.55, 0.35)
+    print("user cluster:", user_cluster)
+    await user_cluster.save()
     return new_user.userid
