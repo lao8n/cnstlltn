@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Any
 from todo.models import (UserFramework, UserCluster)
 from openai import OpenAI
 from todo.app import settings
@@ -10,7 +10,7 @@ client = OpenAI(
     api_key=settings.OPENAI_API_KEY
 )
 
-async def get_clusters(user_id, constellation_name, cluster_by, latest) -> List[UserCluster]:
+async def get_clusters(user_id: str, constellation_name: str, cluster_by: str, latest: bool) -> List[UserCluster]:
     print("get_clusters params:", user_id, constellation_name, cluster_by, latest)
     user_clusters = []
     if latest:
@@ -28,7 +28,7 @@ async def get_clusters(user_id, constellation_name, cluster_by, latest) -> List[
     print("get_clusters returns:", user_clusters)
     return user_clusters
 
-async def get_cluster_by_options(user_id, constellation_name) -> List[str]:
+async def get_cluster_by_options(user_id: str, constellation_name: str) -> List[str]:
     print("get_cluster_by_options params:", user_id, constellation_name)
     user_clusters = UserCluster.find(
         UserCluster.userid == user_id,
@@ -42,7 +42,7 @@ async def get_cluster_by_options(user_id, constellation_name) -> List[str]:
     print("get_cluster_by_options returns:", cluster_options_list)
     return cluster_options_list
 
-async def get_cluster_by_suggestion(user_id, constellation_name) -> str:
+async def get_cluster_by_suggestion(user_id: str, constellation_name: str) -> str:
     print("get_cluster_by_suggestion params:", user_id, constellation_name)
     user_data : List[UserFramework] = await UserFramework.find(
         UserFramework.userid == user_id,
@@ -77,7 +77,7 @@ async def get_cluster_by_suggestion(user_id, constellation_name) -> str:
     print("get_cluster_by_suggestion returns:", content)
     return content
 
-async def cluster_by(user_id, constellation_name, cluster_by, cluster_new_only):
+async def cluster_by(user_id: str, constellation_name: str, cluster_by: str, cluster_new_only: bool):
     print("get_cluster_by params:", user_id, constellation_name, cluster_by, cluster_new_only)
     await _set_not_latest(user_id, constellation_name)
     user_data, clusters, user_clusters = await _data_to_cluster(user_id, constellation_name, cluster_by, cluster_new_only)
@@ -135,7 +135,7 @@ async def cluster_by(user_id, constellation_name, cluster_by, cluster_new_only):
     await _save_clusters(user_id, constellation_name, cluster_by, user_clusters, clusters, cluster_ids, new_clusters, new_cluster_ids)
     return
 
-async def _set_not_latest(user_id, constellation_name):
+async def _set_not_latest(user_id: str, constellation_name: str):
     user_clusters = UserCluster.find(
             UserCluster.userid == user_id,
             UserCluster.constellation == constellation_name,
@@ -169,7 +169,7 @@ async def _data_to_cluster(user_id: str, constellation_name: str, cluster_by: st
         user_data = new_user_data
     return user_data, clusters, user_clusters
 
-async def _save_clusters(user_id, constellation_name, cluster_by, user_clusters, clusters, cluster_ids, new_clusters, new_cluster_ids):
+async def _save_clusters(user_id: str, constellation_name: str, cluster_by: str, user_clusters : List[UserCluster], clusters: dict, cluster_ids : defaultdict[Any, list], new_clusters: dict, new_cluster_ids: defaultdict[Any, list]):
     for user_cluster in user_clusters:
         user_cluster.islatest = True
         for id in cluster_ids[user_cluster.cluster]:
@@ -194,6 +194,6 @@ async def _save_clusters(user_id, constellation_name, cluster_by, user_clusters,
         await user_cluster.save()
     return
     
-def _chunk_list(data, chunk_size):
+def _chunk_list(data: List[UserFramework], chunk_size: int):
     for i in range(0, len(data), chunk_size):
         yield data[i:i + chunk_size]

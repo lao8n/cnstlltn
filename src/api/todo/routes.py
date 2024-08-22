@@ -69,14 +69,43 @@ async def save_frameworks(request: Request, saveFrameworks: List[Framework]) -> 
     user_id = request.headers.get("user-id")
     constellation_name = request.query_params.get("constellationName")
     results = []
+    ids = []
     for framework in saveFrameworks:
-        print(f"framework: {framework}")
-        results.append(await UserFramework(
+        userFramework = UserFramework(
             userid=user_id, 
             constellation=constellation_name,
             title=framework.title, 
             content=framework.content
-        ).save())
+        )        
+        results.append(userFramework)
+        await userFramework.save()
+        saved_user_framework = await UserFramework.find_one(
+            UserFramework.userid==user_id,
+            UserFramework.constellation==constellation_name,
+            UserFramework.title==framework.title, 
+            UserFramework.content==framework.content
+        )
+        print("id comparisons: ", userFramework.id, saved_user_framework.id)
+        ids.append(str(saved_user_framework.id))
+    user_cluster = await UserCluster.find_one(
+        UserCluster.userid == user_id,
+        UserFramework.constellation==constellation_name,
+        islatest=True,
+    )
+    if user_cluster is None:
+        user_cluster = UserCluster(
+            userid=user_id,
+            constellation=constellation_name,
+            clusterby='Unclustered',
+            islatest=True,
+            cluster="Unclustered",
+            coordinate=(uniform(0.1, 0.8), uniform(0.1, 0.8))
+        )
+    for id in ids:
+        x = user_cluster.coordinate[0] + uniform(-1, 1) / 8
+        y = user_cluster.coordinate[1] + uniform(-1, 1) / 8
+        user_cluster.frameworks[id] = (x, y)
+    await user_cluster.save()
     return results
 
 @app.get("/get-constellation", response_model=List[UserFramework], status_code=200)

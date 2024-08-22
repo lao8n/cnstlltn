@@ -8,6 +8,9 @@ export function setConstellationDisplayPoints(constellation: UserFramework[], cl
     console.log("constellation: ", constellation, "clustersMap ", clustersMap)
     const displayPoints = constellation.filter(framework => {
         if (clustersMap.has(framework.id)) {
+            if (clustersMap.get(framework.id)?.cluster === "Unclustered") {
+                count++ // increment count for those with cluster unclustered
+            }
             return true;
         } else {
             console.log(`Missing coordinate data for framework: ${framework.title}`);
