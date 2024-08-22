@@ -31,8 +31,10 @@ const QueryPane: FC = (): ReactElement => {
 
     // display
     const [newQuery, setNewQuery] = useState('');
+    const [emptyQuery, setEmptyQuery] = useState(false);
     const [newSource, setNewSource] = useState('');
     const [selectedResponses, setSelectedResponses] = useState<Set<number>>(new Set());
+    const [emptySelection, setEmptySelection] = useState(false);
     const [isSecondSearchVisible, setIsSecondSearchVisible] = useState(false);
     const onTypeQuery = (_: ChangeEvent<HTMLInputElement> | undefined, newValue?: string) => {
         // console.log("onTypeQuery:", newValue)
@@ -57,11 +59,15 @@ const QueryPane: FC = (): ReactElement => {
         setIsSecondSearchVisible(!isSecondSearchVisible);
     };
     const onSubmit = async () => {
-        if (newQuery && appContext.state.userState.constellationName !== "Home") {
-            const query: Query = {userTxt: newQuery, source: newSource}
-            await actions.query.postQueryResponseList(query) // reducer updates state
-             // set selected responses to empty
-            setSelectedResponses(new Set());
+        if (newQuery) {
+            if (newQuery && appContext.state.userState.constellationName !== "Home") {
+                const query: Query = {userTxt: newQuery, source: newSource}
+                await actions.query.postQueryResponseList(query) // reducer updates state
+                // set selected responses to empty
+                setSelectedResponses(new Set());
+            }
+        } else {
+            setEmptyQuery(true);
         }
     }
     const createConstellation = async () => {
@@ -74,22 +80,28 @@ const QueryPane: FC = (): ReactElement => {
             )
             console.log(createdConstellation)
             actions.display.setUpdated(Date.now());
+        } else {
+            setEmptyQuery(true);
         }
     }
     const saveSelectedResponses = async () => {
-        console.log("queryResponseList " + appContext.state.queryState.responses)
-        const responsesToSave = Array.from(selectedResponses).map(index => appContext.state.queryState.responses?.[index])
-            .filter((response): response is QueryResponse => response !== undefined);
-        // Now, you can save 'responsesToSave' to the database
-        console.log("responses to save " + responsesToSave)
-        const savedFrameworks = await actions.constellation.saveSelectedFrameworks(
-            appContext.state.userState.userId,
-            appContext.state.userState.constellationName,
-            responsesToSave);
-        console.log("saved Frameworks " + savedFrameworks)
-        // set selected responses to empty
-        setSelectedResponses(new Set());
-        actions.display.setUpdated(Date.now());
+        if (selectedResponses.size > 0 ) {
+            console.log("queryResponseList " + appContext.state.queryState.responses)
+            const responsesToSave = Array.from(selectedResponses).map(index => appContext.state.queryState.responses?.[index])
+                .filter((response): response is QueryResponse => response !== undefined);
+            // Now, you can save 'responsesToSave' to the database
+            console.log("responses to save " + responsesToSave)
+            const savedFrameworks = await actions.constellation.saveSelectedFrameworks(
+                appContext.state.userState.userId,
+                appContext.state.userState.constellationName,
+                responsesToSave);
+            console.log("saved Frameworks " + savedFrameworks)
+            // set selected responses to empty
+            setSelectedResponses(new Set());
+            actions.display.setUpdated(Date.now());
+        } else {
+            setEmptySelection(true);
+        }
     };
 
     // effects
@@ -100,6 +112,20 @@ const QueryPane: FC = (): ReactElement => {
         setNewSource('');
         actions.query.setEmptyQueryResponseList();
     }, [actions.query, appContext.state.userState.constellationName])
+
+    useEffect(() => {
+        console.log("non-empty query")
+        if (newQuery) {
+            setEmptyQuery(false);
+        }
+    }, [newQuery])
+    
+    useEffect(() => {
+        console.log("non-empty selection")
+        if (selectedResponses.size > 0) {
+            setEmptySelection(false);
+        }
+    }, [selectedResponses])
 
     return (
         <Stack styles={queryStackStyle}>
@@ -139,6 +165,24 @@ const QueryPane: FC = (): ReactElement => {
                     </Stack.Item>
                 )}
             </Stack.Item>
+            {emptyQuery && 
+                (
+                appContext.state.userState.constellationName === "Home" ? 
+                    <Stack.Item>
+                        Hey, try to typing a constellation title in the box above and then click create below.
+                    </Stack.Item> :
+                    <Stack.Item>
+                        Hey, add a prompt first before searching for notes. Try 'Poor Charlie's Almanac'.
+                    </Stack.Item>
+                )
+            }
+            {
+                emptySelection && appContext.state.userState.constellationName !== "Home" && (
+                    <Stack.Item>
+                        Click on the notes you want to save before trying to save to constellation.
+                    </Stack.Item>
+                )
+            }
             <Stack.Item tokens={stackItemPadding}>
                 {appContext.state.queryState.responses && appContext.state.queryState.responses.map((response, index) => (
                     <button 
@@ -154,7 +198,7 @@ const QueryPane: FC = (): ReactElement => {
                     appContext.state.userState.constellationName === "Home" ?
                         createConstellation : saveSelectedResponses}>
                     {appContext.state.userState.constellationName === "Home" ?
-                        "Create new constellation" : "Save to constellation"}
+                        "Create new constellation" : "Save selected notes to constellation"}
                 </button>
             </Stack.Item>
         </Stack>
