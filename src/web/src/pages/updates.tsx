@@ -32,7 +32,7 @@ export const Updates = () => {
             </Stack.Item>
             <Stack.Item styles={updateTextStyle}>
                 <Stack.Item>
-                - When adding notes have them visible as 'unclustered'
+                - [Released] When adding notes have them visible as 'unclustered'
                 </Stack.Item>
                 <Stack.Item>
                 - [Released] Add a playground constellation and a better introduction - thanks Link for feedback!
