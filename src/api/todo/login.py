@@ -52,7 +52,7 @@ async def get_or_create_user(google_user_id: str) -> str:
             cluster="Cnstlltn Tutorial",
             coordinate=(0.5, 0.4)
         )
-        user_cluster.frameworks[saved_user_framework.id] = (0.55, 0.35)
+        user_cluster.frameworks[str(saved_user_framework.id)] = (0.55, 0.35)
         print("user cluster:", user_cluster)
         await user_cluster.save()
     return new_user.userid
