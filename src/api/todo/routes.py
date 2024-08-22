@@ -83,6 +83,7 @@ async def save_frameworks(request: Request, saveFrameworks: List[Framework]) -> 
     user_cluster = await UserCluster.find_one(
         UserCluster.userid == user_id,
         UserCluster.constellation==constellation_name,
+        UserCluster.cluster=="Unclustered",
         UserCluster.islatest==True,
     )
     if user_cluster is None:
