@@ -1,12 +1,15 @@
+// react imports
 import { useContext } from 'react';
 import { Stack } from '@fluentui/react';
-import { UserAppContext } from '../state/userContext';
+// state imports
 import { AppContext } from '../state/applicationState';
+import { UserAppContext } from '../state/userContext';
+// pane imports
 import ConstellationPane from '../panes/constellationPane';
-import { constellationQueryPageStyle, queryPageStyle } from '../ux/pages';
 import WelcomePane from '../panes/welcomePane';
 import QueryPane from '../panes/queryPane';
-import { constellationStackStyle } from '../ux/constellation';
+// ux imports
+import { constellationQueryPageStyle, queryPageStyle, constellationStackStyle } from '../ux/pages/constellation';
 
 export const Constellation = () => {
   const appContext : AppContext = useContext(UserAppContext);

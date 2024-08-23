@@ -1,11 +1,14 @@
+// react imports
 import { FC, ReactElement } from 'react';
-import Header from '../panes/header';
+import { Stack } from '@fluentui/react';
 import { Routes, Route } from 'react-router-dom';
+// page & pane imports
 import { Constellation } from './constellation';
 import { Login } from './login';
-import { Stack } from '@fluentui/react';
-import { routePageStyle, routesLayoutPageStyle } from '../ux/pages';
 import { Updates } from './updates';
+import Header from '../panes/header';
+// ux imports
+import { routePageStyle, routesLayoutPageStyle } from '../ux/pages/routes';
 
 const RoutesLayout: FC = (): ReactElement => {
     return (

@@ -1,6 +1,7 @@
+// react imports
 import { Stack } from '@fluentui/react';
-import { updatesPageStyle } from '../ux/pages';
-import { updateHeadingStyle, updateTextStyle } from '../ux/updates';
+// ux imports
+import { updatesPageStyle, updateHeadingStyle, updateTextStyle } from '../ux/pages/updates';
 
 export const Updates = () => {
     return(

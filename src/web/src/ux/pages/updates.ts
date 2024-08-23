@@ -1,7 +1,14 @@
 import { IStackStyles } from '@fluentui/react'
-import { CnstlltnTheme } from './theme'
+import { CnstlltnTheme } from './../theme'
 
 const theme = CnstlltnTheme
+
+export const updatesPageStyle: IStackStyles = {
+    root: {
+        width: '100%',
+        display: 'flex',
+    }
+}
 
 export const updateHeadingStyle: IStackStyles = {
     root: {

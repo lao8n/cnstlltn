@@ -16,7 +16,7 @@ import * as clusterActions from '../state/actions/clusterActions';
 import { DisplayActions } from '../state/actions/displayActions';
 import * as displayActions from '../state/actions/displayActions';
 // ux
-import { loginPageStyle } from '../ux/pages';
+import { loginPageStyle } from '../ux/pages/login';
 
 export const Login = () => {
   const appContext = useContext<AppContext>(UserAppContext)
