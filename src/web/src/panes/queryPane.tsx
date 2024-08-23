@@ -16,7 +16,6 @@ import { DisplayActions } from '../state/actions/displayActions';
 import * as displayActions from '../state/actions/displayActions';
 import { badInputNotifications, queryBarStyle, queryStackStyle } from '../ux/panes/query';
 // ux imports
-import '../ux/components.css'
 import { stackItemPadding, buttonStyles, selectedButtonStyles, queryFieldStyles } from '../ux/panes/query';
 
 const QueryPane: FC = (): ReactElement => {
