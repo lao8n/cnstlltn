@@ -14,10 +14,10 @@ import * as clusterActions from '../state/actions/clusterActions';
 import { DisplayActions } from '../state/actions/displayActions';
 import * as displayActions from '../state/actions/displayActions';
 // ux imports
-import { canvasStackStyle, canvasStyle, clusterByStyle, constellationNameStyle, clusterByWordStyle } from '../ux/components';
-import { stackItemPadding } from '../ux/constellation';
-import { CnstlltnTheme } from "../ux/theme";
-import { constellationHeaderStackStyle, constellationStackStyle } from '../ux/constellation';
+import { CnstlltnTheme } from "../ux/shared/theme";
+import { canvasStackStyle, canvasStyle } from '../ux/shared/components';
+import { stackItemPadding, constellationNameStyle, clusterByStyle, clusterByWordStyle } from '../ux/panes/constellation';
+import { constellationHeaderStackStyle, constellationStackStyle } from '../ux/panes/constellation';
 // display imports
 import { CanvasSpace, Circle, Pt } from "pts";
 import { DisplayPoint } from '../frontend/models';

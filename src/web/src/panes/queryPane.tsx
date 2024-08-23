@@ -14,11 +14,10 @@ import { ConstellationActions } from '../state/actions/constellationActions';
 import * as constellationActions from '../state/actions/constellationActions';
 import { DisplayActions } from '../state/actions/displayActions';
 import * as displayActions from '../state/actions/displayActions';
-import { badInputNotifications, queryBarStyle, queryStackStyle } from '../ux/query';
+import { badInputNotifications, queryBarStyle, queryStackStyle } from '../ux/panes/query';
 // ux imports
 import '../ux/components.css'
-import { stackItemPadding } from '../ux/query';
-import { buttonStyles, selectedButtonStyles, queryFieldStyles } from '../ux/components';
+import { stackItemPadding, buttonStyles, selectedButtonStyles, queryFieldStyles } from '../ux/panes/query';
 
 const QueryPane: FC = (): ReactElement => {
     const appContext = useContext<AppContext>(UserAppContext)
@@ -141,7 +140,6 @@ const QueryPane: FC = (): ReactElement => {
                     <Stack.Item styles={queryBarStyle}>
                         <SearchBox
                             value={newQuery}
-                            className="inputField"
                             placeholder={
                                 appContext.state.userState.constellationName === "Home" ?
                                     "Enter name for new constellation" : "Prompt for notes"}
@@ -155,7 +153,6 @@ const QueryPane: FC = (): ReactElement => {
                     <Stack.Item>
                         <SearchBox
                             value={newSource}
-                            className="inputField"
                             placeholder="Copy-paste source article or video transcript"
                             onChange={onTypeSource}
                             onSearch={onSubmit}

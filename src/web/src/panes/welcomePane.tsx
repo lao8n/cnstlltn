@@ -13,14 +13,14 @@ import { ClusterActions } from '../state/actions/clusterActions';
 import * as clusterActions from '../state/actions/clusterActions';
 import { DisplayActions } from '../state/actions/displayActions';
 import * as displayActions from '../state/actions/displayActions';
-// ux imports
-import { welcomeStackStyle, welcomeLineStyle } from "../ux/welcome";
-import { canvasStackStyle, canvasStyle } from "../ux/components";
 // display imports
 import { DisplayPoint } from "../frontend/models";
 import { drawClusterPoints, drawConstellationPoints, drawMultiLineText, setClusterDisplayPoints, setConstellationDisplayPoints, updatePositions } from "../frontend/display";
 import { CanvasSpace, Circle, Pt } from "pts";
-import { CnstlltnTheme } from "../ux/theme";
+// ux imports
+import { CnstlltnTheme } from "../ux/shared/theme";
+import { welcomeStackStyle, welcomeLineStyle } from "../ux/panes/welcome";
+import { canvasStackStyle, canvasStyle } from "../ux/shared/components";
 
 const WelcomePane: FC = (): ReactElement => {
     const appContext = useContext<AppContext>(UserAppContext)

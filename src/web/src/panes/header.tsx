@@ -1,10 +1,7 @@
 // react imports
 import { FC, useContext, useEffect, useState, ReactElement, useMemo, useCallback } from 'react';
 import { IconButton, Stack } from '@fluentui/react';
-import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
-// ux imports
-import { headerLogoStyles, headerLoginStyle, headerLoginButtonStyle, headerLogoButtonStyle, headerUpdatesStyle, headerUpdatesButtonStyle } from '../ux/header';
+import { useNavigate, Link } from 'react-router-dom';
 // state imports
 import { UserAppContext } from '../state/userContext';
 import { AppContext } from '../state/applicationState';
@@ -17,7 +14,8 @@ import { ClusterActions } from '../state/actions/clusterActions';
 import * as clusterActions from '../state/actions/clusterActions';
 import { DisplayActions } from '../state/actions/displayActions';
 import * as displayActions from '../state/actions/displayActions';
-import { headerStackStyle } from '../ux/header';
+// ux imports
+import { headerLogoStyles, headerLoginStyle, headerLoginButtonStyle, headerLogoButtonStyle, headerUpdatesStyle, headerUpdatesButtonStyle, headerStackStyle } from '../ux/panes/header';
 
 const Header: FC = (): ReactElement => {
     const appContext = useContext<AppContext>(UserAppContext)

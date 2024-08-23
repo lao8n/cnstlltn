@@ -1,5 +1,5 @@
 import { IButtonStyles, IStackStyles } from '@fluentui/react'
-import { CnstlltnTheme } from './theme'
+import { CnstlltnTheme } from '../shared/theme'
 
 const theme = CnstlltnTheme
 

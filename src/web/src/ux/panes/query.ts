@@ -1,0 +1,66 @@
+import { IStackStyles, IStackItemTokens, mergeStyles } from '@fluentui/react'
+import { CnstlltnTheme } from '../shared/theme'
+
+const theme = CnstlltnTheme
+
+// stacks
+export const queryStackStyle: IStackStyles = {
+    root: {
+        width: 500,
+        background: theme.palette.neutralPrimary,
+        boxShadow: theme.effects.elevation8,
+    }
+}
+
+export const queryBarStyle: IStackStyles = {
+    root: {
+        width: '100%',
+    }
+}
+
+export const badInputNotifications: IStackStyles = {
+    root: {
+        padding: 10,
+        color: theme.palette.black
+    }
+}
+
+// tokens
+export const stackItemPadding: IStackItemTokens = {
+    padding: 10,
+}
+
+// buttons
+export const buttonStyles = mergeStyles({
+    backgroundColor: theme.palette.neutralPrimary,
+    color: theme.palette.black,
+    margin: '5px',
+    padding: '5px 10px',
+    cursor: 'pointer',
+    border: 'none',
+    transition: 'background-color 0.3s',
+    '&:hover': {
+        backgroundColor: theme.palette.neutralPrimaryAlt
+    }
+});
+
+export const selectedButtonStyles = mergeStyles(buttonStyles, {
+    backgroundColor: theme.palette.themePrimary,
+    color: theme.palette.white,
+});
+
+export const clusterButtonStyles = mergeStyles(buttonStyles, {
+    alignItems: 'flex-end',
+})
+
+// text
+export const queryFieldStyles = {
+    field: {
+        color: theme.palette.black,
+        fontFamily: "Segoe UI",
+        '::placeholder': {
+            color: theme.palette.black,
+            opacity: 0.8,
+        }
+    },
+};
