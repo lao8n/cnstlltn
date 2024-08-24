@@ -42,7 +42,7 @@ const ConstellationPane: FC = (): ReactElement => {
     const clusterPts = useRef<DisplayPoint[]>([]) as React.MutableRefObject<DisplayPoint[]>;
     const [constellationRedrawn, setConstellationRedrawn] = useState(Date.now());
     const [unclusteredContent, setUnclusteredContent] = useState(0);
-    const [clusterBy, setNewClusterBy] = useState('');
+    const [clusterBy, setNewClusterBy] = useState(appContext.state.userState.clusterBy);
     const [clusterByOptions, setNewClusterByOptions] =  useState<string[]>([]);
 
     // functions
@@ -55,7 +55,7 @@ const ConstellationPane: FC = (): ReactElement => {
     }, []);
 
     const onTypeClusterBy = (_: ChangeEvent<HTMLInputElement> | undefined, newValue?: string) => {
-        setNewClusterBy(newValue || clusterBy);
+        setNewClusterBy(newValue || '');
     }
 
     const onDropdownChange = (event: ChangeEvent<HTMLSelectElement>) => {
