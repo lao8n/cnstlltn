@@ -10,21 +10,13 @@ interface EditableNoteProps {
 }
 
 const EditableNoteComponent: React.FC<EditableNoteProps> = ({ welcomeScreen, initialContent }) => {
-    const [editMode, setEditMode] = useState(false);
     const [text, setText] = useState(initialContent);
-  
-    const toggleEdit = () => {
-      setEditMode(!editMode);
-    };
   
     const handleTextChange = (_: FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
       setText(newValue || '');
     };
     const handleTextSubmit = () => {
-        setEditMode(false);
-    };
-    const handleTextBlur = () => {
-        setEditMode(false);
+        console.log('text submitted');
     };
         
     return (
@@ -37,8 +29,6 @@ const EditableNoteComponent: React.FC<EditableNoteProps> = ({ welcomeScreen, ini
             readOnly={!welcomeScreen}
             onChange={handleTextChange}
             onSubmit={handleTextSubmit}
-            onClick={toggleEdit}
-            onBlur={handleTextBlur}
           />
       </Stack>
     );
