@@ -12,6 +12,7 @@ export const noteStackStyle: IStackStyles = {
         background: theme.palette.black,
         paddingLeft: '5px', 
         position: 'relative',
+        minHeight: '25px',
         '::before': {
             content: '""', 
             position: 'absolute',
@@ -28,8 +29,6 @@ export const noteSubStackStyle: IStackStyles = {
     root: {
         display: 'flex',
         width: '100%',
-        height: '100%',
-        overflow: 'auto',
     }
 }
 

@@ -14,7 +14,10 @@ const EditableNoteComponent: React.FC<EditableNoteProps> = ({ welcomeScreen, ini
 
     // functions
     const calculateTextHeight = (textLength: number) => {
-        const heightText = Math.max(textLength / 57 * 20 + 5, 20 + 5);
+        const charsPerLine = 30;
+        const lineHeight = 20;
+        const padding = 5;
+        const heightText = Math.max(textLength / charsPerLine * lineHeight + padding, lineHeight + padding);
         console.log("text height:", textLength, heightText);
         return heightText;
     }
