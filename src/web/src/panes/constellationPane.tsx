@@ -11,6 +11,8 @@ import { ConstellationActions } from '../state/actions/constellationActions';
 import * as constellationActions from '../state/actions/constellationActions';
 import { ClusterActions } from '../state/actions/clusterActions';
 import * as clusterActions from '../state/actions/clusterActions';
+import { NoteActions } from '../state/actions/noteActions';
+import * as noteActions from '../state/actions/noteActions';
 import { DisplayActions } from '../state/actions/displayActions';
 import * as displayActions from '../state/actions/displayActions';
 // ux imports
@@ -33,7 +35,8 @@ const ConstellationPane: FC = (): ReactElement => {
         user: bindActionCreators(userActions, appContext.dispatch) as unknown as UserActions,
         constellation: bindActionCreators(constellationActions, appContext.dispatch) as unknown as ConstellationActions,
         cluster: bindActionCreators(clusterActions, appContext.dispatch) as unknown as ClusterActions,
-        display: bindActionCreators(displayActions, appContext.dispatch) as unknown as DisplayActions
+        note: bindActionCreators(noteActions, appContext.dispatch) as unknown as NoteActions,
+        display: bindActionCreators(displayActions, appContext.dispatch) as unknown as DisplayActions,
     }), [appContext.dispatch]);
 
     // display
@@ -170,14 +173,14 @@ const ConstellationPane: FC = (): ReactElement => {
                             if (appContext.state.userState.constellationName === "Home") {
                                 actions.constellation.setConstellation([]);
                                 actions.cluster.setClusters([]);
-                                actions.display.setSelectedContent(null);
+                                actions.note.setSelectedContent(null);
                                 setUnclusteredContent(0);
                                 actions.cluster.setClusterBy('');
                                 actions.constellation.setConstellationName(pt.name);
                                 actions.display.setUpdated(Date.now());
                             } else {
                                 pt.selected = !pt.selected;
-                                actions.display.setSelectedContent(pt.selected ? pt : null)
+                                actions.note.setSelectedContent(pt.selected ? pt.userFramework : null);
                             }
                         }
                     });
@@ -199,6 +202,7 @@ const ConstellationPane: FC = (): ReactElement => {
         };
     }, [actions.constellation,
         actions.cluster,
+        actions.note,
         actions.display,
         appContext.state.userState.constellationName,
         appContext.state.userState.selectedContent,

@@ -20,10 +20,10 @@ const NotePane: FC = (): ReactElement => {
                 appContext.state.userState.selectedContent && (
                     <Stack styles={noteSubStackStyle}>
                         <Stack.Item tokens={stackItemPadding}>
-                            {appContext.state.userState.selectedContent?.name}
+                            {appContext.state.userState.selectedContent?.title}
                         </Stack.Item>
                         <Stack.Item tokens={stackItemPadding}>
-                            {appContext.state.userState.selectedContent?.description}
+                            {appContext.state.userState.selectedContent?.content}
                         </Stack.Item>
                     </Stack>
                 )

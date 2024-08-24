@@ -1,8 +1,9 @@
 import { Pt } from "pts";
+import { UserFramework } from "../state/userState";
 
 export type DisplayPoint = {
     name: string;
-    description: string;
+    userFramework: UserFramework | null;
     coord: [number, number];
     position: Pt;
     selected: boolean;

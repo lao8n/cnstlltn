@@ -1,5 +1,3 @@
-import { DisplayPoint } from "../frontend/models";
-
 export interface UserState {
     isLoggedIn: boolean;
     userId: string;
@@ -8,7 +6,7 @@ export interface UserState {
     clusterBy: string;
     clusters: Cluster[];
     updated: number;
-    selectedContent: DisplayPoint | null;
+    selectedContent: UserFramework | null;
 }
 
 export interface UserFramework {

@@ -12,6 +12,8 @@ import { ConstellationActions } from '../state/actions/constellationActions';
 import * as constellationActions from '../state/actions/constellationActions';
 import { ClusterActions } from '../state/actions/clusterActions';
 import * as clusterActions from '../state/actions/clusterActions';
+import { NoteActions } from '../state/actions/noteActions';
+import * as noteActions from '../state/actions/noteActions';
 import { DisplayActions } from '../state/actions/displayActions';
 import * as displayActions from '../state/actions/displayActions';
 // ux imports
@@ -23,6 +25,7 @@ const Header: FC = (): ReactElement => {
         user: bindActionCreators(userActions, appContext.dispatch) as unknown as UserActions,
         constellation: bindActionCreators(constellationActions, appContext.dispatch) as unknown as ConstellationActions,
         cluster: bindActionCreators(clusterActions, appContext.dispatch) as unknown as ClusterActions,
+        note: bindActionCreators(noteActions, appContext.dispatch) as unknown as NoteActions,
         display: bindActionCreators(displayActions, appContext.dispatch) as unknown as DisplayActions
     }), [appContext.dispatch]);
     const navigate = useNavigate();
@@ -32,7 +35,7 @@ const Header: FC = (): ReactElement => {
     // functions
     const handleReturnToHome = () => {
         actions.cluster.setClusterBy('');
-        actions.display.setSelectedContent(null);
+        actions.note.setSelectedContent(null);
         actions.constellation.setConstellationName("Home");
     }
     const handleUpdates = () => {

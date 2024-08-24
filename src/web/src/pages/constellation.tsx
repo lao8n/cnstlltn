@@ -17,7 +17,7 @@ export const Constellation = () => {
 
   if (!appContext.state.userState?.isLoggedIn) {
     return (
-      <Stack styles={constellationQueryPageStyle}>
+      <Stack horizontal styles={constellationQueryPageStyle}>
         <Stack.Item styles={welcomePageStyle}>
           <WelcomePane/>
         </Stack.Item>

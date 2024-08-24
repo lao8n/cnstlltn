@@ -2,6 +2,7 @@ import * as queryActions from './queryActions';
 import * as userActions from './userActions';
 import * as constellationActions from './constellationActions'
 import * as clusterActions from './clusterActions'
+import * as noteActions from './noteActions'
 import * as displayActions from './displayActions'
 
 export enum ActionTypes {
@@ -24,9 +25,10 @@ export enum ActionTypes {
     GET_CLUSTER_BY_OPTIONS = "GET_CLUSTER_BY_OPTIONS",
     GET_CLUSTER_BY_SUGGESTION = "GET_CLUSTER_BY_SUGGESTION",
     SET_CLUSTER_BY = "SET_CLUSTER_BY",
+    // note
+    SET_SELECTED_CONTENT = "SET_SELECTED_CONTENT",
     // display
     SET_UPDATED = "SET_UPDATED",
-    SET_SELECTED_CONTENT = "SET_SELECTED_CONTENT",
 }
 
 export type ApplicationActions =
@@ -49,6 +51,7 @@ export type ApplicationActions =
     clusterActions.GetClusterByOptionsAction |
     clusterActions.GetClusterBySuggestionAction |
     clusterActions.SetClusterByAction | 
+    // note
+    noteActions.SetSelectedContentAction |
     // display
-    displayActions.SetUpdatedAction |
-    displayActions.SetSelectedContentAction;
+    displayActions.SetUpdatedAction;

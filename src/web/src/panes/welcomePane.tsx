@@ -11,6 +11,8 @@ import { ConstellationActions } from '../state/actions/constellationActions';
 import * as constellationActions from '../state/actions/constellationActions';
 import { ClusterActions } from '../state/actions/clusterActions';
 import * as clusterActions from '../state/actions/clusterActions';
+import { NoteActions } from '../state/actions/noteActions';
+import * as noteActions from '../state/actions/noteActions';
 import { DisplayActions } from '../state/actions/displayActions';
 import * as displayActions from '../state/actions/displayActions';
 // display imports
@@ -28,6 +30,7 @@ const WelcomePane: FC = (): ReactElement => {
         user: bindActionCreators(userActions, appContext.dispatch) as unknown as UserActions,
         constellation: bindActionCreators(constellationActions, appContext.dispatch) as unknown as ConstellationActions,
         cluster: bindActionCreators(clusterActions, appContext.dispatch) as unknown as ClusterActions,
+        note: bindActionCreators(noteActions, appContext.dispatch) as unknown as NoteActions,
         display: bindActionCreators(displayActions, appContext.dispatch) as unknown as DisplayActions
     }), [appContext.dispatch]);
 
@@ -46,9 +49,6 @@ const WelcomePane: FC = (): ReactElement => {
     const updatePositionsCallback = useCallback(() => {
         updatePositions(canvasRef, constellationPts, clusterPts);
     }, []);
-    // const drawMultiLineTextCallback = useCallback(() => {
-    //     drawMultiLineText()
-    // })
 
     // effects
     useEffect(() => {
@@ -101,7 +101,7 @@ const WelcomePane: FC = (): ReactElement => {
                     constellationPts.current.forEach(pt => {
                         if (Circle.withinBound(range, pt.position)) {
                             pt.selected = !pt.selected;
-                            actions.display.setSelectedContent(pt.selected ? pt : null)
+                            actions.note.setSelectedContent(pt.selected ? pt.userFramework : null)
                         }
                     });
                 }
@@ -120,7 +120,8 @@ const WelcomePane: FC = (): ReactElement => {
             }
             space.stop();
         };
-    }, [actions.display,
+    }, [actions.note,
+        actions.display,
         appContext.state.userState.selectedContent,
         updatePositionsCallback]);
 

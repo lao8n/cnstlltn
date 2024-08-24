@@ -26,7 +26,7 @@ export function setConstellationDisplayPoints(constellation: UserFramework[], cl
         const y = cy * (canvasRef.current?.height || 0);
         return {
             name: framework.title,
-            description: framework.content,
+            userFramework: framework,
             coord: [cx, cy],
             position: new Pt(x, y),
             selected: false,
@@ -53,7 +53,7 @@ export function setClusterDisplayPoints(clusters: Cluster[], canvasRef: React.Re
         const y = cy * (canvasRef.current?.height || 0);
         return {
             name: cluster.cluster,
-            description: "",
+            userFramework: null,
             coord: [cx, cy],
             position: new Pt(x, y),
             selected: false,

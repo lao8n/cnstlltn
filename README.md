@@ -1,36 +1,4 @@
----
-page_type: sample
-languages:
-- azdeveloper
-- python
-- bicep
-- typescript
-- html
-products:
-- azure
-- azure-cosmos-db
-- azure-container-apps
-- azure-container-registry
-- azure-monitor
-- azure-pipelines
-urlFragment: todo-python-mongo-aca
-name: Containerized React Web App with Python API and MongoDB on Azure
-description: A complete ToDo app with Python FastAPI and Azure Cosmos API for MongoDB for storage. Uses Azure Developer CLI (azd) to build, deploy, and monitor
----
-<!-- YAML front-matter schema: https://review.learn.microsoft.com/en-us/help/contribute/samples/process/onboarding?branch=main#supported-metadata-fields-for-readmemd -->
-
-# Containerized React Web App with Python API and MongoDB on Azure
-
-[![Open in GitHub Codespaces](https://img.shields.io/static/v1?style=for-the-badge&label=GitHub+Codespaces&message=Open&color=brightgreen&logo=github)](https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=482996107&machine=standardLinux32gb&devcontainer_path=.devcontainer%2Fdevcontainer.json&location=WestUs2)
-[![Open in Remote - Containers](https://img.shields.io/static/v1?style=for-the-badge&label=Remote%20-%20Containers&message=Open&color=blue&logo=visualstudiocode)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/azure-samples/todo-python-mongo-aca)
-
-A blueprint for getting a React web app with Python (FastAPI) API and a MongoDB database running on Azure. The frontend (a ToDo web app) which can be removed and replaced with your own application code. Add your own source code and leverage the Infrastructure as Code assets (written in Bicep) to get up and running quickly.
-
-Let's jump in and get this up and running in Azure. When you are finished, you will have a fully functional web app deployed to the cloud. In later steps, you'll see how to setup a pipeline and monitor the application.
-
-!["Screenshot of deployed ToDo app"](assets/web.png)
-
-<sup>Screenshot of the deployed ToDo app</sup>
+# Cnstlltn React Web App with Python API and MongoDB on Azure
 
 ### Prerequisites
 > This template will create infrastructure and deploy code to Azure. If you don't have an Azure Subscription, you can sign up for a [free account here](https://azure.microsoft.com/free/). Make sure you have contributor role to the Azure subscription.
