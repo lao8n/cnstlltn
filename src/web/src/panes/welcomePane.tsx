@@ -15,7 +15,7 @@ import { DisplayActions } from '../state/actions/displayActions';
 import * as displayActions from '../state/actions/displayActions';
 // display imports
 import { DisplayPoint } from "../frontend/models";
-import { drawClusterPoints, drawConstellationPoints, drawMultiLineText, setClusterDisplayPoints, setConstellationDisplayPoints, updatePositions } from "../frontend/display";
+import { drawClusterPoints, drawConstellationPoints, setClusterDisplayPoints, setConstellationDisplayPoints, updatePositions } from "../frontend/display";
 import { CanvasSpace, Circle, Pt } from "pts";
 // ux imports
 import { CnstlltnTheme } from "../ux/shared/theme";
@@ -92,9 +92,6 @@ const WelcomePane: FC = (): ReactElement => {
             animate: (time, ftime) => {
                 drawConstellationPoints(space, form, constellationPts);
                 drawClusterPoints(form, clusterPts);
-                if (appContext.state.userState.selectedContent !== null) {
-                    drawMultiLineText(form, canvasRef.current?.parentElement?.clientWidth || 0, appContext.state.userState.selectedContent, 15, 400);
-                }
             },
             action: (type, x, y) => {
                 const r = 10;

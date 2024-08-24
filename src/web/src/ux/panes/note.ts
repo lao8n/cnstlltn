@@ -1,14 +1,16 @@
-import { IStackStyles } from '@fluentui/react'
+import { IStackStyles, mergeStyles } from '@fluentui/react'
 import { CnstlltnTheme } from '../shared/theme' 
 
 const theme = CnstlltnTheme
 
+// stacks
 export const noteStackStyle: IStackStyles = {
     root: {
         width: 500,
         overflow: 'auto',
         background: theme.palette.black,
         paddingLeft: '5px', 
+        position: 'relative',
         '::before': {
             content: '""', 
             position: 'absolute',
@@ -20,3 +22,17 @@ export const noteStackStyle: IStackStyles = {
         }
     }
 }
+
+export const noteSubStackStyle: IStackStyles = {
+    root: {
+        width: '100%',
+        overflow: 'auto',
+    }
+}
+
+// text
+export const noteNameStyle = mergeStyles({
+    fontFamily: "Segoe UI",
+    fontSize: '20px',
+    color: theme.palette.white,
+});

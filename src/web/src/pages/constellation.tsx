@@ -36,9 +36,13 @@ export const Constellation = () => {
       <Stack.Item styles={constellationPageStyle}>
         <ConstellationPane/>
       </Stack.Item>
-      <Stack.Item styles={notePageStyle}>
-        <NotePane/>
-      </Stack.Item>
+      {
+        appContext.state.userState.constellationName !== "Home" && (
+          <Stack.Item styles={notePageStyle}>
+            <NotePane/>
+          </Stack.Item>
+        )
+      }
     </Stack >
   );
 };

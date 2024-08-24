@@ -101,30 +101,6 @@ export function drawClusterPoints(form: CanvasForm, clusterPts: React.MutableRef
     });
 }
 
-export function drawMultiLineText(form: CanvasForm, width: number, lastSelected: DisplayPoint, lineHeight: number, maxWidth: number) {
-    const topRightX = width - 450;
-    const topRightY = 30;
-    const topRight = new Pt(topRightX, topRightY);
-    form.font(15).fill("#fff").text(topRight, lastSelected.name);
-    const startingPoint = topRight.$add(0, 15)
-    const words = lastSelected.description.split(' ');
-    let line = '';
-    let y = startingPoint.y;
-
-    for (let i = 0; i < words.length; i++) {
-        const testLine = line + words[i] + ' ';
-        const testWidth = form.getTextWidth(testLine);
-        if (testWidth > maxWidth && i > 0) {
-            form.font(12).fill("#fff").text(new Pt(startingPoint.x, y), line);
-            line = words[i] + ' ';
-            y += lineHeight;
-        } else {
-            line = testLine;
-        }
-    }
-    form.font(12).fill("#fff").text(new Pt(startingPoint.x, y), line);
-}
-
 export function drawUnclusteredContentNotification(form: CanvasForm, width: number, unclusteredContent: number) {
     const topRightX = width - 350;
     const topRightY = 10;

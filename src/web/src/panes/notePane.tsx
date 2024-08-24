@@ -5,7 +5,7 @@ import { FC, ReactElement, useContext } from "react"
 import { AppContext } from "../state/applicationState"
 import UserAppContext from "../state/userContext"
 // ux imports
-import { noteStackStyle } from "../ux/panes/note"
+import { noteStackStyle, noteNameStyle, noteSubStackStyle } from "../ux/panes/note"
 import { stackItemPadding } from "../ux/shared/components";
 
 const NotePane: FC = (): ReactElement => {
@@ -13,12 +13,28 @@ const NotePane: FC = (): ReactElement => {
 
     return (
         <Stack styles={noteStackStyle}>
-            <Stack.Item tokens={stackItemPadding}>
-                {appContext.state.userState.selectedContent?.name}
+            <Stack.Item className={noteNameStyle} tokens={stackItemPadding}>
+                Notes Panel
             </Stack.Item>
-            <Stack.Item tokens={stackItemPadding}>
-                {appContext.state.userState.selectedContent?.description}
-            </Stack.Item>
+            {
+                appContext.state.userState.selectedContent && (
+                    <Stack styles={noteSubStackStyle}>
+                        <Stack.Item tokens={stackItemPadding}>
+                            {appContext.state.userState.selectedContent?.name}
+                        </Stack.Item>
+                        <Stack.Item tokens={stackItemPadding}>
+                            {appContext.state.userState.selectedContent?.description}
+                        </Stack.Item>
+                    </Stack>
+                )
+            }
+            {
+                !appContext.state.userState.selectedContent && (
+                    <Stack.Item tokens={stackItemPadding}>
+                        No content selected
+                    </Stack.Item>
+                )
+            }
         </Stack>
     )
 }
