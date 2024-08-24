@@ -7,6 +7,7 @@ const theme = CnstlltnTheme
 export const noteStackStyle: IStackStyles = {
     root: {
         width: 500,
+        display: 'flex',
         overflow: 'auto',
         background: theme.palette.black,
         paddingLeft: '5px', 
@@ -25,9 +26,17 @@ export const noteStackStyle: IStackStyles = {
 
 export const noteSubStackStyle: IStackStyles = {
     root: {
+        display: 'flex',
         width: '100%',
         height: '100%',
         overflow: 'auto',
+    }
+}
+
+export const noteSubStackItemStyle: IStackStyles = {
+    root: {
+        display: 'flex',
+        height: '100%',
     }
 }
 
