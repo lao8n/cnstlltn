@@ -66,7 +66,7 @@ export function updatePositions(canvasRef: React.RefObject<HTMLCanvasElement>, c
         console.log("No data in constellationPts yet.");
         return;
     }
-    console.log("update positions:", canvasRef.current?.parentElement?.clientWidth, canvasRef.current?.parentElement?.clientHeight);
+    // console.log("update positions:", canvasRef.current?.parentElement?.clientWidth, canvasRef.current?.parentElement?.clientHeight);
     constellationPts.current.forEach(pt => {
         const x = pt.coord[0] * (canvasRef.current?.parentElement?.clientWidth || 0);
         const y = pt.coord[1] * (canvasRef.current?.parentElement?.clientHeight || 0);

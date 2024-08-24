@@ -12,7 +12,6 @@ export const noteStackStyle: IStackStyles = {
         background: theme.palette.black,
         paddingLeft: '5px', 
         position: 'relative',
-        minHeight: '25px',
         '::before': {
             content: '""', 
             position: 'absolute',

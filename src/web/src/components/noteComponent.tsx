@@ -11,7 +11,7 @@ interface EditableNoteProps {
 
 const EditableNoteComponent: React.FC<EditableNoteProps> = ({ welcomeScreen, initialContent }) => {
     const [text, setText] = useState(initialContent);
-
+    console.log("welcome screen:", welcomeScreen);
     // functions
     const calculateTextHeight = (textLength: number) => {
         const charsPerLine = 30;
