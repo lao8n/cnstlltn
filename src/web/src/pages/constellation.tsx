@@ -8,8 +8,9 @@ import { UserAppContext } from '../state/userContext';
 import ConstellationPane from '../panes/constellationPane';
 import WelcomePane from '../panes/welcomePane';
 import QueryPane from '../panes/queryPane';
+import NotePane from '../panes/notePane';
 // ux imports
-import { constellationQueryPageStyle, queryPageStyle, constellationStackStyle } from '../ux/pages/constellation';
+import { constellationQueryPageStyle, queryPageStyle, constellationPageStyle, notePageStyle } from '../ux/pages/constellation';
 
 export const Constellation = () => {
   const appContext : AppContext = useContext(UserAppContext);
@@ -27,8 +28,11 @@ export const Constellation = () => {
       <Stack.Item styles={queryPageStyle}>
         <QueryPane/>
       </Stack.Item>
-      <Stack.Item styles={constellationStackStyle}>
+      <Stack.Item styles={constellationPageStyle}>
         <ConstellationPane/>
+      </Stack.Item>
+      <Stack.Item styles={notePageStyle}>
+        <NotePane/>
       </Stack.Item>
     </Stack >
   );
