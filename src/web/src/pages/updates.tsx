@@ -7,7 +7,7 @@ export const Updates = () => {
     return(
         <Stack styles={updatesPageStyle}>
             <Stack.Item styles={updateHeadingStyle}>
-                Updates - last updated 08/22/2024
+                Updates - last updated 08/24/2024
             </Stack.Item>
             <Stack.Item styles={updateTextStyle}>
                 This page is for updates on cnstlltn. As we are still in pre-alpha there will be lots of bugs so please send any you see over to cnstlltn@outlook.com. We also welcome any feedback you wish to share including feature requests etc.
@@ -32,6 +32,9 @@ export const Updates = () => {
                 Currently Worked On Features
             </Stack.Item>
             <Stack.Item styles={updateTextStyle}>
+                <Stack.Item>
+                - Add a separate notes section which includes tags
+                </Stack.Item>
                 <Stack.Item>
                 - [Released] When adding notes have them visible as 'unclustered'
                 </Stack.Item>

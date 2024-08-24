@@ -24,11 +24,11 @@ export const Constellation = () => {
   
   return (
     <Stack horizontal styles={constellationQueryPageStyle}>
-      <Stack.Item styles={constellationStackStyle}>
-        <ConstellationPane/>
-      </Stack.Item>
       <Stack.Item styles={queryPageStyle}>
         <QueryPane/>
+      </Stack.Item>
+      <Stack.Item styles={constellationStackStyle}>
+        <ConstellationPane/>
       </Stack.Item>
     </Stack >
   );
