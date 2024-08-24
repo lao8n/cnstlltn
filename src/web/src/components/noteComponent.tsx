@@ -1,5 +1,5 @@
 // react imports
-import { Stack, TextField } from "@fluentui/react";
+import { Stack, TextField, ITextFieldStyles } from "@fluentui/react";
 import { useState, FormEvent } from "react";
 // ux imports
 import { noteComponentStackStyle, noteTextFieldStyle } from "../ux/components/note";
@@ -11,9 +11,22 @@ interface EditableNoteProps {
 
 const EditableNoteComponent: React.FC<EditableNoteProps> = ({ welcomeScreen, initialContent }) => {
     const [text, setText] = useState(initialContent);
-  
+
+    // functions
+    const calculateTextHeight = (textLength: number) => {
+        return Math.max(textLength / 57 * 20, 20);
+    }
     const handleTextChange = (_: FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
-      setText(newValue || '');
+        setText(newValue || '');
+    };
+    const getDynamicStyles = (): Partial<ITextFieldStyles> => {
+        return {
+            ...noteTextFieldStyle,
+            fieldGroup: {
+                ...(noteTextFieldStyle?.fieldGroup as object || {}),
+                height: `${calculateTextHeight(text.length)}px`,  
+            }
+        };
     };
     const handleTextSubmit = () => {
         console.log('text submitted');
@@ -22,7 +35,7 @@ const EditableNoteComponent: React.FC<EditableNoteProps> = ({ welcomeScreen, ini
     return (
       <Stack styles={noteComponentStackStyle} tokens={{ childrenGap: 10 }}>
         <TextField 
-            styles={noteTextFieldStyle}
+            styles={getDynamicStyles()}
             multiline={true}
             resizable={true}
             value={text}
@@ -35,4 +48,3 @@ const EditableNoteComponent: React.FC<EditableNoteProps> = ({ welcomeScreen, ini
 }
 
 export default EditableNoteComponent;
-
