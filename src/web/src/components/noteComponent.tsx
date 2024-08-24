@@ -2,7 +2,7 @@
 import { Stack, TextField } from "@fluentui/react";
 import { useState, FormEvent } from "react";
 // ux imports
-import { noteComponentStackStyle } from "../ux/components/note";
+import { noteComponentStackStyle, noteTextFieldStyle } from "../ux/components/note";
 
 interface EditableNoteProps {
     welcomeScreen: boolean
@@ -25,28 +25,26 @@ const EditableNoteComponent: React.FC<EditableNoteProps> = ({ welcomeScreen, ini
     };
         
     return (
-      <Stack horizontal styles={noteComponentStackStyle} tokens={{ childrenGap: 10 }}>
+      <Stack styles={noteComponentStackStyle} tokens={{ childrenGap: 10 }}>
         {!welcomeScreen && editMode ? (
-            <TextField 
-                width='100%'
-                multiline={true}
-                resizable={false}
-                value={text}
-                onChange={handleTextChange}
-                onSubmit={handleTextSubmit}
+                <TextField 
+                    styles={noteTextFieldStyle}
+                    multiline={true}
+                    resizable={false}
+                    value={text}
+                    onChange={handleTextChange}
+                    onSubmit={handleTextSubmit}
           />
             ) : (
-            <TextField 
-                width='100%'
-                multiline={true}
-                resizable={false}
-                value={text}
-                onChange={handleTextChange}
-                onSubmit={handleTextSubmit}
-                onClick={toggleEdit}
+                <TextField 
+                    styles={noteTextFieldStyle}
+                    width='100%'
+                    multiline={true}
+                    resizable={false}
+                    value={text}
+                    onClick={toggleEdit}
             />
-            )}
-        {/* <IconButton iconProps={{ iconName: editMode ? "Save" : "Edit" }} onClick={toggleEdit} styles={noteLogoStyle} /> */}
+        )}
       </Stack>
     );
 }
