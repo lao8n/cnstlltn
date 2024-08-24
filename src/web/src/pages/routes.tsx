@@ -6,7 +6,7 @@ import { Routes, Route } from 'react-router-dom';
 import { Constellation } from './constellation';
 import { Login } from './login';
 import { Updates } from './updates';
-import Header from '../panes/header';
+import Header from '../panes/headerPane';
 // ux imports
 import { routePageStyle, routesLayoutPageStyle } from '../ux/pages/routes';
 

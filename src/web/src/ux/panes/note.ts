@@ -30,6 +30,16 @@ export const noteSubStackStyle: IStackStyles = {
     }
 }
 
+// note
+export const noteLogoStyle: IStackStyles = {
+    root: {
+        height: 12,
+        display: 'flex',
+        alignItems: 'center',
+        paddingLeft: 5,
+    }
+}
+
 // text
 export const noteNameStyle = mergeStyles({
     fontFamily: "Segoe UI",

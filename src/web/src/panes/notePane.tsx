@@ -4,6 +4,8 @@ import { FC, ReactElement, useContext } from "react"
 // state imports
 import { AppContext } from "../state/applicationState"
 import UserAppContext from "../state/userContext"
+// components
+import EditableNoteComponent from "../components/noteComponent"
 // ux imports
 import { noteStackStyle, noteNameStyle, noteSubStackStyle } from "../ux/panes/note"
 import { stackItemPadding } from "../ux/shared/components";
@@ -20,10 +22,10 @@ const NotePane: FC = (): ReactElement => {
                 appContext.state.userState.selectedContent && (
                     <Stack styles={noteSubStackStyle}>
                         <Stack.Item tokens={stackItemPadding}>
-                            {appContext.state.userState.selectedContent?.title}
+                            <EditableNoteComponent initialContent={appContext.state.userState.selectedContent?.title} />
                         </Stack.Item>
                         <Stack.Item tokens={stackItemPadding}>
-                            {appContext.state.userState.selectedContent?.content}
+                            <EditableNoteComponent initialContent={appContext.state.userState.selectedContent?.content} />
                         </Stack.Item>
                     </Stack>
                 )
