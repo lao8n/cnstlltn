@@ -1,4 +1,4 @@
-import { IStackStyles } from '@fluentui/react'
+import { IStackStyles, IStackItemTokens } from '@fluentui/react'
 
 // canvas
 export const canvasStackStyle: IStackStyles = {
@@ -16,3 +16,8 @@ export const canvasStyle = {
     height: '100%',
     overflow: 'hidden',
 };
+
+// tokens
+export const stackItemPadding: IStackItemTokens = {
+    padding: 10,
+}

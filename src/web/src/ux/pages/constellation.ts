@@ -8,10 +8,18 @@ export const constellationQueryPageStyle: IStackStyles = {
         overflow: 'hidden',
     }
 }
-
-export const notePageStyle: IStackStyles = {
+export const queryPageStyle: IStackStyles = {
     root: {
         display: 'flex',
+        height: '100%',
+        overflow: 'auto',
+    }
+}
+
+export const welcomePageStyle: IStackStyles = {
+    root: {
+        display: 'flex',
+        width: '100%',
         height: '100%',
         overflow: 'hidden',
     }
@@ -26,10 +34,10 @@ export const constellationPageStyle: IStackStyles = {
     }
 }
 
-export const queryPageStyle: IStackStyles = {
+export const notePageStyle: IStackStyles = {
     root: {
         display: 'flex',
         height: '100%',
-        overflow: 'auto',
+        overflow: 'hidden',
     }
 }

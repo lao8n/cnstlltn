@@ -10,7 +10,7 @@ import WelcomePane from '../panes/welcomePane';
 import QueryPane from '../panes/queryPane';
 import NotePane from '../panes/notePane';
 // ux imports
-import { constellationQueryPageStyle, queryPageStyle, constellationPageStyle, notePageStyle } from '../ux/pages/constellation';
+import { constellationQueryPageStyle, queryPageStyle, constellationPageStyle, notePageStyle, welcomePageStyle } from '../ux/pages/constellation';
 
 export const Constellation = () => {
   const appContext : AppContext = useContext(UserAppContext);
@@ -18,7 +18,12 @@ export const Constellation = () => {
   if (!appContext.state.userState?.isLoggedIn) {
     return (
       <Stack styles={constellationQueryPageStyle}>
-        <WelcomePane/>  
+        <Stack.Item styles={welcomePageStyle}>
+          <WelcomePane/>
+        </Stack.Item>
+        <Stack.Item styles={notePageStyle}>
+          <NotePane/>
+        </Stack.Item>
       </Stack>
       );
   }

@@ -16,7 +16,8 @@ import { DisplayActions } from '../state/actions/displayActions';
 import * as displayActions from '../state/actions/displayActions';
 import { badInputNotifications, queryBarStyle, queryStackStyle } from '../ux/panes/query';
 // ux imports
-import { stackItemPadding, buttonStyles, selectedButtonStyles, queryFieldStyles } from '../ux/panes/query';
+import { buttonStyles, selectedButtonStyles, queryFieldStyles } from '../ux/panes/query';
+import { stackItemPadding } from '../ux/shared/components';
 
 const QueryPane: FC = (): ReactElement => {
     const appContext = useContext<AppContext>(UserAppContext)

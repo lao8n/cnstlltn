@@ -1,4 +1,4 @@
-import { IStackStyles, IStackItemTokens, mergeStyles } from '@fluentui/react'
+import { IStackStyles, mergeStyles } from '@fluentui/react'
 import { CnstlltnTheme } from '../shared/theme'
 
 const theme = CnstlltnTheme
@@ -24,11 +24,6 @@ export const badInputNotifications: IStackStyles = {
         padding: 10,
         color: theme.palette.black
     }
-}
-
-// tokens
-export const stackItemPadding: IStackItemTokens = {
-    padding: 10,
 }
 
 // buttons
