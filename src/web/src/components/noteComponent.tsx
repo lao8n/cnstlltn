@@ -3,6 +3,7 @@ import { Stack, TextField, IconButton } from "@fluentui/react";
 import { useState, FormEvent } from "react";
 // ux imports
 import { noteLogoStyle } from "../ux/panes/note";
+import { noteComponentStackStyle } from "../ux/components/note";
 
 interface EditableNoteProps {
     initialContent: string;
@@ -24,12 +25,14 @@ const EditableNoteComponent: React.FC<EditableNoteProps> = ({ initialContent }) 
     };
         
     return (
-      <Stack horizontal tokens={{ childrenGap: 10 }}>
+      <Stack horizontal styles={noteComponentStackStyle} tokens={{ childrenGap: 10 }}>
         {editMode ? (
-          <TextField 
-            value={text}
-            onChange={handleTextChange}
-            onSubmit={handleTextSubmit}
+            <TextField 
+                multiline={true}
+                resizable={false}
+                value={text}
+                onChange={handleTextChange}
+                onSubmit={handleTextSubmit}
           />
         ) : (
           <span>{text}</span>

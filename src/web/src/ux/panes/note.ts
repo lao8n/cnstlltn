@@ -33,10 +33,11 @@ export const noteSubStackStyle: IStackStyles = {
 // note
 export const noteLogoStyle: IStackStyles = {
     root: {
-        height: 12,
+        height: '100%',
         display: 'flex',
         alignItems: 'center',
         paddingLeft: 5,
+        color: theme.palette.white,
     }
 }
 
