@@ -23,28 +23,23 @@ const EditableNoteComponent: React.FC<EditableNoteProps> = ({ welcomeScreen, ini
     const handleTextSubmit = () => {
         setEditMode(false);
     };
+    const handleTextBlur = () => {
+        setEditMode(false);
+    };
         
     return (
       <Stack styles={noteComponentStackStyle} tokens={{ childrenGap: 10 }}>
-        {!welcomeScreen && editMode ? (
-                <TextField 
-                    styles={noteTextFieldStyle}
-                    multiline={true}
-                    resizable={false}
-                    value={text}
-                    onChange={handleTextChange}
-                    onSubmit={handleTextSubmit}
+        <TextField 
+            styles={noteTextFieldStyle}
+            multiline={true}
+            resizable={true}
+            value={text}
+            readOnly={!welcomeScreen}
+            onChange={handleTextChange}
+            onSubmit={handleTextSubmit}
+            onClick={toggleEdit}
+            onBlur={handleTextBlur}
           />
-            ) : (
-                <TextField 
-                    styles={noteTextFieldStyle}
-                    width='100%'
-                    multiline={true}
-                    resizable={false}
-                    value={text}
-                    onClick={toggleEdit}
-            />
-        )}
       </Stack>
     );
 }
