@@ -7,6 +7,7 @@ const theme = CnstlltnTheme
 export const queryStackStyle: IStackStyles = {
     root: {
         width: 500,
+        overflow: 'auto',
         background: theme.palette.neutralPrimary,
         boxShadow: theme.effects.elevation8,
     }
