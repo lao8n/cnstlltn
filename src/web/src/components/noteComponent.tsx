@@ -14,7 +14,9 @@ const EditableNoteComponent: React.FC<EditableNoteProps> = ({ welcomeScreen, ini
 
     // functions
     const calculateTextHeight = (textLength: number) => {
-        return Math.max(textLength / 57 * 20, 20);
+        const heightText = Math.max(textLength / 57 * 20 + 5, 20 + 5);
+        console.log("text height:", textLength, heightText);
+        return heightText;
     }
     const handleTextChange = (_: FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
         setText(newValue || '');
@@ -37,7 +39,7 @@ const EditableNoteComponent: React.FC<EditableNoteProps> = ({ welcomeScreen, ini
         <TextField 
             styles={getDynamicStyles()}
             multiline={true}
-            resizable={true}
+            resizable={false}
             value={text}
             readOnly={!welcomeScreen}
             onChange={handleTextChange}

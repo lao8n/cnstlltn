@@ -26,6 +26,7 @@ export const noteStackStyle: IStackStyles = {
 export const noteSubStackStyle: IStackStyles = {
     root: {
         width: '100%',
+        height: '100%',
         overflow: 'auto',
     }
 }
