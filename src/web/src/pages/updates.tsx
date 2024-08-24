@@ -33,7 +33,7 @@ export const Updates = () => {
             </Stack.Item>
             <Stack.Item styles={updateTextStyle}>
                 <Stack.Item>
-                - Add a separate notes section which includes tags
+                - Add a separate notes section which includes tags - thanks Jerry for feedback!
                 </Stack.Item>
                 <Stack.Item>
                 - [Released] When adding notes have them visible as 'unclustered'
