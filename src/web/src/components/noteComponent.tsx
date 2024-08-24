@@ -1,15 +1,15 @@
 // react imports
-import { Stack, TextField, IconButton } from "@fluentui/react";
+import { Stack, TextField } from "@fluentui/react";
 import { useState, FormEvent } from "react";
 // ux imports
-import { noteLogoStyle } from "../ux/panes/note";
 import { noteComponentStackStyle } from "../ux/components/note";
 
 interface EditableNoteProps {
+    welcomeScreen: boolean
     initialContent: string;
 }
 
-const EditableNoteComponent: React.FC<EditableNoteProps> = ({ initialContent }) => {
+const EditableNoteComponent: React.FC<EditableNoteProps> = ({ welcomeScreen, initialContent }) => {
     const [editMode, setEditMode] = useState(false);
     const [text, setText] = useState(initialContent);
   
@@ -26,18 +26,27 @@ const EditableNoteComponent: React.FC<EditableNoteProps> = ({ initialContent }) 
         
     return (
       <Stack horizontal styles={noteComponentStackStyle} tokens={{ childrenGap: 10 }}>
-        {editMode ? (
+        {!welcomeScreen && editMode ? (
             <TextField 
+                width='100%'
                 multiline={true}
                 resizable={false}
                 value={text}
                 onChange={handleTextChange}
                 onSubmit={handleTextSubmit}
           />
-        ) : (
-          <span>{text}</span>
+            ) : (
+            <TextField 
+                width='100%'
+                multiline={true}
+                resizable={false}
+                value={text}
+                onChange={handleTextChange}
+                onSubmit={handleTextSubmit}
+                onClick={toggleEdit}
+            />
             )}
-        <IconButton iconProps={{ iconName: editMode ? "Save" : "Edit" }} onClick={toggleEdit} styles={noteLogoStyle} />
+        {/* <IconButton iconProps={{ iconName: editMode ? "Save" : "Edit" }} onClick={toggleEdit} styles={noteLogoStyle} /> */}
       </Stack>
     );
 }

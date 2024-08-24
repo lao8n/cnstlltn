@@ -22,10 +22,10 @@ const NotePane: FC = (): ReactElement => {
                 appContext.state.userState.selectedContent && (
                     <Stack styles={noteSubStackStyle}>
                         <Stack.Item tokens={stackItemPadding}>
-                            <EditableNoteComponent initialContent={appContext.state.userState.selectedContent?.title} />
+                            <EditableNoteComponent welcomeScreen={appContext.state.userState.userId === "welcome_user"} initialContent={appContext.state.userState.selectedContent?.title} />
                         </Stack.Item>
                         <Stack.Item tokens={stackItemPadding}>
-                            <EditableNoteComponent initialContent={appContext.state.userState.selectedContent?.content} />
+                            <EditableNoteComponent welcomeScreen={appContext.state.userState.userId === "welcome_user"} initialContent={appContext.state.userState.selectedContent?.content} />
                         </Stack.Item>
                     </Stack>
                 )
