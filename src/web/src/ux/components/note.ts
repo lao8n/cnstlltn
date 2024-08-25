@@ -19,9 +19,18 @@ export const noteTextFieldStyle: Partial<ITextFieldStyles> = {
     },
     fieldGroup: {
         backgroundColor: theme.palette.black,
-        minHeight: '30px',
+        minHeight: '25px',
+        border: 'none',
+        selectors: {
+            ':focus': {
+                borderColor: theme.palette.white,
+                borderWidth: '2px',
+                borderStyle: 'solid',
+            }
+        }
     },
     field: {
         color: theme.palette.white,
+        background: theme.palette.themeSecondary,
     }
 }

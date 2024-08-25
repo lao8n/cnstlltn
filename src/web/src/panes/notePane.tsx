@@ -16,7 +16,7 @@ const NotePane: FC = (): ReactElement => {
     return (
         <Stack styles={noteStackStyle}>
             <Stack.Item className={noteNameStyle} tokens={stackItemPadding}>
-                Notes Panel
+                NOTES 
             </Stack.Item>
             {
                 appContext.state.userState.selectedContent && (

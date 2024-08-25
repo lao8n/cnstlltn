@@ -11,19 +11,14 @@ interface EditableNoteProps {
 
 const EditableNoteComponent: React.FC<EditableNoteProps> = ({ disabled, initialContent }) => {
     const [text, setText] = useState(initialContent);
-    console.log("readOnly:", disabled);
     // functions
     const calculateTextHeight = (textLength: number) => {
         const charsPerLine = 30;
         const lineHeight = 20;
         const padding = 10;
         const heightText = Math.max(textLength / charsPerLine * lineHeight + padding, lineHeight + padding);
-        console.log("text height:", textLength, heightText);
         return heightText;
     }
-    const handleTextChange = (_: FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
-        setText(newValue || '');
-    };
     const getDynamicStyles = (): Partial<ITextFieldStyles> => {
         return {
             ...noteTextFieldStyle,
@@ -33,10 +28,18 @@ const EditableNoteComponent: React.FC<EditableNoteProps> = ({ disabled, initialC
             }
         };
     };
+    const handleTextChange = (_: FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
+        setText(newValue || '');
+    };
     const handleTextSubmit = () => {
         console.log('text submitted');
     };
-        
+    const handleEnter = (event: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        if (event.key === 'Enter' && !event.shiftKey) {
+            event.preventDefault();
+            handleTextSubmit();
+        }
+    }
     return (
       <Stack styles={noteComponentStackStyle} tokens={{ childrenGap: 10 }}>
         <TextField 
@@ -47,6 +50,7 @@ const EditableNoteComponent: React.FC<EditableNoteProps> = ({ disabled, initialC
             disabled={disabled}
             onChange={handleTextChange}
             onBlur={handleTextSubmit}
+            onKeyDown={handleEnter}
           />
       </Stack>
     );

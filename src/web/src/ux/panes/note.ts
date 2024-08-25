@@ -52,6 +52,6 @@ export const noteLogoStyle: IStackStyles = {
 // text
 export const noteNameStyle = mergeStyles({
     fontFamily: "Segoe UI",
-    fontSize: '20px',
+    fontSize: '15px',
     color: theme.palette.white,
 });

@@ -2,12 +2,12 @@ import { createTheme } from '@fluentui/react';
 
 export const CnstlltnTheme = createTheme({
     palette: {
-        themePrimary: '#0c343c',
+        themePrimary: '#0c343c', // dark blue
         themeLighterAlt: '#00060a',
         themeLighter: '#001729',
         themeLight: '#012c4d',
         themeTertiary: '#025799',
-        themeSecondary: '#0280e0',
+        themeSecondary: '#3a3a3a', // dark grey
         themeDarkAlt: '#1c9dff',
         themeDark: '#3facff',
         themeDarker: '#0c343c',
@@ -22,7 +22,7 @@ export const CnstlltnTheme = createTheme({
         neutralPrimaryAlt: '#f2f2f2',
         neutralPrimary: '#e3e3e3',
         neutralDark: '#f9f9f9',
-        black: '#292929',
-        white: '#fcfcfc',
+        black: '#292929', // black
+        white: '#fcfcfc', // white
     }
 });

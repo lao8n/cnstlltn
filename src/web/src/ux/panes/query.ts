@@ -28,7 +28,7 @@ export const badInputNotifications: IStackStyles = {
 
 // buttons
 export const buttonStyles = mergeStyles({
-    backgroundColor: theme.palette.neutralPrimary,
+    backgroundColor: theme.palette.themeSecondary,
     color: theme.palette.black,
     margin: '5px',
     padding: '5px 10px',
@@ -60,3 +60,9 @@ export const queryFieldStyles = {
         }
     },
 };
+
+export const queryNameStyle = mergeStyles({
+    fontFamily: "Segoe UI",
+    fontSize: '15px',
+    color: theme.palette.white,
+});
