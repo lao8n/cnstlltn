@@ -247,6 +247,7 @@ const ConstellationPane: FC = (): ReactElement => {
                                 onSearch={onSubmit}
                                 styles={clusterByStyle}
                             />
+                            {console.log("selected button ", selectedButton)}
                             {
                                 selectedButton === "Cluster By" && (
                                     <Stack horizontal>
