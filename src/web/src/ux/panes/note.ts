@@ -19,7 +19,7 @@ export const noteStackStyle: IStackStyles = {
             top: 0,
             bottom: 0,
             width: '2px', 
-            backgroundColor: theme.palette.white, 
+            backgroundColor: theme.palette.themePrimary, 
         }
     }
 }

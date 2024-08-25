@@ -8,8 +8,18 @@ export const queryStackStyle: IStackStyles = {
     root: {
         width: 500,
         overflow: 'auto',
-        background: theme.palette.neutralPrimary,
-        boxShadow: theme.effects.elevation8,
+        background: theme.palette.black,
+        paddingRight: '5px',
+        position: 'relative',
+        '::after': {
+            content: '""', 
+            position: 'absolute',
+            left: 0,
+            top: 0,
+            bottom: 0,
+            width: '2px', 
+            backgroundColor: theme.palette.themePrimary, 
+        }
     }
 }
 

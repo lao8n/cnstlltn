@@ -127,9 +127,9 @@ const WelcomePane: FC = (): ReactElement => {
 
     return (
         <Stack styles={welcomeStackStyle}>
-            <div className={welcomeLineStyle}>
-                Tools for thinking
-            </div>
+            <Stack.Item className={welcomeLineStyle}>
+                TOOLS FOR THINKING
+            </Stack.Item>
             <Stack.Item styles={canvasStackStyle}>
                 <canvas ref={canvasRef} style={canvasStyle} id="pt"/>
             </Stack.Item>
