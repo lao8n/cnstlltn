@@ -7,7 +7,7 @@ export const Updates = () => {
     return(
         <Stack styles={updatesPageStyle}>
             <Stack.Item styles={updateHeadingStyle}>
-                Updates - last updated 08/24/2024
+                Updates - last updated 08/25/2024
             </Stack.Item>
             <Stack.Item styles={updateTextStyle}>
                 This page is for updates on cnstlltn. As we are still in pre-alpha there will be lots of bugs so please send any you see over to cnstlltn@outlook.com. We also welcome any feedback you wish to share including feature requests etc.
@@ -21,6 +21,9 @@ export const Updates = () => {
                 Current Major Bugs
             </Stack.Item>
             <Stack.Item styles={updateTextStyle}>
+                <Stack.Item>
+                    - Doing a major refactoring and the website is generally not working right now!
+                </Stack.Item>
                 <Stack.Item>
                 - [Fixed] If you have a constellation with existing content and then try an already existing cluster by it creates loads of new clusters.
                 </Stack.Item>
