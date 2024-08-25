@@ -129,7 +129,7 @@ const QueryPane: FC = (): ReactElement => {
     return (
         <Stack styles={queryStackStyle}>
             <Stack.Item tokens={stackItemPadding}>
-                <Stack.Item className={queryNameStyle} tokens={stackItemPadding}>
+                <Stack.Item className={queryNameStyle}>
                     QUERY
                 </Stack.Item>
                 <Stack horizontal styles={queryBarStyle}>

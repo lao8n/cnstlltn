@@ -81,4 +81,5 @@ export const queryNameStyle = mergeStyles({
     fontFamily: "Segoe UI",
     fontSize: '15px',
     color: theme.palette.black,
+    paddingBottom: '10px',
 });

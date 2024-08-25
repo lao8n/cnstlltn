@@ -23,6 +23,7 @@ export const buttonStackStyle = (active: boolean): IStackStyles => {
     if (active) {
         return {
             root: {
+                color: theme.palette.white,
                 position: 'relative',
                 overflow: 'hidden',
                 '::after': {

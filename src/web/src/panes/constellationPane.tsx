@@ -232,7 +232,9 @@ const ConstellationPane: FC = (): ReactElement => {
                     <Stack horizontal>
                         {buttons.map((label, _) => (
                             <Stack.Item styles={buttonStackStyle(selectedButton === label)}>
-                            <button type="button" onClick={() => onButtonClick(label)} style={clusterByButtonStyle}></button>
+                                <button type="button" onClick={() => onButtonClick(label)} style={clusterByButtonStyle}>
+                                    {label}
+                            </button>
                             </Stack.Item>
                         ))}
                     </Stack>
