@@ -5,7 +5,7 @@ export const CnstlltnTheme = createTheme({
         themePrimary: '#0c343c', // dark blue
         themeLighterAlt: '#00060a',
         themeLighter: '#001729',
-        themeLight: '#012c4d',
+        themeLight: '#e3e3e3', // light grey
         themeTertiary: '#025799',
         themeSecondary: '#3a3a3a', // dark grey
         themeDarkAlt: '#1c9dff',

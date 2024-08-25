@@ -41,7 +41,7 @@ const EditableNoteComponent: React.FC<EditableNoteProps> = ({ disabled, initialC
         }
     }
     return (
-      <Stack styles={noteComponentStackStyle} tokens={{ childrenGap: 10 }}>
+      <Stack styles={noteComponentStackStyle}>
         <TextField 
             styles={getDynamicStyles()}
             multiline={true}
