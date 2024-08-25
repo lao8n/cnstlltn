@@ -59,6 +59,12 @@ export const clusterButtonStyles = mergeStyles(buttonStyles, {
     alignItems: 'flex-end',
 })
 
+export const createSaveButtonStyle = {
+    width: '100%',
+    border: 'none',
+    fontFamily: 'Segoe UI',
+}
+
 // text
 export const queryFieldStyles = {
     field: {
@@ -74,5 +80,5 @@ export const queryFieldStyles = {
 export const queryNameStyle = mergeStyles({
     fontFamily: "Segoe UI",
     fontSize: '15px',
-    color: theme.palette.white,
+    color: theme.palette.black,
 });

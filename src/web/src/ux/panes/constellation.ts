@@ -19,11 +19,51 @@ export const constellationHeaderStackStyle: IStackStyles = {
     }
 }
 
+export const buttonStackStyle = (active: boolean): IStackStyles => {
+    if (active) {
+        return {
+            root: {
+                position: 'relative',
+                overflow: 'hidden',
+                '::after': {
+                    content: '""',
+                    display: 'block',
+                    position: 'absolute',
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    height: '2px',
+                    backgroundColor: 'white',
+                },
+            }
+        }
+    } else {
+        return {
+            root: {
+                '::after': {
+                    display: 'none',
+                },
+            }
+        }
+    }
+}
+
 // tokens
 export const stackItemPadding: IStackItemTokens = {
     padding: 10,
 }
 
+// buttons
+export const clusterByButtonStyle = {
+    border: 'none',
+    backgroundColor: theme.palette.black
+}
+
+export const clusteringSuggestionButtonStyle = {
+    flexShrink: 0,
+    border: 'none',
+    fontFamily: 'Segoe UI',
+}
 // text
 export const constellationNameStyle = mergeStyles({
     fontFamily: "Segoe UI",

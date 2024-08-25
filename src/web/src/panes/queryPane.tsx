@@ -14,7 +14,7 @@ import { ConstellationActions } from '../state/actions/constellationActions';
 import * as constellationActions from '../state/actions/constellationActions';
 import { DisplayActions } from '../state/actions/displayActions';
 import * as displayActions from '../state/actions/displayActions';
-import { badInputNotifications, queryBarStyle, queryStackStyle } from '../ux/panes/query';
+import { badInputNotifications, createSaveButtonStyle, queryBarStyle, queryStackStyle } from '../ux/panes/query';
 // ux imports
 import { buttonStyles, selectedButtonStyles, queryFieldStyles, queryNameStyle } from '../ux/panes/query';
 import { stackItemPadding } from '../ux/shared/components';
@@ -129,7 +129,7 @@ const QueryPane: FC = (): ReactElement => {
     return (
         <Stack styles={queryStackStyle}>
             <Stack.Item tokens={stackItemPadding}>
-                <Stack.Item className={queryNameStyle}>
+                <Stack.Item className={queryNameStyle} tokens={stackItemPadding}>
                     QUERY
                 </Stack.Item>
                 <Stack horizontal styles={queryBarStyle}>
@@ -194,7 +194,7 @@ const QueryPane: FC = (): ReactElement => {
                 ))}
             </Stack.Item>
             <Stack.Item tokens={stackItemPadding}>
-                <button onClick={
+                <button style={createSaveButtonStyle} onClick={
                     appContext.state.userState.constellationName === "Home" ?
                         createConstellation : saveSelectedResponses}>
                     {appContext.state.userState.constellationName === "Home" ?
