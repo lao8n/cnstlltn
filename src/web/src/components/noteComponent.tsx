@@ -5,13 +5,13 @@ import { useState, FormEvent } from "react";
 import { noteComponentStackStyle, noteTextFieldStyle } from "../ux/components/note";
 
 interface EditableNoteProps {
-    readOnly: boolean
+    disabled: boolean
     initialContent: string;
 }
 
-const EditableNoteComponent: React.FC<EditableNoteProps> = ({ readOnly, initialContent }) => {
+const EditableNoteComponent: React.FC<EditableNoteProps> = ({ disabled, initialContent }) => {
     const [text, setText] = useState(initialContent);
-    console.log("readOnly:", readOnly);
+    console.log("readOnly:", disabled);
     // functions
     const calculateTextHeight = (textLength: number) => {
         const charsPerLine = 30;
@@ -44,9 +44,9 @@ const EditableNoteComponent: React.FC<EditableNoteProps> = ({ readOnly, initialC
             multiline={true}
             resizable={false}
             value={text}
-            readOnly={readOnly}
+            disabled={disabled}
             onChange={handleTextChange}
-            onSubmit={handleTextSubmit}
+            onBlur={handleTextSubmit}
           />
       </Stack>
     );
