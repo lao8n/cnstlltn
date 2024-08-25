@@ -26,7 +26,7 @@ export const buttonStackStyle = (active: boolean): IStackStyles => {
                 color: theme.palette.white,
                 position: 'relative',
                 overflow: 'hidden',
-                paddingRight: '10px',
+                paddingRight: '20px',
                 paddingBottom: '10px',
                 '::after': {
                     content: '""',
@@ -34,7 +34,7 @@ export const buttonStackStyle = (active: boolean): IStackStyles => {
                     position: 'absolute',
                     left: 0,
                     right: 0,
-                    bottom: 0,
+                    bottom: '5px',
                     height: '2px',
                     backgroundColor: 'white',
                 },
@@ -43,8 +43,11 @@ export const buttonStackStyle = (active: boolean): IStackStyles => {
     } else {
         return {
             root: {
+                paddingRight: '10px',
+                paddingBottom: '10px',
                 '::after': {
                     display: 'none',
+                    bottom: '5px',
                 },
             }
         }
@@ -71,7 +74,7 @@ export const clusteringSuggestionButtonStyle = {
 // text
 export const constellationNameStyle = mergeStyles({
     fontFamily: "Segoe UI",
-    fontSize: '20px',
+    fontSize: '30px',
     color: theme.palette.white,
 });
 
@@ -86,7 +89,7 @@ export const clusterByWordStyle = mergeStyles({
 
 export const clusterByStyle: Partial<ITextFieldStyles> = {
     root: {
-        minWidth: 800,
+        width: '100%',
     },
     fieldGroup: {  // This targets the surrounding container of the input
         backgroundColor: theme.palette.black,

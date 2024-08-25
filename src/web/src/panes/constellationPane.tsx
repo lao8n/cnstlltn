@@ -232,56 +232,54 @@ const ConstellationPane: FC = (): ReactElement => {
                         </Stack.Item>
                     ))}
                 </Stack>
-                <Stack horizontal>
-                    <Stack>
-                        {
-                            selectedButton === "CREATE CONSTELLATION" && (
-                                <SearchBox
-                                    // value={clusterBy}
-                                    placeholder={"Enter constellation name"}
-                                    // onChange={onTypeClusterBy}
-                                    // onSearch={onSubmit}
-                                    styles={clusterByStyle}
-                                />
-                            )
-                        }
-                        {
-                            selectedButton === "CLUSTER BY" && (
-                                <Stack>
-                                <SearchBox
-                                    value={clusterBy}
-                                    placeholder={appContext.state.userState.clusterBy}
-                                    onChange={onTypeClusterBy}
-                                    onSearch={onSubmit}
-                                    styles={clusterByStyle}
-                                />
-                                    <Stack horizontal>
-                                    <button type="button" onClick={onClusterClick} style={clusteringSuggestionButtonStyle}>
-                                        CLUSTERING SUGGESTION
-                                    </button>
-                                    <select onChange={onDropdownChange} style={{flexGrow: 1}}>
-                                        <option value="">SELECT CLUSTERING</option>
-                                        {clusterByOptions.map((option, index) => (
-                                            <option key={index} value={option}>
-                                                {option}
-                                            </option>
-                                        ))}
-                                    </select>
-                                    </Stack>
+                <Stack horizontal style={{width: '100%', paddingLeft: '10px', paddingRight: '10px'}}>
+                    {
+                        selectedButton === "CREATE CONSTELLATION" && (
+                            <SearchBox
+                                // value={clusterBy}
+                                placeholder={"Enter constellation name"}
+                                // onChange={onTypeClusterBy}
+                                // onSearch={onSubmit}
+                                styles={clusterByStyle}
+                            />
+                        )
+                    }
+                    {
+                        selectedButton === "CLUSTER BY" && (
+                        <Stack style={{width: '100%'}}>
+                            <SearchBox
+                                value={clusterBy}
+                                placeholder={appContext.state.userState.clusterBy}
+                                onChange={onTypeClusterBy}
+                                onSearch={onSubmit}
+                                styles={clusterByStyle}
+                            />
+                                <Stack horizontal style={{width: '100%'}}>
+                                <button type="button" onClick={onClusterClick} style={clusteringSuggestionButtonStyle}>
+                                    CLUSTERING SUGGESTION
+                                </button>
+                                <select onChange={onDropdownChange} style={{flexGrow: 1}}>
+                                    <option value="">SELECT CLUSTERING</option>
+                                    {clusterByOptions.map((option, index) => (
+                                        <option key={index} value={option}>
+                                            {option}
+                                        </option>
+                                    ))}
+                                </select>
                                 </Stack>
-                            )
-                        }
-                         {
-                            selectedButton === "FILTER BY" && (
-                                <SearchBox
-                                    // value={clusterBy}
-                                    // onChange={onTypeClusterBy}
-                                    // onSearch={onSubmit}
-                                    styles={clusterByStyle}
-                                />
-                            )
-                        }
-                    </Stack>
+                            </Stack>
+                        )
+                    }
+                        {
+                        selectedButton === "FILTER BY" && (
+                            <SearchBox
+                                // value={clusterBy}
+                                // onChange={onTypeClusterBy}
+                                // onSearch={onSubmit}
+                                styles={clusterByStyle}
+                            />
+                        )
+                    }
                 </Stack>
             </Stack>
             <Stack.Item styles={canvasStackStyle}>
