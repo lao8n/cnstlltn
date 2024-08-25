@@ -79,6 +79,13 @@ export function updatePositions(canvasRef: React.RefObject<HTMLCanvasElement>, c
     });
 }
 
+export function drawWelcomeTitle(space: CanvasSpace, form: CanvasForm, width: number, height: number) {
+    const middleX = width / 2 - 150;
+    const middleY = height / 2 - 100;
+    form.font(25).fill("#fff").text(new Pt(middleX, middleY), "Cnstlltn gives you");
+    form.font(25).fill("#fff").text(new Pt(middleX, middleY + 20), "Tools for thinking");
+}
+
 export function drawConstellationPoints(space : CanvasSpace, form: CanvasForm, constellationPts: React.MutableRefObject<DisplayPoint[]>) {
     const r = 50;
     const range = Circle.fromCenter(space.pointer, r);

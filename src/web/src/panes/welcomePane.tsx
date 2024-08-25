@@ -17,11 +17,11 @@ import { DisplayActions } from '../state/actions/displayActions';
 import * as displayActions from '../state/actions/displayActions';
 // display imports
 import { DisplayPoint } from "../frontend/models";
-import { drawClusterPoints, drawConstellationPoints, setClusterDisplayPoints, setConstellationDisplayPoints, updatePositions } from "../frontend/display";
+import { drawClusterPoints, drawConstellationPoints, setClusterDisplayPoints, setConstellationDisplayPoints, updatePositions, drawWelcomeTitle } from "../frontend/display";
 import { CanvasSpace, Circle, Pt } from "pts";
 // ux imports
 import { CnstlltnTheme } from "../ux/shared/theme";
-import { welcomeStackStyle, welcomeLineStyle } from "../ux/panes/welcome";
+import { welcomeStackStyle } from "../ux/panes/welcome";
 import { canvasStackStyle, canvasStyle } from "../ux/shared/components";
 
 const WelcomePane: FC = (): ReactElement => {
@@ -90,6 +90,7 @@ const WelcomePane: FC = (): ReactElement => {
                 updatePositionsCallback();
             },
             animate: (time, ftime) => {
+                drawWelcomeTitle(space, form, canvasRef.current?.parentElement?.clientWidth || 0, canvasRef.current?.parentElement?.clientHeight || 0);
                 drawConstellationPoints(space, form, constellationPts);
                 drawClusterPoints(form, clusterPts);
             },
@@ -127,9 +128,6 @@ const WelcomePane: FC = (): ReactElement => {
 
     return (
         <Stack styles={welcomeStackStyle}>
-            <Stack.Item className={welcomeLineStyle}>
-                TOOLS FOR THINKING
-            </Stack.Item>
             <Stack.Item styles={canvasStackStyle}>
                 <canvas ref={canvasRef} style={canvasStyle} id="pt"/>
             </Stack.Item>
