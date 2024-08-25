@@ -47,9 +47,9 @@ const ConstellationPane: FC = (): ReactElement => {
     const [unclusteredContent, setUnclusteredContent] = useState(0);
     const [clusterBy, setNewClusterBy] = useState(appContext.state.userState.clusterBy);
     const [clusterByOptions, setNewClusterByOptions] = useState<string[]>([]);
-    const buttons = ["Cluster By", "Filter By"]
+    const buttons = ["CLUSTER BY", "FILTER BY"]
     if (appContext.state.userState.constellationName === "Home") {
-        buttons.unshift("Create Constellation");
+        buttons.unshift("CREATE CONSTELLATION");
     }
     const [selectedButton, setSelectedButton] = useState(buttons[0]);
 
@@ -222,40 +222,45 @@ const ConstellationPane: FC = (): ReactElement => {
 
     return (
         <Stack styles={constellationStackStyle}>
-            <Stack horizontal styles={constellationHeaderStackStyle}>
-                <Stack.Item tokens={stackItemPadding}>
-                    <div className={constellationNameStyle}>
-                        {appContext.state.userState.constellationName}
-                    </div>
-                </Stack.Item>
-                <Stack.Item styles={clusterByStyle} tokens={stackItemPadding}>
-                    <Stack horizontal>
-                        {buttons.map((label, _) => (
-                            <Stack.Item styles={buttonStackStyle(selectedButton === label)}>
-                                <button type="button" onClick={() => onButtonClick(label)} style={clusterByButtonStyle}>
-                                    {label}
-                            </button>
-                            </Stack.Item>
-                        ))}
-                    </Stack>
-                    <Stack horizontal>
-                        <Stack>
-                            <SearchBox
-                                value={clusterBy}
-                                placeholder={appContext.state.userState.clusterBy}
-                                onChange={onTypeClusterBy}
-                                onSearch={onSubmit}
-                                styles={clusterByStyle}
-                            />
-                            {console.log("selected button ", selectedButton)}
-                            {
-                                selectedButton === "Cluster By" && (
+            <Stack styles={constellationHeaderStackStyle}>
+                <Stack horizontal>
+                    {buttons.map((label, _) => (
+                        <Stack.Item styles={buttonStackStyle(selectedButton === label)}>
+                            <button type="button" onClick={() => onButtonClick(label)} style={clusterByButtonStyle}>
+                                {label}
+                        </button>
+                        </Stack.Item>
+                    ))}
+                </Stack>
+                <Stack horizontal>
+                    <Stack>
+                        {
+                            selectedButton === "CREATE CONSTELLATION" && (
+                                <SearchBox
+                                    // value={clusterBy}
+                                    placeholder={"Enter constellation name"}
+                                    // onChange={onTypeClusterBy}
+                                    // onSearch={onSubmit}
+                                    styles={clusterByStyle}
+                                />
+                            )
+                        }
+                        {
+                            selectedButton === "CLUSTER BY" && (
+                                <Stack>
+                                <SearchBox
+                                    value={clusterBy}
+                                    placeholder={appContext.state.userState.clusterBy}
+                                    onChange={onTypeClusterBy}
+                                    onSearch={onSubmit}
+                                    styles={clusterByStyle}
+                                />
                                     <Stack horizontal>
                                     <button type="button" onClick={onClusterClick} style={clusteringSuggestionButtonStyle}>
-                                        Clustering Suggestion
+                                        CLUSTERING SUGGESTION
                                     </button>
                                     <select onChange={onDropdownChange} style={{flexGrow: 1}}>
-                                        <option value="">Select Clustering</option>
+                                        <option value="">SELECT CLUSTERING</option>
                                         {clusterByOptions.map((option, index) => (
                                             <option key={index} value={option}>
                                                 {option}
@@ -263,14 +268,29 @@ const ConstellationPane: FC = (): ReactElement => {
                                         ))}
                                     </select>
                                     </Stack>
-                                )
-                            }
-                        </Stack>
+                                </Stack>
+                            )
+                        }
+                         {
+                            selectedButton === "FILTER BY" && (
+                                <SearchBox
+                                    // value={clusterBy}
+                                    // onChange={onTypeClusterBy}
+                                    // onSearch={onSubmit}
+                                    styles={clusterByStyle}
+                                />
+                            )
+                        }
                     </Stack>
-                </Stack.Item>
+                </Stack>
             </Stack>
             <Stack.Item styles={canvasStackStyle}>
                 <canvas ref={canvasRef} style={canvasStyle} id="pt"/>
+            </Stack.Item>
+            <Stack.Item tokens={stackItemPadding}>
+                <div className={constellationNameStyle}>
+                    {appContext.state.userState.constellationName}
+                </div>
             </Stack.Item>
         </Stack>
     );

@@ -30,9 +30,13 @@ export const Constellation = () => {
   
   return (
     <Stack horizontal styles={constellationQueryPageStyle}>
-      <Stack.Item styles={queryPageStyle}>
-        <QueryPane/>
-      </Stack.Item>
+      {
+        appContext.state.userState.constellationName !== "Home" && (
+          <Stack.Item styles={queryPageStyle}>
+            <QueryPane/>
+          </Stack.Item>
+        )
+      }
       <Stack.Item styles={constellationPageStyle}>
         <ConstellationPane/>
       </Stack.Item>

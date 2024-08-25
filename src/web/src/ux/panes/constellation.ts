@@ -15,7 +15,7 @@ export const constellationStackStyle: IStackStyles = {
 
 export const constellationHeaderStackStyle: IStackStyles = {
     root: {
-        justifyContent: 'space-between',
+        width: '100%',
     }
 }
 
@@ -26,6 +26,8 @@ export const buttonStackStyle = (active: boolean): IStackStyles => {
                 color: theme.palette.white,
                 position: 'relative',
                 overflow: 'hidden',
+                paddingRight: '10px',
+                paddingBottom: '10px',
                 '::after': {
                     content: '""',
                     display: 'block',
@@ -57,6 +59,7 @@ export const stackItemPadding: IStackItemTokens = {
 // buttons
 export const clusterByButtonStyle = {
     border: 'none',
+    color: theme.palette.white,
     backgroundColor: theme.palette.black
 }
 

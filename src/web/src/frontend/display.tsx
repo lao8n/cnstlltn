@@ -81,7 +81,7 @@ export function updatePositions(canvasRef: React.RefObject<HTMLCanvasElement>, c
 
 export function drawWelcomeTitle(space: CanvasSpace, form: CanvasForm, width: number, height: number) {
     const middleX = width / 2 - 150;
-    const middleY = height / 2 - 100;
+    const middleY = height / 2 - 200;
     form.font(25).fill("#fff").text(new Pt(middleX, middleY), "Cnstlltn gives you:");
     form.font(40).fill("#fff").text(new Pt(middleX, middleY + 40), "Tools for thinking");
 }

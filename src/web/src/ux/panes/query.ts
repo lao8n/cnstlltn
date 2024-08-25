@@ -38,7 +38,7 @@ export const badInputNotifications: IStackStyles = {
 
 // buttons
 export const buttonStyles = mergeStyles({
-    backgroundColor: theme.palette.themeSecondary,
+    backgroundColor: theme.palette.themeLight,
     color: theme.palette.black,
     margin: '5px',
     padding: '5px 10px',
@@ -46,7 +46,8 @@ export const buttonStyles = mergeStyles({
     border: 'none',
     transition: 'background-color 0.3s',
     '&:hover': {
-        backgroundColor: theme.palette.neutralPrimaryAlt
+        backgroundColor: theme.palette.themeSecondary,
+        color: theme.palette.white,
     }
 });
 
