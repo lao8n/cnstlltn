@@ -12,7 +12,7 @@ import { stackItemPadding } from "../ux/shared/components";
 
 const NotePane: FC = (): ReactElement => {
     const appContext = useContext<AppContext>(UserAppContext)
-
+    const readOnly = appContext.state.userState.userId === "" || appContext.state.userState.userId === "welcome_user"
     return (
         <Stack styles={noteStackStyle}>
             <Stack.Item className={noteNameStyle} tokens={stackItemPadding}>
@@ -22,10 +22,10 @@ const NotePane: FC = (): ReactElement => {
                 appContext.state.userState.selectedContent && (
                     <Stack styles={noteSubStackStyle}>
                         <Stack.Item tokens={stackItemPadding} styles={noteSubStackItemStyle}>
-                            <EditableNoteComponent welcomeScreen={appContext.state.userState.userId === "welcome_user"} initialContent={appContext.state.userState.selectedContent?.title} />
+                            <EditableNoteComponent readOnly={readOnly} initialContent={appContext.state.userState.selectedContent?.title} />
                         </Stack.Item>
                         <Stack.Item tokens={stackItemPadding} styles={noteSubStackItemStyle}>
-                            <EditableNoteComponent welcomeScreen={appContext.state.userState.userId === "welcome_user"} initialContent={appContext.state.userState.selectedContent?.content} />
+                            <EditableNoteComponent readOnly={readOnly} initialContent={appContext.state.userState.selectedContent?.content} />
                         </Stack.Item>
                     </Stack>
                 )

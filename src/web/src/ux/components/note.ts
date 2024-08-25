@@ -19,7 +19,7 @@ export const noteTextFieldStyle: Partial<ITextFieldStyles> = {
     },
     fieldGroup: {
         backgroundColor: theme.palette.black,
-        minHeight: '25px',
+        minHeight: '30px',
     },
     field: {
         color: theme.palette.white,
