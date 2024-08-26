@@ -10,6 +10,7 @@ export type DisplayPoint = {
 };
 
 export type TwinklePoint = {
+    coord: [number, number];
     position: Pt;
     opacity: number;
     twinkleSpeed: number;

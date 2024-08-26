@@ -78,8 +78,8 @@ export function updatePositions(canvasRef: React.RefObject<HTMLCanvasElement>, c
         pt.position = new Pt(x, y);
     });
     twinklePoints.current.forEach(pt => {
-        const x = pt.position[0] * (canvasRef.current?.parentElement?.clientWidth || 0);
-        const y = pt.position[1] * (canvasRef.current?.parentElement?.clientHeight || 0);
+        const x = pt.coord[0] * (canvasRef.current?.parentElement?.clientWidth || 0);
+        const y = pt.coord[1] * (canvasRef.current?.parentElement?.clientHeight || 0);
         pt.position = new Pt(x, y);
     });
 }
@@ -102,9 +102,10 @@ export function drawConstellationPoints(space : CanvasSpace, form: CanvasForm, c
 
 export function initializeTwinklePoints(count: number): TwinklePoint[] {
     const twinklePoints = Array(count).fill(null).map(() => ({
-        position: new Pt(Math.random(), Math.random()),
+        coord: [Math.random(), Math.random()] as [number, number],
+        position: new Pt(0, 0), // placeholder
         opacity: Math.random(),
-        twinkleSpeed: Math.random() * 0.05 + 0.01,
+        twinkleSpeed: Math.random() * 0.0005 + 0.0001,
         maxOpacity: Math.random() * 0.5 + 0.5
     }));
     return twinklePoints;
