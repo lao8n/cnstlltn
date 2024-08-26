@@ -46,7 +46,8 @@ class Query(BaseModel):
     source: str
 
 class QueryAiResponseBlock(BaseModel):
-    title: str    
+    title: str  
+    source: str
     content: str
 
 class LoginConfig(BaseModel):

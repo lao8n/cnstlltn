@@ -18,47 +18,59 @@ async def query_ai(query: Query) -> List[QueryAiResponseBlock]:
     print("query-ai")
     print("user text: ", query.userTxt)
     print("source: ", query.source)
-    prompt_format = """
-    this prompt is to describe how i want to format your response. i will prompt with something like a book title or an idea or concept and i want you to respond with the following format
-    '
-    concept 1
-    content 1
-    concept 2
-    content 2
-    '
-    make sure you do not return an intro paragraph, conclusion paragraph or anything that deviates from the above format. here is the prompt: return the key frameworks/ideas in
 
-    as an example if the book title was 'guns germs and steel' the response should be in in the following format:
-    Geographic Determinism
-    This is a core concept in the book. The author suggests that the environment in which a society develops significantly determines its eventual success or failure. Factors such as climate, available flora and fauna, and geography shape the technologies, social organization, and disease resistance of societies.
-    Domestication of Plants and Animals
-    Jared Diamond discusses how the ability to domesticate plants and animals gave certain societies significant advantages over others. This allowed them to produce more food and support larger and denser populations. This, in turn, led to social stratification and technological advancements.
+    system_prompt = """
+    You are an AI assistant tasked with analyzing and summarizing key concepts from given texts. Please follow these instructions:
 
-    Note how none of the concepts or titles are numbered etc. 
+    1. If source material is provided, read it carefully.
+    2. Identify key concepts, ideas, or frameworks mentioned in the text or related to the prompt.
+    3. For each key concept, provide a response in the following format:
+
+    Title: [Concept Title]
+    Source: [Source of the concept, or "General Knowledge" if no specific source]
+    Content: [Detailed explanation of the concept]
+
+    Provide multiple concepts related to the given prompt or source material. Do not include any introduction or conclusion.
     """
-    if query.source != "":
-        prompt_format += "I have also included source material which you should use as the basis of your answer"
+
+    user_prompt = f"Please provide key concepts related to the following prompt:\n\n{query.userTxt}"
+
+    if query.source:
+        user_prompt = f"""
+        Please analyze the following source material:
+
+        {query.source}
+
+        Now, focusing on the following specific prompt, provide relevant key concepts:
+
+        {query.userTxt}
+        """
+
     response = client.chat.completions.create(
         model='gpt-4o', # best model
         messages=[
             {
                 "role": "system",
-                "content": prompt_format,
+                "content": system_prompt,
             },
             {
                 "role": "user",
-                "content": query.userTxt + query.source,
+                "content": user_prompt,
             }
         ]
     )
+
     # Split response into blocks
     response_blocks = response.choices[0].message.content.strip().split("\n\n")
 
     # Create QueryAiResponseBlock list
     query_ai_response_blocks = []
     for block in response_blocks:
-        title, content = block.split("\n", 1)
-        query_ai_response_blocks.append(QueryAiResponseBlock(title=title, content=content))
+        lines = block.split("\n")
+        title = lines[0].replace("Title: ", "")
+        source = lines[1].replace("Source: ", "")
+        content = "\n".join(lines[2:]).replace("Content: ", "")
+        query_ai_response_blocks.append(QueryAiResponseBlock(title=title, source=source, content=content))
     formatted_blocks = [f"Title: {block.title}\nContent: {block.content}" for block in query_ai_response_blocks]
     print("query_ai response blocks:\n" + '\n\n'.join(formatted_blocks))    
     return query_ai_response_blocks
