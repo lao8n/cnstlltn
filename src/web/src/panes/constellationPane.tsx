@@ -116,7 +116,7 @@ const ConstellationPane: FC = (): ReactElement => {
 
     // effects
     useEffect(() => {
-        twinklePoints.current = initializeTwinklePoints(100);
+        twinklePoints.current = initializeTwinklePoints(25);
     }, []);
 
     useEffect(() => {

@@ -95,7 +95,7 @@ export function drawConstellationPoints(space : CanvasSpace, form: CanvasForm, c
             form.fill(colour).point(p, dist * 15, "circle");
             form.font(dist * 15).fill("#fff").text(pt.position.$add(15, 15), pt.name);
         } else {
-            form.fill(colour).point(pt.position, 3, "circle");
+            form.fill(colour).point(pt.position, 5, "circle");
         }
     });
 }

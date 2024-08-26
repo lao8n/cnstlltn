@@ -53,7 +53,7 @@ const WelcomePane: FC = (): ReactElement => {
 
     // effects
     useEffect(() => {
-        twinklePoints.current = initializeTwinklePoints(100);
+        twinklePoints.current = initializeTwinklePoints(50);
     }, []);
 
     useEffect(() => {
