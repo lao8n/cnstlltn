@@ -66,34 +66,38 @@ export const stackItemPadding: IStackItemTokens = {
 }
 
 // buttons
-export const canvasHeaderButtonStyle = {
+export const canvasHeaderButtonStyle = mergeStyles({
     border: 'none',
     color: theme.palette.white,
     backgroundColor: theme.palette.black,
     fontSize: '12px',
-}
+    transition: 'background-color 0.3s',
+    '&:hover': {
+        backgroundColor: theme.palette.themeSecondary,
+    }
+});
 
-export const clusteringSuggestionButtonStyle = {
+export const clusteringSuggestionButtonStyle = mergeStyles({
     flexShrink: 0,
     border: 'none',
     backgroundColor: theme.palette.black,
     color: theme.palette.white,
+    transition: 'background-color 0.3s',
     '&:hover': {
         backgroundColor: theme.palette.themeSecondary,
-        color: theme.palette.white,
     }
-}
+});
 
-export const selectClusteringStyle = {
+export const selectClusteringStyle = mergeStyles({
     flexGrow: 1,
     border: 'none',
     backgroundColor: theme.palette.black,
     color: theme.palette.white,
+    transition: 'background-color 0.3s',
     '&:hover': {
         backgroundColor: theme.palette.themeSecondary,
-        color: theme.palette.white,
     }
-}
+});
 
 // text
 export const constellationNameStyle = mergeStyles({

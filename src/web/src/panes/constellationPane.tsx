@@ -244,7 +244,7 @@ const ConstellationPane: FC = (): ReactElement => {
                 <Stack horizontal>
                     {buttons.map((label, _) => (
                         <Stack.Item styles={buttonStackStyle(selectedButton === label)}>
-                            <button type="button" onClick={() => onButtonClick(label)} style={canvasHeaderButtonStyle}>
+                            <button type="button" onClick={() => onButtonClick(label)} className={canvasHeaderButtonStyle}>
                                 {label}
                         </button>
                         </Stack.Item>
@@ -273,10 +273,10 @@ const ConstellationPane: FC = (): ReactElement => {
                                 styles={clusterByStyle}
                             />
                                 <Stack horizontal style={{width: '100%'}}>
-                                <button type="button" onClick={onClusterClick} style={clusteringSuggestionButtonStyle}>
+                                <button type="button" onClick={onClusterClick} className={clusteringSuggestionButtonStyle}>
                                     CLUSTERING SUGGESTION
                                 </button>
-                                <select onChange={onDropdownChange} style={selectClusteringStyle}>
+                                <select onChange={onDropdownChange} className={selectClusteringStyle}>
                                     <option value="">SELECT CLUSTERING</option>
                                     {clusterByOptions.map((option, index) => (
                                         <option key={index} value={option}>

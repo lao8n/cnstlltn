@@ -60,13 +60,18 @@ export const clusterButtonStyles = mergeStyles(buttonStyles, {
     alignItems: 'flex-end',
 })
 
-export const createSaveButtonStyle = {
+export const createSaveButtonStyle = mergeStyles({
     width: '100%',
     border: 'none',
     fontFamily: 'Segoe UI',
     paddingTop: '5px',
     paddingBottom: '5px',
-}
+    transition: 'background-color 0.3s',
+    '&:hover': {
+        backgroundColor: theme.palette.themeSecondary,
+        color: theme.palette.white,
+    }
+});
 
 // text
 export const queryFieldStyles = {

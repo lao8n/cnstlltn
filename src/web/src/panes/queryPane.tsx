@@ -171,7 +171,7 @@ const QueryPane: FC = (): ReactElement => {
                 ))}
             </Stack.Item>
             <Stack.Item tokens={stackItemPadding}>
-                <button style={createSaveButtonStyle} onClick={saveSelectedResponses}>
+                <button className={createSaveButtonStyle} onClick={saveSelectedResponses}>
                     {"Save selected notes to constellation"}
                 </button>
             </Stack.Item>

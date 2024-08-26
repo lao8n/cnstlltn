@@ -27,13 +27,13 @@ const NotePane: FC = (): ReactElement => {
                             <EditableNoteComponent disabled={disabled} field="title" initialContent={appContext.state.userState.selectedContent?.title} />
                         </Stack.Item>
                         <Stack.Item tokens={stackItemPadding} styles={noteSubStackItemStyle}>
-                            <EditableNoteComponent disabled={disabled} field="source" initialContent={appContext.state.userState.selectedContent?.source || "Add source"} />
+                            <EditableNoteComponent disabled={disabled} field="source" initialContent={appContext.state.userState.selectedContent?.source ?? "Add source"} />
                         </Stack.Item>
                         <Stack.Item tokens={stackItemPadding} styles={noteSubStackItemStyle}>
                             <EditableNoteComponent disabled={disabled} field="content" initialContent={appContext.state.userState.selectedContent?.content} />
                         </Stack.Item>
                         <Stack.Item tokens={stackItemPadding} styles={noteSubStackItemStyle}>
-                            <EditableNoteComponent disabled={disabled} field="tags" initialContent={appContext.state.userState.selectedContent?.tags.join(", ") || "Add comma-separated tags"} />
+                            <EditableNoteComponent disabled={disabled} field="tags" initialContent={appContext.state.userState.selectedContent?.tags?.join(", ") ?? "Add comma-separated tags"} />
                         </Stack.Item>
                     </Stack>
                 )
