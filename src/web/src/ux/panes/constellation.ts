@@ -84,6 +84,7 @@ export const clusteringSuggestionButtonStyle = mergeStyles({
     backgroundColor: theme.palette.black,
     color: theme.palette.white,
     transition: 'background-color 0.3s',
+    fontSize: '12px',
     '&:hover': {
         backgroundColor: theme.palette.themeLight,
         color: theme.palette.black,
@@ -96,6 +97,7 @@ export const selectClusteringStyle = mergeStyles({
     backgroundColor: theme.palette.black,
     color: theme.palette.white,
     transition: 'background-color 0.3s',
+    fontSize: '12px',
     '&:hover': {
         backgroundColor: theme.palette.themeLight,
         color: theme.palette.black,
@@ -107,15 +109,6 @@ export const constellationNameStyle = mergeStyles({
     fontFamily: "Segoe UI",
     fontSize: '30px',
     color: theme.palette.white,
-});
-
-export const clusterByWordStyle = mergeStyles({
-    fontFamily: "Segoe UI",
-    fontSize: '15px',
-    color: theme.palette.white,
-    alignItems: 'right',
-    paddingTop: 5,
-    paddingRight: 5,
 });
 
 export const createConstellationButtonStyle: Partial<ITextFieldStyles> = {

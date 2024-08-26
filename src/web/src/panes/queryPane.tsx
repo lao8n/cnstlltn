@@ -154,7 +154,14 @@ const QueryPane: FC = (): ReactElement => {
                 )
             }
             {
-                emptySelection && (
+                appContext.state.queryState.responses?.length === 0 && emptySelection && (
+                    <Stack.Item styles={badInputNotifications}>
+                        Hey, add a prompt first - maybe try 48 Laws of Power by Robert Greene. Then if you like any of the results select them and try again.
+                    </Stack.Item>
+                )
+            }
+            {
+                appContext.state.queryState.responses?.length !== 0 && emptySelection && (
                     <Stack.Item styles={badInputNotifications}>
                         Click on the notes you want to save before trying to save to constellation.
                     </Stack.Item>
