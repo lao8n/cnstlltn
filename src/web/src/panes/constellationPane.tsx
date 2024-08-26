@@ -207,7 +207,7 @@ const ConstellationPane: FC = (): ReactElement => {
                 drawTwinklingPoints(form, twinklePoints.current);
             },
             action: (type, x, y) => {
-                const r = 10;
+                const r = 15;
                 if (type === "up") { // Check if the mouse click is released, which indicates a click
                     const mousePt = new Pt(x, y);
                     const range = Circle.fromCenter(mousePt, r);
