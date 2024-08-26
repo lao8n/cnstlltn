@@ -31,6 +31,5 @@ export const noteTextFieldStyle: Partial<ITextFieldStyles> = {
     },
     field: {
         color: theme.palette.white,
-        backgroundColor: theme.palette.themeSecondary,
     }
 }

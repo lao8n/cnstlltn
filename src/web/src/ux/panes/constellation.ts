@@ -26,14 +26,16 @@ export const buttonStackStyle = (active: boolean): IStackStyles => {
                 color: theme.palette.white,
                 position: 'relative',
                 overflow: 'hidden',
-                paddingRight: '20px',
-                paddingBottom: '10px',
+                paddingTop: '10px',
+                paddingLeft: '10px',
+                paddingRight: '10px',
+                paddingBottom: '15px',
                 '::after': {
                     content: '""',
                     display: 'block',
                     position: 'absolute',
-                    left: 0,
-                    right: 0,
+                    left: `10px`,
+                    right: `10px`,
                     bottom: '5px',
                     height: '2px',
                     backgroundColor: 'white',
@@ -43,9 +45,13 @@ export const buttonStackStyle = (active: boolean): IStackStyles => {
     } else {
         return {
             root: {
+                paddingTop: '10px',
+                paddingLeft: '10px',
                 paddingRight: '10px',
-                paddingBottom: '10px',
+                paddingBottom: '15px',
                 '::after': {
+                    left: `10px`,
+                    right: `10px`,
                     display: 'none',
                     bottom: '5px',
                 },
