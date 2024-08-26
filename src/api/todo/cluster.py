@@ -85,9 +85,9 @@ async def cluster_by(user_id: str, constellation_name: str, cluster_by: str, clu
     prompt_format = f"""
     this prompt is to describe how i want to format your response. i will prompt with something like a list of concepts
     with an id, title and content and clusterby json format
-    [{{"id": "id1", "title": "concept 1", "content": "description of concept 1", "clusterby": ""}}, 
-     {{"id": "id2", "title": "concept 2", "content": "description of concept 2", "clusterby": ""}}, 
-     {{"id": "id3", "title": "concept 3", "content": "description of concept 3", "clusterby": ""}}]
+    [{{"id": "id1", "title": "concept 1", "source": "source 1", "content": "description of concept 1", "tags": "tag1, tag2", "clusterby": ""}}, 
+     {{"id": "id2", "title": "concept 2", "source": "source 2", "content": "description of concept 2", "tags": "", "clusterby": ""}}, 
+     {{"id": "id3", "title": "concept 3", "source": "source 3", "content": "description of concept 3", "tags": "tag2, tag3", "clusterby": ""}}]
     i then want you to return the same data but with the clusterby field filled in with the cluster that the concept belongs to
     in valid json format - dropping the content field
     [{{"id": "id1", "title": "concept 1", "clusterby": "cluster 1"}}, 
@@ -105,7 +105,7 @@ async def cluster_by(user_id: str, constellation_name: str, cluster_by: str, clu
     for chunk in _chunk_list(user_data, chunk_size):
         json_data = []
         for data in chunk:
-            json_data.append({"id": str(data.id), "title": data.title, "content": data.content, "clusterby": ""})
+            json_data.append({"id": str(data.id), "title": data.title, "source": data.source, "content": data.content, "tags": data.tags.join(", "), "clusterby": ""})
         json_string = json.dumps(json_data)
         response = client.chat.completions.create(
             model='gpt-4', # mini doesn't work

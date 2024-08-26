@@ -49,7 +49,12 @@ const EditableNoteComponent: React.FC<EditableNoteProps> = ({ disabled, field, i
     const handleTextSubmit = async () => {
         if (appContext.state.userState.selectedContent) {
             const selectedContent = appContext.state.userState.selectedContent;
-            const newContent = { ...selectedContent, [field]: text };
+            let newContent;
+            if (field === "tags") {
+                newContent = { ...selectedContent, [field]: text.split(", ") };
+            } else {
+                newContent = { ...selectedContent, [field]: text };
+            }
             console.log("save new note ", newContent);
             actions.note.setSelectedContent(newContent);
             await actions.constellation.editFramework(appContext.state.userState.userId, newContent);
