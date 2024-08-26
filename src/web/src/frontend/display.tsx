@@ -102,8 +102,8 @@ export function drawClusterPoints(form: CanvasForm, clusterPts: React.MutableRef
 }
 
 export function drawUnclusteredContentNotification(form: CanvasForm, width: number, unclusteredContent: number) {
-    const topRightX = width - 350;
-    const topRightY = 10;
+    const topRightX = width - 330;
+    const topRightY = 30;
     const topRight = new Pt(topRightX, topRightY);
     form.font(12).fill("#fff").text(topRight, `You have ${unclusteredContent} unclustered content. Try 'Cluster By' again.`);
 }

@@ -68,6 +68,7 @@ const EditableNoteComponent: React.FC<EditableNoteProps> = ({ disabled, field, i
             multiline={true}
             resizable={false}
             value={text}
+            placeholder={field === "title" ? "Enter title" : field === "content" ? "Enter your note here" : field === "source" ? "Add source" : field === "tags" ? "Add comma separated tags" : ""}
             disabled={disabled}
             onChange={handleTextChange}
             onBlur={handleTextSubmit}

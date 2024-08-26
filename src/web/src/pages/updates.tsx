@@ -22,10 +22,10 @@ export const Updates = () => {
             </Stack.Item>
             <Stack.Item styles={updateTextStyle}>
                 <Stack.Item>
-                    - Doing a major refactoring and the website is generally not working right now!
+                - Doing a major refactoring and the website is generally not working right now!
                 </Stack.Item>
                 <Stack.Item>
-                - [Fixed] If you have a constellation with existing content and then try an already existing cluster by it creates loads of new clusters.
+                - [Still not fully fixed] If you have a constellation with existing content and then try an already existing cluster by it creates loads of new clusters.
                 </Stack.Item>
                 <Stack.Item>
                 - [Fixed] Google sign in is not using the correct ID
