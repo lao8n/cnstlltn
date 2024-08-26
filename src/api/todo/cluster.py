@@ -100,8 +100,7 @@ async def cluster_by(user_id: str, constellation_name: str, cluster_by: str, clu
     """
     chunk_size = 10
     new_clusters = {} # cluster -> coordinates
-    cluster_ids = defaultdict(list) # cluster -> []ids
-    new_cluster_ids = defaultdict(list)
+    all_cluster_ids = defaultdict(list) # cluster -> []ids
     for chunk in _chunk_list(user_data, chunk_size):
         json_data = []
         for data in chunk:
@@ -125,14 +124,12 @@ async def cluster_by(user_id: str, constellation_name: str, cluster_by: str, clu
         for response_block in response_blocks:
             id = response_block['id']
             cluster = response_block['clusterby'].title()
-            if cluster not in clusters:
+            if cluster not in clusters and cluster not in new_clusters:
                 new_clusters[cluster] = (uniform(0.1, 0.8), uniform(0.1, 0.8))
-                new_cluster_ids[cluster].append(id)
-            else:
-                cluster_ids[cluster].append(id)
-    print("user_clusters:", user_clusters, " clusters ", clusters, " cluster_ids ", cluster_ids)
-    print("new_clusters", new_clusters, "new_cluster_ids", new_cluster_ids)
-    await _save_clusters(user_id, constellation_name, cluster_by, user_clusters, clusters, cluster_ids, new_clusters, new_cluster_ids)
+            all_cluster_ids[cluster].append(id)
+    print("user_clusters:", user_clusters, " clusters ", clusters, " cluster_ids ", all_cluster_ids)
+    print("new_clusters", new_clusters)
+    await _save_clusters(user_id, constellation_name, cluster_by, user_clusters, clusters, all_cluster_ids, new_clusters)
     return
 
 async def _set_not_latest(user_id: str, constellation_name: str):
