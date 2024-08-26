@@ -44,7 +44,6 @@ const ConstellationPane: FC = (): ReactElement => {
     const constellationPts = useRef<DisplayPoint[]>([]) as React.MutableRefObject<DisplayPoint[]>;
     const clusterPts = useRef<DisplayPoint[]>([]) as React.MutableRefObject<DisplayPoint[]>;
     const twinklePoints = useRef<TwinklePoint[]>([]) as React.MutableRefObject<TwinklePoint[]>;
-    twinklePoints.current = initializeTwinklePoints(100);
     const [constellationRedrawn, setConstellationRedrawn] = useState(Date.now());
     const [unclusteredContent, setUnclusteredContent] = useState(0);
     const [createdConstellationName, setCreatedConstellationName] = useState('');
@@ -116,6 +115,10 @@ const ConstellationPane: FC = (): ReactElement => {
     }
 
     // effects
+    useEffect(() => {
+        twinklePoints.current = initializeTwinklePoints(100);
+    }, []);
+
     useEffect(() => {
         console.log("get constellation & cluster & update display points")
         const updateConstellationAndClusters = async () => {

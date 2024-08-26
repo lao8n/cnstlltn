@@ -101,6 +101,7 @@ export function drawConstellationPoints(space : CanvasSpace, form: CanvasForm, c
 }
 
 export function initializeTwinklePoints(count: number): TwinklePoint[] {
+    console.log("initializing twinkle points")
     const twinklePoints = Array(count).fill(null).map(() => ({
         coord: [Math.random(), Math.random()] as [number, number],
         position: new Pt(0, 0), // placeholder
