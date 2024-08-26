@@ -64,6 +64,8 @@ export const createSaveButtonStyle = {
     width: '100%',
     border: 'none',
     fontFamily: 'Segoe UI',
+    paddingTop: '5px',
+    paddingBottom: '5px',
 }
 
 // text

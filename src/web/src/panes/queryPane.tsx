@@ -59,26 +59,10 @@ const QueryPane: FC = (): ReactElement => {
     };
     const onSubmit = async () => {
         if (newQuery) {
-            if (newQuery && appContext.state.userState.constellationName !== "Home") {
-                const query: Query = {userTxt: newQuery, source: newSource}
-                await actions.query.postQueryResponseList(query) // reducer updates state
-                // set selected responses to empty
-                setSelectedResponses(new Set());
-            }
-        } else {
-            setEmptyQuery(true);
-        }
-    }
-    const createConstellation = async () => {
-        if (newQuery) {
-            const responses: QueryResponse[] = [{ title: newQuery, content: "" }];
-            const createdConstellation = await actions.constellation.saveSelectedFrameworks(
-                appContext.state.userState.userId,
-                appContext.state.userState.constellationName,
-                responses,
-            )
-            console.log(createdConstellation)
-            actions.display.setUpdated(Date.now());
+            const query: Query = {userTxt: newQuery, source: newSource}
+            await actions.query.postQueryResponseList(query) // reducer updates state
+            // set selected responses to empty
+            setSelectedResponses(new Set());
         } else {
             setEmptyQuery(true);
         }
@@ -133,26 +117,23 @@ const QueryPane: FC = (): ReactElement => {
                     QUERY
                 </Stack.Item>
                 <Stack horizontal styles={queryBarStyle}>
-                    {appContext.state.userState.constellationName !== "Home" && (
-                        <Stack.Item align="stretch">
+                    <Stack.Item align="stretch">
                         <button onClick={toggleSecondSearch} style={{ height: '100%', marginRight: '1px' }}>
                             {isSecondSearchVisible ? '▲' : '▼'}
                         </button>
-                        </Stack.Item>
-                    )}
+                    </Stack.Item>
                     <Stack.Item styles={queryBarStyle}>
                         <SearchBox
                             value={newQuery}
                             placeholder={
-                                appContext.state.userState.constellationName === "Home" ?
-                                    "Enter name for new constellation" : "Prompt for notes"}
+                                "Prompt for notes"}
                             onChange={onTypeQuery}
                             onSearch={onSubmit}
                             styles={queryFieldStyles}
                             />
                     </Stack.Item>
                 </Stack>
-                {appContext.state.userState.constellationName !== "Home" && isSecondSearchVisible && (
+                {isSecondSearchVisible && (
                     <Stack.Item>
                         <SearchBox
                             value={newSource}
@@ -167,17 +148,13 @@ const QueryPane: FC = (): ReactElement => {
             </Stack.Item>
             {emptyQuery &&
                 (
-                    appContext.state.userState.constellationName === "Home" ?
-                        <Stack.Item styles={badInputNotifications}>
-                        Hey, try to typing a constellation title in the box above and then click create below.
-                    </Stack.Item> :
                     <Stack.Item styles={badInputNotifications}>
                         Hey, add a prompt first before searching for notes. Try 'Poor Charlie's Almanac'.
                     </Stack.Item>
                 )
             }
             {
-                emptySelection && appContext.state.userState.constellationName !== "Home" && (
+                emptySelection && (
                     <Stack.Item styles={badInputNotifications}>
                         Click on the notes you want to save before trying to save to constellation.
                     </Stack.Item>
@@ -194,11 +171,8 @@ const QueryPane: FC = (): ReactElement => {
                 ))}
             </Stack.Item>
             <Stack.Item tokens={stackItemPadding}>
-                <button style={createSaveButtonStyle} onClick={
-                    appContext.state.userState.constellationName === "Home" ?
-                        createConstellation : saveSelectedResponses}>
-                    {appContext.state.userState.constellationName === "Home" ?
-                        "Create new constellation" : "Save selected notes to constellation"}
+                <button style={createSaveButtonStyle} onClick={saveSelectedResponses}>
+                    {"Save selected notes to constellation"}
                 </button>
             </Stack.Item>
         </Stack>

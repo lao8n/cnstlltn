@@ -3,6 +3,7 @@ import { SearchBox, Stack } from '@fluentui/react';
 import React, { FC, ReactElement, useContext, useEffect, useState, useMemo, useRef, useCallback, ChangeEvent } from "react";
 // state imports
 import { AppContext } from "../state/applicationState";
+import { QueryResponse } from '../state/queryState';
 import UserAppContext from "../state/userContext";
 import { bindActionCreators } from "../state/actions/actionCreators";
 import { UserActions } from '../state/actions/userActions';
@@ -18,8 +19,7 @@ import * as displayActions from '../state/actions/displayActions';
 // ux imports
 import { CnstlltnTheme } from "../ux/shared/theme";
 import { canvasStackStyle, canvasStyle } from '../ux/shared/components';
-import { stackItemPadding, constellationNameStyle, clusterByStyle, clusterByButtonStyle, clusteringSuggestionButtonStyle, buttonStackStyle } from '../ux/panes/constellation';
-import { constellationHeaderStackStyle, constellationStackStyle } from '../ux/panes/constellation';
+import { constellationHeaderStackStyle, constellationStackStyle, stackItemPadding, constellationNameStyle, clusterByStyle, canvasHeaderButtonStyle, clusteringSuggestionButtonStyle, buttonStackStyle, selectClusteringStyle, createConstellationButtonStyle } from '../ux/panes/constellation';
 // display imports
 import { CanvasSpace, Circle, Pt } from "pts";
 import { DisplayPoint } from '../frontend/models';
@@ -45,9 +45,10 @@ const ConstellationPane: FC = (): ReactElement => {
     const clusterPts = useRef<DisplayPoint[]>([]) as React.MutableRefObject<DisplayPoint[]>;
     const [constellationRedrawn, setConstellationRedrawn] = useState(Date.now());
     const [unclusteredContent, setUnclusteredContent] = useState(0);
+    const [createdConstellationName, setCreatedConstellationName] = useState('');
     const [clusterBy, setNewClusterBy] = useState(appContext.state.userState.clusterBy);
     const [clusterByOptions, setNewClusterByOptions] = useState<string[]>([]);
-    const buttons = ["CLUSTER BY", "FILTER BY"]
+    const buttons = ["CLUSTER BY"]
     if (appContext.state.userState.constellationName === "Home") {
         buttons.unshift("CREATE CONSTELLATION");
     }
@@ -61,6 +62,10 @@ const ConstellationPane: FC = (): ReactElement => {
     const updatePositionsCallback = useCallback(() => {
         updatePositions(canvasRef, constellationPts, clusterPts);
     }, []);
+    
+    const onTypeConstellationName = (_: ChangeEvent<HTMLInputElement> | undefined, newValue?: string) => {
+        setCreatedConstellationName(newValue || '');
+    }
 
     const onTypeClusterBy = (_: ChangeEvent<HTMLInputElement> | undefined, newValue?: string) => {
         setNewClusterBy(newValue || '');
@@ -71,7 +76,20 @@ const ConstellationPane: FC = (): ReactElement => {
         setNewClusterBy(event.target.value);
     };
 
-    const onSubmit = async () => {
+    const onCreateConstellationSubmit = async () => {
+        if (createdConstellationName) {
+            const responses: QueryResponse[] = [{ title: createdConstellationName, content: "" }];
+            const createdConstellation = await actions.constellation.saveSelectedFrameworks(
+                appContext.state.userState.userId,
+                appContext.state.userState.constellationName,
+                responses,
+            )
+            console.log(createdConstellation)
+            actions.display.setUpdated(Date.now());
+        } 
+    }
+
+    const onClusterBySubmit = async () => {
         console.log("cluster by", clusterBy, appContext.state.userState.clusterBy)
         await actions.cluster.clusterBy(
             appContext.state.userState.userId,
@@ -226,7 +244,7 @@ const ConstellationPane: FC = (): ReactElement => {
                 <Stack horizontal>
                     {buttons.map((label, _) => (
                         <Stack.Item styles={buttonStackStyle(selectedButton === label)}>
-                            <button type="button" onClick={() => onButtonClick(label)} style={clusterByButtonStyle}>
+                            <button type="button" onClick={() => onButtonClick(label)} style={canvasHeaderButtonStyle}>
                                 {label}
                         </button>
                         </Stack.Item>
@@ -236,11 +254,11 @@ const ConstellationPane: FC = (): ReactElement => {
                     {
                         selectedButton === "CREATE CONSTELLATION" && (
                             <SearchBox
-                                // value={clusterBy}
+                                value={createdConstellationName}
                                 placeholder={"Enter constellation name"}
-                                // onChange={onTypeClusterBy}
-                                // onSearch={onSubmit}
-                                styles={clusterByStyle}
+                                onChange={onTypeConstellationName}
+                                onSearch={onCreateConstellationSubmit}
+                                styles={createConstellationButtonStyle}
                             />
                         )
                     }
@@ -251,14 +269,14 @@ const ConstellationPane: FC = (): ReactElement => {
                                 value={clusterBy}
                                 placeholder={appContext.state.userState.clusterBy}
                                 onChange={onTypeClusterBy}
-                                onSearch={onSubmit}
+                                onSearch={onClusterBySubmit}
                                 styles={clusterByStyle}
                             />
                                 <Stack horizontal style={{width: '100%'}}>
                                 <button type="button" onClick={onClusterClick} style={clusteringSuggestionButtonStyle}>
                                     CLUSTERING SUGGESTION
                                 </button>
-                                <select onChange={onDropdownChange} style={{flexGrow: 1}}>
+                                <select onChange={onDropdownChange} style={selectClusteringStyle}>
                                     <option value="">SELECT CLUSTERING</option>
                                     {clusterByOptions.map((option, index) => (
                                         <option key={index} value={option}>

@@ -16,7 +16,6 @@ export const noteComponentStackStyle: IStackStyles = {
 export const noteTextFieldStyle: Partial<ITextFieldStyles> = {
     root: {
         width: '100%',
-        backgroundColor: theme.palette.themeSecondary,
     },
     fieldGroup: {
         minHeight: '25px',
@@ -30,6 +29,7 @@ export const noteTextFieldStyle: Partial<ITextFieldStyles> = {
         }
     },
     field: {
-        color: theme.palette.white,
+        fontColor: theme.palette.white,
+        backgroundColor: theme.palette.themeSecondary,
     }
 }

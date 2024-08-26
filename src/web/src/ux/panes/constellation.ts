@@ -66,17 +66,29 @@ export const stackItemPadding: IStackItemTokens = {
 }
 
 // buttons
-export const clusterByButtonStyle = {
+export const canvasHeaderButtonStyle = {
     border: 'none',
     color: theme.palette.white,
-    backgroundColor: theme.palette.black
+    backgroundColor: theme.palette.black,
+    fontSize: '12px',
 }
 
 export const clusteringSuggestionButtonStyle = {
     flexShrink: 0,
     border: 'none',
     fontFamily: 'Segoe UI',
+    backgroundColor: theme.palette.black,
+    color: theme.palette.white,
 }
+
+export const selectClusteringStyle = {
+    flexGrow: 1,
+    border: 'none',
+    fontFamily: 'Segoe UI',
+    backgroundColor: theme.palette.black,
+    color: theme.palette.white,
+}
+
 // text
 export const constellationNameStyle = mergeStyles({
     fontFamily: "Segoe UI",
@@ -92,6 +104,18 @@ export const clusterByWordStyle = mergeStyles({
     paddingTop: 5,
     paddingRight: 5,
 });
+
+export const createConstellationButtonStyle: Partial<ITextFieldStyles> = {
+    root: {
+        width: '100%',
+    },
+    field: {  // This targets the input element itself
+        color: theme.palette.black,
+        fontFamily: "Segoe UI",
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+    }
+}
 
 export const clusterByStyle: Partial<ITextFieldStyles> = {
     root: {

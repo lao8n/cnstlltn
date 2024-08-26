@@ -18,3 +18,9 @@ export const welcomeLineStyle = mergeStyles({
     color: theme.palette.white,
     padding: '10px'
 });
+
+export const welcomeCaptionStyle = mergeStyles({
+    fontFamily: "Segoe UI",
+    fontSize: '30px',
+    color: theme.palette.white,
+});
