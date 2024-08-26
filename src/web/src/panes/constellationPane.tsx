@@ -49,9 +49,6 @@ const ConstellationPane: FC = (): ReactElement => {
     const [clusterBy, setNewClusterBy] = useState(appContext.state.userState.clusterBy);
     const [clusterByOptions, setNewClusterByOptions] = useState<string[]>([]);
     const [buttons, setButtons] = useState<string[]>(["CLUSTER BY"]);
-    if (appContext.state.userState.constellationName === "Home") {
-        setButtons(["CREATE CONSTELLATION", "CLUSTER BY"]);
-    }
     const [selectedButton, setSelectedButton] = useState(buttons[0]);
 
     // functions
@@ -177,6 +174,10 @@ const ConstellationPane: FC = (): ReactElement => {
             setButtons(["CLUSTER BY"]);
         }
     }, [appContext.state.userState.constellationName])
+
+    useEffect(() => {
+        setSelectedButton(buttons[0]);
+    }, [buttons])
 
     useEffect(() => {
         const canvas = canvasRef.current;
