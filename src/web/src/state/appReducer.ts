@@ -16,7 +16,7 @@ export const appReducer: Reducer<ApplicationState, ApplicationActions> = (state:
         case ActionTypes.POST_QUERY_RESPONSE_LIST:
             state.queryState.responses = action.payload;
             state.queryState.responses?.forEach((response) => {
-                console.log("response title ", response.title + " content " + response.content)
+                console.log("response title ", response.title + " source " + response.source + " content " + response.content)
             })
             break;
         case ActionTypes.SET_EMPTY_QUERY_RESPONSE_LIST:
