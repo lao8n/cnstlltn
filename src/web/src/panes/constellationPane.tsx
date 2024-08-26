@@ -23,7 +23,7 @@ import { constellationHeaderStackStyle, constellationStackStyle, stackItemPaddin
 // display imports
 import { CanvasSpace, Circle, Pt } from "pts";
 import { DisplayPoint, TwinklePoint } from '../frontend/models';
-import { setConstellationDisplayPoints, setClusterDisplayPoints, drawConstellationPoints, drawClusterPoints, drawUnclusteredContentNotification, drawNoConstellationContentNotification, updatePositions } from '../frontend/display';
+import { setConstellationDisplayPoints, setClusterDisplayPoints, drawConstellationPoints, drawClusterPoints, drawUnclusteredContentNotification, drawNoConstellationContentNotification, updatePositions, initializeTwinklePoints, drawTwinklingPoints } from '../frontend/display';
 
 // Update path
 // 1. createConstellation   -> userState.updated -> getConstellation -> setConstellationDisplayPoints -> redrawConstellation
@@ -44,6 +44,7 @@ const ConstellationPane: FC = (): ReactElement => {
     const constellationPts = useRef<DisplayPoint[]>([]) as React.MutableRefObject<DisplayPoint[]>;
     const clusterPts = useRef<DisplayPoint[]>([]) as React.MutableRefObject<DisplayPoint[]>;
     const twinklePoints = useRef<TwinklePoint[]>([]) as React.MutableRefObject<TwinklePoint[]>;
+    twinklePoints.current = initializeTwinklePoints(100);
     const [constellationRedrawn, setConstellationRedrawn] = useState(Date.now());
     const [unclusteredContent, setUnclusteredContent] = useState(0);
     const [createdConstellationName, setCreatedConstellationName] = useState('');
@@ -200,6 +201,7 @@ const ConstellationPane: FC = (): ReactElement => {
                 if (unclusteredContent === 0 && constellationPts.current.length === 0){
                     drawNoConstellationContentNotification(form,  canvasRef.current?.parentElement?.clientWidth || 0,  canvasRef.current?.parentElement?.clientHeight || 0, appContext.state.userState.constellationName, 15);
                 }
+                drawTwinklingPoints(form, twinklePoints.current);
             },
             action: (type, x, y) => {
                 const r = 10;

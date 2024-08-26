@@ -105,7 +105,7 @@ export function initializeTwinklePoints(count: number): TwinklePoint[] {
         coord: [Math.random(), Math.random()] as [number, number],
         position: new Pt(0, 0), // placeholder
         opacity: Math.random(),
-        twinkleSpeed: Math.random() * 0.0005 + 0.0001,
+        twinkleSpeed: Math.random() * 0.005 + 0.001,
         maxOpacity: Math.random() * 0.5 + 0.5
     }));
     return twinklePoints;
