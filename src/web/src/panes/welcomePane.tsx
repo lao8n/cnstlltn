@@ -44,11 +44,12 @@ const WelcomePane: FC = (): ReactElement => {
     const constellationPts = useRef<DisplayPoint[]>([]) as React.MutableRefObject<DisplayPoint[]>;
     const clusterPts = useRef<DisplayPoint[]>([]) as React.MutableRefObject<DisplayPoint[]>;
     const twinklePoints = useRef<TwinklePoint[]>([]) as React.MutableRefObject<TwinklePoint[]>;
+    twinklePoints.current = initializeTwinklePoints(100);
     const [, setUnclusteredContent] = useState(0);
 
     // functions
     const updatePositionsCallback = useCallback(() => {
-        updatePositions(canvasRef, constellationPts, clusterPts);
+        updatePositions(canvasRef, constellationPts, clusterPts, twinklePoints);
     }, []);
 
     // effects
@@ -86,7 +87,6 @@ const WelcomePane: FC = (): ReactElement => {
             resize: true
         });
         const form = space.getForm();
-        twinklePoints.current = initializeTwinklePoints(space, 100);
         space.add({
             start: (bound) => {
                 updatePositionsCallback();

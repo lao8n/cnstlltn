@@ -61,7 +61,7 @@ export function setClusterDisplayPoints(clusters: Cluster[], canvasRef: React.Re
     })
 }
 
-export function updatePositions(canvasRef: React.RefObject<HTMLCanvasElement>, constellationPts: React.MutableRefObject<DisplayPoint[]>, clusterPts: React.MutableRefObject<DisplayPoint[]>) {
+export function updatePositions(canvasRef: React.RefObject<HTMLCanvasElement>, constellationPts: React.MutableRefObject<DisplayPoint[]>, clusterPts: React.MutableRefObject<DisplayPoint[]>, twinklePoints: React.MutableRefObject<TwinklePoint[]>) {
     if (!constellationPts.current || constellationPts.current.length === 0) {
         console.log("No data in constellationPts yet.");
         return;
@@ -75,6 +75,11 @@ export function updatePositions(canvasRef: React.RefObject<HTMLCanvasElement>, c
     clusterPts.current.forEach(pt => {
         const x = pt.coord[0] * (canvasRef.current?.parentElement?.clientWidth || 0);
         const y = pt.coord[1] * (canvasRef.current?.parentElement?.clientHeight || 0);
+        pt.position = new Pt(x, y);
+    });
+    twinklePoints.current.forEach(pt => {
+        const x = pt.position[0] * (canvasRef.current?.parentElement?.clientWidth || 0);
+        const y = pt.position[1] * (canvasRef.current?.parentElement?.clientHeight || 0);
         pt.position = new Pt(x, y);
     });
 }
@@ -95,9 +100,9 @@ export function drawConstellationPoints(space : CanvasSpace, form: CanvasForm, c
     });
 }
 
-export function initializeTwinklePoints(space: CanvasSpace, count: number): TwinklePoint[] {
+export function initializeTwinklePoints(count: number): TwinklePoint[] {
     const twinklePoints = Array(count).fill(null).map(() => ({
-        position: new Pt(Math.random() * space.width, Math.random() * space.height),
+        position: new Pt(Math.random(), Math.random()),
         opacity: Math.random(),
         twinkleSpeed: Math.random() * 0.05 + 0.01,
         maxOpacity: Math.random() * 0.5 + 0.5

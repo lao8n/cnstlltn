@@ -22,7 +22,7 @@ import { canvasStackStyle, canvasStyle } from '../ux/shared/components';
 import { constellationHeaderStackStyle, constellationStackStyle, stackItemPadding, constellationNameStyle, clusterByStyle, canvasHeaderButtonStyle, clusteringSuggestionButtonStyle, buttonStackStyle, selectClusteringStyle, createConstellationButtonStyle } from '../ux/panes/constellation';
 // display imports
 import { CanvasSpace, Circle, Pt } from "pts";
-import { DisplayPoint } from '../frontend/models';
+import { DisplayPoint, TwinklePoint } from '../frontend/models';
 import { setConstellationDisplayPoints, setClusterDisplayPoints, drawConstellationPoints, drawClusterPoints, drawUnclusteredContentNotification, drawNoConstellationContentNotification, updatePositions } from '../frontend/display';
 
 // Update path
@@ -43,6 +43,7 @@ const ConstellationPane: FC = (): ReactElement => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const constellationPts = useRef<DisplayPoint[]>([]) as React.MutableRefObject<DisplayPoint[]>;
     const clusterPts = useRef<DisplayPoint[]>([]) as React.MutableRefObject<DisplayPoint[]>;
+    const twinklePoints = useRef<TwinklePoint[]>([]) as React.MutableRefObject<TwinklePoint[]>;
     const [constellationRedrawn, setConstellationRedrawn] = useState(Date.now());
     const [unclusteredContent, setUnclusteredContent] = useState(0);
     const [createdConstellationName, setCreatedConstellationName] = useState('');
@@ -57,7 +58,7 @@ const ConstellationPane: FC = (): ReactElement => {
     }, []);
 
     const updatePositionsCallback = useCallback(() => {
-        updatePositions(canvasRef, constellationPts, clusterPts);
+        updatePositions(canvasRef, constellationPts, clusterPts, twinklePoints);
     }, []);
     
     const onTypeConstellationName = (_: ChangeEvent<HTMLInputElement> | undefined, newValue?: string) => {
