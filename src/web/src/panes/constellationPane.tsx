@@ -255,7 +255,7 @@ const ConstellationPane: FC = (): ReactElement => {
                         selectedButton === "CREATE CONSTELLATION" && (
                             <SearchBox
                                 value={createdConstellationName}
-                                placeholder={"Enter constellation name"}
+                                placeholder={"Enter name of new constellation"}
                                 onChange={onTypeConstellationName}
                                 onSearch={onCreateConstellationSubmit}
                                 styles={createConstellationButtonStyle}
@@ -267,7 +267,7 @@ const ConstellationPane: FC = (): ReactElement => {
                         <Stack style={{width: '100%'}}>
                             <SearchBox
                                 value={clusterBy}
-                                placeholder={appContext.state.userState.clusterBy}
+                                placeholder={"Enter what you want to cluster by"}
                                 onChange={onTypeClusterBy}
                                 onSearch={onClusterBySubmit}
                                 styles={clusterByStyle}

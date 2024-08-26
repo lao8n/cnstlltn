@@ -73,7 +73,8 @@ export const canvasHeaderButtonStyle = mergeStyles({
     fontSize: '12px',
     transition: 'background-color 0.3s',
     '&:hover': {
-        backgroundColor: theme.palette.themeSecondary,
+        backgroundColor: theme.palette.themeLight,
+        color: theme.palette.black,
     }
 });
 
@@ -84,7 +85,8 @@ export const clusteringSuggestionButtonStyle = mergeStyles({
     color: theme.palette.white,
     transition: 'background-color 0.3s',
     '&:hover': {
-        backgroundColor: theme.palette.themeSecondary,
+        backgroundColor: theme.palette.themeLight,
+        color: theme.palette.black,
     }
 });
 
@@ -95,7 +97,8 @@ export const selectClusteringStyle = mergeStyles({
     color: theme.palette.white,
     transition: 'background-color 0.3s',
     '&:hover': {
-        backgroundColor: theme.palette.themeSecondary,
+        backgroundColor: theme.palette.themeLight,
+        color: theme.palette.black,
     }
 });
 
@@ -124,6 +127,10 @@ export const createConstellationButtonStyle: Partial<ITextFieldStyles> = {
         fontFamily: "Segoe UI",
         alignItems: 'center',
         justifyContent: 'flex-end',
+        '::placeholder': {
+            color: theme.palette.black,
+            opacity: 0.8,
+        }
     }
 }
 
@@ -139,5 +146,9 @@ export const clusterByStyle: Partial<ITextFieldStyles> = {
         fontFamily: "Segoe UI",
         alignItems: 'center',
         justifyContent: 'flex-end',
+        '::placeholder': {
+            color: theme.palette.black,
+            opacity: 0.8,
+        }
     }
 }
