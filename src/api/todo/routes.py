@@ -104,6 +104,7 @@ async def save_frameworks(request: Request, saveFrameworks: List[Framework]) -> 
 
 @app.post("/edit-framework", response_model=UserFramework, status_code=200)
 async def edit_framework(request: Request, framework: UserFramework) -> UserFramework:
+    print("edit_framework: ", framework)
     existing_framework = await UserFramework.get(framework.id)
     if existing_framework is not None:
         existing_framework.title = framework.title

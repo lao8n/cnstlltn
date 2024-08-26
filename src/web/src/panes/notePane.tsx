@@ -27,7 +27,7 @@ const NotePane: FC = (): ReactElement => {
                             <EditableNoteComponent disabled={disabled} field="title" initialContent={appContext.state.userState.selectedContent?.title} />
                         </Stack.Item>
                         {
-                            appContext.state.userState.userId !== "welcome_user" && (
+                            appContext.state.userState.userId !== "welcome_user" && appContext.state.userState.userId !== "" && (
                         <Stack.Item tokens={stackItemPadding} styles={noteSubStackItemStyle}>
                             <EditableNoteComponent disabled={disabled} field="source" initialContent={appContext.state.userState.selectedContent?.source ?? ""} />
                             </Stack.Item>
@@ -36,7 +36,7 @@ const NotePane: FC = (): ReactElement => {
                             <EditableNoteComponent disabled={disabled} field="content" initialContent={appContext.state.userState.selectedContent?.content} />
                         </Stack.Item>
                         {
-                            appContext.state.userState.userId !== "welcome_user" && (
+                            appContext.state.userState.userId !== "welcome_user" && appContext.state.userState.userId !== "" && (
                                 <Stack.Item tokens={stackItemPadding} styles={noteSubStackItemStyle}>
                                     <EditableNoteComponent disabled={disabled} field="tags" initialContent={appContext.state.userState.selectedContent?.tags?.join(", ") ?? ""} />
                                 </Stack.Item>
