@@ -1,6 +1,6 @@
 import { UserFramework, Cluster } from "../state/userState";
-import { CanvasForm, CanvasSpace, Pt, Circle } from "pts";
-import { DisplayPoint } from './models'
+import { CanvasForm, CanvasSpace, Pt, Circle, Num } from "pts";
+import { DisplayPoint, TwinklePoint } from './models'
 
 export function setConstellationDisplayPoints(constellation: UserFramework[], clusters: Cluster[], canvasRef: React.RefObject<HTMLCanvasElement>): [DisplayPoint[], number] {
     let count = 0;
@@ -94,6 +94,27 @@ export function drawConstellationPoints(space : CanvasSpace, form: CanvasForm, c
         }
     });
 }
+
+export function initializeTwinklePoints(space: CanvasSpace, count: number): TwinklePoint[] {
+    const twinklePoints = Array(count).fill(null).map(() => ({
+        position: new Pt(Math.random() * space.width, Math.random() * space.height),
+        opacity: Math.random(),
+        twinkleSpeed: Math.random() * 0.05 + 0.01,
+        maxOpacity: Math.random() * 0.5 + 0.5
+    }));
+    return twinklePoints;
+}
+
+export function drawTwinklingPoints(form: CanvasForm, twinklePoints: TwinklePoint[]) {
+    twinklePoints.forEach(point => {
+        point.opacity += point.twinkleSpeed;
+        if (point.opacity > point.maxOpacity || point.opacity < 0) {
+            point.twinkleSpeed *= -1;
+        }
+        form.fillOnly(`rgba(255, 255, 255, ${Num.clamp(point.opacity, 0, point.maxOpacity)})`).point(point.position, 1);
+    });
+}
+
 
 export function drawClusterPoints(form: CanvasForm, clusterPts: React.MutableRefObject<DisplayPoint[]>) {
     clusterPts.current.forEach(cluster => {

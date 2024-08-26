@@ -85,6 +85,7 @@ export const clusteringSuggestionButtonStyle = mergeStyles({
     color: theme.palette.white,
     transition: 'background-color 0.3s',
     fontSize: '12px',
+    padding: '5px',
     '&:hover': {
         backgroundColor: theme.palette.themeLight,
         color: theme.palette.black,
@@ -98,6 +99,7 @@ export const selectClusteringStyle = mergeStyles({
     color: theme.palette.white,
     transition: 'background-color 0.3s',
     fontSize: '12px',
+    padding: '5px',
     '&:hover': {
         backgroundColor: theme.palette.themeLight,
         color: theme.palette.black,

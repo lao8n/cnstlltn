@@ -107,7 +107,7 @@ async def cluster_by(user_id: str, constellation_name: str, cluster_by: str, clu
             json_data.append({"id": str(data.id), "title": data.title, "source": data.source, "content": data.content, "tags": ", ".join(data.tags), "clusterby": ""})
         json_string = json.dumps(json_data)
         response = client.chat.completions.create(
-            model='gpt-4', # mini doesn't work
+            model='gpt-4o', # mini doesn't work
             messages=[
                 {
                     "role": "system",

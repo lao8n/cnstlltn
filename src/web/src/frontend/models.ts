@@ -8,3 +8,11 @@ export type DisplayPoint = {
     position: Pt;
     selected: boolean;
 };
+
+export type TwinklePoint = {
+    position: Pt;
+    opacity: number;
+    twinkleSpeed: number;
+    maxOpacity: number;
+}
+

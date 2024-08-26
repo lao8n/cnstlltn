@@ -16,8 +16,8 @@ import * as noteActions from '../state/actions/noteActions';
 import { DisplayActions } from '../state/actions/displayActions';
 import * as displayActions from '../state/actions/displayActions';
 // display imports
-import { DisplayPoint } from "../frontend/models";
-import { drawClusterPoints, drawConstellationPoints, setClusterDisplayPoints, setConstellationDisplayPoints, updatePositions } from "../frontend/display";
+import { DisplayPoint, TwinklePoint } from "../frontend/models";
+import { drawClusterPoints, drawConstellationPoints, drawTwinklingPoints, initializeTwinklePoints, setClusterDisplayPoints, setConstellationDisplayPoints, updatePositions } from "../frontend/display";
 import { CanvasSpace, Circle, Pt } from "pts";
 // ux imports
 import { CnstlltnTheme } from "../ux/shared/theme";
@@ -43,6 +43,7 @@ const WelcomePane: FC = (): ReactElement => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const constellationPts = useRef<DisplayPoint[]>([]) as React.MutableRefObject<DisplayPoint[]>;
     const clusterPts = useRef<DisplayPoint[]>([]) as React.MutableRefObject<DisplayPoint[]>;
+    const twinklePoints = useRef<TwinklePoint[]>([]) as React.MutableRefObject<TwinklePoint[]>;
     const [, setUnclusteredContent] = useState(0);
 
     // functions
@@ -85,6 +86,7 @@ const WelcomePane: FC = (): ReactElement => {
             resize: true
         });
         const form = space.getForm();
+        twinklePoints.current = initializeTwinklePoints(space, 100);
         space.add({
             start: (bound) => {
                 updatePositionsCallback();
@@ -92,6 +94,7 @@ const WelcomePane: FC = (): ReactElement => {
             animate: (time, ftime) => {
                 drawConstellationPoints(space, form, constellationPts);
                 drawClusterPoints(form, clusterPts);
+                drawTwinklingPoints(form, twinklePoints.current);
             },
             action: (type, x, y) => {
                 const r = 10;
