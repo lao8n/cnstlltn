@@ -25,6 +25,8 @@ export const appReducer: Reducer<ApplicationState, ApplicationActions> = (state:
         // constellation
         case ActionTypes.SAVE_SELECTED_FRAMEWORKS:
             break;
+        case ActionTypes.EDIT_FRAMEWORK:
+            break;
         case ActionTypes.GET_CONSTELLATION:
             break;
         case ActionTypes.SET_CONSTELLATION:

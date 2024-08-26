@@ -11,5 +11,7 @@ export interface DbUserFramework {
     userid: string;
     constellation: string;
     title: string;
+    source: string;
     content: string;
+    tags: string[];
 }

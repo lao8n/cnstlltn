@@ -76,17 +76,23 @@ export const canvasHeaderButtonStyle = {
 export const clusteringSuggestionButtonStyle = {
     flexShrink: 0,
     border: 'none',
-    fontFamily: 'Segoe UI',
     backgroundColor: theme.palette.black,
     color: theme.palette.white,
+    '&:hover': {
+        backgroundColor: theme.palette.themeSecondary,
+        color: theme.palette.white,
+    }
 }
 
 export const selectClusteringStyle = {
     flexGrow: 1,
     border: 'none',
-    fontFamily: 'Segoe UI',
     backgroundColor: theme.palette.black,
     color: theme.palette.white,
+    '&:hover': {
+        backgroundColor: theme.palette.themeSecondary,
+        color: theme.palette.white,
+    }
 }
 
 // text

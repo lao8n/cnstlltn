@@ -61,6 +61,9 @@ class UserFramework(Document):
     constellation: str
     title: str
     content: str
+    source: str = ""
+    tags: List[str] = []
+    
 
 class UserCluster(Document):
     userid: str

@@ -15,6 +15,7 @@ export enum ActionTypes {
     SET_EMPTY_QUERY_RESPONSE_LIST = "SET_EMPTY_QUERY_RESPONSE_LIST",
     // constellation
     SAVE_SELECTED_FRAMEWORKS = "SAVE_SELECTED_FRAMEWORKS",
+    EDIT_FRAMEWORK = "EDIT_FRAMEWORK",
     GET_CONSTELLATION = "GET_CONSTELLATION",
     SET_CONSTELLATION = "SET_CONSTELLATION",
     SET_CONSTELLATION_NAME = "SET_CONSTELLATION_NAME",
@@ -41,6 +42,7 @@ export type ApplicationActions =
     queryActions.SetEmptyQueryResponseListAction | 
     // constellation
     constellationActions.SaveSelectedFrameworksAction | 
+    constellationActions.EditFrameworkAction |
     constellationActions.GetConstellationAction |
     constellationActions.SetConstellationAction |
     constellationActions.SetConstellationNameAction |

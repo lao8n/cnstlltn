@@ -13,7 +13,9 @@ export interface UserFramework {
     id: string;
     constellation: string;
     title: string;
+    source: string;
     content: string;
+    tags: string[];
 }
 
 export interface Cluster {

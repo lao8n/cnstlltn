@@ -12,7 +12,9 @@ import { stackItemPadding } from "../ux/shared/components";
 
 const NotePane: FC = (): ReactElement => {
     const appContext = useContext<AppContext>(UserAppContext)
+
     const disabled = appContext.state.userState.userId === "" || appContext.state.userState.userId === "welcome_user"
+    
     return (
         <Stack styles={noteStackStyle}>
             <Stack.Item className={noteNameStyle} tokens={stackItemPadding}>
@@ -22,10 +24,16 @@ const NotePane: FC = (): ReactElement => {
                 appContext.state.userState.selectedContent && (
                     <Stack styles={noteSubStackStyle}>
                         <Stack.Item tokens={stackItemPadding} styles={noteSubStackItemStyle}>
-                            <EditableNoteComponent disabled={disabled} initialContent={appContext.state.userState.selectedContent?.title} />
+                            <EditableNoteComponent disabled={disabled} field="title" initialContent={appContext.state.userState.selectedContent?.title} />
                         </Stack.Item>
                         <Stack.Item tokens={stackItemPadding} styles={noteSubStackItemStyle}>
-                            <EditableNoteComponent disabled={disabled} initialContent={appContext.state.userState.selectedContent?.content} />
+                            <EditableNoteComponent disabled={disabled} field="source" initialContent={appContext.state.userState.selectedContent?.source || "Add source"} />
+                        </Stack.Item>
+                        <Stack.Item tokens={stackItemPadding} styles={noteSubStackItemStyle}>
+                            <EditableNoteComponent disabled={disabled} field="content" initialContent={appContext.state.userState.selectedContent?.content} />
+                        </Stack.Item>
+                        <Stack.Item tokens={stackItemPadding} styles={noteSubStackItemStyle}>
+                            <EditableNoteComponent disabled={disabled} field="tags" initialContent={appContext.state.userState.selectedContent?.tags.join(", ") || "Add comma-separated tags"} />
                         </Stack.Item>
                     </Stack>
                 )
@@ -34,7 +42,7 @@ const NotePane: FC = (): ReactElement => {
                 !appContext.state.userState.selectedContent && (
                     <Stack styles={noteSubStackStyle}>
                         <Stack.Item tokens={stackItemPadding} styles={noteSubStackItemStyle}>
-                            <EditableNoteComponent disabled={true} initialContent={'No content selected'} />
+                            <EditableNoteComponent disabled={true} field="" initialContent={'No content selected'} />
                         </Stack.Item>
                     </Stack>
                 )

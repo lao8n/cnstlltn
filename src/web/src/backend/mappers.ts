@@ -16,6 +16,20 @@ export function mapDbUserFrameworkToUserFramework(dbUserFramework: DbUserFramewo
         id: dbUserFramework._id,
         constellation: dbUserFramework.constellation,
         title: dbUserFramework.title,
+        source: dbUserFramework.source,
         content: dbUserFramework.content,
+        tags: dbUserFramework.tags
+    }
+}
+
+export function mapUserFrameworkToDbUserFramework(userid: string, userFramework: UserFramework): DbUserFramework {
+    return {
+        _id: userFramework.id,
+        userid: userid,
+        constellation: userFramework.constellation,
+        title: userFramework.title,
+        source: userFramework.source,
+        content: userFramework.content,
+        tags: userFramework.tags
     }
 }

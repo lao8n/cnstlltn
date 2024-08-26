@@ -102,6 +102,17 @@ async def save_frameworks(request: Request, saveFrameworks: List[Framework]) -> 
     await user_cluster.save()
     return results
 
+@app.post("/edit-framework", response_model=UserFramework, status_code=200)
+async def edit_framework(request: Request, framework: UserFramework) -> UserFramework:
+    existing_framework = await UserFramework.get(framework.id)
+    if existing_framework is not None:
+        existing_framework.title = framework.title
+        existing_framework.content = framework.content
+        existing_framework.source = framework.source
+        existing_framework.tags = framework.tags
+        await existing_framework.save()
+        return existing_framework
+
 @app.get("/get-constellation", response_model=List[UserFramework], status_code=200)
 async def get_constellation(request: Request) -> List[UserFramework]:
     print("getting constellation")
