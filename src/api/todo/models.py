@@ -1,5 +1,5 @@
 from typing import Optional
-from typing import Dict, Tuple
+from typing import Dict, Tuple, List
 
 from azure.identity import DefaultAzureCredential
 from azure.keyvault.secrets import SecretClient
