@@ -71,7 +71,7 @@ async def query_ai(query: Query) -> List[QueryAiResponseBlock]:
         source = lines[1].replace("Source: ", "")
         content = "\n".join(lines[2:]).replace("Content: ", "")
         query_ai_response_blocks.append(QueryAiResponseBlock(title=title, source=source, content=content))
-    formatted_blocks = [f"Title: {block.title}\nContent: {block.content}" for block in query_ai_response_blocks]
+    formatted_blocks = [f"Title: {block.title}\nSource: {block.source} Content: {block.content}" for block in query_ai_response_blocks]
     print("query_ai response blocks:\n" + '\n\n'.join(formatted_blocks))    
     return query_ai_response_blocks
 

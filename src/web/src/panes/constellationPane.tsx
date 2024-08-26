@@ -75,7 +75,7 @@ const ConstellationPane: FC = (): ReactElement => {
 
     const onCreateConstellationSubmit = async () => {
         if (createdConstellationName) {
-            const responses: QueryResponse[] = [{ title: createdConstellationName, content: "" }];
+            const responses: QueryResponse[] = [{ title: createdConstellationName, source: "", content: "" }];
             const createdConstellation = await actions.constellation.saveSelectedFrameworks(
                 appContext.state.userState.userId,
                 appContext.state.userState.constellationName,

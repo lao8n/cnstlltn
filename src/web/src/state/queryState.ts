@@ -10,5 +10,6 @@ export interface Query {
 
 export interface QueryResponse {
     title: string;
+    source: string;
     content: string;
 }
