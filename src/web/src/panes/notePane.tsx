@@ -38,7 +38,6 @@ const NotePane: FC = (): ReactElement => {
                         {
                             appContext.state.userState.userId !== "welcome_user" && appContext.state.userState.userId !== "" && (
                                 <Stack.Item tokens={stackItemPadding} styles={noteSubStackItemStyle}>
-                                    console.log("tags", appContext.state.userState.selectedContent?.tags)
                                     <EditableNoteComponent 
                                         disabled={disabled} 
                                         field="tags" 

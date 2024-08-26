@@ -166,7 +166,7 @@ async def _data_to_cluster(user_id: str, constellation_name: str, cluster_by: st
         user_data = new_user_data
     return user_data, clusters, user_clusters
 
-async def _save_clusters(user_id: str, constellation_name: str, cluster_by: str, user_clusters : List[UserCluster], clusters: dict, cluster_ids : defaultdict[Any, list], new_clusters: dict, new_cluster_ids: defaultdict[Any, list]):
+async def _save_clusters(user_id: str, constellation_name: str, cluster_by: str, user_clusters: List[UserCluster], clusters: dict, cluster_ids: defaultdict[Any, list], new_clusters: dict):
     for user_cluster in user_clusters:
         user_cluster.islatest = True
         for id in cluster_ids[user_cluster.cluster]:
@@ -174,19 +174,20 @@ async def _save_clusters(user_id: str, constellation_name: str, cluster_by: str,
             y = clusters[user_cluster.cluster][1] + uniform(-1, 1) / 8 
             user_cluster.frameworks[id] = (x, y)
         await user_cluster.save()
-    # new user clusters
-    for cluster in new_cluster_ids.keys():
+    
+    # New user clusters
+    for cluster, coordinate in new_clusters.items():
         user_cluster = UserCluster(
-            userid = user_id,
-            constellation = constellation_name,
-            clusterby = cluster_by,
-            islatest = True,
-            cluster = cluster,
-            coordinate = new_clusters[cluster],
+            userid=user_id,
+            constellation=constellation_name,
+            clusterby=cluster_by,
+            islatest=True,
+            cluster=cluster,
+            coordinate=coordinate,
         )
-        for id in new_cluster_ids[user_cluster.cluster]:
-            x = new_clusters[cluster][0] + uniform(-1, 1) / 8
-            y = new_clusters[cluster][1] + uniform(-1, 1) / 8 
+        for id in cluster_ids[cluster]:
+            x = coordinate[0] + uniform(-1, 1) / 8
+            y = coordinate[1] + uniform(-1, 1) / 8 
             user_cluster.frameworks[id] = (x, y)
         await user_cluster.save()
     return
