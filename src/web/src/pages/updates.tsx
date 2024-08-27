@@ -30,6 +30,9 @@ export const Updates = () => {
             </Stack.Item>
             <Stack.Item styles={updateTextStyle}>
                 <Stack.Item>
+                    - Add a browse section so one can navigate through an article or youtube transcript more easily.
+                </Stack.Item>
+                <Stack.Item>
                 - [Released] Add a separate notes section which includes tags - thanks Jerry for feedback!
                 </Stack.Item>
                 <Stack.Item>
