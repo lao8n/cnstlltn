@@ -1,5 +1,5 @@
 import { UserState } from "./userState";
-import { QueryState } from "./queryState";
+import { QueryState, BrowseState } from "./queryState";
 import { Dispatch } from "react";
 import { ApplicationActions } from "./actions/common";
 
@@ -10,7 +10,8 @@ export interface AppContext {
 
 export interface ApplicationState {
     userState: UserState,
-    queryState: QueryState
+    queryState: QueryState,
+    browseStateStack: BrowseState[]
 }
 
 export const getDefaultState = (): ApplicationState => {
@@ -25,6 +26,9 @@ export const getDefaultState = (): ApplicationState => {
             updated: Date.now(),
             selectedContent: null,
         },
-        queryState: {query: undefined, responses: undefined},
+        queryState: {
+            query: undefined, responses: undefined
+        },
+        browseStateStack: []
     }
 }

@@ -13,3 +13,14 @@ export interface QueryResponse {
     source: string;
     content: string;
 }
+
+export interface BrowseState {
+    source: string;
+    responses: BrowseResponse[];
+}
+
+export interface BrowseResponse {
+    title: string;
+    summary: string;
+    content: string;
+}

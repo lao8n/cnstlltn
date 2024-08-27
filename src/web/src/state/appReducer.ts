@@ -22,6 +22,14 @@ export const appReducer: Reducer<ApplicationState, ApplicationActions> = (state:
         case ActionTypes.SET_EMPTY_QUERY_RESPONSE_LIST:
             state.queryState.responses = undefined;
             break;
+        case ActionTypes.POST_BROWSE:
+            break;
+        case ActionTypes.PUSH_BROWSE_STATE:
+            state.browseStateStack.push(action.payload);
+            break;
+        case ActionTypes.POP_BROWSE_STATE:
+            state.browseStateStack.pop();
+            break;
         // constellation
         case ActionTypes.SAVE_SELECTED_FRAMEWORKS:
             break;
