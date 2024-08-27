@@ -108,7 +108,7 @@ export const selectClusteringStyle = mergeStyles({
 
 // text
 export const constellationNameStyle = mergeStyles({
-    fontFamily: "Segoe UI",
+    fontFamily: '"Segoe UI", "Noto Sans", "Helvetica Neue"',
     fontSize: '30px',
     color: theme.palette.white,
 });
@@ -119,7 +119,7 @@ export const createConstellationButtonStyle: Partial<ITextFieldStyles> = {
     },
     field: {  // This targets the input element itself
         color: theme.palette.black,
-        fontFamily: "Segoe UI",
+        fontFamily: '"Segoe UI", "Noto Sans", "Helvetica Neue"',
         alignItems: 'center',
         justifyContent: 'flex-end',
         '::placeholder': {
@@ -138,7 +138,7 @@ export const clusterByStyle: Partial<ITextFieldStyles> = {
     },
     field: {  // This targets the input element itself
         color: theme.palette.black,
-        fontFamily: "Segoe UI",
+        fontFamily: '"Segoe UI", "Noto Sans", "Helvetica Neue"',
         alignItems: 'center',
         justifyContent: 'flex-end',
         '::placeholder': {

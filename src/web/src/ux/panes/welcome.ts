@@ -13,14 +13,14 @@ export const welcomeStackStyle: IStackStyles = {
 }
 
 export const welcomeLineStyle = mergeStyles({
-    fontFamily: "Segoe UI",
+    fontFamily: '"Segoe UI", "Noto Sans", "Helvetica Neue"',
     fontSize: '20px',
     color: theme.palette.white,
     padding: '10px'
 });
 
 export const welcomeCaptionStyle = mergeStyles({
-    fontFamily: "Segoe UI",
+    fontFamily: '"Segoe UI", "Noto Sans", "Helvetica Neue"',
     fontSize: '30px',
     color: theme.palette.white,
 });

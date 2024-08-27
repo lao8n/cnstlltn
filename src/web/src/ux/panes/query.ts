@@ -77,7 +77,7 @@ export const createSaveButtonStyle = mergeStyles({
 export const queryFieldStyles = {
     field: {
         color: theme.palette.black,
-        fontFamily: "Segoe UI",
+        fontFamily: '"Segoe UI", "Noto Sans", "Helvetica Neue"',
         '::placeholder': {
             color: theme.palette.black,
             opacity: 0.8,
@@ -86,7 +86,7 @@ export const queryFieldStyles = {
 };
 
 export const queryNameStyle = mergeStyles({
-    fontFamily: "Segoe UI",
+    fontFamily: '"Segoe UI", "Noto Sans", "Helvetica Neue"',
     fontSize: '15px',
     color: theme.palette.black,
     paddingBottom: '10px',
