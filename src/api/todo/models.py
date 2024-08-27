@@ -52,6 +52,10 @@ class QueryAiResponseBlock(BaseModel):
     source: str
     content: str
 
+class BrowseResponseBlock(BaseModel):
+    title: str
+    content: str
+
 class LoginConfig(BaseModel):
     googleClientId: str
 
@@ -66,7 +70,6 @@ class UserFramework(Document):
     content: str
     source: str = ""
     tags: List[str] = []
-    
 
 class UserCluster(Document):
     userid: str

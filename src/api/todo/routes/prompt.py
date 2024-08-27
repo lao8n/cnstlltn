@@ -2,7 +2,7 @@
 from typing import List
 # local imports
 from todo.app import app, openai_client
-from todo.models import (Query, QueryAiResponseBlock)
+from todo.models import (Query, QueryAiResponseBlock, BrowseResponseBlock)
 
 @app.post("/query-ai", response_model=List[QueryAiResponseBlock], response_model_by_alias=False, status_code=201)
 async def query_ai(query: Query) -> List[QueryAiResponseBlock]:
@@ -65,3 +65,52 @@ async def query_ai(query: Query) -> List[QueryAiResponseBlock]:
     formatted_blocks = [f"Title: {block.title}\nSource: {block.source}\nContent: {block.content}" for block in query_ai_response_blocks]
     print("query_ai response blocks:\n" + '\n\n'.join(formatted_blocks))    
     return query_ai_response_blocks
+
+@app.post("/browse", response_model=List[BrowseResponseBlock], response_model_by_alias=False, status_code=201)
+async def browse(source: str) -> List[BrowseResponseBlock]:
+    print("browse")
+    print("source: ", source)
+
+    system_prompt = """
+    You are an AI assistant tasked with analyzing and summarizing key concepts from given texts. Please follow these instructions:
+
+    1. Read the source material which could be a video transcript or an article carefully.
+    2. Divide the material into continuous sections such as chapters or sets of paragraphs
+    3. For each section come up with a concise title for that section and then return verbatim that section of the material.
+
+    Title: [Section Title]
+    Section: [Section Content]
+
+    You should aim for roughly 3-10 sections and all material should be included in one or more sections. 
+    Avoid having introduction, conclusion, or other non-content sections.
+    """
+
+    user_prompt = f"Please analyze the following source material:\n\n{source}"
+
+    response = openai_client.chat.completions.create(
+        model='gpt-4o', # best model
+        messages=[
+            {
+                "role": "system",
+                "content": system_prompt,
+            },
+            {
+                "role": "user",
+                "content": user_prompt,
+            }
+        ]
+    )
+
+    # Split response into blocks
+    response_blocks = response.choices[0].message.content.strip().split("\n\n")
+
+    # Create BrowseResponseBlock list
+    browse_response_blocks = []
+    for block in response_blocks:
+        lines = block.split("\n")
+        title = lines[0].replace("Title: ", "")
+        section = "\n".join(lines[1:]).replace("Section: ", "")
+        browse_response_blocks.append(BrowseResponseBlock(title=title, section=section))
+    formatted_blocks = [f"Title: {block.title}\nSection: {block.section}" for block in browse_response_blocks]
+    print("browse response blocks:\n" + '\n\n'.join(formatted_blocks))    
+    return browse_response_blocks
