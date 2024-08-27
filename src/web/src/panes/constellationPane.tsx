@@ -273,8 +273,8 @@ const ConstellationPane: FC = (): ReactElement => {
                                 placeholder={"Enter name of new constellation"}
                                 onChange={onTypeConstellationName}
                                 onSearch={onCreateConstellationSubmit}
-                                styles={createConstellationButtonStyle}
-                            />
+                                    styles={createConstellationButtonStyle}
+                                />
                         )
                     }
                     {
