@@ -1,6 +1,6 @@
 import pytest
 from unittest.mock import AsyncMock
-from todo.cluster import get_clusters, UserCluster
+from api.todo.routes.cluster import get_clusters, UserCluster
 
 # @pytest.fixture
 # def user_clusters():

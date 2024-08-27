@@ -1,8 +1,10 @@
-from typing import Optional
-from typing import Dict, Tuple, List
-
+# azure imports
 from azure.identity import DefaultAzureCredential
 from azure.keyvault.secrets import SecretClient
+# typing imports
+from typing import Optional
+from typing import Dict, Tuple, List
+# package imports
 from beanie import Document
 from pydantic import BaseModel, Field
 from pydantic_settings import BaseSettings

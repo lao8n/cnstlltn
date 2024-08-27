@@ -1,15 +1,21 @@
-import motor
+# fast api imports
 from azure.monitor.opentelemetry.exporter import AzureMonitorTraceExporter
-from beanie import init_beanie
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
 from opentelemetry.sdk.resources import SERVICE_NAME, Resource
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import BatchSpanProcessor
+# ai imports
+from openai import OpenAI
+# package imports
 import os
 from pathlib import Path
+from beanie import init_beanie
+import motor
+# local imports
 from todo.models import __beanie_models__, Settings
+
 # Use API_ALLOW_ORIGINS env var with comma separated urls like
 # `http://localhost:300, http://otherurl:100`
 # Requests coming to the api server from other urls will be rejected as per
@@ -21,7 +27,6 @@ allowOrigins = os.environ.get('API_ALLOW_ORIGINS')
 # allowing all origins.
 environment = os.environ.get('API_ENVIRONMENT')
 
-
 origins = [
         "https://portal.azure.com",
         "https://ms.portal.azure.com",
@@ -29,10 +34,6 @@ origins = [
     ]
 
 def originList(origins):
-    # if environment is not None and environment == "develop":
-    #     print("Allowing requests from any origins. API_ENVIRONMENT=", environment)
-    #     return ["*"]
-    
     print('allowOrigins=', allowOrigins)
     if allowOrigins is not None:
         for origin in allowOrigins.split(","):
@@ -44,18 +45,15 @@ def originList(origins):
 origins = originList(origins)
 
 settings = Settings()
+openai_client = OpenAI(
+    api_key=settings.OPENAI_API_KEY
+)
 
 app = FastAPI(
     description="Cnstlltn App",
     version="0.0.1",
     title="Cnstlltn App",
     docs_url="/")
-
-# class CustomCORSMiddleware(CORSMiddleware):
-#     async def dispatch(self, request: Request, call_next):
-#         response = await call_next(request)
-#         response.headers["Access-Control-Allow-Credentials"] = "true"
-#         return response
 
 app.add_middleware(
     CORSMiddleware,
@@ -80,26 +78,8 @@ if settings.APPLICATIONINSIGHTS_CONNECTION_STRING:
 
     FastAPIInstrumentor.instrument_app(app, tracer_provider=tracerProvider)
 
-# from .models import Settings, __beanie_models__
-from todo import routes, login  # NOQA
-
-# @asynccontextmanager
-# async def lifespan(app: FastAPI):
-#     print("starting up app")
-#     client = motor.motor_asyncio.AsyncIOMotorClient(
-#         settings.AZURE_COSMOS_CONNECTION_STRING
-#     )
-#     await init_beanie(
-#         database=client[settings.AZURE_COSMOS_DATABASE_NAME],
-#         document_models=[UserFramework, UserCluster],
-#     )
-#     try:
-#         yield
-#     finally:
-#         print("shutting down app")
-#         client.close()
-
-# app.router.lifespan = lifespan
+# routes imports
+from api.todo.routes import login, cluster, notes, prompt  # NOQA
 
 @app.on_event("startup")
 async def startup_event():

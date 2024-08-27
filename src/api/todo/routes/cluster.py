@@ -1,16 +1,21 @@
+# typing imports
+from starlette.requests import Request
 from typing import List, Any
-from todo.models import (UserFramework, UserCluster)
-from openai import OpenAI
-from todo.app import settings
+from collections import defaultdict
+# package imports
 import json
 from random import uniform
-from collections import defaultdict
+from todo.models import (UserFramework, UserCluster)
+# local imports
+from todo.app import app, openai_client
+from todo.models import (UserFramework, UserCluster)
 
-client = OpenAI(
-    api_key=settings.OPENAI_API_KEY
-)
-
-async def get_clusters(user_id: str, constellation_name: str, cluster_by: str, latest: bool) -> List[UserCluster]:
+@app.get("/get-clusters", response_model=List[UserCluster], status_code=200)
+async def get_clusters(request: Request) -> List[UserCluster]:
+    user_id = request.headers.get("user-id")
+    constellation_name = request.query_params.get("constellationName")
+    cluster_by = request.query_params.get("clusterBy")
+    latest = request.query_params.get("latest")
     print("get_clusters params:", user_id, constellation_name, cluster_by, latest)
     user_clusters = []
     if latest:
@@ -28,7 +33,10 @@ async def get_clusters(user_id: str, constellation_name: str, cluster_by: str, l
     print("get_clusters returns:", user_clusters)
     return user_clusters
 
-async def get_cluster_by_options(user_id: str, constellation_name: str) -> List[str]:
+@app.get("/get-cluster-by-options", status_code=200)
+async def get_cluster_by_options(request: Request) -> List[str]:
+    user_id = request.headers.get("user-id")
+    constellation_name = request.query_params.get("constellationName")    
     print("get_cluster_by_options params:", user_id, constellation_name)
     user_clusters = UserCluster.find(
         UserCluster.userid == user_id,
@@ -42,7 +50,10 @@ async def get_cluster_by_options(user_id: str, constellation_name: str) -> List[
     print("get_cluster_by_options returns:", cluster_options_list)
     return cluster_options_list
 
-async def get_cluster_by_suggestion(user_id: str, constellation_name: str) -> str:
+@app.get("/get-cluster-by-suggestion", status_code=200)
+async def get_cluster_by_suggestion(request: Request) -> str:
+    user_id = request.headers.get("user-id")
+    constellation_name = request.query_params.get("constellationName")
     print("get_cluster_by_suggestion params:", user_id, constellation_name)
     user_data : List[UserFramework] = await UserFramework.find(
         UserFramework.userid == user_id,
@@ -60,7 +71,7 @@ async def get_cluster_by_suggestion(user_id: str, constellation_name: str) -> st
          json_data.append({"title": data.title, "content": data.content})
     json_string = json.dumps(json_data)
     #TODO: handle json_string > max num characters
-    response = client.chat.completions.create(
+    response = openai_client.chat.completions.create(
         model='gpt-4o-mini',
         messages=[
             {
@@ -77,7 +88,12 @@ async def get_cluster_by_suggestion(user_id: str, constellation_name: str) -> st
     print("get_cluster_by_suggestion returns:", content)
     return content
 
-async def cluster_by(user_id: str, constellation_name: str, cluster_by: str, cluster_new_only: bool):
+@app.post("/cluster-by", status_code=200)
+async def cluster_by(request: Request): 
+    user_id = request.headers.get("user-id")
+    constellation_name = request.query_params.get("constellationName")
+    cluster_by = request.query_params.get("clusterBy")
+    cluster_new_only = request.query_params.get("clusterNewOnly")
     print("get_cluster_by params:", user_id, constellation_name, cluster_by, cluster_new_only)
     await _set_not_latest(user_id, constellation_name)
     user_data, clusters, user_clusters = await _data_to_cluster(user_id, constellation_name, cluster_by, cluster_new_only)
@@ -106,7 +122,7 @@ async def cluster_by(user_id: str, constellation_name: str, cluster_by: str, clu
         for data in chunk:
             json_data.append({"id": str(data.id), "title": data.title, "source": data.source, "content": data.content, "tags": ", ".join(data.tags), "clusterby": ""})
         json_string = json.dumps(json_data)
-        response = client.chat.completions.create(
+        response = openai_client.chat.completions.create(
             model='gpt-4o', # mini doesn't work
             messages=[
                 {

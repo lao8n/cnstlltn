@@ -1,10 +1,14 @@
-from todo.models import (LoginConfig, UserFramework, UserCluster)
-from todo.app import app, settings
+# fastapi imports
 from fastapi import HTTPException, status
+# login imports
 from google.auth.transport import requests
 from google.oauth2 import id_token
-from todo.models import Token, UserId
+# package imports
 import uuid
+# local imports
+from todo.app import app, settings
+from todo.models import (LoginConfig, UserFramework, UserCluster)
+from todo.models import Token, UserId
 
 @app.get("/login-config", response_model=LoginConfig, status_code=200)
 def get_login_config() -> LoginConfig:
