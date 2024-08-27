@@ -76,13 +76,15 @@ async def browse(source: str) -> List[BrowseResponseBlock]:
 
     1. Read the source material which could be a video transcript or an article carefully.
     2. Divide the material into continuous sections such as chapters or sets of paragraphs
-    3. For each section come up with a concise title for that section and then return verbatim that section of the material.
+    3. For each section come up with a concise title for that section, a summary of the section of a few sentences, and then return verbatim that section of the material.
 
     Title: [Section Title]
+    Summary: [Summary of the section]
     Section: [Section Content]
 
     You should aim for roughly 3-10 sections and all material should be included in one or more sections. 
-    Avoid having introduction, conclusion, or other non-content sections.
+    Avoid having introduction, conclusion, or other non-content sections. If you took all the sections and put them together, 
+    you should have the entire source material.
     """
 
     user_prompt = f"Please analyze the following source material:\n\n{source}"
@@ -109,8 +111,9 @@ async def browse(source: str) -> List[BrowseResponseBlock]:
     for block in response_blocks:
         lines = block.split("\n")
         title = lines[0].replace("Title: ", "")
-        section = "\n".join(lines[1:]).replace("Section: ", "")
-        browse_response_blocks.append(BrowseResponseBlock(title=title, section=section))
-    formatted_blocks = [f"Title: {block.title}\nSection: {block.section}" for block in browse_response_blocks]
+        summary = lines[1].replace("Summary: ", "")
+        section = "\n".join(lines[2:]).replace("Section: ", "")
+        browse_response_blocks.append(BrowseResponseBlock(title=title, summary=summary, section=section))
+    formatted_blocks = [f"Title: {block.title}\nSummary: {block.summary}\nSection: {block.section}" for block in browse_response_blocks]
     print("browse response blocks:\n" + '\n\n'.join(formatted_blocks))    
     return browse_response_blocks

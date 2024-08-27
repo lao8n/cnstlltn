@@ -54,6 +54,7 @@ class QueryAiResponseBlock(BaseModel):
 
 class BrowseResponseBlock(BaseModel):
     title: str
+    summary: str
     content: str
 
 class LoginConfig(BaseModel):
