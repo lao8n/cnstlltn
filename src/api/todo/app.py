@@ -79,7 +79,7 @@ if settings.APPLICATIONINSIGHTS_CONNECTION_STRING:
     FastAPIInstrumentor.instrument_app(app, tracer_provider=tracerProvider)
 
 # routes imports
-from api.todo.routes import login, cluster, notes, prompt  # NOQA
+from todo.routes import login, cluster, notes, prompt  # NOQA
 
 @app.on_event("startup")
 async def startup_event():
