@@ -1,6 +1,6 @@
 // react imports
 import { SearchBox, Stack, IconButton } from '@fluentui/react';
-import { FC, ReactElement, useContext, useMemo, useState, ChangeEvent, useEffect } from "react";
+import { FC, ReactElement, useContext, useMemo, useState, ChangeEvent, useEffect, useCallback } from "react";
 // state imports
 import { AppContext } from '../state/applicationState';
 import { QueryResponse } from '../state/queryState';
@@ -29,12 +29,14 @@ const BrowsePane: FC = (): ReactElement => {
     const [emptyMaterial, setEmptyMaterial] = useState(false);
     const [selectedResponses, setSelectedResponses] = useState<Set<number>>(new Set());
     const [emptySelection, setEmptySelection] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const onTypeSource = (_: ChangeEvent<HTMLInputElement> | undefined, newValue?: string) => {
         setNewMaterial(newValue || '');
     }
 
     // functions
     const onSubmit = async () => {
+        console.log("onSubmit", newMaterial)
         if (newMaterial) {
             console.log("new material", newMaterial)
             const browseResponses = await actions.query.postBrowse({material: newMaterial});
@@ -53,13 +55,23 @@ const BrowsePane: FC = (): ReactElement => {
             setEmptyMaterial(true);    
         }
     }
-    const drillDown = async (index: number) => {
-        console.log("drill down", index)
-        const browseState = appContext.state.browseStateStack[appContext.state.browseStateStack.length - 1];
-        console.log("browseState", browseState.responses[index].material)
-        setNewMaterial(browseState.responses[index].material || '');
-        await onSubmit();
-    }
+
+    const drillDown = useCallback(async (index: number) => {
+        if (isLoading) return; // Prevent multiple simultaneous calls
+        setIsLoading(true);
+        try {
+            console.log("Starting drill down", index);
+            const browseState = appContext.state.browseStateStack[appContext.state.browseStateStack.length - 1];
+            console.log("browseState", browseState.responses[index].material);
+            setNewMaterial(browseState.responses[index].material || '');
+            await onSubmit(); 
+        } catch (error) {
+            console.error("Error in drill down:", error);
+        } finally {
+            setIsLoading(false);
+        }
+    }, [appContext.state.browseStateStack, setNewMaterial, onSubmit, isLoading]);
+
     const toggleResponseSelection = (index: number) => {
         const newSelectedResponses = new Set(selectedResponses);
         if (newSelectedResponses.has(index)) {
