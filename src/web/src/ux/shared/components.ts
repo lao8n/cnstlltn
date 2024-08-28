@@ -24,8 +24,6 @@ export const canvasStyle = {
 export const buttonStyles = mergeStyles({
     backgroundColor: theme.palette.themeLight,
     color: theme.palette.black,
-    margin: '5px',
-    padding: '5px 10px',
     cursor: 'pointer',
     border: 'none',
     transition: 'background-color 0.3s',

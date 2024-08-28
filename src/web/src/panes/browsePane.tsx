@@ -13,7 +13,7 @@ import * as constellationActions from '../state/actions/constellationActions';
 import { DisplayActions } from '../state/actions/displayActions';
 import * as displayActions from '../state/actions/displayActions';
 // ux imports
-import { browsePaneStyle, browseStackStyle, browseButtonStackStyle, drillDownButtonStackStyle } from "../ux/panes/browse";
+import { browsePaneStyle, browseStackStyle, browseButtonStackStyle, drillDownButtonStackStyle, drillDownButtonStyles } from "../ux/panes/browse";
 import { stackItemPadding, saveSelectedButtonStyle, queryFieldStyles, badInputNotifications, buttonStyles, selectedButtonStyles } from '../ux/shared/components';
 
 const BrowsePane: FC = (): ReactElement => {
@@ -53,12 +53,12 @@ const BrowsePane: FC = (): ReactElement => {
             setEmptyMaterial(true);    
         }
     }
-    const drillDown = (index: number) => {
+    const drillDown = async (index: number) => {
         console.log("drill down", index)
         const browseState = appContext.state.browseStateStack[appContext.state.browseStateStack.length - 1];
         console.log("browseState", browseState.responses[index].material)
         setNewMaterial(browseState.responses[index].material || '');
-        onSubmit();
+        await onSubmit();
     }
     const toggleResponseSelection = (index: number) => {
         const newSelectedResponses = new Set(selectedResponses);
@@ -153,7 +153,7 @@ const BrowsePane: FC = (): ReactElement => {
                             </button>
                         </Stack.Item>
                         <Stack.Item styles={drillDownButtonStackStyle}>
-                            <IconButton aria-label="DrillDown" iconProps={{ iconName: "ChevronRight" }} onClick={() => drillDown(index)} />
+                            <IconButton aria-label="DrillDown" iconProps={{ iconName: "ChevronRight" }} onClick={() => drillDown(index)} styles={drillDownButtonStyles} />
                         </Stack.Item>
                     </Stack>
                 ))}
