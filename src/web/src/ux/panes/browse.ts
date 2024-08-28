@@ -20,3 +20,12 @@ export const browseButtonStackStyle: IStackStyles = {
         width: '100%',
     }
 }
+
+export const drillDownButtonStackStyle: IStackStyles = {
+    root: {
+        height: '100%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+    }
+}

@@ -13,7 +13,7 @@ import * as constellationActions from '../state/actions/constellationActions';
 import { DisplayActions } from '../state/actions/displayActions';
 import * as displayActions from '../state/actions/displayActions';
 // ux imports
-import { browsePaneStyle, browseStackStyle, browseButtonStackStyle } from "../ux/panes/browse";
+import { browsePaneStyle, browseStackStyle, browseButtonStackStyle, drillDownButtonStackStyle } from "../ux/panes/browse";
 import { stackItemPadding, saveSelectedButtonStyle, queryFieldStyles, badInputNotifications, buttonStyles, selectedButtonStyles } from '../ux/shared/components';
 
 const BrowsePane: FC = (): ReactElement => {
@@ -48,6 +48,7 @@ const BrowsePane: FC = (): ReactElement => {
                 responses: browseResponses
             });
             setSelectedResponses(new Set());
+            setNewMaterial('');
         } else {
             setEmptyMaterial(true);    
         }
@@ -151,7 +152,7 @@ const BrowsePane: FC = (): ReactElement => {
                                 {response.title}: {response.content}
                             </button>
                         </Stack.Item>
-                        <Stack.Item>
+                        <Stack.Item styles={drillDownButtonStackStyle}>
                             <IconButton aria-label="DrillDown" iconProps={{ iconName: "ChevronRight" }} onClick={() => drillDown(index)} />
                         </Stack.Item>
                     </Stack>
