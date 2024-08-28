@@ -121,6 +121,7 @@ async def browse(browse: Browse) -> List[BrowseResponseBlock]:
     # Create BrowseResponseBlock list
     browse_response_blocks = []
     for block in response_blocks:
+        print("block:", block)
         lines = block.split("\n")
         title = source = content = section_material = ""
         for line in lines:
