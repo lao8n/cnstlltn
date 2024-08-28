@@ -192,8 +192,9 @@ const BrowsePane: FC = (): ReactElement => {
                         </Stack.Item>
                         }
                             {
+                                appContext.state.queryState.responses && appContext.state.browseStateStack.length > 1 &&
                                 appContext.state.browseStateStack[appContext.state.browseStateStack.length - 1].material.length < 10000 &&
-                                appContext.state.queryState.responses && appContext.state.queryState.responses.map((response, index) => (
+                                 appContext.state.queryState.responses.map((response, index) => (
                                     <Stack.Item styles={browseButtonStackStyle}>
                                         <button
                                             key={index}
@@ -205,8 +206,9 @@ const BrowsePane: FC = (): ReactElement => {
                                 ))
                         }
                         {
-                            appContext.state.browseStateStack[appContext.state.browseStateStack.length - 1].material.length >= 10000 &&
-                            appContext.state.queryState.responses && appContext.state.queryState.responses.map((response, index) => (
+                            appContext.state.queryState.responses && appContext.state.browseStateStack.length > 1 &&
+                                appContext.state.browseStateStack[appContext.state.browseStateStack.length - 1].material.length >= 10000 &&
+                                appContext.state.queryState.responses.map((response, index) => (
                                 <Stack horizontal styles={browseStackStyle}>
                                     <Stack.Item styles={browseButtonStackStyle}>
                                         <button 
