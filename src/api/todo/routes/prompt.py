@@ -75,8 +75,9 @@ async def browse(browse: Browse) -> List[BrowseResponseBlock]:
 
     1. Read the source material which could be a video transcript or an article carefully.
     2. Divide the material into continuous sections such as chapters or sets of paragraphs
-    3. For each section come up with a concise title for that section, the source of the material such as an author and article name, 
-    and a summary of the content in a few sentences, and then return verbatim that section of the material.
+    3. For each section come up with a concise title for that section, based upon the content of the article or transcript
+    add the source of the material such as an author, book title, or interviewer and interviewee, 
+    and finally a summary of the content in a few sentences, and then return verbatim that section of the material.
 
     Title: [Section Title]
     Source: [Source]
@@ -85,7 +86,7 @@ async def browse(browse: Browse) -> List[BrowseResponseBlock]:
 
     You should aim for roughly 3-10 sections and all material should be included in one or more sections. 
     Avoid having introduction, conclusion, or other non-content sections. If you took all the sections and put them together, 
-    you should have the entire source material.
+    you should have the entire source material. Make sure not to include any hashtags or other markdown formatting.
     """
 
     user_prompt = f"Please analyze the following source material:\n\n{browse.material}"

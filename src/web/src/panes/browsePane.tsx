@@ -55,7 +55,8 @@ const BrowsePane: FC = (): ReactElement => {
     const drillDown = (index: number) => {
         console.log("drill down", index)
         const browseState = appContext.state.browseStateStack[appContext.state.browseStateStack.length - 1];
-        setNewMaterial(browseState.responses[index].source || '');
+        console.log("browseState", browseState.responses[index].material)
+        setNewMaterial(browseState.responses[index].material || '');
         onSubmit();
     }
     const toggleResponseSelection = (index: number) => {

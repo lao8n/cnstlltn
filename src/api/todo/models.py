@@ -66,6 +66,7 @@ class LoginConfig(BaseModel):
 
 class Framework(BaseModel):
     title: str
+    source: str
     content: str
 
 class UserFramework(Document):
