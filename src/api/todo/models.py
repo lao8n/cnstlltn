@@ -47,6 +47,9 @@ class Query(BaseModel):
     userTxt: str
     material: str
 
+class Browse(BaseModel):
+    material: str
+
 class QueryAiResponseBlock(BaseModel):
     title: str  
     source: str

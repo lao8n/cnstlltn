@@ -37,7 +37,7 @@ const BrowsePane: FC = (): ReactElement => {
     const onSubmit = async () => {
         if (newMaterial) {
             console.log("new material", newMaterial)
-            const browseResponses = await actions.query.postBrowse(newMaterial);
+            const browseResponses = await actions.query.postBrowse({material: newMaterial});
             actions.query.setQueryResponseList(browseResponses.map(response => ({
                 title: response.title,
                 source: response.source,

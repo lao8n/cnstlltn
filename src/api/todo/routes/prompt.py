@@ -2,7 +2,7 @@
 from typing import List
 # local imports
 from todo.app import app, openai_client
-from todo.models import (Query, QueryAiResponseBlock, BrowseResponseBlock)
+from todo.models import (Query, Browse, QueryAiResponseBlock, BrowseResponseBlock)
 
 @app.post("/query-ai", response_model=List[QueryAiResponseBlock], response_model_by_alias=False, status_code=201)
 async def query_ai(query: Query) -> List[QueryAiResponseBlock]:
@@ -67,9 +67,9 @@ async def query_ai(query: Query) -> List[QueryAiResponseBlock]:
     return query_ai_response_blocks
 
 @app.post("/browse", response_model=List[BrowseResponseBlock], response_model_by_alias=False, status_code=201)
-async def browse(material: str) -> List[BrowseResponseBlock]:
+async def browse(browse: Browse) -> List[BrowseResponseBlock]:
     print("browse")
-    print("material: ", material)
+    print("material: ", browse.material)
     system_prompt = """
     You are an AI assistant tasked with analyzing and summarizing key concepts from given texts. Please follow these instructions:
 
@@ -88,7 +88,7 @@ async def browse(material: str) -> List[BrowseResponseBlock]:
     you should have the entire source material.
     """
 
-    user_prompt = f"Please analyze the following source material:\n\n{material}"
+    user_prompt = f"Please analyze the following source material:\n\n{browse.material}"
 
     response = openai_client.chat.completions.create(
         model='gpt-4o', # best model

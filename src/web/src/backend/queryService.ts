@@ -1,4 +1,4 @@
-import { Query, QueryResponse, BrowseResponse } from "../state/queryState";
+import { Query, QueryResponse, Browse, BrowseResponse } from "../state/queryState";
 import axios, { AxiosInstance } from 'axios';
 
 export class QueryService {
@@ -19,11 +19,11 @@ export class QueryService {
         return response.data;
     }
 
-    public async postBrowse(source: string): Promise<BrowseResponse[]> {
+    public async postBrowse(query: Browse): Promise<BrowseResponse[]> {
         const response = await this.client.request<BrowseResponse[]>({
             method: 'POST',
             url: `${this.baseUrl}/browse`,
-            data: source
+            data: query
         });
         return response.data;
     }

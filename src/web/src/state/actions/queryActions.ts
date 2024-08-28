@@ -1,7 +1,7 @@
 import { Dispatch } from "react";
 import config from "../../config";
 import { QueryService } from "../../backend/queryService";
-import { Query, QueryResponse, BrowseResponse, BrowseState } from "../queryState";
+import { Query, QueryResponse, Browse, BrowseResponse, BrowseState } from "../queryState";
 import { ActionMethod, createPayloadAction, PayloadAction } from "./actionCreators";
 import { ActionTypes } from "./common";
 
@@ -10,7 +10,7 @@ const queryService = new QueryService(config.api.baseUrl);
 export interface QueryActions {
     postQueryResponseList(query: Query): Promise<QueryResponse[]>;
     setQueryResponseList(queryResponses: QueryResponse[] | undefined): void;
-    postBrowse(source: string): Promise<BrowseResponse[]>;
+    postBrowse(query: Browse): Promise<BrowseResponse[]>;
     pushBrowseState(browseState: BrowseState): void;
     popBrowseState(): BrowseState;
 }
@@ -52,9 +52,9 @@ const setQueryResponseListAction = (queryResponses: QueryResponse[] | undefined)
     payload: queryResponses
 });
 
-export const postBrowse = (source: string): ActionMethod<BrowseResponse[]> =>
+export const postBrowse = (query: Browse): ActionMethod<BrowseResponse[]> =>
     async (dispatch: Dispatch<PostBrowseAction>) => {
-        const browseResponses = await queryService.postBrowse(source);
+        const browseResponses = await queryService.postBrowse(query);
         dispatch(postBrowseAction(browseResponses));
         return browseResponses;
     }
