@@ -44,6 +44,7 @@ const BrowsePane: FC = (): ReactElement => {
         console.log("onSubmit", newMaterial)
         if (newMaterial) {
             console.log("new material", newMaterial)
+            setShouldSubmit(false); // in case of drill-down
             setIsLoading(true);
             const browseResponses = await actions.query.postBrowse({material: newMaterial});
             actions.query.setQueryResponseList(browseResponses.map(response => ({
@@ -130,9 +131,9 @@ const BrowsePane: FC = (): ReactElement => {
 
     useEffect(() => {
         if (shouldSubmit && newMaterial) {
+            console.log("drill down triggered submit")
             const handleSubmit = async () => {
                 await onSubmit();
-                setShouldSubmit(false);
             };
             handleSubmit();
         }
@@ -169,7 +170,7 @@ const BrowsePane: FC = (): ReactElement => {
                     <LoadingDots style={blackLoadingDots}/>
                 ) : (
                     appContext.state.queryState.responses && appContext.state.queryState.responses.map((response, index) => (
-                        <Stack horizontal styles={browseStackStyle}>\
+                        <Stack horizontal styles={browseStackStyle}>
                             <Stack.Item styles={browseButtonStackStyle}>
                             <button 
                             key={index} 
