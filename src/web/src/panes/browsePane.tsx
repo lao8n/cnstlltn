@@ -171,8 +171,20 @@ const BrowsePane: FC = (): ReactElement => {
                 ) : (
                     appContext.state.queryState.responses && appContext.state.queryState.responses.map((response, index) => (
                         <Stack horizontal styles={browseStackStyle}>
-                            <Stack.Item styles={browseButtonStackStyle}>
-                            <button 
+                            {newMaterial.length < 2000 && (
+                                <Stack.Item styles={browseButtonStackStyle}>
+                                        <button 
+                                key={index} 
+                                className={selectedResponses.has(index) ? selectedButtonStyles: buttonStyles} 
+                                onClick={() => toggleResponseSelection(index)}>
+                                        {response.title}: {response.content}
+                                    </button>
+                                </Stack.Item>
+                            )}
+                            {newMaterial.length >= 2000  && ( // only allow drilling down if material is long enough
+                                <Stack horizontal styles={browseStackStyle}>
+                                <Stack.Item styles={browseButtonStackStyle}>
+                                    <button 
                             key={index} 
                             className={selectedResponses.has(index) ? selectedButtonStyles: buttonStyles} 
                             onClick={() => toggleResponseSelection(index)}>
@@ -182,6 +194,8 @@ const BrowsePane: FC = (): ReactElement => {
                             <Stack.Item styles={drillDownButtonStackStyle}>
                                 <IconButton aria-label="DrillDown" iconProps={{ iconName: "ChevronRight" }} onClick={() => onDrillDown(index)} styles={drillDownButtonStyles} />
                             </Stack.Item>
+                                    </Stack>
+                                )}
                         </Stack>
                     ))
                 )}

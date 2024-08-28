@@ -13,9 +13,8 @@ export const browseStackStyle: IStackStyles = {
     root: {
         width: '100%',
         display: 'flex',
-        alignItems: 'center',
+        alignItems: 'stretch',
         justifyContent: 'center',
-        verticalAlign: 'center',
     }
 }
 
@@ -27,9 +26,11 @@ export const browseButtonStackStyle: IStackStyles = {
 
 export const drillDownButtonStackStyle: IStackStyles = {
     root: {
-        height: '100%',
         display: 'flex',
+        flexDirection: 'column',
+        height: '100%',
         alignItems: 'stretch',
+        width: 'auto',
     }
 }
 
