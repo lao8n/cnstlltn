@@ -1,6 +1,6 @@
 // react imports
 import { SearchBox, Stack, IconButton } from '@fluentui/react';
-import { FC, ReactElement, useContext, useMemo, useState, ChangeEvent, useEffect } from "react";
+import { FC, ReactElement, useContext, useMemo, useState, ChangeEvent, useEffect, useCallback } from "react";
 // state imports
 import { AppContext } from '../state/applicationState';
 import { QueryResponse } from '../state/queryState';
@@ -12,6 +12,8 @@ import { ConstellationActions } from '../state/actions/constellationActions';
 import * as constellationActions from '../state/actions/constellationActions';
 import { DisplayActions } from '../state/actions/displayActions';
 import * as displayActions from '../state/actions/displayActions';
+// components
+import { LoadingDots } from '../components/loadingDots';
 // ux imports
 import { browsePaneStyle, browseStackStyle, browseButtonStackStyle, drillDownButtonStackStyle, drillDownButtonStyles } from "../ux/panes/browse";
 import { stackItemPadding, saveSelectedButtonStyle, queryFieldStyles, badInputNotifications, buttonStyles, selectedButtonStyles } from '../ux/shared/components';
@@ -30,12 +32,13 @@ const BrowsePane: FC = (): ReactElement => {
     const [selectedResponses, setSelectedResponses] = useState<Set<number>>(new Set());
     const [emptySelection, setEmptySelection] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+
+    // functions
     const onTypeSource = (_: ChangeEvent<HTMLInputElement> | undefined, newValue?: string) => {
         setNewMaterial(newValue || '');
     }
 
-    // functions
-    const onSubmit = async () => {
+    const onSubmit = useCallback(async () => {      
         console.log("onSubmit", newMaterial)
         if (newMaterial) {
             console.log("new material", newMaterial)
@@ -57,23 +60,16 @@ const BrowsePane: FC = (): ReactElement => {
         } else {
             setEmptyMaterial(true);    
         }
-    }
+    }, [newMaterial, actions.query, appContext.state.queryState.responses]);
 
-    const drillDown = async (index: number) => {
-        if (isLoading) return; 
+    const onDrillDown = (index: number) => {
+        if (isLoading) return;
         setIsLoading(true);
-        try {
-            console.log("Starting drill down", index);
-            const browseState = appContext.state.browseStateStack[appContext.state.browseStateStack.length - 1];
-            console.log("browseState", browseState.responses[index].material);
-            setNewMaterial(browseState.responses[index].material || '');
-            await onSubmit(); 
-        } catch (error) {
-            console.error("Error in drill down:", error);
-        } finally {
-            setIsLoading(false);
-        }
-    };
+        console.log("Starting drill down", index);
+        const browseState = appContext.state.browseStateStack[appContext.state.browseStateStack.length - 1];
+        console.log("browseState", browseState.responses[index].material);
+        setNewMaterial(browseState.responses[index].material || '');
+    }
 
     const toggleResponseSelection = (index: number) => {
         const newSelectedResponses = new Set(selectedResponses);
@@ -84,6 +80,7 @@ const BrowsePane: FC = (): ReactElement => {
         }
         setSelectedResponses(newSelectedResponses);
     };
+
     const saveSelectedResponses = async () => {
         if (selectedResponses.size > 0 ) {
             console.log("queryResponseList " + appContext.state.queryState.responses)
@@ -122,13 +119,23 @@ const BrowsePane: FC = (): ReactElement => {
         }
     }, [selectedResponses])
 
-    // effects
     useEffect(() => {
-        console.log("query pane reset")
+        console.log("browse pane reset")
         setSelectedResponses(new Set());
         setNewMaterial('');
         actions.query.setQueryResponseList(undefined);
     }, [actions.query, appContext.state.userState.constellationName])
+
+    useEffect(() => {
+        console.log("onSubmit triggered")
+        if (isLoading && newMaterial) {
+            console.log("onSubmit triggered")
+            onSubmit();
+            console.log("onSubmit done")
+            setIsLoading(false);
+            console.log("setIsLoading done")
+        }
+    }, [newMaterial, isLoading, onSubmit]) // this is only way to time onSubmit after drill down.   
 
     return (
         <Stack styles={browsePaneStyle}>
@@ -157,21 +164,25 @@ const BrowsePane: FC = (): ReactElement => {
                 )
             }
             <Stack.Item tokens={stackItemPadding}>
-                {appContext.state.queryState.responses && appContext.state.queryState.responses.map((response, index) => (
-                    <Stack horizontal styles={browseStackStyle}>\
-                        <Stack.Item styles={browseButtonStackStyle}>
-                        <button 
-                        key={index} 
-                        className={selectedResponses.has(index) ? selectedButtonStyles: buttonStyles} 
-                        onClick={() => toggleResponseSelection(index)}>
-                                {response.title}: {response.content}
-                            </button>
-                        </Stack.Item>
-                        <Stack.Item styles={drillDownButtonStackStyle}>
-                            <IconButton aria-label="DrillDown" iconProps={{ iconName: "ChevronRight" }} onClick={() => drillDown(index)} styles={drillDownButtonStyles} />
-                        </Stack.Item>
-                    </Stack>
-                ))}
+                {isLoading ? (
+                    <LoadingDots />
+                ) : (
+                    appContext.state.queryState.responses && appContext.state.queryState.responses.map((response, index) => (
+                        <Stack horizontal styles={browseStackStyle}>\
+                            <Stack.Item styles={browseButtonStackStyle}>
+                            <button 
+                            key={index} 
+                            className={selectedResponses.has(index) ? selectedButtonStyles: buttonStyles} 
+                            onClick={() => toggleResponseSelection(index)}>
+                                    {response.title}: {response.content}
+                                </button>
+                            </Stack.Item>
+                            <Stack.Item styles={drillDownButtonStackStyle}>
+                                <IconButton aria-label="DrillDown" iconProps={{ iconName: "ChevronRight" }} onClick={() => onDrillDown(index)} styles={drillDownButtonStyles} />
+                            </Stack.Item>
+                        </Stack>
+                    ))
+                )}
             </Stack.Item>
             <Stack.Item tokens={stackItemPadding}>
                 <button className={saveSelectedButtonStyle} onClick={saveSelectedResponses}>
