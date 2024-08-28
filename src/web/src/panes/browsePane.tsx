@@ -46,16 +46,8 @@ const BrowsePane: FC = (): ReactElement => {
             console.log("new material", newMaterial)
             setShouldSubmit(false); // in case of drill-down
             setIsLoading(true);
-            const browseResponses = await actions.query.postBrowse({material: newMaterial});
-            actions.query.setQueryResponseList(browseResponses.map(response => ({
-                title: response.title,
-                source: response.source,
-                content: response.content
-            })));
-            appContext.state.queryState.responses?.forEach((response, index) => {
-                console.log("response " + index + " " + response.title)
-            });
-            let previousTitle = ''
+            const browseResponses = await actions.query.postBrowse({ material: newMaterial });
+            let previousTitle = 'Browse Home'
             if (appContext.state.browseStateStack.length > 1) {
                 previousTitle = appContext.state.browseStateStack[appContext.state.browseStateStack.length - 1].title;
             }
@@ -63,6 +55,14 @@ const BrowsePane: FC = (): ReactElement => {
                 title: previousTitle,
                 material: newMaterial,
                 responses: browseResponses
+            });
+            actions.query.setQueryResponseList(browseResponses.map(response => ({
+                title: response.title,
+                source: response.source,
+                content: response.content
+            })));
+            appContext.state.queryState.responses?.forEach((response, index) => {
+                console.log("response " + index + " " + response.title)
             });
             setIsLoading(false);
             setSelectedResponses(new Set());
@@ -190,37 +190,39 @@ const BrowsePane: FC = (): ReactElement => {
                         <Stack.Item>
                             <IconButton aria-label="DrillUp" iconProps={{ iconName: "ChevronLeft" }} text={appContext.state.browseStateStack[appContext.state.browseStateStack.length - 1].title} onClick={onDrillUp} styles={drillUpButtonStyles} />
                         </Stack.Item>
-                    }   
-                    {appContext.state.queryState.responses && appContext.state.queryState.responses.map((response, index) => (
-                        <Stack horizontal styles={browseStackStyle}>
-                            {newMaterial.length < 1000 && (
-                                <Stack.Item styles={browseButtonStackStyle}>
-                                        <button 
-                                key={index} 
-                                className={selectedResponses.has(index) ? selectedButtonStyles: buttonStyles} 
-                                onClick={() => toggleResponseSelection(index)}>
-                                        {response.title}: {response.content}
-                                    </button>
-                                </Stack.Item>
-                            )}
-                            {newMaterial.length >= 1000  && ( // only allow drilling down if material is long enough
+                        }
+                            {
+                                appContext.state.browseStateStack[appContext.state.browseStateStack.length - 1].material.length < 10000 &&
+                                appContext.state.queryState.responses && appContext.state.queryState.responses.map((response, index) => (
+                                    <Stack.Item styles={browseButtonStackStyle}>
+                                        <button
+                                            key={index}
+                                            className={selectedResponses.has(index) ? selectedButtonStyles : buttonStyles}
+                                            onClick={() => toggleResponseSelection(index)}>
+                                            {response.title}: {response.content}
+                                        </button>
+                                    </Stack.Item>
+                                ))
+                        }
+                        {
+                            appContext.state.browseStateStack[appContext.state.browseStateStack.length - 1].material.length >= 10000 &&
+                            appContext.state.queryState.responses && appContext.state.queryState.responses.map((response, index) => (
                                 <Stack horizontal styles={browseStackStyle}>
-                                <Stack.Item styles={browseButtonStackStyle}>
-                                    <button 
-                            key={index} 
-                            className={selectedResponses.has(index) ? selectedButtonStyles: buttonStyles} 
-                            onClick={() => toggleResponseSelection(index)}>
-                                    {response.title}: {response.content}
-                                </button>
-                            </Stack.Item>
-                            <Stack.Item styles={drillDownButtonStackStyle}>
-                                <IconButton aria-label="DrillDown" iconProps={{ iconName: "ChevronRight" }} onClick={() => onDrillDown(index)} styles={drillDownButtonStyles} />
-                            </Stack.Item>
-                                    </Stack>
-                                )}
-                        </Stack>
-                    ))} 
-                </Stack>
+                                    <Stack.Item styles={browseButtonStackStyle}>
+                                        <button 
+                                            key={index} 
+                                            className={selectedResponses.has(index) ? selectedButtonStyles: buttonStyles} 
+                                            onClick={() => toggleResponseSelection(index)}>
+                                                    {response.title}: {response.content}
+                                        </button>
+                                    </Stack.Item>
+                                    <Stack.Item styles={drillDownButtonStackStyle}>
+                                        <IconButton aria-label="DrillDown" iconProps={{ iconName: "ChevronRight" }} onClick={() => onDrillDown(index)} styles={drillDownButtonStyles} />
+                                    </Stack.Item>
+                                </Stack>
+                            ))
+                        }
+                    </Stack>
                 )}
             </Stack.Item>
             <Stack.Item tokens={stackItemPadding}>
