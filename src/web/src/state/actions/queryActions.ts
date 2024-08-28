@@ -9,8 +9,8 @@ const queryService = new QueryService(config.api.baseUrl, '/query-ai');
 
 export interface QueryActions {
     postQueryResponseList(query: Query): Promise<QueryResponse[]>;
-    setEmptyQueryResponseList(): void;
-    postBrowse(source: string): BrowseResponse[];
+    setQueryResponseList(queryResponses: QueryResponse[] | undefined): void;
+    postBrowse(source: string): Promise<BrowseResponse[]>;
     pushBrowseState(browseState: BrowseState): void;
     popBrowseState(): BrowseState;
 }
@@ -37,17 +37,19 @@ export interface PostQueryResponseListAction extends PayloadAction<string, Query
 const postQueryResponseListAction =
     createPayloadAction<PostQueryResponseListAction>(ActionTypes.POST_QUERY_RESPONSE_LIST);
 
-export const setEmptyQueryResponseList = () =>
-    (dispatch: Dispatch<SetEmptyQueryResponseListAction>) => {
-        dispatch(setEmptyQueryResponseListAction());
+export const setQueryResponseList = (queryResponses: QueryResponse[] | undefined) =>
+    (dispatch: Dispatch<SetQueryResponseListAction>) => {
+        dispatch(setQueryResponseListAction(queryResponses));
     }
 
-export interface SetEmptyQueryResponseListAction {
-    type: ActionTypes.SET_EMPTY_QUERY_RESPONSE_LIST,
+export interface SetQueryResponseListAction {
+    type: ActionTypes.SET_QUERY_RESPONSE_LIST,
+    payload: QueryResponse[] | undefined
 }
 
-const setEmptyQueryResponseListAction = (): SetEmptyQueryResponseListAction => ({
-    type: ActionTypes.SET_EMPTY_QUERY_RESPONSE_LIST,
+const setQueryResponseListAction = (queryResponses: QueryResponse[] | undefined): SetQueryResponseListAction => ({
+    type: ActionTypes.SET_QUERY_RESPONSE_LIST,
+    payload: queryResponses
 });
 
 export const postBrowse = (source: string): ActionMethod<BrowseResponse[]> =>
@@ -57,7 +59,7 @@ export const postBrowse = (source: string): ActionMethod<BrowseResponse[]> =>
         return browseResponses;
     }
 
-export interface PostBrowseAction {
+export interface PostBrowseAction extends PayloadAction<string, BrowseResponse[]> {
     type: ActionTypes.POST_BROWSE, payload: BrowseResponse[]
 }
 

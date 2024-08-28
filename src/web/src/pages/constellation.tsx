@@ -7,10 +7,10 @@ import { UserAppContext } from '../state/userContext';
 // pane imports
 import ConstellationPane from '../panes/constellationPane';
 import WelcomePane from '../panes/welcomePane';
-import QueryPane from '../panes/queryPane';
+import AIPane from '../panes/aiPane';
 import NotePane from '../panes/notePane';
 // ux imports
-import { constellationQueryPageStyle, queryPageStyle, constellationPageStyle, notePageStyle, welcomePageStyle } from '../ux/pages/constellation';
+import { constellationQueryPageStyle, aiPageStyle, constellationPageStyle, notePageStyle, welcomePageStyle } from '../ux/pages/constellation';
 
 export const Constellation = () => {
   const appContext : AppContext = useContext(UserAppContext);
@@ -32,8 +32,8 @@ export const Constellation = () => {
     <Stack horizontal styles={constellationQueryPageStyle}>
       {
         appContext.state.userState.constellationName !== "Home" && (
-          <Stack.Item styles={queryPageStyle}>
-            <QueryPane/>
+          <Stack.Item styles={aiPageStyle}>
+            <AIPane/>
           </Stack.Item>
         )
       }

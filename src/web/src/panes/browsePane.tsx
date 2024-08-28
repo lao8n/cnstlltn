@@ -1,9 +1,9 @@
 // react imports
-import { SearchBox, Stack } from '@fluentui/react';
-import { FC, ReactElement, useState, useContext, useEffect, useMemo, ChangeEvent } from "react";
+import { SearchBox, Stack, IconButton } from '@fluentui/react';
+import { FC, ReactElement, useContext, useMemo, useState, ChangeEvent, useEffect } from "react";
 // state imports
 import { AppContext } from '../state/applicationState';
-import { Query, QueryResponse } from '../state/queryState';
+import { QueryResponse } from '../state/queryState';
 import UserAppContext from '../state/userContext';
 import { bindActionCreators } from '../state/actions/actionCreators';
 import { QueryActions } from '../state/actions/queryActions';
@@ -13,10 +13,10 @@ import * as constellationActions from '../state/actions/constellationActions';
 import { DisplayActions } from '../state/actions/displayActions';
 import * as displayActions from '../state/actions/displayActions';
 // ux imports
-import { queryBarStyle, queryStackStyle } from '../ux/panes/query';
+import { browsePaneStyle, browseStackStyle, browseButtonStackStyle } from "../ux/panes/browse";
 import { stackItemPadding, saveSelectedButtonStyle, queryFieldStyles, badInputNotifications, buttonStyles, selectedButtonStyles } from '../ux/shared/components';
 
-const QueryPane: FC = (): ReactElement => {
+const BrowsePane: FC = (): ReactElement => {
     const appContext = useContext<AppContext>(UserAppContext)
     const actions = useMemo(() => ({
         query: bindActionCreators(queryActions, appContext.dispatch) as unknown as QueryActions,
@@ -25,20 +25,38 @@ const QueryPane: FC = (): ReactElement => {
     }), [appContext.dispatch]);
 
     // display
-    const [newQuery, setNewQuery] = useState('');
-    const [emptyQuery, setEmptyQuery] = useState(false);
     const [newMaterial, setNewMaterial] = useState('');
+    const [emptyMaterial, setEmptyMaterial] = useState(false);
     const [selectedResponses, setSelectedResponses] = useState<Set<number>>(new Set());
     const [emptySelection, setEmptySelection] = useState(false);
-    const [isSecondSearchVisible, setIsSecondSearchVisible] = useState(false);
-    const onTypeQuery = (_: ChangeEvent<HTMLInputElement> | undefined, newValue?: string) => {
-        setNewQuery(newValue || '');
-    }
-    const onTypeMaterial = (_: ChangeEvent<HTMLInputElement> | undefined, newValue?: string) => {
+    const onTypeSource = (_: ChangeEvent<HTMLInputElement> | undefined, newValue?: string) => {
         setNewMaterial(newValue || '');
     }
 
     // functions
+    const onSubmit = async () => {
+        if (newMaterial) {
+            const browseResponses = await actions.query.postBrowse(newMaterial);
+            actions.query.setQueryResponseList(browseResponses.map(response => ({
+                title: response.title,
+                source: response.source,
+                content: response.content
+            })));
+            actions.query.pushBrowseState({
+                material: newMaterial,
+                responses: browseResponses
+            });
+            setSelectedResponses(new Set());
+        } else {
+            setEmptyMaterial(true);    
+        }
+    }
+    const drillDown = (index: number) => {
+        console.log("drill down", index)
+        const browseState = appContext.state.browseStateStack[appContext.state.browseStateStack.length - 1];
+        setNewMaterial(browseState.responses[index].source || '');
+        onSubmit();
+    }
     const toggleResponseSelection = (index: number) => {
         const newSelectedResponses = new Set(selectedResponses);
         if (newSelectedResponses.has(index)) {
@@ -48,19 +66,6 @@ const QueryPane: FC = (): ReactElement => {
         }
         setSelectedResponses(newSelectedResponses);
     };
-    const toggleSecondSearch = () => {
-        setIsSecondSearchVisible(!isSecondSearchVisible);
-    };
-    const onSubmit = async () => {
-        if (newQuery) {
-            const query: Query = {userTxt: newQuery, material: newMaterial}
-            const queryResponses = await actions.query.postQueryResponseList(query)
-            actions.query.setQueryResponseList(queryResponses)
-            setSelectedResponses(new Set()); // set to empty
-        } else {
-            setEmptyQuery(true);
-        }
-    }
     const saveSelectedResponses = async () => {
         if (selectedResponses.size > 0 ) {
             console.log("queryResponseList " + appContext.state.queryState.responses)
@@ -86,19 +91,11 @@ const QueryPane: FC = (): ReactElement => {
 
     // effects
     useEffect(() => {
-        console.log("query pane reset")
-        setSelectedResponses(new Set());
-        setIsSecondSearchVisible(false);
-        setNewMaterial('');
-        actions.query.setQueryResponseList(undefined);
-    }, [actions.query, appContext.state.userState.constellationName])
-
-    useEffect(() => {
-        console.log("non-empty query")
-        if (newQuery) {
-            setEmptyQuery(false);
+        console.log("non-empty source")
+        if (newMaterial) {
+            setEmptyMaterial(false);
         }
-    }, [newQuery])
+    }, [newMaterial])
     
     useEffect(() => {
         console.log("non-empty selection")
@@ -107,50 +104,30 @@ const QueryPane: FC = (): ReactElement => {
         }
     }, [selectedResponses])
 
+    // effects
+    useEffect(() => {
+        console.log("query pane reset")
+        setSelectedResponses(new Set());
+        setNewMaterial('');
+        actions.query.setQueryResponseList(undefined);
+    }, [actions.query, appContext.state.userState.constellationName])
+
     return (
-        <Stack styles={queryStackStyle}>
+        <Stack styles={browsePaneStyle}>
             <Stack.Item tokens={stackItemPadding}>
-                <Stack horizontal styles={queryBarStyle}>
-                    <Stack.Item align="stretch">
-                        <button onClick={toggleSecondSearch} style={{ height: '100%', marginRight: '1px' }}>
-                            {isSecondSearchVisible ? '▲' : '▼'}
-                        </button>
-                    </Stack.Item>
-                    <Stack.Item styles={queryBarStyle}>
-                        <SearchBox
-                            value={newQuery}
-                            placeholder={
-                                "Prompt for notes"}
-                            onChange={onTypeQuery}
-                            onSearch={onSubmit}
-                            styles={queryFieldStyles}
-                            />
-                    </Stack.Item>
-                </Stack>
-                {isSecondSearchVisible && (
-                    <Stack.Item>
-                        <SearchBox
-                            value={newMaterial}
-                            placeholder="Copy-paste source article or video transcript"
-                            onChange={onTypeMaterial}
-                            onSearch={onSubmit}
-                            styles={queryFieldStyles}
-                            iconProps={{styles: {root: { display: 'Copy' }}}}
-                        />
-                    </Stack.Item>
-                )}
+                <SearchBox
+                    value={newMaterial}
+                    placeholder="Copy-paste source article or video transcript"
+                    onChange={onTypeSource}
+                    onSearch={onSubmit}
+                    styles={queryFieldStyles}
+                    iconProps={{styles: {root: { display: 'NewsSearch' }}}}
+                />
             </Stack.Item>
-            {emptyQuery &&
+            {(emptyMaterial || (appContext.state.queryState.responses?.length === 0 && emptySelection)) &&
                 (
                     <Stack.Item styles={badInputNotifications}>
-                        Hey, add a prompt first before searching for notes. Try 'Poor Charlie's Almanac'.
-                    </Stack.Item>
-                )
-            }
-            {
-                appContext.state.queryState.responses?.length === 0 && emptySelection && (
-                    <Stack.Item styles={badInputNotifications}>
-                        Hey, add a prompt first - maybe try 48 Laws of Power by Robert Greene. Then if you like any of the results select them and try again.
+                        Hey, try copy-pasting in an article or video transcript first.
                     </Stack.Item>
                 )
             }
@@ -163,12 +140,19 @@ const QueryPane: FC = (): ReactElement => {
             }
             <Stack.Item tokens={stackItemPadding}>
                 {appContext.state.queryState.responses && appContext.state.queryState.responses.map((response, index) => (
-                    <button 
+                    <Stack horizontal styles={browseStackStyle}>\
+                        <Stack.Item styles={browseButtonStackStyle}>
+                        <button 
                         key={index} 
                         className={selectedResponses.has(index) ? selectedButtonStyles: buttonStyles} 
                         onClick={() => toggleResponseSelection(index)}>
-                        {response.title}: {response.content}
-                    </button>
+                                {response.title}: {response.content}
+                            </button>
+                        </Stack.Item>
+                        <Stack.Item>
+                            <IconButton aria-label="DrillDown" iconProps={{ iconName: "ChevronRight" }} onClick={() => drillDown(index)} />
+                        </Stack.Item>
+                    </Stack>
                 ))}
             </Stack.Item>
             <Stack.Item tokens={stackItemPadding}>
@@ -177,7 +161,7 @@ const QueryPane: FC = (): ReactElement => {
                 </button>
             </Stack.Item>
         </Stack>
-    );
-}; 
+    )
+}
 
-export default QueryPane;
+export default BrowsePane;

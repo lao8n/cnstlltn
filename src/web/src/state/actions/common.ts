@@ -12,7 +12,7 @@ export enum ActionTypes {
     GET_GOOGLE_USER_ID = "GET_GOOGLE_USER_ID",
     // query
     POST_QUERY_RESPONSE_LIST = "POST_QUERY_RESPONSE_LIST",
-    SET_EMPTY_QUERY_RESPONSE_LIST = "SET_EMPTY_QUERY_RESPONSE_LIST",
+    SET_QUERY_RESPONSE_LIST = "SET_QUERY_RESPONSE_LIST",
     POST_BROWSE = "POST_BROWSE",
     PUSH_BROWSE_STATE = "PUSH_BROWSE_STATE",
     POP_BROWSE_STATE = "POP_BROWSE_STATE",
@@ -42,7 +42,7 @@ export type ApplicationActions =
     userActions.GetLoginConfigAction |
     // query
     queryActions.PostQueryResponseListAction |
-    queryActions.SetEmptyQueryResponseListAction | 
+    queryActions.SetQueryResponseListAction |
     queryActions.PostBrowseAction |
     queryActions.PushBrowseStateAction |
     queryActions.PopBrowseStateAction |

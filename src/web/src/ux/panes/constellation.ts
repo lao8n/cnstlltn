@@ -38,7 +38,7 @@ export const buttonStackStyle = (active: boolean): IStackStyles => {
                     right: `10px`,
                     bottom: '5px',
                     height: '2px',
-                    backgroundColor: 'white',
+                    backgroundColor: theme.palette.white,
                 },
             }
         }

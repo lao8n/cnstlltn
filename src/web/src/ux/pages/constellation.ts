@@ -8,7 +8,7 @@ export const constellationQueryPageStyle: IStackStyles = {
         overflow: 'hidden',
     }
 }
-export const queryPageStyle: IStackStyles = {
+export const aiPageStyle: IStackStyles = {
     root: {
         display: 'flex',
         height: '100%',

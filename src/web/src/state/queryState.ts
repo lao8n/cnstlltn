@@ -5,7 +5,7 @@ export interface QueryState {
 
 export interface Query {
     userTxt: string;
-    source: string
+    material: string
 }
 
 export interface QueryResponse {
@@ -15,12 +15,13 @@ export interface QueryResponse {
 }
 
 export interface BrowseState {
-    source: string;
+    material: string;
     responses: BrowseResponse[];
 }
 
 export interface BrowseResponse {
     title: string;
-    summary: string;
+    source: string;
     content: string;
+    material: string;
 }

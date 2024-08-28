@@ -45,7 +45,7 @@ class Token(BaseModel):
 
 class Query(BaseModel):
     userTxt: str
-    source: str
+    material: str
 
 class QueryAiResponseBlock(BaseModel):
     title: str  
@@ -54,8 +54,9 @@ class QueryAiResponseBlock(BaseModel):
 
 class BrowseResponseBlock(BaseModel):
     title: str
-    summary: str
+    source: str
     content: str
+    material: str
 
 class LoginConfig(BaseModel):
     googleClientId: str
