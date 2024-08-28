@@ -66,7 +66,6 @@ const BrowsePane: FC = (): ReactElement => {
             });
             setIsLoading(false);
             setSelectedResponses(new Set());
-            setNewMaterial('');
         } else {
             setEmptyMaterial(true);    
         }
@@ -192,8 +191,7 @@ const BrowsePane: FC = (): ReactElement => {
                         </Stack.Item>
                         }
                             {
-                                appContext.state.queryState.responses && appContext.state.browseStateStack.length > 1 &&
-                                appContext.state.browseStateStack[appContext.state.browseStateStack.length - 1].material.length < 10000 &&
+                                appContext.state.queryState.responses && newMaterial.length < 10000 &&
                                  appContext.state.queryState.responses.map((response, index) => (
                                     <Stack.Item styles={browseButtonStackStyle}>
                                         <button
@@ -206,8 +204,7 @@ const BrowsePane: FC = (): ReactElement => {
                                 ))
                         }
                         {
-                            appContext.state.queryState.responses && appContext.state.browseStateStack.length > 1 &&
-                                appContext.state.browseStateStack[appContext.state.browseStateStack.length - 1].material.length >= 10000 &&
+                            appContext.state.queryState.responses && newMaterial.length >= 10000 &&
                                 appContext.state.queryState.responses.map((response, index) => (
                                 <Stack horizontal styles={browseStackStyle}>
                                     <Stack.Item styles={browseButtonStackStyle}>
