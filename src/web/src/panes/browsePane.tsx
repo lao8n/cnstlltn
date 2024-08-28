@@ -42,6 +42,7 @@ const BrowsePane: FC = (): ReactElement => {
         console.log("onSubmit", newMaterial)
         if (newMaterial) {
             console.log("new material", newMaterial)
+            setIsLoading(true);
             const browseResponses = await actions.query.postBrowse({material: newMaterial});
             actions.query.setQueryResponseList(browseResponses.map(response => ({
                 title: response.title,
@@ -55,6 +56,7 @@ const BrowsePane: FC = (): ReactElement => {
                 material: newMaterial,
                 responses: browseResponses
             });
+            setIsLoading(false);
             setSelectedResponses(new Set());
             setNewMaterial('');
         } else {
@@ -65,7 +67,7 @@ const BrowsePane: FC = (): ReactElement => {
     const onDrillDown = (index: number) => {
         if (isLoading) return;
         setIsLoading(true);
-        console.log("Starting drill down", index);
+        console.log("Starting drill down", index, isLoading);
         const browseState = appContext.state.browseStateStack[appContext.state.browseStateStack.length - 1];
         console.log("browseState", browseState.responses[index].material);
         setNewMaterial(browseState.responses[index].material || '');
@@ -127,15 +129,18 @@ const BrowsePane: FC = (): ReactElement => {
     }, [actions.query, appContext.state.userState.constellationName])
 
     useEffect(() => {
-        console.log("onSubmit triggered")
-        if (isLoading && newMaterial) {
-            console.log("onSubmit triggered")
-            onSubmit();
-            console.log("onSubmit done")
-            setIsLoading(false);
-            console.log("setIsLoading done")
-        }
-    }, [newMaterial, isLoading, onSubmit]) // this is only way to time onSubmit after drill down.   
+        const handleSubmit = async () => {
+            if (isLoading && newMaterial) {
+                console.log("onSubmit triggered")
+                await onSubmit();
+                console.log("onSubmit done")
+                setIsLoading(false);
+                console.log("setIsLoading done")
+            }
+        };
+        console.log("drill down triggered submit")
+        handleSubmit();
+    }, [newMaterial, isLoading, onSubmit])
 
     return (
         <Stack styles={browsePaneStyle}>

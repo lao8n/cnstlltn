@@ -58,10 +58,20 @@ async def query_ai(query: Query) -> List[QueryAiResponseBlock]:
     query_ai_response_blocks = []
     for block in response_blocks:
         lines = block.split("\n")
-        title = lines[0].replace("Title: ", "")
-        source = lines[1].replace("Source: ", "")
-        content = "\n".join(lines[2:]).replace("Content: ", "")
-        query_ai_response_blocks.append(QueryAiResponseBlock(title=title, source=source, content=content))
+        title = source = content = ""
+        content_started = False
+        for line in lines:
+            if line.startswith("Title:"):
+                title = line.replace("Title:", "").strip()
+            elif line.startswith("Source:"):
+                source = line.replace("Source:", "").strip()
+            elif line.startswith("Content:"):
+                content = line.replace("Content:", "").strip()
+                content_started = True
+            elif content_started:
+                content += "\n" + line.strip()
+        if title:  # Only add block if at least a title is present
+            query_ai_response_blocks.append(QueryAiResponseBlock(title=title, source=source, content=content))
     formatted_blocks = [f"Title: {block.title}\nSource: {block.source}\nContent: {block.content}" for block in query_ai_response_blocks]
     print("query_ai response blocks:\n" + '\n\n'.join(formatted_blocks))    
     return query_ai_response_blocks
@@ -112,11 +122,20 @@ async def browse(browse: Browse) -> List[BrowseResponseBlock]:
     browse_response_blocks = []
     for block in response_blocks:
         lines = block.split("\n")
-        title = lines[0].replace("Title: ", "")
-        source = lines[1].replace("Source: ", "")
-        content = lines[2].replace("Content: ", "")
-        section_material = "\n".join(lines[3:]).replace("Material: ", "")
-        browse_response_blocks.append(BrowseResponseBlock(title=title, source=source, content=content, material=section_material))
+        title = source = content = section_material = ""
+        for line in lines:
+            if line.startswith("Title: "):
+                title = line.replace("Title: ", "")
+            elif line.startswith("Source: "):
+                source = line.replace("Source: ", "")
+            elif line.startswith("Content: "):
+                content = line.replace("Content: ", "")
+            elif line.startswith("Material: "):
+                section_material = line.replace("Material: ", "")
+            else:
+                section_material += "\n" + line
+        if title:  # Only add block if at least a title is present
+            browse_response_blocks.append(BrowseResponseBlock(title=title, source=source, content=content, material=section_material))
     formatted_blocks = [f"Title: {block.title}\nSource: {block.source}\nContent: {block.content}\nMaterial: {block.material}" for block in browse_response_blocks]
     print("browse response blocks:\n" + '\n\n'.join(formatted_blocks))    
     return browse_response_blocks
