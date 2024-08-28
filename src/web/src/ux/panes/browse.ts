@@ -50,7 +50,8 @@ export const drillDownButtonStyles: IButtonStyles = {
         alignItems: 'center',
         backgroundColor: 'transparent',
         border: 'none',
-        padding: 0, // Remove padding
+        paddingTop: '40px',
+        paddingBottom: '40px',
     },
     icon: {
         fontSize: '10px', // Adjust icon size as needed

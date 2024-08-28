@@ -25,6 +25,7 @@ export const buttonStyles = mergeStyles({
     backgroundColor: theme.palette.themeLight,
     color: theme.palette.black,
     cursor: 'pointer',
+    padding: '5px 10px',
     border: 'none',
     transition: 'background-color 0.3s',
     '&:hover': {

@@ -94,7 +94,7 @@ async def browse(browse: Browse) -> List[BrowseResponseBlock]:
     Content: [Summary of the section]
     Material: [Section Content]
 
-    You should aim for roughly 3-10 sections and all material should be included in one or more sections. 
+    You should aim for roughly 3-5 sections and all material should be included in one or more sections. 
     Avoid having introduction, conclusion, or other non-content sections. If you took all the sections and put them together, 
     you should have the entire source material. Make sure not to include any hashtags or other markdown formatting.
     """
