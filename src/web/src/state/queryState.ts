@@ -19,6 +19,7 @@ export interface QueryResponse {
 }
 
 export interface BrowseState {
+    title: string;
     material: string;
     responses: BrowseResponse[];
 }

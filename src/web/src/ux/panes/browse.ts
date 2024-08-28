@@ -35,6 +35,12 @@ export const drillDownButtonStackStyle: IStackStyles = {
 }
 
 // buttons
+export const drillUpButtonStyles: IButtonStyles = {
+    root: {
+        width: '100%',
+    },
+}
+
 export const drillDownButtonStyles: IButtonStyles = {
     root: {
         height: '100%',

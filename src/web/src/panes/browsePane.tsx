@@ -15,7 +15,7 @@ import * as displayActions from '../state/actions/displayActions';
 // components
 import { LoadingDots } from '../components/loadingDots';
 // ux imports
-import { browsePaneStyle, browseStackStyle, browseButtonStackStyle, drillDownButtonStackStyle, drillDownButtonStyles } from "../ux/panes/browse";
+import { browsePaneStyle, browseStackStyle, browseButtonStackStyle, drillDownButtonStackStyle, drillDownButtonStyles, drillUpButtonStyles } from "../ux/panes/browse";
 import { stackItemPadding, saveSelectedButtonStyle, queryFieldStyles, badInputNotifications, buttonStyles, selectedButtonStyles } from '../ux/shared/components';
 import { blackLoadingDots } from '../ux/components/loadingDots';
 
@@ -55,7 +55,12 @@ const BrowsePane: FC = (): ReactElement => {
             appContext.state.queryState.responses?.forEach((response, index) => {
                 console.log("response " + index + " " + response.title)
             });
+            let previousTitle = ''
+            if (appContext.state.browseStateStack.length > 1) {
+                previousTitle = appContext.state.browseStateStack[appContext.state.browseStateStack.length - 1].title;
+            }
             actions.query.pushBrowseState({
+                title: previousTitle,
                 material: newMaterial,
                 responses: browseResponses
             });
@@ -65,13 +70,24 @@ const BrowsePane: FC = (): ReactElement => {
         } else {
             setEmptyMaterial(true);    
         }
-    }, [newMaterial, actions.query, appContext.state.queryState.responses]);
+    }, [newMaterial, actions.query, appContext.state.queryState.responses, appContext.state.browseStateStack]);
 
     const onDrillDown = (index: number) => {
         if (shouldSubmit) return;
         const browseState = appContext.state.browseStateStack[appContext.state.browseStateStack.length - 1];
         setNewMaterial(browseState.responses[index].material || '');
         setShouldSubmit(true);
+    }
+
+    const onDrillUp = () => {
+        actions.query.popBrowseState();
+        const browseState = appContext.state.browseStateStack[appContext.state.browseStateStack.length - 1];
+        setNewMaterial(browseState.material || '');
+        actions.query.setQueryResponseList(browseState.responses.map(response => ({
+            title: response.title,
+            source: response.source,
+            content: response.content
+        })));
     }
 
     const toggleResponseSelection = (index: number) => {
@@ -167,11 +183,17 @@ const BrowsePane: FC = (): ReactElement => {
             }
             <Stack.Item tokens={stackItemPadding}>
                 {isLoading ? (
-                    <LoadingDots style={blackLoadingDots}/>
+                    <LoadingDots style={blackLoadingDots} />
                 ) : (
-                    appContext.state.queryState.responses && appContext.state.queryState.responses.map((response, index) => (
+                        <Stack styles={browsePaneStyle}>
+                        { appContext.state.browseStateStack.length > 1 &&
+                        <Stack.Item>
+                            <IconButton aria-label="DrillUp" iconProps={{ iconName: "ChevronLeft" }} text={appContext.state.browseStateStack[appContext.state.browseStateStack.length - 1].title} onClick={onDrillUp} styles={drillUpButtonStyles} />
+                        </Stack.Item>
+                    }   
+                    {appContext.state.queryState.responses && appContext.state.queryState.responses.map((response, index) => (
                         <Stack horizontal styles={browseStackStyle}>
-                            {newMaterial.length < 2000 && (
+                            {newMaterial.length < 1000 && (
                                 <Stack.Item styles={browseButtonStackStyle}>
                                         <button 
                                 key={index} 
@@ -181,7 +203,7 @@ const BrowsePane: FC = (): ReactElement => {
                                     </button>
                                 </Stack.Item>
                             )}
-                            {newMaterial.length >= 2000  && ( // only allow drilling down if material is long enough
+                            {newMaterial.length >= 1000  && ( // only allow drilling down if material is long enough
                                 <Stack horizontal styles={browseStackStyle}>
                                 <Stack.Item styles={browseButtonStackStyle}>
                                     <button 
@@ -197,7 +219,8 @@ const BrowsePane: FC = (): ReactElement => {
                                     </Stack>
                                 )}
                         </Stack>
-                    ))
+                    ))} 
+                </Stack>
                 )}
             </Stack.Item>
             <Stack.Item tokens={stackItemPadding}>
