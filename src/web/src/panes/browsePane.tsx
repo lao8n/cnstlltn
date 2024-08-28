@@ -1,6 +1,6 @@
 // react imports
 import { SearchBox, Stack, IconButton } from '@fluentui/react';
-import { FC, ReactElement, useContext, useMemo, useState, ChangeEvent, useEffect, useCallback } from "react";
+import { FC, ReactElement, useContext, useMemo, useState, ChangeEvent, useEffect } from "react";
 // state imports
 import { AppContext } from '../state/applicationState';
 import { QueryResponse } from '../state/queryState';
@@ -45,6 +45,9 @@ const BrowsePane: FC = (): ReactElement => {
                 source: response.source,
                 content: response.content
             })));
+            appContext.state.queryState.responses?.forEach((response, index) => {
+                console.log("response " + index + " " + response.title)
+            });
             actions.query.pushBrowseState({
                 material: newMaterial,
                 responses: browseResponses
@@ -56,8 +59,8 @@ const BrowsePane: FC = (): ReactElement => {
         }
     }
 
-    const drillDown = useCallback(async (index: number) => {
-        if (isLoading) return; // Prevent multiple simultaneous calls
+    const drillDown = async (index: number) => {
+        if (isLoading) return; 
         setIsLoading(true);
         try {
             console.log("Starting drill down", index);
@@ -70,7 +73,7 @@ const BrowsePane: FC = (): ReactElement => {
         } finally {
             setIsLoading(false);
         }
-    }, [appContext.state.browseStateStack, setNewMaterial, onSubmit, isLoading]);
+    };
 
     const toggleResponseSelection = (index: number) => {
         const newSelectedResponses = new Set(selectedResponses);
