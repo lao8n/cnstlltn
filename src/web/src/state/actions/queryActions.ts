@@ -5,7 +5,7 @@ import { Query, QueryResponse, BrowseResponse, BrowseState } from "../queryState
 import { ActionMethod, createPayloadAction, PayloadAction } from "./actionCreators";
 import { ActionTypes } from "./common";
 
-const queryService = new QueryService(config.api.baseUrl, '/query-ai');
+const queryService = new QueryService(config.api.baseUrl);
 
 export interface QueryActions {
     postQueryResponseList(query: Query): Promise<QueryResponse[]>;

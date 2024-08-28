@@ -19,6 +19,13 @@ export const constellationHeaderStackStyle: IStackStyles = {
     }
 }
 
+export const createConstellationStackStyle: IStackStyles = {
+    root: {
+        width: '100%',
+        paddingBottom: '23px', // 10px padding + 13px searchBox height
+    }
+}
+
 export const buttonStackStyle = (active: boolean): IStackStyles => {
     if (active) {
         return {
@@ -116,7 +123,6 @@ export const constellationNameStyle = mergeStyles({
 export const createConstellationButtonStyle: Partial<ITextFieldStyles> = {
     root: {
         width: '100%',
-        paddingBottom: '23px', // 12 font size + 10 padding + 1 border
     },
     field: {  // This targets the input element itself
         color: theme.palette.black,

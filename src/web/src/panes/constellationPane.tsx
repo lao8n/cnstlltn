@@ -19,7 +19,7 @@ import * as displayActions from '../state/actions/displayActions';
 // ux imports
 import { CnstlltnTheme } from "../ux/shared/theme";
 import { canvasStackStyle, canvasStyle } from '../ux/shared/components';
-import { constellationHeaderStackStyle, constellationStackStyle, stackItemPadding, constellationNameStyle, clusterByStyle, canvasHeaderButtonStyle, clusteringSuggestionButtonStyle, buttonStackStyle, selectClusteringStyle, createConstellationButtonStyle } from '../ux/panes/constellation';
+import { constellationHeaderStackStyle, constellationStackStyle, stackItemPadding, constellationNameStyle, clusterByStyle, canvasHeaderButtonStyle, clusteringSuggestionButtonStyle, buttonStackStyle, selectClusteringStyle, createConstellationButtonStyle, createConstellationStackStyle } from '../ux/panes/constellation';
 // display imports
 import { CanvasSpace, Circle, Pt } from "pts";
 import { DisplayPoint, TwinklePoint } from '../frontend/models';
@@ -268,13 +268,15 @@ const ConstellationPane: FC = (): ReactElement => {
                 <Stack horizontal style={{width: '100%', paddingLeft: '10px', paddingRight: '10px'}}>
                     {
                         selectedButton === "CREATE CONSTELLATION" && (
-                            <SearchBox
+                            <Stack.Item styles={createConstellationStackStyle}>
+                                <SearchBox
                                 value={createdConstellationName}
                                 placeholder={"Enter name of new constellation"}
-                                onChange={onTypeConstellationName}
-                                onSearch={onCreateConstellationSubmit}
+                                    onChange={onTypeConstellationName}
+                                    onSearch={onCreateConstellationSubmit}
                                     styles={createConstellationButtonStyle}
                                 />
+                            </Stack.Item>
                         )
                     }
                     {
