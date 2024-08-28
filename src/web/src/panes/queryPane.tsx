@@ -12,9 +12,12 @@ import { ConstellationActions } from '../state/actions/constellationActions';
 import * as constellationActions from '../state/actions/constellationActions';
 import { DisplayActions } from '../state/actions/displayActions';
 import * as displayActions from '../state/actions/displayActions';
+// components imports
+import { LoadingDots } from '../components/loadingDots';
 // ux imports
 import { queryBarStyle, queryStackStyle } from '../ux/panes/query';
 import { stackItemPadding, saveSelectedButtonStyle, queryFieldStyles, badInputNotifications, buttonStyles, selectedButtonStyles } from '../ux/shared/components';
+import { blackLoadingDots } from '../ux/components/loadingDots';
 
 const QueryPane: FC = (): ReactElement => {
     const appContext = useContext<AppContext>(UserAppContext)
@@ -31,12 +34,7 @@ const QueryPane: FC = (): ReactElement => {
     const [selectedResponses, setSelectedResponses] = useState<Set<number>>(new Set());
     const [emptySelection, setEmptySelection] = useState(false);
     const [isSecondSearchVisible, setIsSecondSearchVisible] = useState(false);
-    const onTypeQuery = (_: ChangeEvent<HTMLInputElement> | undefined, newValue?: string) => {
-        setNewQuery(newValue || '');
-    }
-    const onTypeMaterial = (_: ChangeEvent<HTMLInputElement> | undefined, newValue?: string) => {
-        setNewMaterial(newValue || '');
-    }
+    const [isLoading, setIsLoading] = useState(false);
 
     // functions
     const toggleResponseSelection = (index: number) => {
@@ -51,12 +49,20 @@ const QueryPane: FC = (): ReactElement => {
     const toggleSecondSearch = () => {
         setIsSecondSearchVisible(!isSecondSearchVisible);
     };
+    const onTypeQuery = (_: ChangeEvent<HTMLInputElement> | undefined, newValue?: string) => {
+        setNewQuery(newValue || '');
+    }
+    const onTypeMaterial = (_: ChangeEvent<HTMLInputElement> | undefined, newValue?: string) => {
+        setNewMaterial(newValue || '');
+    }
     const onSubmit = async () => {
         if (newQuery) {
+            setIsLoading(true);
             const query: Query = {userTxt: newQuery, material: newMaterial}
             const queryResponses = await actions.query.postQueryResponseList(query)
             actions.query.setQueryResponseList(queryResponses)
             setSelectedResponses(new Set()); // set to empty
+            setIsLoading(false);
         } else {
             setEmptyQuery(true);
         }
@@ -162,14 +168,17 @@ const QueryPane: FC = (): ReactElement => {
                 )
             }
             <Stack.Item tokens={stackItemPadding}>
-                {appContext.state.queryState.responses && appContext.state.queryState.responses.map((response, index) => (
-                    <button 
+                {isLoading ? (
+                    <LoadingDots style={blackLoadingDots}/>
+                ) : (
+                    appContext.state.queryState.responses && appContext.state.queryState.responses.map((response, index) => (
+                        <button 
                         key={index} 
                         className={selectedResponses.has(index) ? selectedButtonStyles: buttonStyles} 
                         onClick={() => toggleResponseSelection(index)}>
                         {response.title}: {response.content}
                     </button>
-                ))}
+                )))}
             </Stack.Item>
             <Stack.Item tokens={stackItemPadding}>
                 <button className={saveSelectedButtonStyle} onClick={saveSelectedResponses}>

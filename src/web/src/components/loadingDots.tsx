@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-export const LoadingDots: React.FC = () => {    
+export const LoadingDots: React.FC<{style: React.HTMLAttributes<HTMLDivElement>['style']}> = ({style}) => {    
 
     const [dots, setDots] = useState('');
 
@@ -13,5 +13,5 @@ export const LoadingDots: React.FC = () => {
         return () => clearInterval(interval);
     }, []);
 
-    return <div>Loading{dots}</div>;
+    return <div style={style}>{dots}</div>;
 };

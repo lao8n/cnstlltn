@@ -17,6 +17,7 @@ import { LoadingDots } from '../components/loadingDots';
 // ux imports
 import { browsePaneStyle, browseStackStyle, browseButtonStackStyle, drillDownButtonStackStyle, drillDownButtonStyles } from "../ux/panes/browse";
 import { stackItemPadding, saveSelectedButtonStyle, queryFieldStyles, badInputNotifications, buttonStyles, selectedButtonStyles } from '../ux/shared/components';
+import { blackLoadingDots } from '../ux/components/loadingDots';
 
 const BrowsePane: FC = (): ReactElement => {
     const appContext = useContext<AppContext>(UserAppContext)
@@ -32,6 +33,7 @@ const BrowsePane: FC = (): ReactElement => {
     const [selectedResponses, setSelectedResponses] = useState<Set<number>>(new Set());
     const [emptySelection, setEmptySelection] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const [shouldSubmit, setShouldSubmit] = useState(false);
 
     // functions
     const onTypeSource = (_: ChangeEvent<HTMLInputElement> | undefined, newValue?: string) => {
@@ -65,12 +67,10 @@ const BrowsePane: FC = (): ReactElement => {
     }, [newMaterial, actions.query, appContext.state.queryState.responses]);
 
     const onDrillDown = (index: number) => {
-        if (isLoading) return;
-        setIsLoading(true);
-        console.log("Starting drill down", index, isLoading);
+        if (shouldSubmit) return;
         const browseState = appContext.state.browseStateStack[appContext.state.browseStateStack.length - 1];
-        console.log("browseState", browseState.responses[index].material);
         setNewMaterial(browseState.responses[index].material || '');
+        setShouldSubmit(true);
     }
 
     const toggleResponseSelection = (index: number) => {
@@ -129,18 +129,14 @@ const BrowsePane: FC = (): ReactElement => {
     }, [actions.query, appContext.state.userState.constellationName])
 
     useEffect(() => {
-        const handleSubmit = async () => {
-            if (isLoading && newMaterial) {
-                console.log("onSubmit triggered")
+        if (shouldSubmit && newMaterial) {
+            const handleSubmit = async () => {
                 await onSubmit();
-                console.log("onSubmit done")
-                setIsLoading(false);
-                console.log("setIsLoading done")
-            }
-        };
-        console.log("drill down triggered submit")
-        handleSubmit();
-    }, [newMaterial, isLoading, onSubmit])
+                setShouldSubmit(false);
+            };
+            handleSubmit();
+        }
+    }, [shouldSubmit, newMaterial, onSubmit])
 
     return (
         <Stack styles={browsePaneStyle}>
@@ -170,7 +166,7 @@ const BrowsePane: FC = (): ReactElement => {
             }
             <Stack.Item tokens={stackItemPadding}>
                 {isLoading ? (
-                    <LoadingDots />
+                    <LoadingDots style={blackLoadingDots}/>
                 ) : (
                     appContext.state.queryState.responses && appContext.state.queryState.responses.map((response, index) => (
                         <Stack horizontal styles={browseStackStyle}>\
