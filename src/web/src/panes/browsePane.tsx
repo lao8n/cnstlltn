@@ -1,5 +1,5 @@
 // react imports
-import { SearchBox, Stack, IconButton } from '@fluentui/react';
+import { SearchBox, Stack, IconButton, mergeStyles } from '@fluentui/react';
 import { FC, ReactElement, useContext, useMemo, useState, ChangeEvent, useEffect } from "react";
 // state imports
 import { AppContext } from '../state/applicationState';
@@ -205,7 +205,7 @@ const BrowsePane: FC = (): ReactElement => {
                     </Stack.Item>
                 )
             }
-            <Stack.Item styles={browsePaneItemStyle}>
+            <Stack styles={browsePaneItemStyle}>
                 {isLoading ? (
                     <LoadingDots style={blackLoadingDots} />
                 ) : (
@@ -225,6 +225,8 @@ const BrowsePane: FC = (): ReactElement => {
                         {appContext.state.browseState.messages.length > 0 &&
                             appContext.state.browseState.messages[appContext.state.browseState.messages.length - 1].responses?.map((response, index) => (
                                 <Stack horizontal styles={browseStackStyle} key={index}>
+                                    {response.flag === true ? (
+                                        <Stack>
                                     <Stack.Item styles={browseButtonStackStyle}>
                                         <button 
                                             className={selectedResponses.has(index) ? selectedButtonStyles : buttonStyles} 
@@ -232,7 +234,6 @@ const BrowsePane: FC = (): ReactElement => {
                                             <strong>{response.title}</strong>: {response.content}
                                         </button>
                                     </Stack.Item>
-                                    {response.flag === true ? (
                                         <Stack.Item styles={drillDownButtonStackStyle}>
                                             <IconButton 
                                                 aria-label="DrillDown" 
@@ -240,20 +241,18 @@ const BrowsePane: FC = (): ReactElement => {
                                                 onClick={() => onDrillDown(index)} 
                                                 styles={drillDownButtonStyles} 
                                             />
-                                        </Stack.Item>
+                                            </Stack.Item>
+                                        </Stack>
                                     ) : (
-                                        <Stack.Item styles={drillDownButtonStackStyle}>
-                                            <IconButton 
-                                                aria-label="DrillDown" 
-                                                iconProps={{ iconName: "ChevronRight" }} 
-                                                onClick={() => onDrillDown(index)} 
-                                                styles={{
-                                                    ...drillDownButtonStyles,
-                                                    root: {
-                                                        marginRight: '32px'
-                                                    }
-                                                }}
-                                            />
+                                        <Stack.Item styles={browseButtonStackStyle}>
+                                            <button 
+                                                className={mergeStyles(
+                                                    selectedResponses.has(index) ? selectedButtonStyles : buttonStyles,
+                                                    { marginRight: '32px' }
+                                                )}
+                                                onClick={() => toggleResponseSelection(index)}>
+                                                <strong>{response.title}</strong>: {response.content}
+                                            </button>
                                         </Stack.Item>
                                     )}
                                 </Stack>
@@ -261,7 +260,7 @@ const BrowsePane: FC = (): ReactElement => {
                         }
                     </Stack>
                 )}
-            </Stack.Item>
+            </Stack>
             <Stack.Item tokens={stackItemPadding}>
                 <button className={saveSelectedButtonStyle} onClick={saveSelectedResponses}>
                     {"Save selected notes to constellation"}

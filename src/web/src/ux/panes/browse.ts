@@ -61,6 +61,7 @@ export const drillUpButtonStyles: IButtonStyles = {
         textAlign: 'right',
         fontSize: '12px',
         fontFamily: '"Segoe UI", "Noto Sans", "Helvetica Neue"',
+        color: theme.palette.black,
         marginLeft: '5px',
         display: 'inline-block',
     }
