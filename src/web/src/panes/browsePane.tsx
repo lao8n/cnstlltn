@@ -15,7 +15,7 @@ import * as displayActions from '../state/actions/displayActions';
 // components
 import { LoadingDots } from '../components/loadingDots';
 // ux imports
-import { browsePaneStyle, browseStackStyle, browseButtonStackStyle, drillDownButtonStackStyle, drillDownButtonStyles, drillUpButtonStyles, browseBarStyle, materialAttachedButtonStyle } from "../ux/panes/browse";
+import { browsePaneStyle, browseStackStyle, browseButtonStackStyle, drillDownButtonStackStyle, drillDownButtonStyles, drillUpButtonStyles, browseBarStyle, materialAttachedButtonStyle, browsePaneItemStyle } from "../ux/panes/browse";
 import { stackItemPadding, saveSelectedButtonStyle, queryFieldStyles, badInputNotifications, buttonStyles, selectedButtonStyles } from '../ux/shared/components';
 import { blackLoadingDots } from '../ux/components/loadingDots';
 
@@ -205,7 +205,7 @@ const BrowsePane: FC = (): ReactElement => {
                     </Stack.Item>
                 )
             }
-            <Stack.Item>
+            <Stack.Item styles={browsePaneItemStyle}>
                 {isLoading ? (
                     <LoadingDots style={blackLoadingDots} />
                 ) : (
@@ -215,7 +215,7 @@ const BrowsePane: FC = (): ReactElement => {
                                 <IconButton
                                     aria-label="DrillUp" 
                                     iconProps={{ iconName: "ChevronLeft" }} 
-                                    text={previousTitles[previousTitles.length - 1]} 
+                                    label={previousTitles[previousTitles.length - 1]}
                                     onClick={onDrillUp} 
                                     styles={drillUpButtonStyles} 
                                 />

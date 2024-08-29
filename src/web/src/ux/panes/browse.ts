@@ -6,15 +6,23 @@ const theme = CnstlltnTheme;
 // stacks
 export const browsePaneStyle: IStackStyles = {
     root: {
+        height: '100%',
         width: '100%',
         overflow: 'auto',
         padding: '10px',
     }
 }
 
+export const browsePaneItemStyle: IStackStyles = {
+    root: {
+        height: '100%',
+    }
+}
+
 export const browseStackStyle: IStackStyles = {
     root: {
         width: '100%',
+        height: '100%',
         display: 'flex',
         alignItems: 'stretch',
         justifyContent: 'center',
@@ -47,7 +55,14 @@ export const drillDownButtonStackStyle: IStackStyles = {
 export const drillUpButtonStyles: IButtonStyles = {
     root: {
         width: '100%',
+        textAlign: 'left',
     },
+    label: {
+        textAlign: 'right',
+        fontSize: '12px',
+        fontFamily: '"Segoe UI", "Noto Sans", "Helvetica Neue"',
+        marginLeft: '5px',
+    }
 }
 
 export const drillDownButtonStyles: IButtonStyles = {
