@@ -64,12 +64,14 @@ export const queryFieldStyles = {
     field: {
         color: theme.palette.black,
         fontFamily: '"Segoe UI", "Noto Sans", "Helvetica Neue"',
+        paddingLeft: 0,
         '::placeholder': {
             color: theme.palette.black,
             opacity: 0.8,
         }
     },
-};
+    icon: { display: 'none' },
+}
 
 // tokens
 export const stackItemPadding: IStackItemTokens = {

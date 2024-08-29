@@ -184,8 +184,8 @@ const BrowsePane: FC = (): ReactElement => {
                             onChange={onTypeSource}
                             onSearch={onSubmitMaterial}
                             styles={queryFieldStyles}
-                            iconProps={{styles: {root: { display: 'NewsSearch' }}}}
-                                />
+                            iconProps={{ iconName: 'Copy' }}
+                            />
                     </Stack.Item>
                 </Stack>
             </Stack.Item>
