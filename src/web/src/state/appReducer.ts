@@ -27,13 +27,17 @@ export const appReducer: Reducer<ApplicationState, ApplicationActions> = (state:
             state.browseState.messages = action.payload;
             break;
         case ActionTypes.SET_BROWSE_CHOSEN:
-            state.browseState.messages[state.browseState.messages.length - 1].chosen = action.payload;
+            if (state.browseState.messages.length > 0) {
+                state.browseState.messages[state.browseState.messages.length - 1].chosen = action.payload;
+            }
             break;
         case ActionTypes.PUSH_BROWSE_MESSAGE:
             state.browseState.messages.push(action.payload);
             break;
         case ActionTypes.POP_BROWSE_MESSAGE:
-            state.browseState.messages.pop();
+            if (state.browseState.messages.length > 0) {
+                state.browseState.messages.pop();
+            }
             break;
         // constellation
         case ActionTypes.SAVE_SELECTED_FRAMEWORKS:
