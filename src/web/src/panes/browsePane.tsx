@@ -30,7 +30,7 @@ const BrowsePane: FC = (): ReactElement => {
     // display
     const [newMaterial, setNewMaterial] = useState('');
     const [previousTitles, setPreviousTitles] = useState(['Browse Home']);
-    const [materialAttached, setMaterialAttached] = useState(false);
+    const [materialAttached, setMaterialAttached] = useState(true);
     const [emptyMaterial, setEmptyMaterial] = useState(false);
     const [selectedResponses, setSelectedResponses] = useState<Set<number>>(new Set());
     const [emptySelection, setEmptySelection] = useState(false);
@@ -164,10 +164,11 @@ const BrowsePane: FC = (): ReactElement => {
             <Stack horizontal styles={browseBarStyle}>
                     <Stack.Item align="stretch">
                         <IconButton aria-label="material attached"
-                            iconProps={{ iconName: materialAttached ? "NewsSearch" : "BookAnswers" }}
+                            iconProps={{ iconName: materialAttached ? "Copy" : "BookAnswers" }}
                             onClick={() => setMaterialAttached(!materialAttached)}
                             styles={materialAttachedButtonStyle} />
                     </Stack.Item>
+                    <Stack.Item styles={browseBarStyle}>
                 <SearchBox
                     value={newMaterial}
                     placeholder={materialAttached ? "Copy-paste source article or video transcript" : "Name and author of book"}
@@ -175,8 +176,10 @@ const BrowsePane: FC = (): ReactElement => {
                     onSearch={onSubmitMaterial}
                     styles={queryFieldStyles}
                     iconProps={{styles: {root: { display: 'NewsSearch' }}}}
-                    />
+                        />
+                    </Stack.Item>
                 </Stack>
+                
             </Stack.Item>
             {(emptyMaterial || (appContext.state.queryState.responses?.length === 0 && emptySelection)) &&
                 (

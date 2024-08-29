@@ -80,40 +80,39 @@ async def browse(browse: Browse) -> List[BrowseResponseBlock]:
         system_prompt = """
         You are an AI assistant tasked with analyzing and summarizing key concepts from given texts. Please follow these instructions:
 
-        1. Read the source material which could be a video transcript or an article carefully.
-        2. Divide the material into 3 to 8 continuous sections of text.
-        3. For each section come up with a concise title for that section, the source of the material based upon the content of the article or transcript
-        or perhaps the name of the interviewer and interviewee, a flag of true or false to indicate if you think there is more material, such as 3 to 8 
-        new continuous sections, to explore within that section specifically and finally a summary of the content in a few sentences
+        1. Read the source material carefully. This could be a video transcript or an article.
+        2. Divide the material into 3 to 8 continuous sections.
+        3. For each section, provide the following information:
+
+        Title: [Concise title for the section]
+        Source: [Source of the material, based on the content or names of interviewer/interviewee]
+        Flag: [true or false, indicating if there's more material to explore within this section]
+        Content: [Summary of the section's content in a few sentences]
+
+        Ensure each section is separated by two newlines. Do not include any introduction, conclusion, or other non-content sections.
         """
     else:
         system_prompt = """
         You are an AI assistant tasked with analyzing and summarizing key concepts from a book. Please follow these instructions:
 
         1. Consider the book as a whole.
-        2. Divide the material into 3 to 8 continuous sections of text. 
-        3. For each section come up with a concise title for that section, based upon the content of that section, add the source of the material such as the author and book title,
-        a flag of true or false to indicate if you think there is more material, such as 3 to 8 new continuous sections within that section specifically, to explore and finally,
-        a summary of the content in a few sentences
+        2. Divide the material into 3 to 8 continuous sections.
+        3. For each section, provide the following information:
+
+        Title: [Concise title for the section]
+        Source: [Source of the material, such as author and book title]
+        Flag: [true or false, indicating if there's more material to explore within this section]
+        Content: [Summary of the section's content in a few sentences]
+
+        Ensure each section is separated by two newlines. Do not include any introduction, conclusion, or other non-content sections.
         """
 
-    system_prompt += """Each section should have the following format, with double newlines between sections:
+    system_prompt += """
+    When recursing into a section, treat it as relatively independent. The flag indicates whether there are more sections to explore 
+    within that specific section. For example, if a section is 2,000 words, the flag would likely be true because the content summary 
+    is only a few sentences. If a section is just 500 words, the content summary might cover the material completely, so the flag should be false.
+    """
 
-        Title: [Section Title]
-        Source: [Source]
-        Flag: [More material to explore]
-        Content: [Summary of the section]
-
-        Avoid having introduction, conclusion, or other non-content sections. 
-        Make sure not to include any hashtags or other markdown formatting.
-        You will be provided a series of messages between the user and the assistant, which will indicate how the user wants to recurse into the material, 
-        in this recursion you should treat each section as relatively independent. For example if you initially have 5 sections and the user chooses the 2nd section,
-        and then of the 8 sections provided for the second section they choose the 4th section you should only consider material in that 4th section (of the second section)
-        To understand the flag better, if you imagine the material as a tree, the flag indicates whether there are more sections to explore within that section specifically, 
-        for example if the material is 10,000 words, and a section is 2,000 words the flag would probably be true because the content summary is only a few sentences and
-        so there is much more material te explore. But if you have a section which is just 500 words then maybe the content summary covers the material completely and so the 
-        flag should be false.
-        """
     if browse.attachment:
         system_prompt = f"Please analyze the following source material:\n\n{browse.material}"
     else:
