@@ -90,6 +90,17 @@ async def browse(browse: Browse) -> List[BrowseResponseBlock]:
         Content: [Summary of the section's content in a few sentences]
 
         Ensure each section is separated by two newlines. Do not include any introduction, conclusion, or other non-content sections.
+        Do not include any markdown formatting such as # or * in the content, do not number the sections.
+
+        For example, a section might look like this:
+
+        Title: Role of agriculture
+        Source: BBC interview with Jared Diamond
+        Flag: false
+        Content: Agriculture is a central theme in "Guns, Germs, and Steel," emphasizing how the development of farming practices
+        allowed certain societies to produce surplus food, enabling population growth, job specialization, and technological advancements.
+        This agricultural revolution created the foundation for powerful, organized states.
+        
         """
     else:
         system_prompt = """
@@ -105,6 +116,17 @@ async def browse(browse: Browse) -> List[BrowseResponseBlock]:
         Content: [Summary of the section's content in a few sentences]
 
         Ensure each section is separated by two newlines. Do not include any introduction, conclusion, or other non-content sections.
+        Do not include any markdown formatting such as # or * in the content, do not number the sections.
+
+        For example, a section might look like this:
+
+        Title: Role of agriculture
+        Source: Guns, Germs, and Steel by Jared Diamond
+        Flag: true
+        Content: Agriculture is a central theme in "Guns, Germs, and Steel," emphasizing how the development of farming practices
+        allowed certain societies to produce surplus food, enabling population growth, job specialization, and technological advancements.
+        This agricultural revolution created the foundation for powerful, organized states.
+
         """
 
     system_prompt += """
@@ -118,7 +140,7 @@ async def browse(browse: Browse) -> List[BrowseResponseBlock]:
     else:
         system_prompt = f"Please analyze the following book:\n\n{browse.material}"
 
-    messages = [{ "role": "system", "content": system_prompt }]
+    messages = [{ "role": "system", "content": system_prompt }, {"role": "user", "content": f"Please follow the instructions and analyze"}]
     for message in browse.messages:
         responses_content = "\n\n".join([
             f"Title: {block.title}\nSource: {block.source}\nFlag: {block.flag}\nContent: {block.content}"
