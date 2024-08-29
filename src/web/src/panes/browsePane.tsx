@@ -15,7 +15,7 @@ import * as displayActions from '../state/actions/displayActions';
 // components
 import { LoadingDots } from '../components/loadingDots';
 // ux imports
-import { browsePaneStyle, browseStackStyle, browseButtonStackStyle, drillDownButtonStackStyle, drillDownButtonStyles, drillUpButtonStyles, browseBarStyle, materialAttachedButtonStyle, browsePaneItemStyle } from "../ux/panes/browse";
+import { browsePaneStyle, browseStackStyle, browseButtonStackStyle, drillDownButtonStackStyle, drillDownButtonStyles, drillUpButtonStyles, browseBarStyle, materialAttachedButtonStyle, browsePaneItemStyle, buttonTextStyles } from "../ux/panes/browse";
 import { stackItemPadding, saveSelectedButtonStyle, queryFieldStyles, badInputNotifications, buttonStyles, selectedButtonStyles } from '../ux/shared/components';
 import { blackLoadingDots } from '../ux/components/loadingDots';
 
@@ -219,41 +219,47 @@ const BrowsePane: FC = (): ReactElement => {
                                         text={previousTitles[previousTitles.length - 1]}
                                     onClick={onDrillUp} 
                                     styles={drillUpButtonStyles} 
-                                />
+                                    >
+                                      previousTitles[previousTitles.length - 1]  
+                                </IconButton>
                             </Stack.Item>
                         )}
                         {appContext.state.browseState.messages.length > 0 &&
                             appContext.state.browseState.messages[appContext.state.browseState.messages.length - 1].responses?.map((response, index) => (
                                 <Stack horizontal styles={browseStackStyle} key={index}>
                                     {response.flag === true ? (
-                                        <Stack>
-                                    <Stack.Item styles={browseButtonStackStyle}>
-                                        <button 
-                                            className={selectedResponses.has(index) ? selectedButtonStyles : buttonStyles} 
-                                            onClick={() => toggleResponseSelection(index)}>
-                                            <strong>{response.title}</strong>: {response.content}
-                                        </button>
-                                    </Stack.Item>
-                                        <Stack.Item styles={drillDownButtonStackStyle}>
-                                            <IconButton 
-                                                aria-label="DrillDown" 
-                                                iconProps={{ iconName: "ChevronRight" }} 
-                                                onClick={() => onDrillDown(index)} 
-                                                styles={drillDownButtonStyles} 
-                                            />
+                                        <Stack horizontal styles={browseStackStyle}>
+                                            <Stack.Item styles={browseButtonStackStyle} grow>
+                                                <button 
+                                                    className={selectedResponses.has(index) ? selectedButtonStyles : buttonStyles} 
+                                                    onClick={() => toggleResponseSelection(index)}>
+                                                    <span className={buttonTextStyles}>
+                                                        <strong>{response.title}</strong>: {response.content}
+                                                    </span>
+                                                </button>
+                                            </Stack.Item>
+                                            <Stack.Item styles={drillDownButtonStackStyle}>
+                                                <IconButton 
+                                                    aria-label="DrillDown" 
+                                                    iconProps={{ iconName: "ChevronRight" }} 
+                                                    onClick={() => onDrillDown(index)} 
+                                                    styles={drillDownButtonStyles} 
+                                                />
                                             </Stack.Item>
                                         </Stack>
                                     ) : (
-                                        <Stack.Item styles={browseButtonStackStyle}>
-                                            <button 
-                                                className={mergeStyles(
-                                                    selectedResponses.has(index) ? selectedButtonStyles : buttonStyles,
-                                                    { marginRight: '32px' }
-                                                )}
-                                                onClick={() => toggleResponseSelection(index)}>
-                                                <strong>{response.title}</strong>: {response.content}
-                                            </button>
-                                        </Stack.Item>
+                                        <Stack horizontal styles={browseStackStyle}>
+                                            <Stack.Item styles={browseButtonStackStyle} grow>
+                                                <button 
+                                                    className={mergeStyles(
+                                                        selectedResponses.has(index) ? selectedButtonStyles : buttonStyles,
+                                                        { marginRight: '32px' }
+                                                    )}
+                                                    onClick={() => toggleResponseSelection(index)}>
+                                                    <strong>{response.title}</strong>: {response.content}
+                                                </button>
+                                            </Stack.Item>
+                                        </Stack>
                                     )}
                                 </Stack>
                             ))

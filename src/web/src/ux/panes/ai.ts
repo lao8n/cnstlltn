@@ -6,7 +6,7 @@ const theme = CnstlltnTheme
 // stacks
 export const aiStackStyle: IStackStyles = {
     root: {
-        width: 500,
+        width: 600,
         overflow: 'auto',
         background: theme.palette.themeLight,
         paddingRight: '5px',

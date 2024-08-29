@@ -169,14 +169,17 @@ const QueryPane: FC = (): ReactElement => {
                 {isLoading ? (
                     <LoadingDots style={blackLoadingDots}/>
                 ) : (
-                    appContext.state.queryState.responses && appContext.state.queryState.responses.map((response, index) => (
-                        <button 
-                        key={index} 
-                        className={selectedResponses.has(index) ? selectedButtonStyles: buttonStyles} 
-                        onClick={() => toggleResponseSelection(index)}>
-                        <strong>{response.title}</strong>: {response.content}
-                    </button>
-                )))}
+                    <Stack styles={queryStackStyle}>
+                        {appContext.state.queryState.responses && appContext.state.queryState.responses.map((response, index) => (
+                            <button 
+                                key={index} 
+                                className={selectedResponses.has(index) ? selectedButtonStyles : buttonStyles} 
+                                onClick={() => toggleResponseSelection(index)}>
+                                <strong>{response.title}</strong>: {response.content}
+                            </button>
+                        ))}
+                    </Stack>
+                )}
             </Stack.Item>
             <Stack.Item tokens={stackItemPadding}>
                 <button className={saveSelectedButtonStyle} onClick={saveSelectedResponses}>

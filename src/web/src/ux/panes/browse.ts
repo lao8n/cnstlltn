@@ -96,3 +96,9 @@ export const materialAttachedButtonStyle: IButtonStyles = {
         color: theme.palette.black
     },
 }
+
+export const buttonTextStyles = mergeStyles({
+    textAlign: 'left',
+    width: '100%',
+    display: 'block'
+  });
