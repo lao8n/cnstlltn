@@ -1,5 +1,5 @@
 // react imports
-import { SearchBox, Stack } from '@fluentui/react';
+import { SearchBox, Stack, IconButton } from '@fluentui/react';
 import { FC, ReactElement, useState, useContext, useEffect, useMemo, ChangeEvent } from "react";
 // state imports
 import { AppContext } from '../state/applicationState';
@@ -15,7 +15,7 @@ import * as displayActions from '../state/actions/displayActions';
 // components imports
 import { LoadingDots } from '../components/loadingDots';
 // ux imports
-import { queryBarStyle, queryStackStyle } from '../ux/panes/query';
+import { queryBarStyle, queryStackStyle, toggleSecondSearchButtonStyle } from '../ux/panes/query';
 import { stackItemPadding, saveSelectedButtonStyle, queryFieldStyles, badInputNotifications, buttonStyles, selectedButtonStyles } from '../ux/shared/components';
 import { blackLoadingDots } from '../ux/components/loadingDots';
 
@@ -118,9 +118,7 @@ const QueryPane: FC = (): ReactElement => {
             <Stack.Item tokens={stackItemPadding}>
                 <Stack horizontal styles={queryBarStyle}>
                     <Stack.Item align="stretch">
-                        <button onClick={toggleSecondSearch} style={{ height: '100%', marginRight: '1px' }}>
-                            {isSecondSearchVisible ? '▲' : '▼'}
-                        </button>
+                        <IconButton aria-label="Toggle second search" iconProps={{ iconName: isSecondSearchVisible ? "ChevronDown" : "ChevronRight" }} onClick={toggleSecondSearch} styles={toggleSecondSearchButtonStyle} />
                     </Stack.Item>
                     <Stack.Item styles={queryBarStyle}>
                         <SearchBox

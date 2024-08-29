@@ -4,6 +4,7 @@ import * as constellationActions from './constellationActions'
 import * as clusterActions from './clusterActions'
 import * as noteActions from './noteActions'
 import * as displayActions from './displayActions'
+import * as browseActions from './browseActions'
 
 export enum ActionTypes {
     // user 
@@ -13,8 +14,11 @@ export enum ActionTypes {
     // query
     POST_QUERY_RESPONSE_LIST = "POST_QUERY_RESPONSE_LIST",
     SET_QUERY_RESPONSE_LIST = "SET_QUERY_RESPONSE_LIST",
+    // browse
     POST_BROWSE = "POST_BROWSE",
     SET_BROWSE_MATERIAL = "SET_BROWSE_MATERIAL",
+    SET_BROWSE_MESSAGES = "SET_BROWSE_MESSAGES",
+    SET_BROWSE_CHOSEN = "SET_BROWSE_CHOSEN",
     PUSH_BROWSE_MESSAGE = "PUSH_BROWSE_MESSAGE",
     POP_BROWSE_MESSAGE = "POP_BROWSE_MESSAGE",
     // constellation
@@ -44,10 +48,13 @@ export type ApplicationActions =
     // query
     queryActions.PostQueryResponseListAction |
     queryActions.SetQueryResponseListAction |
-    queryActions.PostBrowseAction |
-    queryActions.SetBrowseMaterialAction |
-    queryActions.PushBrowseMessageAction |
-    queryActions.PopBrowseMessageAction |
+    // browse
+    browseActions.PostBrowseAction |
+    browseActions.SetBrowseMaterialAction |
+    browseActions.SetBrowseMessagesAction |
+    browseActions.SetBrowseChosenAction |
+    browseActions.PushBrowseMessageAction |
+    browseActions.PopBrowseMessageAction |
     // constellation
     constellationActions.SaveSelectedFrameworksAction | 
     constellationActions.EditFrameworkAction |

@@ -3,11 +3,11 @@ import { SearchBox, Stack, IconButton } from '@fluentui/react';
 import { FC, ReactElement, useContext, useMemo, useState, ChangeEvent, useEffect, useCallback } from "react";
 // state imports
 import { AppContext } from '../state/applicationState';
-import { QueryResponse } from '../state/queryState';
+import { BrowseResponse } from '../state/browseState';
 import UserAppContext from '../state/userContext';
 import { bindActionCreators } from '../state/actions/actionCreators';
-import { QueryActions } from '../state/actions/queryActions';
-import * as queryActions from '../state/actions/queryActions';
+import { BrowseActions } from '../state/actions/browseActions';
+import * as browseActions from '../state/actions/browseActions';
 import { ConstellationActions } from '../state/actions/constellationActions';
 import * as constellationActions from '../state/actions/constellationActions';
 import { DisplayActions } from '../state/actions/displayActions';
@@ -15,53 +15,54 @@ import * as displayActions from '../state/actions/displayActions';
 // components
 import { LoadingDots } from '../components/loadingDots';
 // ux imports
-import { browsePaneStyle, browseStackStyle, browseButtonStackStyle, drillDownButtonStackStyle, drillDownButtonStyles, drillUpButtonStyles } from "../ux/panes/browse";
+import { browsePaneStyle, browseStackStyle, browseButtonStackStyle, drillDownButtonStackStyle, drillDownButtonStyles, drillUpButtonStyles, browseBarStyle, materialAttachedButtonStyle } from "../ux/panes/browse";
 import { stackItemPadding, saveSelectedButtonStyle, queryFieldStyles, badInputNotifications, buttonStyles, selectedButtonStyles } from '../ux/shared/components';
 import { blackLoadingDots } from '../ux/components/loadingDots';
 
 const BrowsePane: FC = (): ReactElement => {
     const appContext = useContext<AppContext>(UserAppContext)
     const actions = useMemo(() => ({
-        query: bindActionCreators(queryActions, appContext.dispatch) as unknown as QueryActions,
+        browse: bindActionCreators(browseActions, appContext.dispatch) as unknown as BrowseActions,
         constellation: bindActionCreators(constellationActions, appContext.dispatch) as unknown as ConstellationActions,
         display: bindActionCreators(displayActions, appContext.dispatch) as unknown as DisplayActions
     }), [appContext.dispatch]);
 
     // display
     const [newMaterial, setNewMaterial] = useState('');
+    const [previousTitles, setPreviousTitles] = useState(['Browse Home']);
+    const [materialAttached, setMaterialAttached] = useState(false);
     const [emptyMaterial, setEmptyMaterial] = useState(false);
     const [selectedResponses, setSelectedResponses] = useState<Set<number>>(new Set());
     const [emptySelection, setEmptySelection] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-    const [shouldSubmit, setShouldSubmit] = useState(false);
 
     // functions
     const onTypeSource = (_: ChangeEvent<HTMLInputElement> | undefined, newValue?: string) => {
         setNewMaterial(newValue || '');
     }
 
-    const onSubmit = useCallback(async () => {      
+    const onSubmitMaterial = useCallback(async () => {      
         console.log("onSubmit", newMaterial)
         if (newMaterial) {
             console.log("new material", newMaterial)
-            setShouldSubmit(false); // in case of drill-down
+            actions.browse.setBrowseMaterial(newMaterial);
             setIsLoading(true);
-            const browseResponses = await actions.query.postBrowse({ material: newMaterial });
-            let previousTitle = 'Browse Home'
-            if (appContext.state.browseStateStack.length > 1) {
-                previousTitle = appContext.state.browseStateStack[appContext.state.browseStateStack.length - 1].title;
-            }
-            actions.query.pushBrowseState({
-                title: previousTitle,
-                material: newMaterial,
-                responses: browseResponses
+            setPreviousTitles(['Browse Home']);
+            const browseResponses = await actions.browse.postBrowse({
+                attachment: materialAttached,
+                material: newMaterial, // can be slight delay in set browse material
+                messages: appContext.state.browseState.messages
             });
-            actions.query.setQueryResponseList(browseResponses.map(response => ({
-                title: response.title,
-                source: response.source,
-                content: response.content
-            })));
-            appContext.state.queryState.responses?.forEach((response, index) => {
+            actions.browse.pushBrowseMessage({
+                chosen: "", // user hasn't chosen yet
+                responses: browseResponses.map(response => ({
+                    title: response.title,
+                    source: response.source,
+                    flag: response.flag,
+                    content: response.content
+                }))
+            });
+            appContext.state.browseState.messages[appContext.state.browseState.messages.length - 1].responses?.forEach((response: BrowseResponse, index: number) => {
                 console.log("response " + index + " " + response.title)
             });
             setIsLoading(false);
@@ -69,24 +70,35 @@ const BrowsePane: FC = (): ReactElement => {
         } else {
             setEmptyMaterial(true);    
         }
-    }, [newMaterial, actions.query, appContext.state.queryState.responses, appContext.state.browseStateStack]);
+    }, [newMaterial, actions.browse, appContext.state.browseState.messages, materialAttached]);
 
-    const onDrillDown = (index: number) => {
-        if (shouldSubmit) return;
-        const browseState = appContext.state.browseStateStack[appContext.state.browseStateStack.length - 1];
-        setNewMaterial(browseState.responses[index].material || '');
-        setShouldSubmit(true);
+    const onDrillDown = async (index: number) => {
+        console.log("drill down")
+        const browseState = appContext.state.browseState.messages[appContext.state.browseState.messages.length - 1];
+        actions.browse.setBrowseChosen(browseState.responses[index].title);
+        setIsLoading(true);
+        setPreviousTitles([...previousTitles, browseState.responses[index].title]);
+        const browseResponses = await actions.browse.postBrowse({
+            attachment: materialAttached,
+            material: appContext.state.browseState.material,
+            messages: appContext.state.browseState.messages // TODO: check if browse chosen updated in time
+        });
+        actions.browse.pushBrowseMessage({
+            chosen: "", // user hasn't chosen yet
+            responses: browseResponses.map(response => ({
+                title: response.title,
+                source: response.source,
+                flag: response.flag,
+                content: response.content
+            }))
+        });
+        setSelectedResponses(new Set());
+        setIsLoading(false);
     }
 
     const onDrillUp = () => {
-        actions.query.popBrowseState();
-        const browseState = appContext.state.browseStateStack[appContext.state.browseStateStack.length - 1];
-        setNewMaterial(browseState.material || '');
-        actions.query.setQueryResponseList(browseState.responses.map(response => ({
-            title: response.title,
-            source: response.source,
-            content: response.content
-        })));
+        actions.browse.popBrowseMessage();
+        setPreviousTitles(previousTitles.slice(0, -1));
     }
 
     const toggleResponseSelection = (index: number) => {
@@ -101,9 +113,9 @@ const BrowsePane: FC = (): ReactElement => {
 
     const saveSelectedResponses = async () => {
         if (selectedResponses.size > 0 ) {
-            console.log("queryResponseList " + appContext.state.queryState.responses)
-            const responsesToSave = Array.from(selectedResponses).map(index => appContext.state.queryState.responses?.[index])
-                .filter((response): response is QueryResponse => response !== undefined);
+            console.log("queryResponseList " + appContext.state.browseState.messages[appContext.state.browseState.messages.length - 1].responses)
+            const responsesToSave = Array.from(selectedResponses).map(index => appContext.state.browseState.messages[appContext.state.browseState.messages.length - 1].responses[index])
+                .filter((response): response is BrowseResponse => response !== undefined);
             for (const response of responsesToSave) {
                 console.log("response " + response)
             }
@@ -141,30 +153,30 @@ const BrowsePane: FC = (): ReactElement => {
         console.log("browse pane reset")
         setSelectedResponses(new Set());
         setNewMaterial('');
-        actions.query.setQueryResponseList(undefined);
-    }, [actions.query, appContext.state.userState.constellationName])
-
-    useEffect(() => {
-        if (shouldSubmit && newMaterial) {
-            console.log("drill down triggered submit")
-            const handleSubmit = async () => {
-                await onSubmit();
-            };
-            handleSubmit();
-        }
-    }, [shouldSubmit, newMaterial, onSubmit])
+        actions.browse.setBrowseMaterial('');
+        actions.browse.setBrowseChosen('');
+        actions.browse.setBrowseMessages([]);
+    }, [actions.browse])
 
     return (
         <Stack styles={browsePaneStyle}>
             <Stack.Item tokens={stackItemPadding}>
+            <Stack horizontal styles={browseBarStyle}>
+                    <Stack.Item align="stretch">
+                        <IconButton aria-label="material attached"
+                            iconProps={{ iconName: materialAttached ? "NewsSearch" : "BookAnswers" }}
+                            onClick={() => setMaterialAttached(!materialAttached)}
+                            styles={materialAttachedButtonStyle} />
+                    </Stack.Item>
                 <SearchBox
                     value={newMaterial}
-                    placeholder="Copy-paste source article or video transcript"
+                    placeholder={materialAttached ? "Copy-paste source article or video transcript" : "Name and author of book"}
                     onChange={onTypeSource}
-                    onSearch={onSubmit}
+                    onSearch={onSubmitMaterial}
                     styles={queryFieldStyles}
                     iconProps={{styles: {root: { display: 'NewsSearch' }}}}
-                />
+                    />
+                </Stack>
             </Stack.Item>
             {(emptyMaterial || (appContext.state.queryState.responses?.length === 0 && emptySelection)) &&
                 (
@@ -185,26 +197,19 @@ const BrowsePane: FC = (): ReactElement => {
                     <LoadingDots style={blackLoadingDots} />
                 ) : (
                         <Stack styles={browsePaneStyle}>
-                        { appContext.state.browseStateStack.length > 1 &&
+                        { appContext.state.browseState.messages.length > 1 &&
                         <Stack.Item>
-                            <IconButton aria-label="DrillUp" iconProps={{ iconName: "ChevronLeft" }} text={appContext.state.browseStateStack[appContext.state.browseStateStack.length - 1].title} onClick={onDrillUp} styles={drillUpButtonStyles} />
-                        </Stack.Item>
-                        }
-                            {
-                                appContext.state.queryState.responses && newMaterial.length < 10000 &&
-                                 appContext.state.queryState.responses.map((response, index) => (
-                                    <Stack.Item styles={browseButtonStackStyle}>
-                                        <button
-                                            key={index}
-                                            className={selectedResponses.has(index) ? selectedButtonStyles : buttonStyles}
-                                            onClick={() => toggleResponseSelection(index)}>
-                                            {response.title}: {response.content}
-                                        </button>
-                                    </Stack.Item>
-                                ))
-                        }
+                                    <IconButton
+                                        aria-label="DrillUp" 
+                                        iconProps={{ iconName: "ChevronLeft" }} 
+                                        text={previousTitles[previousTitles.length - 1]} 
+                                        onClick={onDrillUp} 
+                                        styles={drillUpButtonStyles} 
+                                    />
+                                </Stack.Item>
+                            }
                         {
-                            appContext.state.queryState.responses && newMaterial.length >= 10000 &&
+                            appContext.state.queryState.responses &&
                                 appContext.state.queryState.responses.map((response, index) => (
                                 <Stack horizontal styles={browseStackStyle}>
                                     <Stack.Item styles={browseButtonStackStyle}>

@@ -1,7 +1,7 @@
-import { Query, QueryResponse } from "../state/queryState";
+import { Browse, BrowseResponse } from "../state/queryState";
 import axios, { AxiosInstance } from 'axios';
 
-export class QueryService {
+export class BrowseService {
     protected client: AxiosInstance;
     protected baseUrl: string;
 
@@ -10,10 +10,10 @@ export class QueryService {
         this.baseUrl = baseUrl;
     }
 
-    public async postQueryResponseList(query: Query): Promise<QueryResponse[]> {
-        const response = await this.client.request<QueryResponse[]>({
+    public async postBrowse(query: Browse): Promise<BrowseResponse[]> {
+        const response = await this.client.request<BrowseResponse[]>({
             method: 'POST',
-            url: `${this.baseUrl}/query-ai`,
+            url: `${this.baseUrl}/browse`,
             data: query
         });
         return response.data;

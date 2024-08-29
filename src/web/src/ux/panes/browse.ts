@@ -1,6 +1,8 @@
 // react imports
 import { IStackStyles, IButtonStyles } from "@fluentui/react";     
+import { CnstlltnTheme } from '../shared/theme'
 
+const theme = CnstlltnTheme;
 // stacks
 export const browsePaneStyle: IStackStyles = {
     root: {
@@ -15,6 +17,12 @@ export const browseStackStyle: IStackStyles = {
         display: 'flex',
         alignItems: 'stretch',
         justifyContent: 'center',
+    }
+}
+
+export const browseBarStyle: IStackStyles = {
+    root: {
+        width: '100%',
     }
 }
 
@@ -63,4 +71,10 @@ export const drillDownButtonStyles: IButtonStyles = {
         flexDirection: 'column',
         justifyContent: 'space-around', // This will create equal space above and below
     }
+}
+
+export const materialAttachedButtonStyle: IButtonStyles = {
+    root: {
+        color: theme.palette.black
+    },
 }
