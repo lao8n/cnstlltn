@@ -1,5 +1,6 @@
 import { UserState } from "./userState";
-import { QueryState, BrowseState } from "./queryState";
+import { QueryState } from "./queryState";
+import { BrowseState } from "./browseState";
 import { Dispatch } from "react";
 import { ApplicationActions } from "./actions/common";
 
