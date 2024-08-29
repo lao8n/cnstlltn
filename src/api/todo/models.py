@@ -47,9 +47,6 @@ class Query(BaseModel):
     userTxt: str
     material: str
 
-class Browse(BaseModel):
-    material: str
-
 class QueryAiResponseBlock(BaseModel):
     title: str  
     source: str
@@ -58,8 +55,13 @@ class QueryAiResponseBlock(BaseModel):
 class BrowseResponseBlock(BaseModel):
     title: str
     source: str
+    flag: bool
     content: str
+
+class Browse(BaseModel):
+    attachment: bool # true if article or video transcript, false if book title etc.
     material: str
+    messages: List[Tuple[str, List[BrowseResponseBlock]]] = [] # list of selected option and list of responses
 
 class LoginConfig(BaseModel):
     googleClientId: str
