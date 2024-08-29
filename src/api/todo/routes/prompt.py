@@ -30,7 +30,14 @@ async def query_ai(query: Query) -> List[QueryAiResponseBlock]:
         {query.material}
         """
 
-    user_prompt = f"Please provide key concepts related to the following prompt:\n\n{query.userTxt}"
+    user_prompt = f"""
+        Please provide key concepts related to the following prompt:\n\n{query.userTxt}
+        Return your response in the following format:
+
+        Title: [Concept Title]
+        Source: [Source of the concept, or "General Knowledge" if no specific source]
+        Content: [Detailed explanation of the concept]
+        """
 
     response = openai_client.chat.completions.create(
         model='gpt-4o', # best model
@@ -100,7 +107,7 @@ async def browse(browse: Browse) -> List[BrowseResponseBlock]:
         Content: Agriculture is a central theme in "Guns, Germs, and Steel," emphasizing how the development of farming practices
         allowed certain societies to produce surplus food, enabling population growth, job specialization, and technological advancements.
         This agricultural revolution created the foundation for powerful, organized states.
-        
+
         """
     else:
         system_prompt = """
@@ -126,28 +133,39 @@ async def browse(browse: Browse) -> List[BrowseResponseBlock]:
         Content: Agriculture is a central theme in "Guns, Germs, and Steel," emphasizing how the development of farming practices
         allowed certain societies to produce surplus food, enabling population growth, job specialization, and technological advancements.
         This agricultural revolution created the foundation for powerful, organized states.
-
         """
 
-    system_prompt += """
-    When recursing into a section, treat it as relatively independent. The flag indicates whether there are more sections to explore 
-    within that specific section. For example, if a section is 2,000 words, the flag would likely be true because the content summary 
-    is only a few sentences. If a section is just 500 words, the content summary might cover the material completely, so the flag should be false.
-    """
-
     if browse.attachment:
-        system_prompt = f"Please analyze the following source material:\n\n{browse.material}"
+        system_prompt = f"Here is the material to analyze:\n\n{browse.material}"
     else:
-        system_prompt = f"Please analyze the following book:\n\n{browse.material}"
+        system_prompt = f"Here is the name of the book to analyse:\n\n{browse.material}"
 
-    messages = [{ "role": "system", "content": system_prompt }, {"role": "user", "content": f"Please follow the instructions and analyze"}]
+    messages = [
+        { "role": "system", "content": system_prompt }, 
+        {"role": "user", "content": """
+         Summarise the key concepts where your response is in the following format:
+         
+        Title: [Concise title for the section]
+        Source: [Source of the material, such as author and book title]
+        Flag: [true or false, indicating if there's more material to explore within this section]
+        Content: [Summary of the section's content in a few sentences]  
+        """}]
     for message in browse.messages:
         responses_content = "\n\n".join([
             f"Title: {block.title}\nSource: {block.source}\nFlag: {block.flag}\nContent: {block.content}"
             for block in message.responses
         ])
         messages.append({"role": "assistant", "content": responses_content})
-        messages.append({"role": "user", "content": f"Focus just on this section: {message.chosen}"})
+        messages.append({"role": "user", "content": f"""
+                         Focus just on this section: {message.chosen}
+                        
+                        Return your response in the following format:
+
+                        Title: [Concise title for the section]
+                        Source: [Source of the material, such as author and book title]
+                        Flag: [true or false, indicating if there's more material to explore within this section]
+                        Content: [Summary of the section's content in a few sentences]  
+                        """})
 
     # make openai call
     response = openai_client.chat.completions.create(
