@@ -8,6 +8,7 @@ export const browsePaneStyle: IStackStyles = {
     root: {
         width: '100%',
         overflow: 'auto',
+        padding: '10px',
     }
 }
 

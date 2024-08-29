@@ -83,6 +83,7 @@ const BrowsePane: FC = (): ReactElement => {
             material: appContext.state.browseState.material,
             messages: appContext.state.browseState.messages // TODO: check if browse chosen updated in time
         });
+        console.log("browse responses", browseResponses)
         actions.browse.pushBrowseMessage({
             chosen: "", // user hasn't chosen yet
             responses: browseResponses.map(response => ({
@@ -168,7 +169,7 @@ const BrowsePane: FC = (): ReactElement => {
 
     return (
         <Stack styles={browsePaneStyle}>
-            <Stack.Item tokens={stackItemPadding}>
+            <Stack.Item>
             <Stack horizontal styles={browseBarStyle}>
                     <Stack.Item align="stretch">
                         <IconButton aria-label="material attached"
@@ -227,7 +228,7 @@ const BrowsePane: FC = (): ReactElement => {
                                         <button 
                                             className={selectedResponses.has(index) ? selectedButtonStyles : buttonStyles} 
                                             onClick={() => toggleResponseSelection(index)}>
-                                            {response.title}: {response.content}
+                                            <strong>{response.title}</strong>: {response.content}
                                         </button>
                                     </Stack.Item>
                                     <Stack.Item styles={drillDownButtonStackStyle}>

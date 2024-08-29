@@ -174,7 +174,7 @@ const QueryPane: FC = (): ReactElement => {
                         key={index} 
                         className={selectedResponses.has(index) ? selectedButtonStyles: buttonStyles} 
                         onClick={() => toggleResponseSelection(index)}>
-                        {response.title}: {response.content}
+                        <strong>{response.title}</strong>: {response.content}
                     </button>
                 )))}
             </Stack.Item>

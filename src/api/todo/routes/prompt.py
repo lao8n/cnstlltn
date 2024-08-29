@@ -95,8 +95,9 @@ async def browse(browse: Browse) -> List[BrowseResponseBlock]:
 
         Title: [Concise title for the section]
         Source: [Source of the material, such as author and book title - use your knowledge of the material to infer this]
-        Flag: [true or false, indicating if your response comprehensively covers the section or if there's more detail to explore within this section]
         Content: [Detailed explanation of the section's content]
+        Flag: [true or false, set to true if there is still more detail in this section not covered in your response, 
+        set to false if your response covers all the details from this section of the source material]
 
         Ensure each section is separated by two newlines. Do not include any introduction, conclusion, or other non-content sections.
         Do not include any markdown formatting such as # or * in the content, do not number the sections.
@@ -105,10 +106,10 @@ async def browse(browse: Browse) -> List[BrowseResponseBlock]:
 
         Title: Role of agriculture
         Source: BBC interview with Jared Diamond
-        Flag: false
         Content: Agriculture is a central theme in "Guns, Germs, and Steel," emphasizing how the development of farming practices
         allowed certain societies to produce surplus food, enabling population growth, job specialization, and technological advancements.
         This agricultural revolution created the foundation for powerful, organized states.
+        Flag: false
 
         """
     else:
@@ -121,8 +122,9 @@ async def browse(browse: Browse) -> List[BrowseResponseBlock]:
 
         Title: [Concise title for the section]
         Source: [Source of the material, such as author and book title - use your knowledge of the material to infer this]
-        Flag: [true or false, indicating if your response comprehensively covers the section or if there's more detail to explore within this section]
         Content: [Detailed explanation of the section's content]
+        Flag: [true or false, set to true if there is still more detail in this section not covered in your response, 
+        set to false if your response covers all the details from this section of the source material]
 
         Ensure each section is separated by two newlines. Do not include any introduction, conclusion, or other non-content sections.
         Do not include any markdown formatting such as # or * in the content, do not number the sections.
@@ -135,6 +137,7 @@ async def browse(browse: Browse) -> List[BrowseResponseBlock]:
         Content: Agriculture is a central theme in "Guns, Germs, and Steel," emphasizing how the development of farming practices
         allowed certain societies to produce surplus food, enabling population growth, job specialization, and technological advancements.
         This agricultural revolution created the foundation for powerful, organized states.
+        Flag: true
         """
 
     if browse.attachment:
@@ -145,12 +148,13 @@ async def browse(browse: Browse) -> List[BrowseResponseBlock]:
     messages = [
         { "role": "system", "content": system_prompt }, 
         {"role": "user", "content": """
-         Summarise the key concepts where your response is in the following format:
+        Summarise the key concepts in 3-8 sections where each section of your response is in the following format:
          
         Title: [Concise title for the section]
         Source: [Source of the material, such as author and book title - use your knowledge of the material to infer this]
-        Flag: [true or false, indicating if your response comprehensively covers the section or if there's more detail to explore within this section]
         Content: [Detailed explanation of the section's content]
+        Flag: [true or false, set to true if there is still more detail in this section not covered in your response, 
+        set to false if your response covers all the details from this section of the source material]
          
         Make sure not to include any markdown formatting such as # or * in the content, do not number the sections.
         """}]
@@ -161,16 +165,19 @@ async def browse(browse: Browse) -> List[BrowseResponseBlock]:
         ])
         messages.append({"role": "assistant", "content": responses_content})
         messages.append({"role": "user", "content": f"""
-                         Focus just on this section: {message.chosen}
+                         1. Focus just on this section: {message.chosen}
+                         2. Divide the material into 3 to 8 continuous sub-sections.
+                         3. For each sub-section, provide the following information:
                         
-                        Return your response in the following format:
+                        Return your response in the following format for each sub-section:
 
                         Title: [Concise title for the section]
                         Source: [Source of the material, such as author and book title - use your knowledge of the material to infer this]
-                        Flag: [true or false, indicating if your response comprehensively covers the section or if there's more detail to explore within this section]
                         Content: [Detailed explanation of the section's content]
+                        Flag: [true or false, set to true if there is still more detail in this section not covered in your response, 
+                        set to false if your response covers all the details from this section of the source material]
 
-                        Make sure not to include any markdown formatting such as # or * in the content, do not number the sections.
+                        Make sure not to include any markdown formatting such as # or * in the content, do not number the sub-sections.
                         """})
 
     # make openai call
@@ -187,18 +194,16 @@ async def browse(browse: Browse) -> List[BrowseResponseBlock]:
         lines = block.split("\n")
         title = source = content = ""
         flag = "false"
-        content_started = False
         for line in lines:
             if line.startswith("Title: "):
                 title = line.replace("Title: ", "")
             elif line.startswith("Source: "):
                 source = line.replace("Source: ", "")
-            elif line.startswith("Flag: "):
-                flag = line.replace("Flag: ", "")
             elif line.startswith("Content: "):
                 content = line.replace("Content: ", "")
-                content_started = True
-            elif content_started:
+            elif line.startswith("Flag: "):
+                flag = line.replace("Flag: ", "")
+            else:
                 content += "\n" + line
         if title and content:  # Only add block if at least a title and content is present
             flag = flag.lower() == "true"
