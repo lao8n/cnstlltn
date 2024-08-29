@@ -12,7 +12,6 @@ export interface QueryActions {
     setQueryResponseList(queryResponses: QueryResponse[] | undefined): void;
     postBrowse(query: Browse): Promise<BrowseResponse[]>;
     setBrowseMaterial(material: string): void;
-    getBrowseMessage(): BrowseMessage | undefined;
     pushBrowseMessage(browseMessage: BrowseMessage): void;
     popBrowseMessage(): void;
 }
@@ -72,17 +71,6 @@ export interface SetBrowseMaterialAction {
 }
 const setBrowseMaterialAction = (material: string): SetBrowseMaterialAction => ({
     type: ActionTypes.SET_BROWSE_MATERIAL, payload: material
-});
-
-export const getBrowseMessage = () =>
-    (dispatch: Dispatch<GetBrowseMessageAction>) => {
-        dispatch(getBrowseMessageAction());
-    }
-export interface GetBrowseMessageAction {
-    type: ActionTypes.GET_BROWSE_MESSAGE
-}
-const getBrowseMessageAction = (): GetBrowseMessageAction => ({
-    type: ActionTypes.GET_BROWSE_MESSAGE
 });
 
 export const pushBrowseMessage = (browseMessage: BrowseMessage) =>

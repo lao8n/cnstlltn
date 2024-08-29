@@ -23,8 +23,6 @@ export const appReducer: Reducer<ApplicationState, ApplicationActions> = (state:
         case ActionTypes.SET_BROWSE_MATERIAL:
             state.browseState.material = action.payload;
             break;
-        case ActionTypes.GET_BROWSE_MESSAGE:
-            break;
         case ActionTypes.PUSH_BROWSE_MESSAGE:
             state.browseState.messages.push(action.payload);
             break;

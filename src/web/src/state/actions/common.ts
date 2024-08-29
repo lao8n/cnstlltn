@@ -15,7 +15,6 @@ export enum ActionTypes {
     SET_QUERY_RESPONSE_LIST = "SET_QUERY_RESPONSE_LIST",
     POST_BROWSE = "POST_BROWSE",
     SET_BROWSE_MATERIAL = "SET_BROWSE_MATERIAL",
-    GET_BROWSE_MESSAGE = "GET_BROWSE_MESSAGE",
     PUSH_BROWSE_MESSAGE = "PUSH_BROWSE_MESSAGE",
     POP_BROWSE_MESSAGE = "POP_BROWSE_MESSAGE",
     // constellation
@@ -47,7 +46,6 @@ export type ApplicationActions =
     queryActions.SetQueryResponseListAction |
     queryActions.PostBrowseAction |
     queryActions.SetBrowseMaterialAction |
-    queryActions.GetBrowseMessageAction |
     queryActions.PushBrowseMessageAction |
     queryActions.PopBrowseMessageAction |
     // constellation
