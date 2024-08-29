@@ -179,9 +179,9 @@ const BrowsePane: FC = (): ReactElement => {
                         />
                     </Stack.Item>
                 </Stack>
-                
             </Stack.Item>
-            {(emptyMaterial || (appContext.state.queryState.responses?.length === 0 && emptySelection)) &&
+            {(emptyMaterial || (appContext.state.browseState.messages.length > 0 &&
+                appContext.state.browseState.messages[appContext.state.browseState.messages.length - 1].responses?.length === 0 && emptySelection)) &&
                 (
                     <Stack.Item styles={badInputNotifications}>
                         Hey, try copy-pasting in an article or video transcript first.
@@ -189,7 +189,8 @@ const BrowsePane: FC = (): ReactElement => {
                 )
             }
             {
-                appContext.state.queryState.responses?.length !== 0 && emptySelection && (
+                (appContext.state.browseState.messages.length > 0 &&
+                    appContext.state.browseState.messages[appContext.state.browseState.messages.length - 1].responses?.length !== 0 && emptySelection) && (
                     <Stack.Item styles={badInputNotifications}>
                         Click on the notes you want to save before trying to save to constellation.
                     </Stack.Item>
@@ -199,28 +200,26 @@ const BrowsePane: FC = (): ReactElement => {
                 {isLoading ? (
                     <LoadingDots style={blackLoadingDots} />
                 ) : (
-                        <Stack styles={browsePaneStyle}>
-                        { appContext.state.browseState.messages.length > 1 &&
-                        <Stack.Item>
-                                    <IconButton
-                                        aria-label="DrillUp" 
-                                        iconProps={{ iconName: "ChevronLeft" }} 
-                                        text={previousTitles[previousTitles.length - 1]} 
-                                        onClick={onDrillUp} 
-                                        styles={drillUpButtonStyles} 
-                                    />
-                                </Stack.Item>
-                            }
-                        {
-                            appContext.state.queryState.responses &&
-                                appContext.state.queryState.responses.map((response, index) => (
-                                <Stack horizontal styles={browseStackStyle}>
+                    <Stack styles={browsePaneStyle}>
+                        {appContext.state.browseState.messages.length > 1 && (
+                            <Stack.Item>
+                                <IconButton
+                                    aria-label="DrillUp" 
+                                    iconProps={{ iconName: "ChevronLeft" }} 
+                                    text={previousTitles[previousTitles.length - 1]} 
+                                    onClick={onDrillUp} 
+                                    styles={drillUpButtonStyles} 
+                                />
+                            </Stack.Item>
+                        )}
+                        {appContext.state.browseState.messages.length > 0 &&
+                            appContext.state.browseState.messages[appContext.state.browseState.messages.length - 1].responses?.map((response, index) => (
+                                <Stack horizontal styles={browseStackStyle} key={index}>
                                     <Stack.Item styles={browseButtonStackStyle}>
                                         <button 
-                                            key={index} 
-                                            className={selectedResponses.has(index) ? selectedButtonStyles: buttonStyles} 
+                                            className={selectedResponses.has(index) ? selectedButtonStyles : buttonStyles} 
                                             onClick={() => toggleResponseSelection(index)}>
-                                                    {response.title}: {response.content}
+                                            {response.title}: {response.content}
                                         </button>
                                     </Stack.Item>
                                     <Stack.Item styles={drillDownButtonStackStyle}>
