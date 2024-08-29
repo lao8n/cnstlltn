@@ -41,7 +41,7 @@ const BrowsePane: FC = (): ReactElement => {
         setNewMaterial(newValue || '');
     }
 
-    const onSubmitMaterial = useCallback(async () => {      
+    const onSubmitMaterial = async () => {      
         console.log("onSubmit", newMaterial)
         if (newMaterial) {
             console.log("new material", newMaterial)
@@ -70,7 +70,7 @@ const BrowsePane: FC = (): ReactElement => {
         } else {
             setEmptyMaterial(true);    
         }
-    }, [newMaterial, actions.browse, appContext.state.browseState.messages, materialAttached]);
+    };
 
     const onDrillDown = async (index: number) => {
         console.log("drill down")
@@ -99,6 +99,7 @@ const BrowsePane: FC = (): ReactElement => {
     const onDrillUp = () => {
         actions.browse.popBrowseMessage();
         setPreviousTitles(previousTitles.slice(0, -1));
+        setSelectedResponses(new Set());
     }
 
     const toggleResponseSelection = (index: number) => {
@@ -113,7 +114,7 @@ const BrowsePane: FC = (): ReactElement => {
 
     const saveSelectedResponses = async () => {
         if (selectedResponses.size > 0 ) {
-            console.log("queryResponseList " + appContext.state.browseState.messages[appContext.state.browseState.messages.length - 1].responses)
+            console.log("browse responses " + appContext.state.browseState.messages[appContext.state.browseState.messages.length - 1].responses)
             const responsesToSave = Array.from(selectedResponses).map(index => appContext.state.browseState.messages[appContext.state.browseState.messages.length - 1].responses[index])
                 .filter((response): response is BrowseResponse => response !== undefined);
             for (const response of responsesToSave) {
@@ -157,6 +158,13 @@ const BrowsePane: FC = (): ReactElement => {
         actions.browse.setBrowseChosen('');
         actions.browse.setBrowseMessages([]);
     }, [actions.browse])
+
+    useEffect(() => {
+        console.log("Messages length:", appContext.state.browseState.messages.length);
+        if (appContext.state.browseState.messages.length > 0) {
+            console.log("Last message responses:", appContext.state.browseState.messages[appContext.state.browseState.messages.length - 1].responses);
+        }
+    }, [appContext.state.browseState.messages]);
 
     return (
         <Stack styles={browsePaneStyle}>

@@ -92,7 +92,7 @@ async def browse(browse: Browse) -> List[BrowseResponseBlock]:
         3. For each section, provide the following information:
 
         Title: [Concise title for the section]
-        Source: [Source of the material, based on the content or names of interviewer/interviewee]
+        Source: [Source of the material, based on the content or names of interviewer/interviewee or "General Knowledge" if no specific source]
         Flag: [true or false, indicating if there's more material to explore within this section]
         Content: [Summary of the section's content in a few sentences]
 
@@ -118,7 +118,7 @@ async def browse(browse: Browse) -> List[BrowseResponseBlock]:
         3. For each section, provide the following information:
 
         Title: [Concise title for the section]
-        Source: [Source of the material, such as author and book title]
+        Source: [Source of the material, such as author and book title or "General Knowledge" if no specific source]
         Flag: [true or false, indicating if there's more material to explore within this section]
         Content: [Summary of the section's content in a few sentences]
 
@@ -146,7 +146,7 @@ async def browse(browse: Browse) -> List[BrowseResponseBlock]:
          Summarise the key concepts where your response is in the following format:
          
         Title: [Concise title for the section]
-        Source: [Source of the material, such as author and book title]
+        Source: [Source of the material, such as author and book title or "General Knowledge" if no specific source]
         Flag: [true or false, indicating if there's more material to explore within this section]
         Content: [Summary of the section's content in a few sentences]  
         """}]
@@ -162,7 +162,7 @@ async def browse(browse: Browse) -> List[BrowseResponseBlock]:
                         Return your response in the following format:
 
                         Title: [Concise title for the section]
-                        Source: [Source of the material, such as author and book title]
+                        Source: [Source of the material, such as author and book title or "General Knowledge" if no specific source]
                         Flag: [true or false, indicating if there's more material to explore within this section]
                         Content: [Summary of the section's content in a few sentences]  
                         """})
