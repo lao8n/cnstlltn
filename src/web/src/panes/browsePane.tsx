@@ -169,7 +169,7 @@ const BrowsePane: FC = (): ReactElement => {
 
     return (
         <Stack styles={browsePaneStyle}>
-            <Stack.Item>
+            <Stack.Item tokens={stackItemPadding}>
             <Stack horizontal styles={browseBarStyle}>
                     <Stack.Item align="stretch">
                         <IconButton aria-label="material attached"
@@ -178,14 +178,14 @@ const BrowsePane: FC = (): ReactElement => {
                             styles={materialAttachedButtonStyle} />
                     </Stack.Item>
                     <Stack.Item styles={browseBarStyle}>
-                <SearchBox
-                    value={newMaterial}
-                    placeholder={materialAttached ? "Copy-paste source article or video transcript" : "Name and author of book"}
-                    onChange={onTypeSource}
-                    onSearch={onSubmitMaterial}
-                    styles={queryFieldStyles}
-                    iconProps={{styles: {root: { display: 'NewsSearch' }}}}
-                        />
+                        <SearchBox
+                            value={newMaterial}
+                            placeholder={materialAttached ? "Copy-paste source article or video transcript" : "Name and author of book"}
+                            onChange={onTypeSource}
+                            onSearch={onSubmitMaterial}
+                            styles={queryFieldStyles}
+                            iconProps={{styles: {root: { display: 'NewsSearch' }}}}
+                                />
                     </Stack.Item>
                 </Stack>
             </Stack.Item>
@@ -215,7 +215,8 @@ const BrowsePane: FC = (): ReactElement => {
                                 <IconButton
                                     aria-label="DrillUp" 
                                     iconProps={{ iconName: "ChevronLeft" }} 
-                                    label={previousTitles[previousTitles.length - 1]}
+                                        label={previousTitles[previousTitles.length - 1]}
+                                        text={previousTitles[previousTitles.length - 1]}
                                     onClick={onDrillUp} 
                                     styles={drillUpButtonStyles} 
                                 />
@@ -231,9 +232,30 @@ const BrowsePane: FC = (): ReactElement => {
                                             <strong>{response.title}</strong>: {response.content}
                                         </button>
                                     </Stack.Item>
-                                    <Stack.Item styles={drillDownButtonStackStyle}>
-                                        <IconButton aria-label="DrillDown" iconProps={{ iconName: "ChevronRight" }} onClick={() => onDrillDown(index)} styles={drillDownButtonStyles} />
-                                    </Stack.Item>
+                                    {response.flag === true ? (
+                                        <Stack.Item styles={drillDownButtonStackStyle}>
+                                            <IconButton 
+                                                aria-label="DrillDown" 
+                                                iconProps={{ iconName: "ChevronRight" }} 
+                                                onClick={() => onDrillDown(index)} 
+                                                styles={drillDownButtonStyles} 
+                                            />
+                                        </Stack.Item>
+                                    ) : (
+                                        <Stack.Item styles={drillDownButtonStackStyle}>
+                                            <IconButton 
+                                                aria-label="DrillDown" 
+                                                iconProps={{ iconName: "ChevronRight" }} 
+                                                onClick={() => onDrillDown(index)} 
+                                                styles={{
+                                                    ...drillDownButtonStyles,
+                                                    root: {
+                                                        marginRight: '32px'
+                                                    }
+                                                }}
+                                            />
+                                        </Stack.Item>
+                                    )}
                                 </Stack>
                             ))
                         }

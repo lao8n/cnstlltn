@@ -9,13 +9,13 @@ export const browsePaneStyle: IStackStyles = {
         height: '100%',
         width: '100%',
         overflow: 'auto',
-        padding: '10px',
     }
 }
 
 export const browsePaneItemStyle: IStackStyles = {
     root: {
         height: '100%',
+        padding: '10px'
     }
 }
 
@@ -62,6 +62,7 @@ export const drillUpButtonStyles: IButtonStyles = {
         fontSize: '12px',
         fontFamily: '"Segoe UI", "Noto Sans", "Helvetica Neue"',
         marginLeft: '5px',
+        display: 'inline-block',
     }
 }
 
