@@ -11,7 +11,7 @@ export interface AppContext {
 export interface ApplicationState {
     userState: UserState,
     queryState: QueryState,
-    browseStateStack: BrowseState[]
+    browseState: BrowseState,
 }
 
 export const getDefaultState = (): ApplicationState => {
@@ -29,6 +29,9 @@ export const getDefaultState = (): ApplicationState => {
         queryState: {
             query: undefined, responses: undefined
         },
-        browseStateStack: []
+        browseState: {
+            material: "",
+            messages: [],
+        }
     }
 }

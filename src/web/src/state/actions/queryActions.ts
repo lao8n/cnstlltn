@@ -1,7 +1,7 @@
 import { Dispatch } from "react";
 import config from "../../config";
 import { QueryService } from "../../backend/queryService";
-import { Query, QueryResponse, Browse, BrowseResponse, BrowseState } from "../queryState";
+import { Query, QueryResponse, Browse, BrowseResponse, BrowseMessage } from "../queryState";
 import { ActionMethod, createPayloadAction, PayloadAction } from "./actionCreators";
 import { ActionTypes } from "./common";
 
@@ -11,8 +11,10 @@ export interface QueryActions {
     postQueryResponseList(query: Query): Promise<QueryResponse[]>;
     setQueryResponseList(queryResponses: QueryResponse[] | undefined): void;
     postBrowse(query: Browse): Promise<BrowseResponse[]>;
-    pushBrowseState(browseState: BrowseState): void;
-    popBrowseState(): BrowseState;
+    setBrowseMaterial(material: string): void;
+    getBrowseMessage(): BrowseMessage | undefined;
+    pushBrowseMessage(browseMessage: BrowseMessage): void;
+    popBrowseMessage(): void;
 }
 
 export const postQueryResponseList = (query: Query): ActionMethod<QueryResponse[]> =>
@@ -29,11 +31,9 @@ export const postQueryResponseList = (query: Query): ActionMethod<QueryResponse[
             throw error
         }
 }
-
 export interface PostQueryResponseListAction extends PayloadAction<string, QueryResponse[]> {
     type: ActionTypes.POST_QUERY_RESPONSE_LIST
 }
-
 const postQueryResponseListAction =
     createPayloadAction<PostQueryResponseListAction>(ActionTypes.POST_QUERY_RESPONSE_LIST);
 
@@ -41,12 +41,10 @@ export const setQueryResponseList = (queryResponses: QueryResponse[] | undefined
     (dispatch: Dispatch<SetQueryResponseListAction>) => {
         dispatch(setQueryResponseListAction(queryResponses));
     }
-
 export interface SetQueryResponseListAction {
     type: ActionTypes.SET_QUERY_RESPONSE_LIST,
     payload: QueryResponse[] | undefined
 }
-
 const setQueryResponseListAction = (queryResponses: QueryResponse[] | undefined): SetQueryResponseListAction => ({
     type: ActionTypes.SET_QUERY_RESPONSE_LIST,
     payload: queryResponses
@@ -58,37 +56,53 @@ export const postBrowse = (query: Browse): ActionMethod<BrowseResponse[]> =>
         dispatch(postBrowseAction(browseResponses));
         return browseResponses;
     }
-
 export interface PostBrowseAction extends PayloadAction<string, BrowseResponse[]> {
     type: ActionTypes.POST_BROWSE, payload: BrowseResponse[]
 }
-
 const postBrowseAction = (browseResponses: BrowseResponse[]): PostBrowseAction => ({
     type: ActionTypes.POST_BROWSE, payload: browseResponses
 });
 
-export const pushBrowseState = (browseState: BrowseState) =>
-    (dispatch: Dispatch<PushBrowseStateAction>) => {
-        dispatch(pushBrowseStateAction(browseState));
+export const setBrowseMaterial = (material: string) =>
+    (dispatch: Dispatch<SetBrowseMaterialAction>) => {
+        dispatch(setBrowseMaterialAction(material));
     }
-
-export interface PushBrowseStateAction {
-    type: ActionTypes.PUSH_BROWSE_STATE, payload: BrowseState
+export interface SetBrowseMaterialAction {
+    type: ActionTypes.SET_BROWSE_MATERIAL, payload: string
 }
-
-const pushBrowseStateAction = (browseState: BrowseState): PushBrowseStateAction => ({
-    type: ActionTypes.PUSH_BROWSE_STATE, payload: browseState
+const setBrowseMaterialAction = (material: string): SetBrowseMaterialAction => ({
+    type: ActionTypes.SET_BROWSE_MATERIAL, payload: material
 });
 
-export const popBrowseState = () =>
-    (dispatch: Dispatch<PopBrowseStateAction>) => {
-        dispatch(popBrowseStateAction());
+export const getBrowseMessage = () =>
+    (dispatch: Dispatch<GetBrowseMessageAction>) => {
+        dispatch(getBrowseMessageAction());
     }
-
-export interface PopBrowseStateAction {
-    type: ActionTypes.POP_BROWSE_STATE
+export interface GetBrowseMessageAction {
+    type: ActionTypes.GET_BROWSE_MESSAGE
 }
+const getBrowseMessageAction = (): GetBrowseMessageAction => ({
+    type: ActionTypes.GET_BROWSE_MESSAGE
+});
 
-const popBrowseStateAction = (): PopBrowseStateAction => ({
-    type: ActionTypes.POP_BROWSE_STATE
+export const pushBrowseMessage = (browseMessage: BrowseMessage) =>
+    (dispatch: Dispatch<PushBrowseMessageAction>) => {
+        dispatch(pushBrowseMessageAction(browseMessage));
+    }
+export interface PushBrowseMessageAction {
+    type: ActionTypes.PUSH_BROWSE_MESSAGE, payload: BrowseMessage
+}
+const pushBrowseMessageAction = (browseMessage: BrowseMessage): PushBrowseMessageAction => ({
+    type: ActionTypes.PUSH_BROWSE_MESSAGE, payload: browseMessage
+});
+
+export const popBrowseMessage = () =>
+    (dispatch: Dispatch<PopBrowseMessageAction>) => {
+        dispatch(popBrowseMessageAction());
+    }
+export interface PopBrowseMessageAction {
+    type: ActionTypes.POP_BROWSE_MESSAGE
+}
+const popBrowseMessageAction = (): PopBrowseMessageAction => ({
+    type: ActionTypes.POP_BROWSE_MESSAGE
 });

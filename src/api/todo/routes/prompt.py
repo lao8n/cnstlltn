@@ -120,9 +120,13 @@ async def browse(browse: Browse) -> List[BrowseResponseBlock]:
         system_prompt = f"Please analyze the following book:\n\n{browse.material}"
 
     messages = [{ "role": "system", "content": system_prompt }]
-    for (chosen, content) in browse.messages:
-        messages.append({"role": "assistant", "content": content})
-        messages.append({"role": "user", "content": f"Focus just on this section: {chosen}"})
+    for message in browse.messages:
+        responses_content = "\n\n".join([
+            f"Title: {block.title}\nSource: {block.source}\nFlag: {block.flag}\nContent: {block.content}"
+            for block in message.responses
+        ])
+        messages.append({"role": "assistant", "content": responses_content})
+        messages.append({"role": "user", "content": f"Focus just on this section: {message.chosen}"})
 
     # make openai call
     response = openai_client.chat.completions.create(

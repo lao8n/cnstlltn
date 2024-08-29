@@ -20,11 +20,16 @@ export const appReducer: Reducer<ApplicationState, ApplicationActions> = (state:
             break;
         case ActionTypes.POST_BROWSE:
             break;
-        case ActionTypes.PUSH_BROWSE_STATE:
-            state.browseStateStack.push(action.payload);
+        case ActionTypes.SET_BROWSE_MATERIAL:
+            state.browseState.material = action.payload;
             break;
-        case ActionTypes.POP_BROWSE_STATE:
-            state.browseStateStack.pop();
+        case ActionTypes.GET_BROWSE_MESSAGE:
+            break;
+        case ActionTypes.PUSH_BROWSE_MESSAGE:
+            state.browseState.messages.push(action.payload);
+            break;
+        case ActionTypes.POP_BROWSE_MESSAGE:
+            state.browseState.messages.pop();
             break;
         // constellation
         case ActionTypes.SAVE_SELECTED_FRAMEWORKS:

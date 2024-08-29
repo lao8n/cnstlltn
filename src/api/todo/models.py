@@ -58,10 +58,14 @@ class BrowseResponseBlock(BaseModel):
     flag: bool
     content: str
 
+class BrowseMessage(BaseModel):
+    chosen: str
+    responses: List[BrowseResponseBlock]
+
 class Browse(BaseModel):
-    attachment: bool # true if article or video transcript, false if book title etc.
+    attachment: bool
     material: str
-    messages: List[Tuple[str, List[BrowseResponseBlock]]] = [] # list of selected option and list of responses
+    messages: List[BrowseMessage] = []
 
 class LoginConfig(BaseModel):
     googleClientId: str

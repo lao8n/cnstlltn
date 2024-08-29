@@ -14,8 +14,10 @@ export enum ActionTypes {
     POST_QUERY_RESPONSE_LIST = "POST_QUERY_RESPONSE_LIST",
     SET_QUERY_RESPONSE_LIST = "SET_QUERY_RESPONSE_LIST",
     POST_BROWSE = "POST_BROWSE",
-    PUSH_BROWSE_STATE = "PUSH_BROWSE_STATE",
-    POP_BROWSE_STATE = "POP_BROWSE_STATE",
+    SET_BROWSE_MATERIAL = "SET_BROWSE_MATERIAL",
+    GET_BROWSE_MESSAGE = "GET_BROWSE_MESSAGE",
+    PUSH_BROWSE_MESSAGE = "PUSH_BROWSE_MESSAGE",
+    POP_BROWSE_MESSAGE = "POP_BROWSE_MESSAGE",
     // constellation
     SAVE_SELECTED_FRAMEWORKS = "SAVE_SELECTED_FRAMEWORKS",
     EDIT_FRAMEWORK = "EDIT_FRAMEWORK",
@@ -44,8 +46,10 @@ export type ApplicationActions =
     queryActions.PostQueryResponseListAction |
     queryActions.SetQueryResponseListAction |
     queryActions.PostBrowseAction |
-    queryActions.PushBrowseStateAction |
-    queryActions.PopBrowseStateAction |
+    queryActions.SetBrowseMaterialAction |
+    queryActions.GetBrowseMessageAction |
+    queryActions.PushBrowseMessageAction |
+    queryActions.PopBrowseMessageAction |
     // constellation
     constellationActions.SaveSelectedFrameworksAction | 
     constellationActions.EditFrameworkAction |
