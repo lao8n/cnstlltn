@@ -18,7 +18,7 @@ async def query_ai(query: Query) -> List[QueryAiResponseBlock]:
     3. For each key concept, provide a response in the following format:
 
     Title: [Concept Title]
-    Source: [Source of the concept, or "General Knowledge" if no specific source]
+    Source: [Source of the concept -use your knowledge of the material to infer this]
     Content: [Detailed explanation of the concept]
 
     Provide multiple concepts related to the given prompt or source material. Do not include any introduction or conclusion.
@@ -35,8 +35,10 @@ async def query_ai(query: Query) -> List[QueryAiResponseBlock]:
         Return your response in the following format:
 
         Title: [Concept Title]
-        Source: [Source of the concept, or "General Knowledge" if no specific source]
+        Source: [Source of the concept - use your knowledge of the material to infer this]
         Content: [Detailed explanation of the concept]
+
+        Make sure not to include any markdown formatting such as # or * in the content, do not number the sections.
         """
 
     response = openai_client.chat.completions.create(
@@ -92,9 +94,9 @@ async def browse(browse: Browse) -> List[BrowseResponseBlock]:
         3. For each section, provide the following information:
 
         Title: [Concise title for the section]
-        Source: [Source of the material, based on the content or names of interviewer/interviewee or "General Knowledge" if no specific source]
-        Flag: [true or false, indicating if there's more material to explore within this section]
-        Content: [Summary of the section's content in a few sentences]
+        Source: [Source of the material, such as author and book title - use your knowledge of the material to infer this]
+        Flag: [true or false, indicating if your response comprehensively covers the section or if there's more detail to explore within this section]
+        Content: [Detailed explanation of the section's content]
 
         Ensure each section is separated by two newlines. Do not include any introduction, conclusion, or other non-content sections.
         Do not include any markdown formatting such as # or * in the content, do not number the sections.
@@ -118,9 +120,9 @@ async def browse(browse: Browse) -> List[BrowseResponseBlock]:
         3. For each section, provide the following information:
 
         Title: [Concise title for the section]
-        Source: [Source of the material, such as author and book title or "General Knowledge" if no specific source]
-        Flag: [true or false, indicating if there's more material to explore within this section]
-        Content: [Summary of the section's content in a few sentences]
+        Source: [Source of the material, such as author and book title - use your knowledge of the material to infer this]
+        Flag: [true or false, indicating if your response comprehensively covers the section or if there's more detail to explore within this section]
+        Content: [Detailed explanation of the section's content]
 
         Ensure each section is separated by two newlines. Do not include any introduction, conclusion, or other non-content sections.
         Do not include any markdown formatting such as # or * in the content, do not number the sections.
@@ -146,9 +148,11 @@ async def browse(browse: Browse) -> List[BrowseResponseBlock]:
          Summarise the key concepts where your response is in the following format:
          
         Title: [Concise title for the section]
-        Source: [Source of the material, such as author and book title or "General Knowledge" if no specific source]
-        Flag: [true or false, indicating if there's more material to explore within this section]
-        Content: [Summary of the section's content in a few sentences]  
+        Source: [Source of the material, such as author and book title - use your knowledge of the material to infer this]
+        Flag: [true or false, indicating if your response comprehensively covers the section or if there's more detail to explore within this section]
+        Content: [Detailed explanation of the section's content]
+         
+        Make sure not to include any markdown formatting such as # or * in the content, do not number the sections.
         """}]
     for message in browse.messages:
         responses_content = "\n\n".join([
@@ -162,9 +166,11 @@ async def browse(browse: Browse) -> List[BrowseResponseBlock]:
                         Return your response in the following format:
 
                         Title: [Concise title for the section]
-                        Source: [Source of the material, such as author and book title or "General Knowledge" if no specific source]
-                        Flag: [true or false, indicating if there's more material to explore within this section]
-                        Content: [Summary of the section's content in a few sentences]  
+                        Source: [Source of the material, such as author and book title - use your knowledge of the material to infer this]
+                        Flag: [true or false, indicating if your response comprehensively covers the section or if there's more detail to explore within this section]
+                        Content: [Detailed explanation of the section's content]
+
+                        Make sure not to include any markdown formatting such as # or * in the content, do not number the sections.
                         """})
 
     # make openai call

@@ -1,6 +1,6 @@
 // react imports
 import { SearchBox, Stack, IconButton } from '@fluentui/react';
-import { FC, ReactElement, useContext, useMemo, useState, ChangeEvent, useEffect, useCallback } from "react";
+import { FC, ReactElement, useContext, useMemo, useState, ChangeEvent, useEffect } from "react";
 // state imports
 import { AppContext } from '../state/applicationState';
 import { BrowseResponse } from '../state/browseState';
@@ -204,7 +204,7 @@ const BrowsePane: FC = (): ReactElement => {
                     </Stack.Item>
                 )
             }
-            <Stack.Item tokens={stackItemPadding}>
+            <Stack.Item>
                 {isLoading ? (
                     <LoadingDots style={blackLoadingDots} />
                 ) : (
