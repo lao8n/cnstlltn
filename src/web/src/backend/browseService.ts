@@ -1,4 +1,4 @@
-import { Browse, BrowseResponse } from "../state/queryState";
+import { Browse, BrowseResponse } from "../state/browseState";
 import axios, { AxiosInstance } from 'axios';
 
 export class BrowseService {
