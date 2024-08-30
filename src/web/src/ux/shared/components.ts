@@ -65,6 +65,7 @@ export const queryFieldStyles = {
         color: theme.palette.black,
         fontFamily: '"Segoe UI", "Noto Sans", "Helvetica Neue"',
         paddingLeft: 0,
+        outlineOffset: '0px',
         '::placeholder': {
             color: theme.palette.black,
             opacity: 0.8,

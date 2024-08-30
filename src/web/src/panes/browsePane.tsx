@@ -212,16 +212,13 @@ const BrowsePane: FC = (): ReactElement => {
                     <Stack styles={browsePaneStyle}>
                         {appContext.state.browseState.messages.length > 1 && (
                             <Stack.Item>
-                                <IconButton
-                                    aria-label="DrillUp" 
-                                    iconProps={{ iconName: "ChevronLeft" }} 
-                                        label={previousTitles[previousTitles.length - 1]}
-                                        text={previousTitles[previousTitles.length - 1]}
-                                    onClick={onDrillUp} 
-                                    styles={drillUpButtonStyles} 
-                                    >
-                                      previousTitles[previousTitles.length - 1]  
-                                </IconButton>
+                                <button
+                                    aria-label="DrillUp"
+                                    onClick={onDrillUp}
+                                    className={drillUpButtonStyles}>
+                                    <i>&#8592;</i>
+                                    {previousTitles[previousTitles.length - 1]}
+                                </button>
                             </Stack.Item>
                         )}
                         {appContext.state.browseState.messages.length > 0 &&

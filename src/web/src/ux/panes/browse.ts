@@ -52,7 +52,7 @@ export const drillDownButtonStackStyle: IStackStyles = {
 }
 
 // buttons
-export const drillUpButtonStyles: IButtonStyles = {
+export const drillUpButtonStyles = mergeStyles({
     root: {
         width: '100%',
         textAlign: 'left',
@@ -65,7 +65,7 @@ export const drillUpButtonStyles: IButtonStyles = {
         marginLeft: '5px',
         display: 'inline-block',
     }
-}
+})
 
 export const drillDownButtonStyles: IButtonStyles = {
     root: {
