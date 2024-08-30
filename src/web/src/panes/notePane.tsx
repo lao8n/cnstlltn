@@ -7,6 +7,8 @@ import { bindActionCreators } from "../state/actions/actionCreators";
 import UserAppContext from "../state/userContext"
 import { NoteActions } from "../state/actions/noteActions"
 import * as noteActions from "../state/actions/noteActions"
+import { DisplayActions } from "../state/actions/displayActions"
+import * as displayActions from "../state/actions/displayActions"
 // components
 import EditableNoteComponent from "../components/noteComponent"
 // ux imports
@@ -17,6 +19,7 @@ const NotePane: FC = (): ReactElement => {
     const appContext = useContext<AppContext>(UserAppContext)
     const actions = useMemo(() => ({
         note: bindActionCreators(noteActions, appContext.dispatch) as unknown as NoteActions,
+        display: bindActionCreators(displayActions, appContext.dispatch) as unknown as DisplayActions,
     }), [appContext.dispatch]);
     const disabled = appContext.state.userState.userId === "" || appContext.state.userState.userId === "welcome_user"
     
@@ -24,6 +27,8 @@ const NotePane: FC = (): ReactElement => {
     const handleDelete = async () => {
         if (appContext.state.userState.selectedContent) {
             await actions.note.deleteFramework(appContext.state.userState.userId, appContext.state.userState.selectedContent);
+            actions.note.setSelectedContent(null);
+            actions.display.setUpdated(Date.now());
         }
     }
 
