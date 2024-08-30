@@ -65,16 +65,14 @@ async def delete_framework(request: Request, framework: UserFramework) -> UserFr
     existing_framework = await UserFramework.get(framework.id)
     if existing_framework is not None:
         await existing_framework.delete()
-        # Delete references to the framework ID from all user clusters
-        user_clusters = await UserCluster.find(
-            UserCluster.userid == existing_framework.userid,
-            UserCluster.constellation == existing_framework.constellation
-        ).to_list()
-        
-        for cluster in user_clusters:
-            if str(existing_framework.id) in cluster.frameworks:
-                del cluster.frameworks[str(existing_framework.id)]
-                await cluster.save()
+        # Update all user clusters to remove the framework reference
+        await UserCluster.update_many(
+            {
+                "userid": existing_framework.userid,
+                "constellation": existing_framework.constellation
+            },
+            {"$unset": {f"frameworks.{str(existing_framework.id)}": ""}}
+        )
         return existing_framework
 
 @app.get("/get-constellation", response_model=List[UserFramework], status_code=200)
@@ -93,33 +91,28 @@ async def delete_constellation(request: Request) -> Dict[str, str]:
     print("delete_constellation")
     user_id = request.headers.get("user-id")
     constellation_name = request.query_params.get("constellationName")
-    
-    # Delete UserFrameworks
+
+    # constellation data
     await UserFramework.find(
         UserFramework.userid == user_id,
         UserFramework.constellation == constellation_name,
     ).delete()
-    
-    # Delete UserClusters
     await UserCluster.find(
         UserCluster.userid == user_id,
         UserCluster.constellation == constellation_name,
     ).delete()
 
+    # home page data
     constellation = await UserFramework.find_one(
         UserFramework.userid == user_id,
         UserFramework.constellation == "Home",
         UserFramework.title == constellation_name,
     )
-    user_clusters = await UserCluster.find(
-        UserCluster.userid == user_id,
-        UserCluster.constellation == "Home",
-    ).to_list()
 
-    for cluster in user_clusters:
-        if str(constellation.id) in cluster.frameworks:
-            del cluster.frameworks[str(constellation.id)]
-            await cluster.save()
+    await UserCluster.update_many(
+        {"userid": user_id, "constellation": "Home"},
+        {"$unset": {f"frameworks.{str(constellation.id)}": ""}}
+    )
+    await constellation.delete()
 
     return {"message": f"Constellation '{constellation_name}' deleted successfully"}
-        
