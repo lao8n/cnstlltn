@@ -41,6 +41,15 @@ const BrowsePane: FC = (): ReactElement => {
         setNewMaterial(newValue || '');
     }
 
+    const onSwitchMaterialAttached = () => {
+        setMaterialAttached(!materialAttached);
+        setNewMaterial('');
+        setEmptyMaterial(false);
+        setEmptySelection(false);
+        setSelectedResponses(new Set());
+        setPreviousTitles(['Browse Home']);
+    }
+
     const onSubmitMaterial = async () => {      
         console.log("onSubmit", newMaterial)
         if (newMaterial) {
@@ -174,7 +183,7 @@ const BrowsePane: FC = (): ReactElement => {
                     <Stack.Item align="stretch">
                         <IconButton aria-label="material attached"
                             iconProps={{ iconName: materialAttached ? "Copy" : "BookAnswers" }}
-                            onClick={() => setMaterialAttached(!materialAttached)}
+                            onClick={onSwitchMaterialAttached}
                             styles={materialAttachedButtonStyle} />
                     </Stack.Item>
                     <Stack.Item styles={browseBarStyle}>
@@ -218,7 +227,8 @@ const BrowsePane: FC = (): ReactElement => {
                                     onClick={onDrillUp}
                                     styles={{
                                         root: drillUpButtonStyles,
-                                        textContainer: buttonTextStyles
+                                        textContainer: buttonTextStyles,
+                                        iconContainer: { width: '0px'}
                                     } as IButtonStyles}
                                 />
                             </Stack.Item>

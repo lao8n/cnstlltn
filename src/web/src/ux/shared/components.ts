@@ -71,7 +71,7 @@ export const queryFieldStyles = {
             opacity: 0.8,
         }
     },
-    icon: { display: 'none' },
+    icon: { width: '0px' },
 }
 
 // tokens

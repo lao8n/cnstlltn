@@ -133,6 +133,9 @@ export const createConstellationButtonStyle: Partial<ITextFieldStyles> = {
             color: theme.palette.black,
             opacity: 0.8,
         }
+    },
+    icon: {
+        width: '0px',
     }
 }
 
@@ -152,5 +155,8 @@ export const clusterByStyle: Partial<ITextFieldStyles> = {
             color: theme.palette.black,
             opacity: 0.8,
         }
+    },
+    icon: {
+        width: '0px',
     }
 }
