@@ -51,6 +51,20 @@ export const drillDownButtonStackStyle: IStackStyles = {
     }
 }
 
+export const drillUpButtonStackStyle: IStackStyles = {
+    root: {
+        cursor: 'pointer',
+        display: 'flex',
+        alignItems: 'center',
+        selectors: {
+            '&:hover': {
+                backgroundColor: theme.palette.themeSecondary,
+                color: theme.palette.white,
+            }
+        }
+    }
+}
+
 // buttons
 export const drillUpButtonStyles = mergeStyles({
     root: {
@@ -58,6 +72,10 @@ export const drillUpButtonStyles = mergeStyles({
         display: 'flex',
         textAlign: 'left',
         border: 'none',
+    },
+    rootHovered: {
+        backgroundColor: 'transparent',
+        color: theme.palette.black, // or any color you want to maintain on hover
     },
     label: {
         textAlign: 'right',
@@ -100,6 +118,7 @@ export const materialAttachedButtonStyle: IButtonStyles = {
 }
 
 export const buttonTextStyles = mergeStyles({
+    color: theme.palette.black,
     textAlign: 'left',
     width: '100%',
     display: 'block',
