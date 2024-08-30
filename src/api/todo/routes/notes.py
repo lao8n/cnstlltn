@@ -65,6 +65,16 @@ async def delete_framework(request: Request, framework: UserFramework) -> UserFr
     existing_framework = await UserFramework.get(framework.id)
     if existing_framework is not None:
         await existing_framework.delete()
+        # Delete references to the framework ID from all user clusters
+        user_clusters = await UserCluster.find(
+            UserCluster.userid == existing_framework.userid,
+            UserCluster.constellation == existing_framework.constellation
+        ).to_list()
+        
+        for cluster in user_clusters:
+            if str(existing_framework.id) in cluster.frameworks:
+                del cluster.frameworks[str(existing_framework.id)]
+                await cluster.save()
         return existing_framework
 
 @app.get("/get-constellation", response_model=List[UserFramework], status_code=200)
@@ -77,3 +87,17 @@ async def get_constellation(request: Request) -> List[UserFramework]:
         UserFramework.constellation == constellation_name,
     ).to_list();
     return constellation
+
+@app.post("/delete-constellation", response_model=UserFramework, status_code=200)
+async def delete_constellation(request: Request):
+    print("delete_constellation")
+    user_id = request.headers.get("user-id")
+    constellation_name = request.query_params.get("constellationName")
+    await UserFramework.delete(
+        UserFramework.userid == user_id,
+        UserFramework.constellation == constellation_name,
+    )
+    await UserCluster.delete(
+        UserCluster.userid == user_id,
+        UserCluster.constellation == constellation_name,
+    )

@@ -19,7 +19,7 @@ import * as displayActions from '../state/actions/displayActions';
 // ux imports
 import { CnstlltnTheme } from "../ux/shared/theme";
 import { canvasStackStyle, canvasStyle } from '../ux/shared/components';
-import { constellationHeaderStackStyle, constellationStackStyle, stackItemPadding, constellationNameStyle, clusterByStyle, canvasHeaderButtonStyle, clusteringSuggestionButtonStyle, buttonStackStyle, selectClusteringStyle, createConstellationButtonStyle, createConstellationStackStyle } from '../ux/panes/constellation';
+import { constellationHeaderStackStyle, constellationStackStyle, stackItemPadding, constellationNameStyle, clusterByStyle, canvasHeaderButtonStyle, clusteringSuggestionButtonStyle, buttonStackStyle, selectClusteringStyle, createConstellationButtonStyle, createConstellationStackStyle, deleteConstellationButtonStyle } from '../ux/panes/constellation';
 // display imports
 import { CanvasSpace, Circle, Pt } from "pts";
 import { DisplayPoint, TwinklePoint } from '../frontend/models';
@@ -85,6 +85,17 @@ const ConstellationPane: FC = (): ReactElement => {
             console.log(createdConstellation)
             actions.display.setUpdated(Date.now());
         } 
+    }
+
+    const onDeleteConstellationClick = async () => {
+        console.log("delete constellation")
+        await actions.constellation.deleteConstellation(
+            appContext.state.userState.userId,
+            appContext.state.userState.constellationName,
+        )
+        actions.cluster.setClusterBy('');
+        actions.note.setSelectedContent(null);
+        actions.constellation.setConstellationName("Home");
     }
 
     const onClusterBySubmit = async () => {
@@ -176,7 +187,7 @@ const ConstellationPane: FC = (): ReactElement => {
         if (appContext.state.userState.constellationName === "Home") {
             setButtons(["CREATE CONSTELLATION", "CLUSTER BY"]);
         } else {
-            setButtons(["CLUSTER BY"]);
+            setButtons(["CLUSTER BY", "DELETE CONSTELLATION"]);
         }
     }, [appContext.state.userState.constellationName])
 
@@ -308,13 +319,10 @@ const ConstellationPane: FC = (): ReactElement => {
                         )
                     }
                         {
-                        selectedButton === "FILTER BY" && (
-                            <SearchBox
-                                // value={clusterBy}
-                                // onChange={onTypeClusterBy}
-                                // onSearch={onSubmit}
-                                styles={clusterByStyle}
-                            />
+                        selectedButton === "DELETE CONSTELLATION" && (
+                            <button type="button" onClick={onDeleteConstellationClick} className={deleteConstellationButtonStyle}>
+                                    DELETE CONSTELLATION - WARNING: THIS IS IRREVERSIBLE
+                                </button>
                         )
                     }
                 </Stack>

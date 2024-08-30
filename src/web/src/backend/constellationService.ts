@@ -52,4 +52,13 @@ export class ConstellationService {
         });
         return response.data;
     }
+
+    public async deleteConstellation(userId: string, constellationName: string): Promise<void> {
+        await this.client.request({
+            method: 'POST',
+            url: `${this.baseUrl}/delete-constellation`,
+            headers: { 'USER-ID': userId },
+            params: { constellationName: constellationName},
+        });
+    }
 }

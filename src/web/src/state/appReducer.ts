@@ -44,6 +44,8 @@ export const appReducer: Reducer<ApplicationState, ApplicationActions> = (state:
             break;
         case ActionTypes.GET_CONSTELLATION:
             break;
+        case ActionTypes.DELETE_CONSTELLATION:
+            break;
         case ActionTypes.SET_CONSTELLATION:
             state.userState.constellation = action.constellation;
             break;

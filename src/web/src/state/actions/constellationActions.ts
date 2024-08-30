@@ -12,6 +12,7 @@ const constellationService = new ConstellationService(config.api.baseUrl);
 export interface ConstellationActions {
     saveSelectedFrameworks(userId: string, constellationName: string, frameworks: QueryResponse[]): Promise<QueryResponse[]>;
     getConstellation(userId: string, constellationName: string): Promise<UserFramework[]>;
+    deleteConstellation(userId: string, constellationName: string): Promise<void>;
     setConstellation(constellation: UserFramework[]): void;
     setConstellationName(constellationName: string): void;
 }
@@ -22,14 +23,11 @@ export const saveSelectedFrameworks = (userId: string, constellationName: string
         dispatch(saveSelectedFrameworksAction(frameworks))
         return savedFrameworks
     }
-
 export interface SaveSelectedFrameworksAction extends PayloadAction<string, QueryResponse[]> {
     type: ActionTypes.SAVE_SELECTED_FRAMEWORKS
 }
-
 const saveSelectedFrameworksAction =
     createPayloadAction<SaveSelectedFrameworksAction>(ActionTypes.SAVE_SELECTED_FRAMEWORKS);
-
 
 export const getConstellation = (userId: string, constellationName: string): ActionMethod<UserFramework[]> =>
     async (dispatch: Dispatch<GetConstellationAction>) => {
@@ -38,24 +36,31 @@ export const getConstellation = (userId: string, constellationName: string): Act
         dispatch(getConstellationAction(constellation))
         return constellation;
     }
-
 export interface GetConstellationAction extends PayloadAction<string, UserFramework[]> {
     type: ActionTypes.GET_CONSTELLATION
 }
-
 const getConstellationAction =
     createPayloadAction<GetConstellationAction>(ActionTypes.GET_CONSTELLATION);
+
+export const deleteConstellation = (userId: string, constellationName: string): ActionMethod<void> =>
+    async (dispatch: Dispatch<DeleteConstellationAction>) => {
+        await constellationService.deleteConstellation(userId, constellationName);
+        dispatch(deleteConstellationAction());
+    }
+export interface DeleteConstellationAction extends PayloadAction<string, void> {
+    type: ActionTypes.DELETE_CONSTELLATION
+}
+const deleteConstellationAction =
+    createPayloadAction<DeleteConstellationAction>(ActionTypes.DELETE_CONSTELLATION);
 
 export const setConstellation = (constellation: UserFramework[]) =>
     (dispatch: Dispatch<SetConstellationAction>) => {
         dispatch(setConstellationAction(constellation));
     }
-
 export interface SetConstellationAction {
     type: ActionTypes.SET_CONSTELLATION,
     constellation: UserFramework[]
 }
-
 const setConstellationAction = (constellation: UserFramework[]): SetConstellationAction => ({
     type: ActionTypes.SET_CONSTELLATION,
     constellation: constellation,
@@ -65,12 +70,10 @@ export const setConstellationName = (constellationName: string) =>
     (dispatch: Dispatch<SetConstellationNameAction>) => {
         dispatch(setConstellationNameAction(constellationName));
     }
-
 export interface SetConstellationNameAction {
     type: ActionTypes.SET_CONSTELLATION_NAME,
     constellationName: string
 }
-
 const setConstellationNameAction = (constellationName: string): SetConstellationNameAction => ({
     type: ActionTypes.SET_CONSTELLATION_NAME,
     constellationName: constellationName,

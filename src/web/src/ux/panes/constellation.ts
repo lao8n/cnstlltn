@@ -113,6 +113,20 @@ export const selectClusteringStyle = mergeStyles({
     }
 });
 
+export const deleteConstellationButtonStyle = mergeStyles({
+    flexShrink: 0,
+    border: 'none',
+    backgroundColor: theme.palette.black,
+    color: theme.palette.white,
+    transition: 'background-color 0.3s',
+    fontSize: '12px',
+    padding: '5px',
+    '&:hover': {
+        backgroundColor: theme.palette.themeLight,
+        color: theme.palette.black,
+    }
+});
+
 // text
 export const constellationNameStyle = mergeStyles({
     fontFamily: '"Segoe UI", "Noto Sans", "Helvetica Neue"',

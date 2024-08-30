@@ -24,6 +24,7 @@ export enum ActionTypes {
     // constellation
     SAVE_SELECTED_FRAMEWORKS = "SAVE_SELECTED_FRAMEWORKS",
     GET_CONSTELLATION = "GET_CONSTELLATION",
+    DELETE_CONSTELLATION = "DELETE_CONSTELLATION",
     SET_CONSTELLATION = "SET_CONSTELLATION",
     SET_CONSTELLATION_NAME = "SET_CONSTELLATION_NAME",
     // cluster
@@ -59,6 +60,7 @@ export type ApplicationActions =
     // constellation
     constellationActions.SaveSelectedFrameworksAction | 
     constellationActions.GetConstellationAction |
+    constellationActions.DeleteConstellationAction |
     constellationActions.SetConstellationAction |
     constellationActions.SetConstellationNameAction |
     // cluster
