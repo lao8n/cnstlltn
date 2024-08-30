@@ -122,6 +122,8 @@ export const deleteConstellationButtonStyle = mergeStyles({
     transition: 'background-color 0.3s',
     fontSize: '12px',
     padding: '5px',
+    height: '26px',
+    boxSizing: 'border-box',
     '&:hover': {
         backgroundColor: theme.palette.themeLight,
         color: theme.palette.black,
