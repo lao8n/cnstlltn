@@ -19,7 +19,7 @@ import * as displayActions from '../state/actions/displayActions';
 // ux imports
 import { CnstlltnTheme } from "../ux/shared/theme";
 import { canvasStackStyle, canvasStyle } from '../ux/shared/components';
-import { constellationHeaderStackStyle, constellationStackStyle, stackItemPadding, constellationNameStyle, clusterByStyle, canvasHeaderButtonStyle, clusteringSuggestionButtonStyle, buttonStackStyle, selectClusteringStyle, createConstellationButtonStyle, createConstellationStackStyle, deleteConstellationButtonStyle } from '../ux/panes/constellation';
+import { constellationHeaderStackStyle, constellationStackStyle, stackItemPadding, constellationNameStyle, clusterByStyle, canvasHeaderButtonStyle, clusteringSuggestionButtonStyle, buttonStackStyle, selectClusteringStyle, createConstellationStyle, createConstellationStackStyle, deleteConstellationButtonStyle } from '../ux/panes/constellation';
 // display imports
 import { CanvasSpace, Circle, Pt } from "pts";
 import { DisplayPoint, TwinklePoint } from '../frontend/models';
@@ -285,7 +285,7 @@ const ConstellationPane: FC = (): ReactElement => {
                                 placeholder={"Enter name of new constellation"}
                                     onChange={onTypeConstellationName}
                                     onSearch={onCreateConstellationSubmit}
-                                    styles={createConstellationButtonStyle}
+                                    styles={createConstellationStyle}
                                     iconProps={{ iconName: "None" }}
                                 />
                             </Stack.Item>

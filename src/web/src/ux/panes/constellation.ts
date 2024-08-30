@@ -1,4 +1,4 @@
-import { IStackStyles, IStackItemTokens, ITextFieldStyles, mergeStyles } from '@fluentui/react'
+import { IStackStyles, IStackItemTokens, mergeStyles } from '@fluentui/react'
 import { CnstlltnTheme } from '../shared/theme'
 
 const theme = CnstlltnTheme
@@ -134,7 +134,7 @@ export const constellationNameStyle = mergeStyles({
     color: theme.palette.white,
 });
 
-export const createConstellationButtonStyle: Partial<ITextFieldStyles> = {
+export const createConstellationStyle = {
     root: {
         width: '100%',
     },
@@ -148,15 +148,11 @@ export const createConstellationButtonStyle: Partial<ITextFieldStyles> = {
             opacity: 0.8,
         }
     },
-    icon: {
-        width: '0px',
-    },
-    suffix: {
-        display: 'none',
-    }
+    icon: { width: '0px' },
+    iconContainer: { width: '0px' }
 }
 
-export const clusterByStyle: Partial<ITextFieldStyles> = {
+export const clusterByStyle = {
     root: {
         width: '100%',
     },
@@ -173,7 +169,6 @@ export const clusterByStyle: Partial<ITextFieldStyles> = {
             opacity: 0.8,
         }
     },
-    icon: {
-        width: '0px',
-    },
+    icon: { width: '0px' },
+    iconContainer: { width: '0px' }
 }
