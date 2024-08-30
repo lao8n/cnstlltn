@@ -119,7 +119,11 @@ async def delete_constellation(request: Request) -> Dict[str, str]:
     for cluster in user_clusters:
         if str(constellation.id) in cluster.frameworks:
             del cluster.frameworks[str(constellation.id)]
-            await cluster.save()
+            if len(cluster.frameworks) == 0:
+                await cluster.delete()
+            else:
+                await cluster.save()
+
     await constellation.delete()
 
     return {"message": f"Constellation '{constellation_name}' deleted successfully"}
