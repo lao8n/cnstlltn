@@ -136,6 +136,9 @@ export const createConstellationButtonStyle: Partial<ITextFieldStyles> = {
     },
     icon: {
         width: '0px',
+    },
+    suffix: {
+        display: 'none',
     }
 }
 

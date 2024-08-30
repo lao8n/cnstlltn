@@ -72,6 +72,7 @@ export const queryFieldStyles = {
         }
     },
     icon: { width: '0px' },
+    iconContainer: { width: '0px' }
 }
 
 // tokens
