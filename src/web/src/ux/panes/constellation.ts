@@ -115,6 +115,7 @@ export const selectClusteringStyle = mergeStyles({
 
 export const deleteConstellationButtonStyle = mergeStyles({
     flexShrink: 0,
+    display: 'inline-flex',
     border: 'none',
     backgroundColor: theme.palette.black,
     color: theme.palette.white,
