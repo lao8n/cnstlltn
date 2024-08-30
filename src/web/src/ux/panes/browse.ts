@@ -55,7 +55,9 @@ export const drillDownButtonStackStyle: IStackStyles = {
 export const drillUpButtonStyles = mergeStyles({
     root: {
         width: '100%',
+        display: 'flex',
         textAlign: 'left',
+        border: 'none',
     },
     label: {
         textAlign: 'right',

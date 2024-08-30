@@ -1,5 +1,5 @@
 // react imports
-import { SearchBox, Stack, IconButton, mergeStyles } from '@fluentui/react';
+import { SearchBox, Stack, IconButton, mergeStyles, IButtonStyles} from '@fluentui/react';
 import { FC, ReactElement, useContext, useMemo, useState, ChangeEvent, useEffect } from "react";
 // state imports
 import { AppContext } from '../state/applicationState';
@@ -53,15 +53,15 @@ const BrowsePane: FC = (): ReactElement => {
                 material: newMaterial, // can be slight delay in set browse material
                 messages: appContext.state.browseState.messages
             });
-            actions.browse.pushBrowseMessage({
-                chosen: "", // user hasn't chosen yet
+            actions.browse.setBrowseMessages([{ // reset as new material
+                chosen: "",
                 responses: browseResponses.map(response => ({
                     title: response.title,
                     source: response.source,
                     flag: response.flag,
                     content: response.content
                 }))
-            });
+            }]);
             appContext.state.browseState.messages[appContext.state.browseState.messages.length - 1].responses?.forEach((response: BrowseResponse, index: number) => {
                 console.log("response " + index + " " + response.title)
             });
@@ -212,13 +212,15 @@ const BrowsePane: FC = (): ReactElement => {
                     <Stack styles={browsePaneStyle}>
                         {appContext.state.browseState.messages.length > 1 && (
                             <Stack.Item>
-                                <button
-                                    aria-label="DrillUp"
+                                <IconButton
+                                    iconProps={{ iconName: "ChevronLeft" }}
+                                    text={previousTitles[previousTitles.length - 1]}
                                     onClick={onDrillUp}
-                                    className={drillUpButtonStyles}>
-                                    <i>&#8592;</i>
-                                    {previousTitles[previousTitles.length - 1]}
-                                </button>
+                                    styles={{
+                                        root: drillUpButtonStyles,
+                                        textContainer: buttonTextStyles
+                                    } as IButtonStyles}
+                                />
                             </Stack.Item>
                         )}
                         {appContext.state.browseState.messages.length > 0 &&
@@ -253,7 +255,9 @@ const BrowsePane: FC = (): ReactElement => {
                                                         { marginRight: '32px' }
                                                     )}
                                                     onClick={() => toggleResponseSelection(index)}>
-                                                    <strong>{response.title}</strong>: {response.content}
+                                                    <span className={buttonTextStyles}>
+                                                        <strong>{response.title}</strong>: {response.content}
+                                                    </span>
                                                 </button>
                                             </Stack.Item>
                                         </Stack>
