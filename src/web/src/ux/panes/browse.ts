@@ -124,4 +124,7 @@ export const buttonTextStyles = mergeStyles({
     display: 'block',
     fontSize: '12px',
     fontFamily: '"Segoe UI", "Noto Sans", "Helvetica Neue"',
+    '&:hover': {
+        color: theme.palette.white,
+    }
   });
