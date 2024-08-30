@@ -42,7 +42,9 @@ export const noteSubStackItemStyle: IStackStyles = {
 // buttons
 export const deleteButtonStyle: IButtonStyles = {
     root: {
-        color: theme.palette.white
+        color: theme.palette.white,
+        height: '30px',
+        width: '30px',
     },
 }
 

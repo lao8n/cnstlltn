@@ -93,11 +93,15 @@ async def delete_constellation(request: Request):
     print("delete_constellation")
     user_id = request.headers.get("user-id")
     constellation_name = request.query_params.get("constellationName")
-    await UserFramework.delete(
+    
+    # Delete UserFrameworks
+    await UserFramework.find(
         UserFramework.userid == user_id,
         UserFramework.constellation == constellation_name,
-    )
-    await UserCluster.delete(
+    ).delete()
+    
+    # Delete UserClusters
+    await UserCluster.find(
         UserCluster.userid == user_id,
         UserCluster.constellation == constellation_name,
-    )
+    ).delete()

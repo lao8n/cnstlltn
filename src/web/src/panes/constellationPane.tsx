@@ -276,7 +276,7 @@ const ConstellationPane: FC = (): ReactElement => {
                         </Stack.Item>
                     ))}
                 </Stack>
-                <Stack horizontal style={{width: '100%', paddingLeft: '10px', paddingRight: '10px'}}>
+                <Stack horizontal style={{width: '100%', paddingLeft: '10px', paddingRight: '10px', minHeight: '100px'}}>
                     {
                         selectedButton === "CREATE CONSTELLATION" && (
                             <Stack.Item styles={createConstellationStackStyle}>

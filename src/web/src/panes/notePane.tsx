@@ -12,7 +12,7 @@ import * as displayActions from "../state/actions/displayActions"
 // components
 import EditableNoteComponent from "../components/noteComponent"
 // ux imports
-import { noteStackStyle, noteNameStyle, noteSubStackStyle, noteSubStackItemStyle } from "../ux/panes/note"
+import { noteStackStyle, noteNameStyle, noteSubStackStyle, noteSubStackItemStyle, deleteButtonStyle } from "../ux/panes/note"
 import { stackItemPadding } from "../ux/shared/components";
 
 const NotePane: FC = (): ReactElement => {
@@ -45,7 +45,7 @@ const NotePane: FC = (): ReactElement => {
                                 <EditableNoteComponent disabled={disabled} field="title" initialContent={appContext.state.userState.selectedContent?.title} />
                             </Stack.Item>
                             <Stack.Item>
-                                <IconButton iconProps={{ iconName: "Delete" }} onClick={handleDelete} />
+                                <IconButton iconProps={{ iconName: "Delete" }} onClick={handleDelete} styles={deleteButtonStyle} />
                             </Stack.Item>
                         </Stack>
                         {
