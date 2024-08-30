@@ -59,6 +59,14 @@ async def edit_framework(request: Request, framework: UserFramework) -> UserFram
         await existing_framework.save()
         return existing_framework
 
+@app.post("/delete-framework", response_model=UserFramework, status_code=200)
+async def delete_framework(request: Request, framework: UserFramework) -> UserFramework:
+    print("delete_framework: ", framework)
+    existing_framework = await UserFramework.get(framework.id)
+    if existing_framework is not None:
+        await existing_framework.delete()
+        return existing_framework
+
 @app.get("/get-constellation", response_model=List[UserFramework], status_code=200)
 async def get_constellation(request: Request) -> List[UserFramework]:
     print("getting constellation")

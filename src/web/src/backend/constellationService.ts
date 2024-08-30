@@ -33,6 +33,16 @@ export class ConstellationService {
         return response.data;
     }
 
+    public async deleteFramework(userId: string, framework: DbUserFramework): Promise<DbUserFramework> {
+        const response = await this.client.request<DbUserFramework>({
+            method: 'POST',
+            url: `${this.baseUrl}/delete-framework`,
+            data: framework,
+            headers: { 'USER-ID': userId },
+        });
+        return response.data;
+    }
+
     public async getConstellation(userId: string, constellationName: string): Promise<DbUserFramework[]> {
         const response = await this.client.request<DbUserFramework[]>({
             method: 'GET',

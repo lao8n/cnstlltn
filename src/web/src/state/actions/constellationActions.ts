@@ -5,13 +5,12 @@ import { QueryResponse } from "../queryState";
 import { ConstellationService } from "../../backend/constellationService"
 import config from "../../config";
 import { UserFramework } from "../userState";
-import { mapUserFrameworkToDbUserFramework, mapDbUserFrameworkToUserFramework } from "../../backend/mappers";
+import { mapDbUserFrameworkToUserFramework } from "../../backend/mappers";
 
 const constellationService = new ConstellationService(config.api.baseUrl);
 
 export interface ConstellationActions {
     saveSelectedFrameworks(userId: string, constellationName: string, frameworks: QueryResponse[]): Promise<QueryResponse[]>;
-    editFramework(userId: string, framework: UserFramework): Promise<UserFramework>;
     getConstellation(userId: string, constellationName: string): Promise<UserFramework[]>;
     setConstellation(constellation: UserFramework[]): void;
     setConstellationName(constellationName: string): void;
@@ -31,21 +30,6 @@ export interface SaveSelectedFrameworksAction extends PayloadAction<string, Quer
 const saveSelectedFrameworksAction =
     createPayloadAction<SaveSelectedFrameworksAction>(ActionTypes.SAVE_SELECTED_FRAMEWORKS);
 
-export const editFramework = (userId: string, framework: UserFramework): ActionMethod<UserFramework> =>
-    async (dispatch: Dispatch<EditFrameworkAction>) => {
-        const dbFramework = mapUserFrameworkToDbUserFramework(userId, framework);
-        const editedFrameworkDb = await constellationService.editFramework(userId, dbFramework);
-        const editedFramework = mapDbUserFrameworkToUserFramework(editedFrameworkDb);
-        dispatch(editFrameworkAction(editedFramework));
-        return editedFramework;
-    }
-
-export interface EditFrameworkAction extends PayloadAction<string, UserFramework> {
-    type: ActionTypes.EDIT_FRAMEWORK;
-}
-
-const editFrameworkAction = 
-    createPayloadAction<EditFrameworkAction>(ActionTypes.EDIT_FRAMEWORK);
 
 export const getConstellation = (userId: string, constellationName: string): ActionMethod<UserFramework[]> =>
     async (dispatch: Dispatch<GetConstellationAction>) => {

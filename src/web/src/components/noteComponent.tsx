@@ -5,8 +5,6 @@ import { useState, FormEvent, useContext, useMemo } from "react";
 import { AppContext } from "../state/applicationState"
 import UserAppContext from "../state/userContext"
 import { bindActionCreators } from "../state/actions/actionCreators";
-import { ConstellationActions } from "../state/actions/constellationActions";
-import * as constellationActions from "../state/actions/constellationActions";
 import { NoteActions } from "../state/actions/noteActions";
 import * as noteActions from "../state/actions/noteActions";
 // ux imports
@@ -21,7 +19,6 @@ interface EditableNoteProps {
 const EditableNoteComponent: React.FC<EditableNoteProps> = ({ disabled, field, initialContent }) => {
     const appContext = useContext<AppContext>(UserAppContext)
     const actions = useMemo(() => ({
-        constellation: bindActionCreators(constellationActions, appContext.dispatch) as unknown as ConstellationActions,
         note: bindActionCreators(noteActions, appContext.dispatch) as unknown as NoteActions,
     }), [appContext.dispatch]);
     const [text, setText] = useState(initialContent);
@@ -57,7 +54,7 @@ const EditableNoteComponent: React.FC<EditableNoteProps> = ({ disabled, field, i
             }
             console.log("save new note ", newContent);
             actions.note.setSelectedContent(newContent);
-            await actions.constellation.editFramework(appContext.state.userState.userId, newContent);
+            await actions.note.editFramework(appContext.state.userState.userId, newContent);
         }
     };
     const handleEnter = (event: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {

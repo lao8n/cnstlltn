@@ -1,9 +1,12 @@
 // react imports
-import { Stack } from "@fluentui/react"
-import { FC, ReactElement, useContext } from "react"
+import { Stack, IconButton } from "@fluentui/react"
+import { FC, ReactElement, useContext, useMemo } from "react"
 // state imports
 import { AppContext } from "../state/applicationState"
+import { bindActionCreators } from "../state/actions/actionCreators";
 import UserAppContext from "../state/userContext"
+import { NoteActions } from "../state/actions/noteActions"
+import * as noteActions from "../state/actions/noteActions"
 // components
 import EditableNoteComponent from "../components/noteComponent"
 // ux imports
@@ -12,9 +15,18 @@ import { stackItemPadding } from "../ux/shared/components";
 
 const NotePane: FC = (): ReactElement => {
     const appContext = useContext<AppContext>(UserAppContext)
-
+    const actions = useMemo(() => ({
+        note: bindActionCreators(noteActions, appContext.dispatch) as unknown as NoteActions,
+    }), [appContext.dispatch]);
     const disabled = appContext.state.userState.userId === "" || appContext.state.userState.userId === "welcome_user"
     
+    // functions
+    const handleDelete = async () => {
+        if (appContext.state.userState.selectedContent) {
+            await actions.note.deleteFramework(appContext.state.userState.userId, appContext.state.userState.selectedContent);
+        }
+    }
+
     return (
         <Stack styles={noteStackStyle}>
             <Stack.Item className={noteNameStyle} tokens={stackItemPadding}>
@@ -23,9 +35,14 @@ const NotePane: FC = (): ReactElement => {
             {
                 appContext.state.userState.selectedContent && (
                     <Stack styles={noteSubStackStyle}>
-                        <Stack.Item tokens={stackItemPadding} styles={noteSubStackItemStyle}>
-                            <EditableNoteComponent disabled={disabled} field="title" initialContent={appContext.state.userState.selectedContent?.title} />
-                        </Stack.Item>
+                        <Stack horizontal styles={noteSubStackStyle}>
+                            <Stack.Item tokens={stackItemPadding} styles={noteSubStackItemStyle}>
+                                <EditableNoteComponent disabled={disabled} field="title" initialContent={appContext.state.userState.selectedContent?.title} />
+                            </Stack.Item>
+                            <Stack.Item>
+                                <IconButton iconProps={{ iconName: "Delete" }} onClick={handleDelete} />
+                            </Stack.Item>
+                        </Stack>
                         {
                             appContext.state.userState.userId !== "welcome_user" && appContext.state.userState.userId !== "" && (
                         <Stack.Item tokens={stackItemPadding} styles={noteSubStackItemStyle}>

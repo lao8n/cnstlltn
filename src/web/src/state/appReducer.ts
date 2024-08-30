@@ -42,8 +42,6 @@ export const appReducer: Reducer<ApplicationState, ApplicationActions> = (state:
         // constellation
         case ActionTypes.SAVE_SELECTED_FRAMEWORKS:
             break;
-        case ActionTypes.EDIT_FRAMEWORK:
-            break;
         case ActionTypes.GET_CONSTELLATION:
             break;
         case ActionTypes.SET_CONSTELLATION:
@@ -74,6 +72,10 @@ export const appReducer: Reducer<ApplicationState, ApplicationActions> = (state:
         // note
         case ActionTypes.SET_SELECTED_CONTENT:
             state.userState.selectedContent = action.selected;
+            break;
+        case ActionTypes.EDIT_FRAMEWORK:
+            break;
+        case ActionTypes.DELETE_FRAMEWORK:
             break;
         default:
             console.log("reducer state not updated {action.type}")

@@ -23,7 +23,6 @@ export enum ActionTypes {
     POP_BROWSE_MESSAGE = "POP_BROWSE_MESSAGE",
     // constellation
     SAVE_SELECTED_FRAMEWORKS = "SAVE_SELECTED_FRAMEWORKS",
-    EDIT_FRAMEWORK = "EDIT_FRAMEWORK",
     GET_CONSTELLATION = "GET_CONSTELLATION",
     SET_CONSTELLATION = "SET_CONSTELLATION",
     SET_CONSTELLATION_NAME = "SET_CONSTELLATION_NAME",
@@ -36,6 +35,8 @@ export enum ActionTypes {
     SET_CLUSTER_BY = "SET_CLUSTER_BY",
     // note
     SET_SELECTED_CONTENT = "SET_SELECTED_CONTENT",
+    EDIT_FRAMEWORK = "EDIT_FRAMEWORK",
+    DELETE_FRAMEWORK = "DELETE_FRAMEWORK",
     // display
     SET_UPDATED = "SET_UPDATED",
 }
@@ -57,7 +58,6 @@ export type ApplicationActions =
     browseActions.PopBrowseMessageAction |
     // constellation
     constellationActions.SaveSelectedFrameworksAction | 
-    constellationActions.EditFrameworkAction |
     constellationActions.GetConstellationAction |
     constellationActions.SetConstellationAction |
     constellationActions.SetConstellationNameAction |
@@ -70,5 +70,7 @@ export type ApplicationActions =
     clusterActions.SetClusterByAction | 
     // note
     noteActions.SetSelectedContentAction |
+    noteActions.EditFrameworkAction |
+    noteActions.DeleteFrameworkAction |
     // display
     displayActions.SetUpdatedAction;
