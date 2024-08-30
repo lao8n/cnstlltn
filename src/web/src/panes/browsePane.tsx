@@ -1,5 +1,5 @@
 // react imports
-import { SearchBox, Stack, IconButton, mergeStyles, IButtonStyles} from '@fluentui/react';
+import { SearchBox, Stack, IconButton, mergeStyles} from '@fluentui/react';
 import { FC, ReactElement, useContext, useMemo, useState, ChangeEvent, useEffect } from "react";
 // state imports
 import { AppContext } from '../state/applicationState';
@@ -220,17 +220,20 @@ const BrowsePane: FC = (): ReactElement => {
                 ) : (
                     <Stack styles={browsePaneStyle}>
                         {appContext.state.browseState.messages.length > 1 && (
-                            <Stack.Item>
+                            <Stack.Item 
+                                onClick={onDrillUp} 
+                                styles={{ root: { cursor: 'pointer', display: 'flex', alignItems: 'center' } }}
+                            >
                                 <IconButton
                                     iconProps={{ iconName: "ChevronLeft" }}
-                                    text={previousTitles[previousTitles.length - 1]}
-                                    onClick={onDrillUp}
                                     styles={{
                                         root: drillUpButtonStyles,
-                                        textContainer: buttonTextStyles,
-                                        iconContainer: { width: '0px'}
-                                    } as IButtonStyles}
+                                        icon: { fontSize: '12px', marginRight: '8px' }
+                                    }}
                                 />
+                                <span className={buttonTextStyles}>
+                                    {previousTitles[previousTitles.length - 1]}
+                                </span>
                             </Stack.Item>
                         )}
                         {appContext.state.browseState.messages.length > 0 &&
