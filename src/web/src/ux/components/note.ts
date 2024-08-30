@@ -6,6 +6,7 @@ import { CnstlltnTheme } from "../shared/theme";
 const theme = CnstlltnTheme;
 export const noteComponentStackStyle: IStackStyles = {
     root: {
+        width: '100%',
         height: '100%',
         display: 'flex',
         justifyContent: 'space-between',

@@ -66,13 +66,15 @@ async def delete_framework(request: Request, framework: UserFramework) -> UserFr
     if existing_framework is not None:
         await existing_framework.delete()
         # Update all user clusters to remove the framework reference
-        await UserCluster.update_many(
-            {
-                "userid": existing_framework.userid,
-                "constellation": existing_framework.constellation
-            },
-            {"$unset": {f"frameworks.{str(existing_framework.id)}": ""}}
-        )
+        user_clusters = await UserCluster.find(
+            UserCluster.userid == existing_framework.userid,
+            UserCluster.constellation == existing_framework.constellation
+        ).to_list()
+
+        for cluster in user_clusters:
+            if str(existing_framework.id) in cluster.frameworks:
+                del cluster.frameworks[str(existing_framework.id)]
+                await cluster.save()
         return existing_framework
 
 @app.get("/get-constellation", response_model=List[UserFramework], status_code=200)
@@ -109,10 +111,15 @@ async def delete_constellation(request: Request) -> Dict[str, str]:
         UserFramework.title == constellation_name,
     )
 
-    await UserCluster.update_many(
-        {"userid": user_id, "constellation": "Home"},
-        {"$unset": {f"frameworks.{str(constellation.id)}": ""}}
-    )
+    user_clusters = await UserCluster.find(
+        UserCluster.userid == user_id,
+        UserCluster.constellation == "Home",
+    ).to_list()
+
+    for cluster in user_clusters:
+        if str(constellation.id) in cluster.frameworks:
+            del cluster.frameworks[str(constellation.id)]
+            await cluster.save()
     await constellation.delete()
 
     return {"message": f"Constellation '{constellation_name}' deleted successfully"}
