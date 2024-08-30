@@ -35,8 +35,8 @@ const NotePane: FC = (): ReactElement => {
             {
                 appContext.state.userState.selectedContent && (
                     <Stack styles={noteSubStackStyle}>
-                        <Stack horizontal styles={noteSubStackStyle}>
-                            <Stack.Item tokens={stackItemPadding} styles={noteSubStackItemStyle}>
+                        <Stack horizontal styles={noteSubStackStyle} tokens={stackItemPadding}>
+                            <Stack.Item styles={noteSubStackItemStyle}>
                                 <EditableNoteComponent disabled={disabled} field="title" initialContent={appContext.state.userState.selectedContent?.title} />
                             </Stack.Item>
                             <Stack.Item>

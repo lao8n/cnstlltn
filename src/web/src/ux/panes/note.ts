@@ -1,4 +1,4 @@
-import { IStackStyles, mergeStyles } from '@fluentui/react'
+import { IStackStyles, mergeStyles, IButtonStyles } from '@fluentui/react'
 import { CnstlltnTheme } from '../shared/theme' 
 
 const theme = CnstlltnTheme
@@ -35,10 +35,18 @@ export const noteSubStackItemStyle: IStackStyles = {
     root: {
         display: 'flex',
         height: '100%',
+        width: '100%',
     }
 }
 
-// note
+// buttons
+export const deleteButtonStyle: IButtonStyles = {
+    root: {
+        color: theme.palette.white
+    },
+}
+
+// text
 export const noteLogoStyle: IStackStyles = {
     root: {
         height: '100%',
@@ -49,7 +57,6 @@ export const noteLogoStyle: IStackStyles = {
     }
 }
 
-// text
 export const noteNameStyle = mergeStyles({
     fontFamily: '"Segoe UI", "Noto Sans", "Helvetica Neue"',
     fontSize: '12px',
