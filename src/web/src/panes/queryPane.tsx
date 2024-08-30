@@ -128,6 +128,7 @@ const QueryPane: FC = (): ReactElement => {
                             onChange={onTypeQuery}
                             onSearch={onSubmit}
                             styles={queryFieldStyles}
+                            iconProps={{ iconName: "None" }}
                             />
                     </Stack.Item>
                 </Stack>
@@ -139,7 +140,7 @@ const QueryPane: FC = (): ReactElement => {
                             onChange={onTypeMaterial}
                             onSearch={onSubmit}
                             styles={queryFieldStyles}
-                            iconProps={{styles: {root: { display: 'Copy' }}}}
+                            iconProps={{ iconName: "None" }}
                         />
                     </Stack.Item>
                 )}

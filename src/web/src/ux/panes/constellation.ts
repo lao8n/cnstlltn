@@ -161,5 +161,5 @@ export const clusterByStyle: Partial<ITextFieldStyles> = {
     },
     icon: {
         width: '0px',
-    }
+    },
 }

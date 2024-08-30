@@ -275,6 +275,7 @@ const ConstellationPane: FC = (): ReactElement => {
                                     onChange={onTypeConstellationName}
                                     onSearch={onCreateConstellationSubmit}
                                     styles={createConstellationButtonStyle}
+                                    iconProps={{ iconName: "None" }}
                                 />
                             </Stack.Item>
                         )
@@ -287,7 +288,8 @@ const ConstellationPane: FC = (): ReactElement => {
                                 placeholder={"Enter what you want to cluster by"}
                                 onChange={onTypeClusterBy}
                                 onSearch={onClusterBySubmit}
-                                styles={clusterByStyle}
+                                    styles={clusterByStyle}
+                                    iconProps={{ iconName: "None" }}
                             />
                                 <Stack horizontal style={{width: '100%'}}>
                                 <button type="button" onClick={onClusterClick} className={clusteringSuggestionButtonStyle}>
