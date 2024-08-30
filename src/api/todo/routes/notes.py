@@ -1,5 +1,5 @@
 # typing imports
-from typing import List
+from typing import List, Dict
 from starlette.requests import Request
 # package imports
 from random import uniform
@@ -88,8 +88,8 @@ async def get_constellation(request: Request) -> List[UserFramework]:
     ).to_list();
     return constellation
 
-@app.post("/delete-constellation", response_model=UserFramework, status_code=200)
-async def delete_constellation(request: Request):
+@app.post("/delete-constellation", response_model=Dict[str, str], status_code=200)
+async def delete_constellation(request: Request) -> Dict[str, str]:
     print("delete_constellation")
     user_id = request.headers.get("user-id")
     constellation_name = request.query_params.get("constellationName")
@@ -105,3 +105,6 @@ async def delete_constellation(request: Request):
         UserCluster.userid == user_id,
         UserCluster.constellation == constellation_name,
     ).delete()
+    
+    return {"message": f"Constellation '{constellation_name}' deleted successfully"}
+        

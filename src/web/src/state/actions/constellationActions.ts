@@ -44,7 +44,7 @@ const getConstellationAction =
 
 export const deleteConstellation = (userId: string, constellationName: string): ActionMethod<void> =>
     async (dispatch: Dispatch<DeleteConstellationAction>) => {
-        await constellationService.deleteConstellation(userId, constellationName);
+        await constellationService.deleteConstellation(userId, constellationName); // ignore response
         dispatch(deleteConstellationAction());
     }
 export interface DeleteConstellationAction extends PayloadAction<string, void> {
