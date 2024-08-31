@@ -74,7 +74,7 @@
         "userid" : "welcome_user",
         "constellation" : "welcome_constellation",
         "title" : "Browsing YouTube transcript",
-        "content" : "We've all watched a YouTube podcast and thought 'that's an interesting point', but had no easy way to write it down. With cnstlltn you can browse a YouTube transcript and drill-down if you want more details. First, you copy-paste the transcript, in the example below we have an interview with Peter Attia on the Huberman Lab podcast - unfortunately this is a manual process. Second, you will get a number of notes which you can save to your constellation, or it there is more content to explore you can click the right arrow for more notes. This also works well with articles - consider browsing some Paul Graham essays!",
+        "content" : "We've all watched a YouTube podcast and thought 'that's an interesting point', but had no easy way to write it down. With cnstlltn you can browse a YouTube transcript and drill-down if you want more details. First, you copy-paste the transcript, in the example below we have an interview with Peter Attia on the Huberman Lab podcast - unfortunately this is a manual process. Second, you will get a number of notes which you can save to your constellation, or it there is more content to explore you can click the right arrow for more notes. This also works well with articles - consider browsing some Paul Graham essays! https://paulgraham.com/articles.html",
         "source" : "",
         "tags" : [ ]
     }

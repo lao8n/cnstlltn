@@ -153,8 +153,8 @@ async def browse(browse: Browse) -> List[BrowseResponseBlock]:
         Title: [Concise title for the section]
         Source: [Source of the material, such as author and book title - use your knowledge of the material to infer this]
         Content: [Detailed explanation of the section's content]
-        Flag: [true or false, set to true if there is still more detail in this section not covered in your response, 
-        set to false if your response covers all the details from this section of the source material]
+        Flag: [true or false, set to false if your response comprehensively covers the underlying source material, 
+        set to true if there are more details (3-8 sections) to be covered]
          
         Make sure not to include any markdown formatting such as # or * in the content, do not number the sections.
         """}]
@@ -175,7 +175,7 @@ async def browse(browse: Browse) -> List[BrowseResponseBlock]:
                         Source: [Source of the material, such as author and book title - use your knowledge of the material to infer this]
                         Content: [Detailed explanation of the section's content]
                         Flag: [true or false, set to false if your response comprehensively covers the underlying source material, 
-                        set to true if there is at least 3-8 more details to be covered]
+                        set to true if there are more details (3-8 sections) to be covered]
 
                         Make sure not to include any markdown formatting such as # or * in the content, do not number the sub-sections.
                         """})

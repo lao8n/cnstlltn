@@ -6,7 +6,7 @@ const theme = CnstlltnTheme
 // stacks
 export const noteStackStyle: IStackStyles = {
     root: {
-        width: 500,
+        width: 600,
         display: 'flex',
         overflow: 'auto',
         background: theme.palette.black,
