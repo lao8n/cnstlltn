@@ -15,7 +15,7 @@ import * as displayActions from '../state/actions/displayActions';
 // components
 import { LoadingDots } from '../components/loadingDots';
 // ux imports
-import { browsePaneStyle, browseStackStyle, browseButtonStackStyle, drillDownButtonStackStyle, drillDownButtonStyles, drillUpButtonStyles, browseBarStyle, materialAttachedButtonStyle, browsePaneItemStyle, buttonTextStyles } from "../ux/panes/browse";
+import { browsePaneStyle, browseStackStyle, browseButtonStackStyle, drillDownButtonStackStyle, drillDownButtonStyles, drillUpIconStyles, browseBarStyle, materialAttachedButtonStyle, browsePaneItemStyle, buttonTextStyles, selectedButtonTextStyles, drillUpButtonStackStyle } from "../ux/panes/browse";
 import { stackItemPadding, saveSelectedButtonStyle, queryFieldStyles, badInputNotifications, buttonStyles, selectedButtonStyles } from '../ux/shared/components';
 import { blackLoadingDots } from '../ux/components/loadingDots';
 
@@ -222,12 +222,12 @@ const BrowsePane: FC = (): ReactElement => {
                         {appContext.state.browseState.messages.length > 1 && (
                             <Stack.Item 
                                 onClick={onDrillUp} 
-                                styles={{ root: { cursor: 'pointer', display: 'flex', alignItems: 'center' } }}
+                                styles={drillUpButtonStackStyle}
                             >
                                 <IconButton
                                     iconProps={{ iconName: "ChevronLeft" }}
                                     styles={{
-                                        root: drillUpButtonStyles,
+                                        root: drillUpIconStyles,
                                         icon: { fontSize: '12px', marginRight: '8px' }
                                     }}
                                 />
@@ -245,8 +245,8 @@ const BrowsePane: FC = (): ReactElement => {
                                                 <button 
                                                     className={selectedResponses.has(index) ? selectedButtonStyles : buttonStyles} 
                                                     onClick={() => toggleResponseSelection(index)}>
-                                                    <span className={buttonTextStyles}>
-                                                        <strong>{response.title}</strong>: {response.content}
+                                                    <span className={selectedResponses.has(index) ? selectedButtonTextStyles : buttonTextStyles}>
+                                                    <strong>{response.title}</strong>: {response.content}
                                                     </span>
                                                 </button>
                                             </Stack.Item>
@@ -268,7 +268,7 @@ const BrowsePane: FC = (): ReactElement => {
                                                         { marginRight: '32px' }
                                                     )}
                                                     onClick={() => toggleResponseSelection(index)}>
-                                                    <span className={buttonTextStyles}>
+                                                    <span className={selectedResponses.has(index) ? selectedButtonTextStyles : buttonTextStyles}>
                                                         <strong>{response.title}</strong>: {response.content}
                                                     </span>
                                                 </button>

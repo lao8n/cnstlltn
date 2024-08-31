@@ -53,9 +53,13 @@ export const drillDownButtonStackStyle: IStackStyles = {
 
 export const drillUpButtonStackStyle: IStackStyles = {
     root: {
+        width: '100%',
         cursor: 'pointer',
         display: 'flex',
         alignItems: 'center',
+        color: theme.palette.black,
+        fontSize: '12px',
+        fontFamily: '"Segoe UI", "Noto Sans", "Helvetica Neue"',
         selectors: {
             '&:hover': {
                 backgroundColor: theme.palette.themeSecondary,
@@ -66,25 +70,13 @@ export const drillUpButtonStackStyle: IStackStyles = {
 }
 
 // buttons
-export const drillUpButtonStyles = mergeStyles({
+export const drillUpIconStyles = mergeStyles({
     root: {
         width: '100%',
         display: 'flex',
         textAlign: 'left',
         border: 'none',
     },
-    rootHovered: {
-        backgroundColor: 'transparent',
-        color: theme.palette.black, // or any color you want to maintain on hover
-    },
-    label: {
-        textAlign: 'right',
-        fontSize: '12px',
-        fontFamily: '"Segoe UI", "Noto Sans", "Helvetica Neue"',
-        color: theme.palette.black,
-        marginLeft: '5px',
-        display: 'inline-block',
-    }
 })
 
 export const drillDownButtonStyles: IButtonStyles = {
@@ -126,5 +118,10 @@ export const buttonTextStyles = mergeStyles({
     fontFamily: '"Segoe UI", "Noto Sans", "Helvetica Neue"',
     '&:hover': {
         color: theme.palette.white,
+        backgroundColor: theme.palette.themeSecondary,
     }
+});
+  
+export const selectedButtonTextStyles = mergeStyles(buttonTextStyles, {
+    color: theme.palette.white,
   });
