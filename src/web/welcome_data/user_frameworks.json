@@ -68,5 +68,14 @@
         "constellation" : "welcome_constellation",
         "title" : "Test your own thinking",
         "content" : "In our partisan world it is very easy to be in a bubble. But as any Charlie Munger aficionado will council 'I'm not entitled to have an opinion on this subject unless I can state the arguments against my position better than the people do who are supporting it'. Cnstlltn can help you keep to this 'iron prescription', for example, suppose you have a constellation on topic X with 30 ideas and concepts you find compelling. You can then prompt cnstlltn to give you the best counter-arguments to your ideas - and over time your thinking can become more battle tested."
+    },
+    {
+        "_id" : ObjectId("66d25b9b0ee53ea4e104fbfb"),
+        "userid" : "welcome_user",
+        "constellation" : "welcome_constellation",
+        "title" : "Browsing YouTube transcript",
+        "content" : "We've all watched a YouTube podcast and thought 'that's an interesting point', but had no easy way to write it down. With cnstlltn you can browse a YouTube transcript and drill-down if you want more details. First, you copy-paste the transcript, in the example below we have an interview with Peter Attia on the Huberman Lab podcast - unfortunately this is a manual process. Second, you will get a number of notes which you can save to your constellation, or it there is more content to explore you can click the right arrow for more notes.",
+        "source" : "",
+        "tags" : [ ]
     }
 ]

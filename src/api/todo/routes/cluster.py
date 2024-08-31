@@ -61,7 +61,7 @@ async def get_cluster_by_suggestion(request: Request) -> str:
     ).to_list()
     prompt_format = f"""
     this prompt is to describe how i want to format your response. i will prompt you with lots of concepts and content
-    and i want you to come up with roughly 5-10 categories that could neatly divide them up. 
+    and i want you to come up with roughly 3-8 categories that could neatly divide them up. 
     you should return these categories as a single comma separated string for example you might suggest below:
     political, economic, sociological, technological, legal, environmental, psychological etc
     you should not return anything else except this single line string\n
@@ -136,7 +136,16 @@ async def cluster_by(request: Request):
             ]
         )
         json_response = response.choices[0].message.content.strip()
-        response_blocks = json.loads(json_response)
+        
+        # Add error handling and logging
+        try:
+            response_blocks = json.loads(json_response)
+        except json.JSONDecodeError as e:
+            print(f"Error decoding JSON: {e}")
+            print(f"Raw response: {json_response}")
+            # You might want to skip this chunk or handle the error differently
+            continue
+
         for response_block in response_blocks:
             id = response_block['id']
             cluster = response_block['clusterby'].title()
