@@ -15,7 +15,6 @@ export const browsePaneStyle: IStackStyles = {
 export const browsePaneItemStyle: IStackStyles = {
     root: {
         height: '100%',
-        padding: '10px'
     }
 }
 
@@ -72,6 +71,7 @@ export const drillUpButtonStackStyle: IStackStyles = {
 export const exampleImageStyle: IStackStyles = {
     root: {
         backgroundColor: theme.palette.themeSecondary,
+        padding: '10px',
     }
 }
 

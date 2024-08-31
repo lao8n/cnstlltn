@@ -75,18 +75,18 @@ const NotePane: FC = (): ReactElement => {
                         }
                         {
                             (appContext.state.userState.userId === "welcome_user" || appContext.state.userState.userId === "") && appContext.state.userState.selectedContent?.title === "Browsing YouTube transcript" && (
-                                <Stack styles={exampleImageStyle}>
-                                <Stack tokens={stackItemPadding} styles={noteSubStackItemStyle}>
+                                <Stack styles={exampleImageStyle} tokens={stackItemPadding}>
+                                    <Stack tokens={stackItemPadding} styles={noteSubStackItemStyle}>
+                                        <span>1. Copy-paste the transcript</span>
                                         <Image src={`${process.env.PUBLIC_URL}/transcript.png`} width="100%" />
-                                        <span>Copy-paste the transcript</span>
-                                </Stack>
-                                <Stack tokens={stackItemPadding} styles={noteSubStackItemStyle}>
-                                        <Image src={`${process.env.PUBLIC_URL}/browse.png`} width="100%" />
-                                        <span>Browse the transcript - notice the arrows to the right of some notes</span>
                                     </Stack>
                                     <Stack tokens={stackItemPadding} styles={noteSubStackItemStyle}>
+                                    <span>2. Browse the transcript - notice the arrows to the right of some notes</span>
+                                        <Image src={`${process.env.PUBLIC_URL}/browse.png`} width="100%" />
+                                    </Stack>
+                                    <Stack tokens={stackItemPadding} styles={noteSubStackItemStyle}>
+                                        <span>3. Drilling-down we can get more details</span>
                                         <Image src={`${process.env.PUBLIC_URL}/drilldown.png`} width="100%" />
-                                        <span>Drilling-down we can get more details</span>
                                     </Stack>   
                                 </Stack>
                             )
