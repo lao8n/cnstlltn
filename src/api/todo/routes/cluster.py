@@ -139,6 +139,11 @@ async def cluster_by(request: Request):
         
         # Add error handling and logging
         try:
+            # Remove code block markers if present
+            json_response = json_response.strip('`')
+            if json_response.startswith('json\n'):
+                json_response = json_response[5:]
+            
             response_blocks = json.loads(json_response)
         except json.JSONDecodeError as e:
             print(f"Error decoding JSON: {e}")
