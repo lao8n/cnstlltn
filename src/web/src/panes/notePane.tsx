@@ -44,9 +44,11 @@ const NotePane: FC = (): ReactElement => {
                             <Stack.Item styles={noteSubStackItemStyle}>
                                 <EditableNoteComponent disabled={disabled} field="title" initialContent={appContext.state.userState.selectedContent?.title} />
                             </Stack.Item>
+                            {appContext.state.userState.userId !== "welcome_user" && (
                             <Stack.Item>
                                 <IconButton iconProps={{ iconName: "Delete" }} onClick={handleDelete} styles={deleteButtonStyle} />
-                            </Stack.Item>
+                                </Stack.Item>
+                            )}
                         </Stack>
                         {
                             appContext.state.userState.userId !== "welcome_user" && appContext.state.userState.userId !== "" && (
@@ -71,7 +73,7 @@ const NotePane: FC = (): ReactElement => {
                             )
                         }
                         {
-                            appContext.state.userState.userId === "welcome_user" && appContext.state.userState.selectedContent?.title === "Browsing YouTube transcript" && (
+                            (appContext.state.userState.userId === "welcome_user" || appContext.state.userState.userId === "") && appContext.state.userState.selectedContent?.title === "Browsing YouTube transcript" && (
                                 <Stack>
                                 <Stack.Item tokens={stackItemPadding} styles={noteSubStackItemStyle}>
                                         <Image src={"/src/web/welcome_data/transcript.png"} width="100%" />

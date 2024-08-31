@@ -108,6 +108,7 @@ const WelcomePane: FC = (): ReactElement => {
                         if (Circle.withinBound(range, pt.position)) {
                             pt.selected = !pt.selected;
                             actions.note.setSelectedContent(pt.selected ? pt.userFramework : null)
+                            console.log("selected content: ", appContext.state.userState.selectedContent?.title)
                         }
                     });
                 }
