@@ -12,7 +12,7 @@ import * as displayActions from "../state/actions/displayActions"
 // components
 import EditableNoteComponent from "../components/noteComponent"
 // ux imports
-import { noteStackStyle, noteNameStyle, noteSubStackStyle, noteSubStackItemStyle, deleteButtonStyle, exampleImageStyle } from "../ux/panes/note"
+import { noteStackStyle, noteNameStyle, noteSubStackStyle, noteSubStackItemStyle, deleteButtonStyle, exampleImageStyle, exampleImageTextStyle } from "../ux/panes/note"
 import { stackItemPadding } from "../ux/shared/components";
 
 const NotePane: FC = (): ReactElement => {
@@ -76,15 +76,15 @@ const NotePane: FC = (): ReactElement => {
                             (appContext.state.userState.userId === "welcome_user" || appContext.state.userState.userId === "") && appContext.state.userState.selectedContent?.title === "Browsing YouTube transcript" && (
                                 <Stack styles={exampleImageStyle} tokens={stackItemPadding}>
                                     <Stack tokens={stackItemPadding} styles={noteSubStackItemStyle}>
-                                        <span>1. Copy-paste the transcript</span>
+                                        <Stack.Item styles={exampleImageTextStyle}>1. Copy-paste the transcript</Stack.Item>
                                         <Image src={`${process.env.PUBLIC_URL}/transcript.png`} width="100%" />
                                     </Stack>
                                     <Stack tokens={stackItemPadding} styles={noteSubStackItemStyle}>
-                                    <span>2. Browse the transcript - notice the arrows to the right of some notes</span>
+                                        <Stack.Item styles={exampleImageTextStyle}>2. Browse the transcript - notice the arrows to the right of some notes</Stack.Item>
                                         <Image src={`${process.env.PUBLIC_URL}/browse.png`} width="100%" />
                                     </Stack>
                                     <Stack tokens={stackItemPadding} styles={noteSubStackItemStyle}>
-                                        <span>3. Drilling-down we can get more details</span>
+                                        <Stack.Item styles={exampleImageTextStyle}>3. Drilling-down we can get more details</Stack.Item>
                                         <Image src={`${process.env.PUBLIC_URL}/drilldown.png`} width="100%" />
                                     </Stack>   
                                 </Stack>
