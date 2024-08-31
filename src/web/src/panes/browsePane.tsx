@@ -35,6 +35,7 @@ const BrowsePane: FC = (): ReactElement => {
     const [selectedResponses, setSelectedResponses] = useState<Set<number>>(new Set());
     const [emptySelection, setEmptySelection] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const [tryingToSaveOnHome, setTryingToSaveOnHome] = useState(false);
 
     // functions
     const onTypeSource = (_: ChangeEvent<HTMLInputElement> | undefined, newValue?: string) => {
@@ -123,7 +124,9 @@ const BrowsePane: FC = (): ReactElement => {
     };
 
     const saveSelectedResponses = async () => {
-        if (selectedResponses.size > 0 ) {
+        if (appContext.state.userState.constellationName === "Home") {
+            setTryingToSaveOnHome(true);
+        } else if (selectedResponses.size > 0 ) {
             console.log("browse responses " + appContext.state.browseState.messages[appContext.state.browseState.messages.length - 1].responses)
             const responsesToSave = Array.from(selectedResponses).map(index => appContext.state.browseState.messages[appContext.state.browseState.messages.length - 1].responses[index])
                 .filter((response): response is BrowseResponse => response !== undefined);
@@ -159,6 +162,13 @@ const BrowsePane: FC = (): ReactElement => {
             setEmptySelection(false);
         }
     }, [selectedResponses])
+
+    useEffect(() => {
+        console.log("trying to save on home")
+        if (tryingToSaveOnHome) {
+            setTryingToSaveOnHome(false);
+        }
+    }, [appContext.state.userState.constellationName, tryingToSaveOnHome])
 
     useEffect(() => {
         console.log("browse pane reset")
@@ -214,6 +224,11 @@ const BrowsePane: FC = (): ReactElement => {
                     </Stack.Item>
                 )
             }
+            {tryingToSaveOnHome && (
+                <Stack.Item styles={badInputNotifications}>
+                    If you want to save notes to your constellation, you need to click into a constellation first.
+                </Stack.Item>
+            )}
             <Stack styles={browsePaneItemStyle}>
                 {isLoading ? (
                     <LoadingDots style={blackLoadingDots} />

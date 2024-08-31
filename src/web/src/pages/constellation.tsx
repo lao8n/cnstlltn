@@ -31,7 +31,10 @@ export const Constellation = () => {
   return (
     <Stack horizontal styles={constellationQueryPageStyle}>
       {
-        appContext.state.userState.constellationName !== "Home" && (
+        // if we are not home, and we have material to show, or we have responses to show, show the ai pane
+        (appContext.state.userState.constellationName !== "Home" ||
+          appContext.state.browseState.material !== "" ||
+          (appContext.state.queryState?.responses?.length ?? 0) > 0) && (
           <Stack.Item styles={aiPageStyle}>
             <AIPane/>
           </Stack.Item>

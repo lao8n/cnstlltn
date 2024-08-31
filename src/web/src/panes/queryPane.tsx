@@ -35,6 +35,7 @@ const QueryPane: FC = (): ReactElement => {
     const [emptySelection, setEmptySelection] = useState(false);
     const [isSecondSearchVisible, setIsSecondSearchVisible] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const [tryingToSaveOnHome, setTryingToSaveOnHome] = useState(false);
 
     // functions
     const toggleResponseSelection = (index: number) => {
@@ -92,12 +93,11 @@ const QueryPane: FC = (): ReactElement => {
 
     // effects
     useEffect(() => {
-        console.log("query pane reset")
-        setSelectedResponses(new Set());
-        setIsSecondSearchVisible(false);
-        setNewMaterial('');
-        actions.query.setQueryResponseList(undefined);
-    }, [actions.query, appContext.state.userState.constellationName])
+        console.log("trying to save on home")
+        if (tryingToSaveOnHome) {
+            setTryingToSaveOnHome(false);
+        }
+    }, [appContext.state.userState.constellationName, tryingToSaveOnHome, setTryingToSaveOnHome])
 
     useEffect(() => {
         console.log("non-empty query")
@@ -166,6 +166,11 @@ const QueryPane: FC = (): ReactElement => {
                     </Stack.Item>
                 )
             }
+            {tryingToSaveOnHome && (
+                <Stack.Item styles={badInputNotifications}>
+                    If you want to save notes to your constellation, you need to click into a constellation first.
+                </Stack.Item>
+            )}
             <Stack.Item tokens={stackItemPadding}>
                 {isLoading ? (
                     <LoadingDots style={blackLoadingDots}/>
