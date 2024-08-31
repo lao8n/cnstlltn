@@ -74,16 +74,16 @@ const NotePane: FC = (): ReactElement => {
                         }
                         {
                             (appContext.state.userState.userId === "welcome_user" || appContext.state.userState.userId === "") && appContext.state.userState.selectedContent?.title === "Browsing YouTube transcript" && (
-                                <Stack styles={exampleImageStyle} tokens={stackItemPadding}>
-                                    <Stack styles={noteSubStackItemStyle}>
+                                <Stack styles={noteSubStackStyle} tokens={stackItemPadding}>
+                                    <Stack styles={exampleImageStyle}>
                                         <Stack.Item styles={exampleImageTextStyle}>1. Copy-paste the transcript</Stack.Item>
                                         <Image src={`${process.env.PUBLIC_URL}/transcript.png`} width="100%" />
                                     </Stack>
-                                    <Stack styles={noteSubStackItemStyle}>
+                                    <Stack styles={exampleImageStyle}>
                                         <Stack.Item styles={exampleImageTextStyle}>2. Browse the transcript - notice the arrows to the right of some notes</Stack.Item>
                                         <Image src={`${process.env.PUBLIC_URL}/browse.png`} width="100%" />
                                     </Stack>
-                                    <Stack styles={noteSubStackItemStyle}>
+                                    <Stack styles={exampleImageStyle}>
                                         <Stack.Item styles={exampleImageTextStyle}>3. Drilling-down we can get more details</Stack.Item>
                                         <Image src={`${process.env.PUBLIC_URL}/drilldown.png`} width="100%" />
                                     </Stack>   
