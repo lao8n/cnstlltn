@@ -69,6 +69,12 @@ export const drillUpButtonStackStyle: IStackStyles = {
     }
 }
 
+export const exampleImageStyle: IStackStyles = {
+    root: {
+        backgroundColor: theme.palette.themeSecondary,
+    }
+}
+
 // buttons
 export const drillUpIconStyles = mergeStyles({
     root: {
