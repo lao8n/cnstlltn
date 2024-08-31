@@ -12,9 +12,8 @@ import * as displayActions from "../state/actions/displayActions"
 // components
 import EditableNoteComponent from "../components/noteComponent"
 // ux imports
-import { noteStackStyle, noteNameStyle, noteSubStackStyle, noteSubStackItemStyle, deleteButtonStyle } from "../ux/panes/note"
+import { noteStackStyle, noteNameStyle, noteSubStackStyle, noteSubStackItemStyle, deleteButtonStyle, exampleImageStyle } from "../ux/panes/note"
 import { stackItemPadding } from "../ux/shared/components";
-import { exampleImageStyle } from "../ux/panes/browse";
 
 const NotePane: FC = (): ReactElement => {
     const appContext = useContext<AppContext>(UserAppContext)

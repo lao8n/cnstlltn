@@ -68,3 +68,11 @@ export const noteNameStyle = mergeStyles({
     fontSize: '12px',
     color: theme.palette.white,
 });
+
+export const exampleImageStyle: IStackStyles = {
+    root: {
+        backgroundColor: theme.palette.themeSecondary,
+        padding: '10px',
+        boxSizing: 'border-box', 
+    }
+}
