@@ -1,5 +1,5 @@
 // react imports
-import { Stack, TextField, ITextFieldStyles } from "@fluentui/react";
+import { Stack, TextField } from "@fluentui/react";
 import { useState, FormEvent, useContext, useMemo } from "react";
 // state imports
 import { AppContext } from "../state/applicationState"
@@ -23,26 +23,12 @@ const EditableNoteComponent: React.FC<EditableNoteProps> = ({ disabled, field, i
     }), [appContext.dispatch]);
     const [text, setText] = useState(initialContent);
 
-    // functions
-    const calculateTextHeight = (textLength: number) => {
-        const charsPerLine = 30;
-        const lineHeight = 20;
-        const padding = 10;
-        const heightText = Math.max(textLength / charsPerLine * lineHeight + padding, lineHeight + padding);
-        return heightText;
-    }
-    const getDynamicStyles = (): Partial<ITextFieldStyles> => {
-        return {
-            ...noteTextFieldStyle,
-            fieldGroup: {
-                ...(noteTextFieldStyle?.fieldGroup as object || {}),
-                height: `${calculateTextHeight(text.length)}px`,  
-            }
-        };
-    };
+    // Remove calculateTextHeight and getDynamicStyles functions
+
     const handleTextChange = (_: FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
         setText(newValue || '');
     };
+
     const handleTextSubmit = async () => {
         if (appContext.state.userState.selectedContent) {
             const selectedContent = appContext.state.userState.selectedContent;
@@ -57,17 +43,20 @@ const EditableNoteComponent: React.FC<EditableNoteProps> = ({ disabled, field, i
             await actions.note.editFramework(appContext.state.userState.userId, newContent);
         }
     };
+
     const handleEnter = (event: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         if (event.key === 'Enter' && !event.shiftKey) {
             event.preventDefault();
             handleTextSubmit();
         }
     }
+
     return (
       <Stack styles={noteComponentStackStyle}>
         <TextField 
-            styles={getDynamicStyles()}
+            styles={noteTextFieldStyle}
             multiline={true}
+            autoAdjustHeight
             resizable={false}
             value={text}
             placeholder={field === "title" ? "Enter title" : field === "content" ? "Enter your note here" : field === "source" ? "Add source" : field === "tags" ? "Add comma separated tags" : ""}

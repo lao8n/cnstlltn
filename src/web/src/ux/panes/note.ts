@@ -72,8 +72,7 @@ export const noteNameStyle = mergeStyles({
 export const exampleImageStyle: IStackStyles = {
     root: {
         backgroundColor: theme.palette.themeSecondary,
-        paddingBottom: '10px',
-        boxSizing: 'border-box', 
+        padding: '5px',
     }
 }
 
@@ -81,7 +80,7 @@ export const exampleImageTextStyle: IStackStyles = {
     root: {
         fontFamily: '"Segoe UI", "Noto Sans", "Helvetica Neue"',
         fontSize: '12px',
-        color: theme.palette.black,
+        color: theme.palette.white,
         padding: '10px',
     }
 }
