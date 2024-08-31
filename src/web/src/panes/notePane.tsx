@@ -44,7 +44,7 @@ const NotePane: FC = (): ReactElement => {
                             <Stack.Item styles={noteSubStackItemStyle}>
                                 <EditableNoteComponent disabled={disabled} field="title" initialContent={appContext.state.userState.selectedContent?.title} />
                             </Stack.Item>
-                            {appContext.state.userState.userId !== "welcome_user" && (
+                            {(appContext.state.userState.userId !== "" && appContext.state.userState.userId !== "welcome_user") && (
                             <Stack.Item>
                                 <IconButton iconProps={{ iconName: "Delete" }} onClick={handleDelete} styles={deleteButtonStyle} />
                                 </Stack.Item>
