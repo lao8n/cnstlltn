@@ -76,5 +76,23 @@
 				0.5854753799080782
 			]
 		}
+	},
+	{
+		"_id" : ObjectId("66d25b9c0ee53ea4e104fc00"),
+		"userid" : "welcome_user",
+		"constellation" : "welcome_constellation",
+		"clusterby" : "welcome_cluster_by",
+		"cluster" : "Examples",
+		"islatest" : true,
+		"coordinate" : [
+			0.5131091317346143,
+			0.8026835564107997
+		],
+		"frameworks" : {
+			"66d25b9b0ee53ea4e104fbfb" : [
+				0.5576504427310567,
+				0.722453455949527
+			]
+		}
 	}
 ]

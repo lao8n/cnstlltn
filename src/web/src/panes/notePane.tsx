@@ -1,5 +1,5 @@
 // react imports
-import { Stack, IconButton } from "@fluentui/react"
+import { Stack, IconButton, Image } from "@fluentui/react"
 import { FC, ReactElement, useContext, useMemo } from "react"
 // state imports
 import { AppContext } from "../state/applicationState"
@@ -68,6 +68,24 @@ const NotePane: FC = (): ReactElement => {
                                             : ""}
                                     />
                                 </Stack.Item>
+                            )
+                        }
+                        {
+                            appContext.state.userState.userId === "welcome_user" && appContext.state.userState.selectedContent?.title === "Browsing YouTube transcript" && (
+                                <Stack>
+                                <Stack.Item tokens={stackItemPadding} styles={noteSubStackItemStyle}>
+                                        <Image src={"/src/web/welcome_data/transcript.png"} width="100%" />
+                                        <span>Copy-paste the transcript</span>
+                                </Stack.Item>
+                                <Stack.Item tokens={stackItemPadding} styles={noteSubStackItemStyle}>
+                                        <Image src={"/src/web/welcome_data/browse.png"} width="100%" />
+                                        <span>Browse the transcript - notice the arrows to the right of some notes</span>
+                                    </Stack.Item>
+                                    <Stack.Item tokens={stackItemPadding} styles={noteSubStackItemStyle}>
+                                        <Image src={"/src/web/welcome_data/drilldown.png"} width="100%" />
+                                        <span>Drilling-down we can get more details</span>
+                                    </Stack.Item>   
+                                </Stack>
                             )
                         }
                     </Stack>
