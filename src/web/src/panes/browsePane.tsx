@@ -234,7 +234,7 @@ const BrowsePane: FC = (): ReactElement => {
                     <LoadingDots style={blackLoadingDots} />
                 ) : (
                     <Stack styles={browsePaneStyle}>
-                        {appContext.state.browseState.messages.length >= 1 && (
+                        {appContext.state.browseState.messages.length > 1 && (
                             <Stack.Item 
                                 onClick={onDrillUp} 
                                 styles={drillUpButtonStackStyle}
