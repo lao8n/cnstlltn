@@ -61,7 +61,7 @@ const BrowsePane: FC = (): ReactElement => {
             const browseResponses = await actions.browse.postBrowse({
                 attachment: materialAttached,
                 material: newMaterial, // can be slight delay in set browse material
-                messages: appContext.state.browseState.messages
+                messages: []
             });
             actions.browse.setBrowseMessages([{ // reset as new material
                 chosen: "",
