@@ -164,8 +164,8 @@ const BrowsePane: FC = (): ReactElement => {
     }, [selectedResponses])
 
     useEffect(() => {
-        console.log("trying to save on home")
-        if (tryingToSaveOnHome) {
+        console.log("set trying to save on home to false")
+        if (tryingToSaveOnHome && appContext.state.userState.constellationName !== "Home") {
             setTryingToSaveOnHome(false);
         }
     }, [appContext.state.userState.constellationName, tryingToSaveOnHome])

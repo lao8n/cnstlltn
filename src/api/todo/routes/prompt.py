@@ -178,6 +178,7 @@ async def browse(browse: Browse) -> List[BrowseResponseBlock]:
                         set to true if there are more details (3-8 sections) to be covered]
 
                         Make sure not to include any markdown formatting such as # or * in the content, do not number the sub-sections.
+                        When relevant, add interesting statistics, quotes or other interesting tidbits to the content rather than just a bland summary.
                         """})
 
     # make openai call
