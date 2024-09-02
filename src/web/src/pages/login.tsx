@@ -18,7 +18,7 @@ import * as noteActions from '../state/actions/noteActions';
 import { DisplayActions } from '../state/actions/displayActions';
 import * as displayActions from '../state/actions/displayActions';
 // ux
-import { loginPageStyle } from '../ux/pages/login';
+import { loginPageStyle, loginPageLeftStyle, loginPageRightStyle } from '../ux/pages/login';
 
 export const Login = () => {
   const appContext = useContext<AppContext>(UserAppContext)
@@ -31,6 +31,12 @@ export const Login = () => {
   }), [appContext.dispatch]);
   const navigate = useNavigate();
   const [googleClientId, setGoogleClientId] = useState("");
+  const messages = [
+    ["thinking", "is for losers"],
+    ["think for yourself", "but not by yourself"],
+    ["think less", "filter more"],
+    ["outsource", "your thinking"]
+  ]
 
   // functions
   const handleLoginSuccess = async (response: CredentialResponse) => {
@@ -58,13 +64,23 @@ export const Login = () => {
 
   return (
     <GoogleOAuthProvider clientId={googleClientId}>
-      <Stack styles={loginPageStyle}>
-        <GoogleOAuthProvider clientId={googleClientId}>
-          <GoogleLogin
-            onSuccess={handleLoginSuccess}
-            onError={handleLoginFailure}
-          />
-        </GoogleOAuthProvider>
+      <Stack horizontal styles={loginPageStyle}>
+        <Stack.Item styles={loginPageLeftStyle}>
+          <Stack.Item>
+            {messages[Math.floor(Math.random() * messages.length)][0]}
+          </Stack.Item>
+          <Stack.Item>
+            {messages[Math.floor(Math.random() * messages.length)][1]}
+          </Stack.Item>
+        </Stack.Item>
+        <Stack.Item styles={loginPageRightStyle}>
+          <GoogleOAuthProvider clientId={googleClientId}>
+            <GoogleLogin
+              onSuccess={handleLoginSuccess}
+              onError={handleLoginFailure}
+            />
+          </GoogleOAuthProvider>
+        </Stack.Item>
       </Stack>
     </GoogleOAuthProvider>
   )
