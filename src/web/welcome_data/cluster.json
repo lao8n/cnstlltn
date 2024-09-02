@@ -94,5 +94,35 @@
 				0.722453455949527
 			]
 		}
+	},
+	{
+		"_id" : ObjectId("66d26f3c88bae30019fbe12a"),
+		"userid" : "welcome_user",
+		"constellation" : "welcome_constellation",
+		"clusterby" : "welcome_cluster_by",
+		"cluster" : "Theory",
+		"islatest" : true,
+		"coordinate" : [
+			0.60944952765437908,
+			0.80280864638275
+		],
+		"frameworks" : {
+			"66d25b9b0ee53ea4e104fbfd" : [
+				0.52996989235157915,
+				0.786686362051815
+			],
+			"66d25b9b0ee53ea4e104fbfe" : [
+				0.63996989235157915,
+				0.76686362051815
+			],
+			"66d25b9b0ee53ea4e104fbff" : [
+				0.57996989235157915,
+				0.846686362051815
+			],
+			"66d4cd0a960f690f92964957" : [
+				0.64996989235157915,
+				0.876686362051815
+			]
+		}
 	}
 ]

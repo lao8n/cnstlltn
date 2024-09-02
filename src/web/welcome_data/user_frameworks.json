@@ -77,5 +77,41 @@
         "content" : "We've all watched a YouTube podcast and thought 'that's an interesting point', but had no easy way to write it down. With cnstlltn you can browse a YouTube transcript and drill-down if you want more details. First, you copy-paste the transcript, in the example below we have an interview with Peter Attia on the Huberman Lab podcast - unfortunately this is a manual process. Second, you will get a number of notes which you can save to your constellation, or it there is more content to explore you can click the right arrow for more notes. This also works well with articles - consider browsing some Paul Graham essays! https://paulgraham.com/articles.html",
         "source" : "",
         "tags" : [ ]
+    },
+    {
+        "_id" : ObjectId("66d25b9b0ee53ea4e104fbfd"),
+        "userid" : "welcome_user",
+        "constellation" : "welcome_constellation",
+        "title" : "HCI 3 elements",
+        "content" : "Human Computer Interaction has three key parts: 1. Data storage, 2. Data transmission, 3. Data processing. Initially everything was done by the human so we 1. Remember, 2. Talk and 3. Think. Over time, the development of writing and books meant data storage and transmission became more efficient, but as all the thinking is still in human brains, they are still the bottleneck",
+        "source" : "",
+        "tags" : [ ]
+    },
+    {
+        "_id" : ObjectId("66d25b9b0ee53ea4e104fbfe"),
+        "userid" : "welcome_user",
+        "constellation" : "welcome_constellation",
+        "title" : "Data storage",
+        "content" : "There has been a lot of progress in data storage, with books, then databases, then search engines, then LLM chabots. At their heart, they are all just variations on key-value lookup, however where the retrieval is into highly constrained human memory for thinking.",
+        "source" : "",
+        "tags" : [ ]
+    },
+    {
+        "_id" : ObjectId("66d25b9b0ee53ea4e104fbff"),
+        "userid" : "welcome_user",
+        "constellation" : "welcome_constellation",
+        "title" : "Data transmission",
+        "content" : "Data transmission across time and space has changed significantly with obvious examples like books, telegraph, telephone, radio, internet, streaming, and now LLMs. Humans fundamentally still use the old paradigms of talking and reading",
+        "source" : "",
+        "tags" : [ ]
+    },
+    {
+        "_id" : ObjectId("66d4cd0a960f690f92964957"),
+        "userid" : "welcome_user",
+        "constellation" : "welcome_constellation",
+        "title" : "Data processing",
+        "content" : "We are all very comfortable using calculators to do arithmetic but is surprising how much high level thinking, even with computers, still happens in our heads. Perhaps, AI will mean that all thinking will be done by the superintelligence, but until then there is perhaps value in using LLMs to push some of the lower-level, more procedural thinking to the machine.",
+        "source" : "",
+        "tags" : [ ]
     }
 ]
