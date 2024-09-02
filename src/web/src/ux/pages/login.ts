@@ -41,6 +41,7 @@ export const loginPageLeftTopTextStyle: IStackStyles = {
         fontSize: '70px',
         fontWeight: 'bold',
         color: theme.palette.white,
+        alignSelf: 'flex-end',
         justifySelf: 'flex-end',
     }
 }
