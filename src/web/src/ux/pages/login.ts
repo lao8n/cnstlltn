@@ -18,8 +18,9 @@ export const loginPageLeftStyle: IStackStyles = {
         backgroundColor: theme.palette.themeSecondary,
         padding: '20px',
         display: 'flex',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
+        justifyContent: 'center', // Centers content vertically
+        alignItems: 'flex-start', // Aligns text to the left
+        flexDirection: 'column',
     }
 }
 
@@ -36,13 +37,9 @@ export const loginPageRightStyle: IStackStyles = {
 
 export const loginPageLeftTextStyle: ITextStyles = {
     root: {
-        display: 'flex',
-        flexDirection: 'column',
         height: '100%',  // Ensure the container takes full height
         fontSize: '70px',
         fontWeight: 'bold',
         color: theme.palette.white,
-        justifyContent: 'center', // Centers content vertically
-        alignItems: 'flex-start', // Aligns text to the left
     }
 }

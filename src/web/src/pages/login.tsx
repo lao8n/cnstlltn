@@ -33,7 +33,6 @@ export const Login = () => {
   const [googleClientId, setGoogleClientId] = useState("");
   const messages = [
     ["thinking", "is for losers"],
-    ["think for yourself", "but not by yourself"],
     ["think less", "filter more"],
     ["outsource", "your thinking"]
   ]
