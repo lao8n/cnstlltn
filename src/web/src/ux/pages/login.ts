@@ -17,6 +17,9 @@ export const loginPageLeftStyle: IStackStyles = {
         height: '100%',
         backgroundColor: theme.palette.themeSecondary,
         padding: '20px',
+        display: 'flex',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
     }
 }
 
