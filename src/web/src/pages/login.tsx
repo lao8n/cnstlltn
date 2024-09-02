@@ -66,14 +66,14 @@ export const Login = () => {
   return (
     <GoogleOAuthProvider clientId={googleClientId}>
       <Stack horizontal styles={loginPageStyle}>
-        <Stack.Item styles={loginPageLeftStyle}>
+        <Stack styles={loginPageLeftStyle}>
           <Stack.Item styles={loginPageLeftTextStyle}>
             {messages[messageIndex][0]}
           </Stack.Item>
-          <Stack.Item>
+          <Stack.Item styles={loginPageLeftTextStyle}>
             {messages[messageIndex][1]}
           </Stack.Item>
-        </Stack.Item>
+        </Stack>
         <Stack.Item styles={loginPageRightStyle}>
           <GoogleOAuthProvider clientId={googleClientId}>
             <GoogleLogin
