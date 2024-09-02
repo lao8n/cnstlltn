@@ -37,6 +37,7 @@ export const Login = () => {
     ["think less", "filter more"],
     ["outsource", "your thinking"]
   ]
+  const messageIndex = Math.floor(Math.random() * messages.length);
 
   // functions
   const handleLoginSuccess = async (response: CredentialResponse) => {
@@ -67,10 +68,10 @@ export const Login = () => {
       <Stack horizontal styles={loginPageStyle}>
         <Stack.Item styles={loginPageLeftStyle}>
           <Stack.Item>
-            {messages[Math.floor(Math.random() * messages.length)][0]}
+            {messages[messageIndex][0]}
           </Stack.Item>
           <Stack.Item>
-            {messages[Math.floor(Math.random() * messages.length)][1]}
+            {messages[messageIndex][1]}
           </Stack.Item>
         </Stack.Item>
         <Stack.Item styles={loginPageRightStyle}>

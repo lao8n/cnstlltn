@@ -7,17 +7,15 @@ export const loginPageStyle: IStackStyles = {
     root: {
         width: '100%',
         display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
     }
 }
 
 export const loginPageLeftStyle: IStackStyles = {
     root: {
         width: '50%',
-        fontSize: '50px',
+        height: '100%',
         backgroundColor: theme.palette.themeSecondary,
-        color: theme.palette.white,
+        padding: '20px',
     }
 }
 
@@ -25,5 +23,15 @@ export const loginPageRightStyle: IStackStyles = {
     root: {
         width: '50%',
         backgroundColor: theme.palette.white,
+        justifyContent: 'center',
+        alignItems: 'center',
+    }
+}
+
+export const loginPageLeftTextStyle: IStackStyles = {
+    root: {
+        fontSize: '50px',
+        fontWeight: 'bold',
+        color: theme.palette.white,
     }
 }
