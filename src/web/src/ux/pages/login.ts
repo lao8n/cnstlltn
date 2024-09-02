@@ -36,10 +36,13 @@ export const loginPageRightStyle: IStackStyles = {
 
 export const loginPageLeftTextStyle: ITextStyles = {
     root: {
-        fontSize: '50px',
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100%',  // Ensure the container takes full height
+        fontSize: '70px',
         fontWeight: 'bold',
         color: theme.palette.white,
-        justifyContent: 'flex-start',
-        alignItems: 'center',
+        justifyContent: 'center', // Centers content vertically
+        alignItems: 'flex-start', // Aligns text to the left
     }
 }
