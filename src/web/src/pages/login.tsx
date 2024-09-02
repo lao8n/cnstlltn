@@ -18,7 +18,7 @@ import * as noteActions from '../state/actions/noteActions';
 import { DisplayActions } from '../state/actions/displayActions';
 import * as displayActions from '../state/actions/displayActions';
 // ux
-import { loginPageStyle, loginPageLeftStyle, loginPageRightStyle, loginPageLeftTextStyle } from '../ux/pages/login';
+import { loginPageStyle, loginPageLeftStyle, loginPageRightStyle, loginPageLeftTopTextStyle, loginPageLeftBottomTextStyle } from '../ux/pages/login';
 
 export const Login = () => {
   const appContext = useContext<AppContext>(UserAppContext)
@@ -66,10 +66,10 @@ export const Login = () => {
     <GoogleOAuthProvider clientId={googleClientId}>
       <Stack horizontal styles={loginPageStyle}>
         <Stack styles={loginPageLeftStyle}>
-          <Stack.Item styles={loginPageLeftTextStyle}>
+          <Stack.Item styles={loginPageLeftTopTextStyle}>
             {messages[messageIndex][0]}
           </Stack.Item>
-          <Stack.Item styles={loginPageLeftTextStyle}>
+          <Stack.Item styles={loginPageLeftBottomTextStyle}>
             {messages[messageIndex][1]}
           </Stack.Item>
         </Stack>

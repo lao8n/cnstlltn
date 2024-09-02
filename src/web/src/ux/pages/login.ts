@@ -1,4 +1,4 @@
-import { IStackStyles, ITextStyles } from '@fluentui/react'
+import { IStackStyles } from '@fluentui/react'
 import { CnstlltnTheme } from '../shared/theme'
 
 const theme = CnstlltnTheme;
@@ -35,7 +35,17 @@ export const loginPageRightStyle: IStackStyles = {
     }
 }
 
-export const loginPageLeftTextStyle: ITextStyles = {
+export const loginPageLeftTopTextStyle: IStackStyles = {
+    root: {
+        height: '100%',  // Ensure the container takes full height
+        fontSize: '70px',
+        fontWeight: 'bold',
+        color: theme.palette.white,
+        alignSelf: 'flex-end',
+    }
+}
+
+export const loginPageLeftBottomTextStyle: IStackStyles = {
     root: {
         height: '100%',  // Ensure the container takes full height
         fontSize: '70px',
