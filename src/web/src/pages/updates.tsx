@@ -22,6 +22,9 @@ export const Updates = () => {
             </Stack.Item>
             <Stack.Item styles={updateTextStyle}>
                 <Stack.Item>
+                - I think there is a bug in the drilldown where it does not drill down into thd correct note but maybe the one before? Sometimes it works, sometimes it doesn't.
+                </Stack.Item>
+                <Stack.Item>
                 - [Fixed - again!] If you have a constellation with existing content and then try an already existing cluster by it creates loads of new clusters.
                 </Stack.Item>
             </Stack.Item>

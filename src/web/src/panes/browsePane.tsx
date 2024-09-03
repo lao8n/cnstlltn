@@ -86,6 +86,7 @@ const BrowsePane: FC = (): ReactElement => {
         console.log("drill down")
         const browseState = appContext.state.browseState.messages[appContext.state.browseState.messages.length - 1];
         actions.browse.setBrowseChosen(browseState.responses[index].title);
+        console.log("browse chosen", browseState.responses[index].title)
         setIsLoading(true);
         setPreviousTitles([...previousTitles, browseState.responses[index].title]);
         const browseResponses = await actions.browse.postBrowse({

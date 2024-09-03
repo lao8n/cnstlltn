@@ -47,6 +47,12 @@ export const drillDownButtonStackStyle: IStackStyles = {
         height: '100%',
         alignItems: 'stretch',
         width: 'auto',
+        selectors: {
+            '&:hover': {
+                backgroundColor: theme.palette.themeSecondary,
+                color: theme.palette.white,
+            }
+        }
     }
 }
 
