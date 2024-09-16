@@ -7,7 +7,7 @@ export const Updates = () => {
     return(
         <Stack styles={updatesPageStyle}>
             <Stack.Item styles={updateHeadingStyle}>
-                Updates - last updated 08/31/2024
+                Updates - last updated 09/16/2024
             </Stack.Item>
             <Stack.Item styles={updateTextStyle}>
                 This page is for updates on cnstlltn. As we are still in pre-alpha there will be lots of bugs so please send any you see over to cnstlltn@outlook.com. We also welcome any feedback you wish to share including feature requests etc.
@@ -21,6 +21,9 @@ export const Updates = () => {
                 Current Major Bugs
             </Stack.Item>
             <Stack.Item styles={updateTextStyle}>
+                <Stack.Item>
+                - Going to update to new OpenAI api for more reliable JSON responses which should mean that clustering should be much faster as I don't have to batch.
+                </Stack.Item>
                 <Stack.Item>
                 - I think there is a bug in the drilldown where it does not drill down into thd correct note but maybe the one before? Sometimes it works, sometimes it doesn't.
                 </Stack.Item>
