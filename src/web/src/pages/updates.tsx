@@ -25,6 +25,9 @@ export const Updates = () => {
                     - No drill down button being shown.
                 </Stack.Item>
                 <Stack.Item>
+                - Going to update to new OpenAI api for more reliable JSON responses which should mean that clustering should be much faster as I don't have to batch.
+                </Stack.Item>
+                <Stack.Item>
                 - I think there is a bug in the drilldown where it does not drill down into thd correct note but maybe the one before? Sometimes it works, sometimes it doesn't.
                 </Stack.Item>
                 <Stack.Item>
