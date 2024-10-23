@@ -14,7 +14,8 @@ from pathlib import Path
 from beanie import init_beanie
 import motor
 # local imports
-from todo.models import __beanie_models__, Settings
+from todo.models import __beanie_models__
+from todo.settings import Settings
 
 # Use API_ALLOW_ORIGINS env var with comma separated urls like
 # `http://localhost:300, http://otherurl:100`

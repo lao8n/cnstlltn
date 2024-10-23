@@ -15,8 +15,8 @@ import * as displayActions from '../state/actions/displayActions';
 // components imports
 import { LoadingDots } from '../components/loadingDots';
 // ux imports
-import { queryBarStyle, queryStackStyle, toggleSecondSearchButtonStyle } from '../ux/panes/query';
-import { stackItemPadding, saveSelectedButtonStyle, queryFieldStyles, badInputNotifications, buttonStyles, selectedButtonStyles } from '../ux/shared/components';
+import { queryBarStyle, queryStackStyle, toggleSecondSearchButtonStyle, selectedButtonTextStyles, buttonTextStyles } from '../ux/panes/query';
+import { stackItemPadding, saveSelectedButtonStyle, queryFieldStyles, badInputNotifications, buttonStyles, selectedButtonStyles, } from '../ux/shared/components';
 import { blackLoadingDots } from '../ux/components/loadingDots';
 
 const QueryPane: FC = (): ReactElement => {
@@ -181,7 +181,9 @@ const QueryPane: FC = (): ReactElement => {
                                 key={index} 
                                 className={selectedResponses.has(index) ? selectedButtonStyles : buttonStyles} 
                                 onClick={() => toggleResponseSelection(index)}>
-                                <strong>{response.title}</strong>: {response.content}
+                                <span className={selectedResponses.has(index) ? selectedButtonTextStyles : buttonTextStyles}>
+                                    <strong>{response.title}</strong>: {response.content}
+                                </span>
                             </button>
                         ))}
                     </Stack>
