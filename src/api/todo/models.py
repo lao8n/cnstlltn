@@ -16,17 +16,17 @@ class LoginConfig(BaseModel):
     googleClientId: str
 
 # prompt
-class Query(BaseModel):
+class QueryRequest(BaseModel):
     userTxt: str
     material: str
 
-class QueryAiResponseBlock(BaseModel):
+class QueryResponse(BaseModel):
     title: str  
     source: str
     content: str
 
 # browse
-class BrowseResponseBlock(BaseModel):
+class BrowseResponse(BaseModel):
     title: str
     source: str
     flag: bool
@@ -34,9 +34,9 @@ class BrowseResponseBlock(BaseModel):
 
 class BrowseMessage(BaseModel):
     chosen: str
-    responses: List[BrowseResponseBlock]
+    responses: List[BrowseResponse]
 
-class Browse(BaseModel):
+class BrowseRequest(BaseModel):
     attachment: bool
     material: str
     messages: List[BrowseMessage] = []
