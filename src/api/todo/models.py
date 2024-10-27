@@ -25,12 +25,18 @@ class QueryResponse(BaseModel):
     source: str
     content: str
 
+class QueryResponses(BaseModel):
+    responses: List[QueryResponse]
+
 # browse
 class BrowseResponse(BaseModel):
     title: str
     source: str
-    flag: bool
     content: str
+    flag: bool
+
+class BrowseResponses(BaseModel):
+    responses: List[BrowseResponse]
 
 class BrowseMessage(BaseModel):
     chosen: str
@@ -42,6 +48,14 @@ class BrowseRequest(BaseModel):
     messages: List[BrowseMessage] = []
 
 # cluster
+class ClusterResponse(BaseModel):
+    id: str
+    title: str
+    clusterby: str
+
+class ClusterResponses(BaseModel):
+    responses: List[ClusterResponse]
+
 class UserCluster(Document):
     userid: str
     constellation: str

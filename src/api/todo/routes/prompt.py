@@ -2,10 +2,10 @@
 from typing import List
 # local imports
 from todo.app import app, openai_client
-from todo.models import (QueryRequest, BrowseRequest, QueryResponse, BrowseResponse)
+from todo.models import (QueryRequest, BrowseRequest, QueryResponses, BrowseResponses)
 
-@app.post("/query-ai", response_model=List[QueryResponse], response_model_by_alias=False, status_code=201)
-async def query_ai(query: QueryRequest) -> List[QueryResponse]:
+@app.post("/query-ai", response_model=QueryResponses, response_model_by_alias=False, status_code=201)
+async def query_ai(query: QueryRequest) -> QueryResponses:
     print("query-ai")
     print("user text: ", query.userTxt)
     print("material: ", query.material)
@@ -48,7 +48,7 @@ async def query_ai(query: QueryRequest) -> List[QueryResponse]:
                 "content": user_prompt,
             }
         ],
-        response_format=QueryResponse,
+        response_format=QueryResponses,
     )
 
     # process response
@@ -60,8 +60,8 @@ async def query_ai(query: QueryRequest) -> List[QueryResponse]:
         print(response.refusal)
         return []
 
-@app.post("/browse", response_model=List[BrowseResponse], response_model_by_alias=False, status_code=201)
-async def browse(browse: BrowseRequest) -> List[BrowseResponse]:
+@app.post("/browse", response_model=BrowseResponses, response_model_by_alias=False, status_code=201)
+async def browse(browse: BrowseRequest) -> BrowseResponses:
     print("browse")
     print("attachment: ", browse.attachment, "material: ", browse.material)
 
@@ -131,7 +131,7 @@ async def browse(browse: BrowseRequest) -> List[BrowseResponse]:
     response = openai_client.chat.completions.create(
         model='gpt-4o', # best model
         messages=messages,
-        response_format=BrowseResponse,
+        response_format=BrowseResponses,
     )
 
     # process response

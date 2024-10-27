@@ -5,10 +5,9 @@ from collections import defaultdict
 # package imports
 import json
 from random import uniform
-from todo.models import (UserFramework, UserCluster)
 # local imports
 from todo.app import app, openai_client
-from todo.models import (UserFramework, UserCluster)
+from todo.models import (UserFramework, UserCluster, ClusterResponses)
 
 @app.get("/get-clusters", response_model=List[UserCluster], status_code=200)
 async def get_clusters(request: Request) -> List[UserCluster]:
@@ -95,70 +94,54 @@ async def cluster_by(request: Request):
     cluster_by = request.query_params.get("clusterBy")
     cluster_new_only = request.query_params.get("clusterNewOnly")
     print("get_cluster_by params:", user_id, constellation_name, cluster_by, cluster_new_only)
+
+    # get user data
     await _set_not_latest(user_id, constellation_name)
     user_data, clusters, user_clusters = await _data_to_cluster(user_id, constellation_name, cluster_by, cluster_new_only)
     print("data to cluster output:", user_data, clusters, user_clusters)
-    prompt_format = f"""
-    this prompt is to describe how i want to format your response. i will prompt with something like a list of concepts
-    with an id, title and content and clusterby json format
-    [{{"id": "id1", "title": "concept 1", "source": "source 1", "content": "description of concept 1", "tags": "tag1, tag2", "clusterby": ""}}, 
-     {{"id": "id2", "title": "concept 2", "source": "source 2", "content": "description of concept 2", "tags": "", "clusterby": ""}}, 
-     {{"id": "id3", "title": "concept 3", "source": "source 3", "content": "description of concept 3", "tags": "tag2, tag3", "clusterby": ""}}]
-    i then want you to return the same data but with the clusterby field filled in with the cluster that the concept belongs to
-    in valid json format - dropping the content field
-    [{{"id": "id1", "title": "concept 1", "clusterby": "cluster 1"}}, 
-     {{"id": "id2", "title": "concept 2", "clusterby": "cluster 2"}}, 
-     {{"id": "id3", "title": "concept 3", "clusterby": "cluster 1"}}]
-    this should correspond in order exactly to the list of concepts in the prompt. therefore there should be 
-    {len(user_data)} lines in total, one for each concept.
-    the following is a list of concepts and their descriptions, using {cluster_by} assign a category to 
-    each one of them\n
+    
+    # prepare request
+    system_prompt = f"""
+    You are an AI assistant tasked with clustering concepts into categories. Please follow these instructions:
+    1. You will be give a list of concepts with an id, title, source, content and tags.
+    2. Return a list of the same concepts but with just the id, title and clusterby fields populated. The id and title 
+    should be exactly as in the prompt but you will have to decide the clusterby field based upon the this categorisation: 
+    {cluster_by}
+    3. The clusterby field should be the category that the concept belongs to.
     """
-    chunk_size = 10
+    user_prompt = f"""
+        Please categorise the following concepts into the categories: {cluster_by}
+    """
+
+    # make openai calls
+    completion = openai_client.chat.completions.parse(
+        model='gpt-4o', # mini doesn't work
+        messages=[
+            {
+                "role": "system",
+                "content": system_prompt,
+            },
+            {
+                "role": "user",
+                "content": user_prompt,
+            }
+        ],
+        response_format=ClusterResponses,
+    )
+
+    # process response
     new_clusters = {} # cluster -> coordinates
     all_cluster_ids = defaultdict(list) # cluster -> []ids
-    for chunk in _chunk_list(user_data, chunk_size):
-        json_data = []
-        for data in chunk:
-            json_data.append({"id": str(data.id), "title": data.title, "source": data.source, "content": data.content, "tags": ", ".join(data.tags), "clusterby": ""})
-        json_string = json.dumps(json_data)
-        response = openai_client.chat.completions.create(
-            model='gpt-4o', # mini doesn't work
-            messages=[
-                {
-                    "role": "system",
-                    "content": prompt_format,
-                },
-                {
-                    "role": "user",
-                    "content": json_string,
-                }
-            ]
-        )
-        json_response = response.choices[0].message.content.strip()
-        
-        # Add error handling and logging
-        try:
-            # Remove code block markers if present
-            json_response = json_response.strip('`')
-            if json_response.startswith('json\n'):
-                json_response = json_response[5:]
-            
-            response_blocks = json.loads(json_response)
-        except json.JSONDecodeError as e:
-            print(f"Error decoding JSON: {e}")
-            print(f"Raw response: {json_response}")
-            # You might want to skip this chunk or handle the error differently
-            continue
+    message = completion.choices[0].message
+    for response in message.responses:
+        if response.title not in clusters and response.title not in new_clusters:
+            new_clusters[response.title] = (uniform(0.1, 0.8), uniform(0.1, 0.8))
+        all_cluster_ids[response.title].append(response.id)
 
-        for response_block in response_blocks:
-            id = response_block['id']
-            cluster = response_block['clusterby'].title()
-            if cluster not in clusters and cluster not in new_clusters:
-                new_clusters[cluster] = (uniform(0.1, 0.8), uniform(0.1, 0.8))
-            all_cluster_ids[cluster].append(id)
     print("user_clusters:", user_clusters, " clusters ", clusters, " cluster_ids ", all_cluster_ids)
     print("new_clusters", new_clusters)
+
+    # save clusters
     await _save_clusters(user_id, constellation_name, cluster_by, user_clusters, clusters, all_cluster_ids, new_clusters)
     return
 
@@ -221,7 +204,3 @@ async def _save_clusters(user_id: str, constellation_name: str, cluster_by: str,
             user_cluster.frameworks[id] = (x, y)
         await user_cluster.save()
     return
-    
-def _chunk_list(data: List[UserFramework], chunk_size: int):
-    for i in range(0, len(data), chunk_size):
-        yield data[i:i + chunk_size]
