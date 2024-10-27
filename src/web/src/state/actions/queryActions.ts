@@ -18,9 +18,9 @@ export const postQueryResponseList = (query: Query): ActionMethod<QueryResponse[
         try {
             const queryResponses = await queryService.postQueryResponseList(query);
             console.log("query responses", queryResponses)
-            dispatch(postQueryResponseListAction(queryResponses));
+            dispatch(postQueryResponseListAction(queryResponses.responses));
             console.log("returned query responses")
-            return queryResponses
+            return queryResponses.responses
         } catch (error) {
             console.error("Error posting query responses: ", error);
             throw error

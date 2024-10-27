@@ -20,8 +20,8 @@ export interface BrowseActions {
 export const postBrowse = (query: Browse): ActionMethod<BrowseResponse[]> =>
     async (dispatch: Dispatch<PostBrowseAction>) => {
         const browseResponses = await browseService.postBrowse(query);
-        dispatch(postBrowseAction(browseResponses));
-        return browseResponses;
+        dispatch(postBrowseAction(browseResponses.responses));
+        return browseResponses.responses;
     }
 export interface PostBrowseAction extends PayloadAction<string, BrowseResponse[]> {
     type: ActionTypes.POST_BROWSE, payload: BrowseResponse[]
