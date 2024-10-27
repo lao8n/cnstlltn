@@ -128,7 +128,7 @@ async def browse(browse: BrowseRequest) -> BrowseResponses:
                         """})
 
     # make openai call
-    response = openai_client.beta.chat.completions.create(
+    response = openai_client.beta.chat.completions.parse(
         model='gpt-4o-2024-08-06', # best model
         messages=messages,
         response_format=BrowseResponses,
