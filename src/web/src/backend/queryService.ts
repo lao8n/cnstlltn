@@ -1,4 +1,4 @@
-import { Query, QueryResponse } from "../state/queryState";
+import { Query, QueryResponses } from "../state/queryState";
 import axios, { AxiosInstance } from 'axios';
 
 export class QueryService {
@@ -10,8 +10,8 @@ export class QueryService {
         this.baseUrl = baseUrl;
     }
 
-    public async postQueryResponseList(query: Query): Promise<QueryResponse[]> {
-        const response = await this.client.request<QueryResponse[]>({
+    public async postQueryResponseList(query: Query): Promise<QueryResponses> {
+        const response = await this.client.request<QueryResponses>({
             method: 'POST',
             url: `${this.baseUrl}/query-ai`,
             data: query

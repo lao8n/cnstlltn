@@ -14,6 +14,10 @@ export interface BrowseState {
     messages: BrowseMessage[];
 }
 
+export interface BrowseResponses {
+    responses: BrowseResponse[];
+}
+
 export interface BrowseResponse {
     title: string;
     source: string;

@@ -8,6 +8,10 @@ export interface Query {
     material: string
 }
 
+export interface QueryResponses {
+    responses: QueryResponse[];
+}
+
 export interface QueryResponse {
     title: string;
     source: string;
