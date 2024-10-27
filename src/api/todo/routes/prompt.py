@@ -36,8 +36,8 @@ async def query_ai(query: QueryRequest) -> QueryResponses:
         """
 
     # make openai call
-    completion = openai_client.chat.completions.parse(
-        model='gpt-4o', # best model
+    completion = openai_client.beta.chat.completions.parse(
+        model='gpt-4o-2024-08-06', # best model
         messages=[
             {
                 "role": "system",
@@ -128,8 +128,8 @@ async def browse(browse: BrowseRequest) -> BrowseResponses:
                         """})
 
     # make openai call
-    response = openai_client.chat.completions.create(
-        model='gpt-4o', # best model
+    response = openai_client.beta.chat.completions.create(
+        model='gpt-4o-2024-08-06', # best model
         messages=messages,
         response_format=BrowseResponses,
     )

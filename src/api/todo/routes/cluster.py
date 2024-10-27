@@ -114,8 +114,8 @@ async def cluster_by(request: Request):
     """
 
     # make openai calls
-    completion = openai_client.chat.completions.parse(
-        model='gpt-4o', # mini doesn't work
+    completion = openai_client.beta.chat.completions.parse(
+        model='gpt-4o-2024-08-06', # mini doesn't work
         messages=[
             {
                 "role": "system",
