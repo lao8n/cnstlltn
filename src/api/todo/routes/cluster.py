@@ -133,7 +133,7 @@ async def cluster_by(request: Request):
     new_clusters = {} # cluster -> coordinates
     all_cluster_ids = defaultdict(list) # cluster -> []ids
     message = completion.choices[0].message
-    for response in message.responses:
+    for response in message.parsed:
         if response.title not in clusters and response.title not in new_clusters:
             new_clusters[response.title] = (uniform(0.1, 0.8), uniform(0.1, 0.8))
         all_cluster_ids[response.title].append(response.id)
