@@ -7,7 +7,7 @@ export const Updates = () => {
     return(
         <Stack styles={updatesPageStyle}>
             <Stack.Item styles={updateHeadingStyle}>
-                Updates - last updated 10/07/2024
+                Updates - last updated 11/30/2024
             </Stack.Item>
             <Stack.Item styles={updateTextStyle}>
                 This page is for updates on cnstlltn. As we are still in pre-alpha there will be lots of bugs so please send any you see over to cnstlltn@outlook.com. We also welcome any feedback you wish to share including feature requests etc.
@@ -22,22 +22,22 @@ export const Updates = () => {
             </Stack.Item>
             <Stack.Item styles={updateTextStyle}>
                 <Stack.Item>
-                    - No drill down button being shown.
-                </Stack.Item>
-                <Stack.Item>
-                - Going to update to new OpenAI api for more reliable JSON responses which should mean that clustering should be much faster as I don't have to batch.
+                - No drill down button being shown.
                 </Stack.Item>
                 <Stack.Item>
                 - I think there is a bug in the drilldown where it does not drill down into thd correct note but maybe the one before? Sometimes it works, sometimes it doesn't.
-                </Stack.Item>
-                <Stack.Item>
-                - [Fixed - again!] If you have a constellation with existing content and then try an already existing cluster by it creates loads of new clusters.
                 </Stack.Item>
             </Stack.Item>
             <Stack.Item styles={updateHeadingStyle}>
                 Currently Worked On Features
             </Stack.Item>
             <Stack.Item styles={updateTextStyle}>
+                <Stack.Item>
+                - Add ability to create new empty note.
+                </Stack.Item>
+                <Stack.Item>
+                - [Released] Updated to new OpenAI API with structured outputs which means 100% reliable json responses. Clustering is now much faster as don't have to batch.
+                </Stack.Item>
                 <Stack.Item>
                 - [Released] Add the ability to delete notes - thanks Alex for feedback!
                 </Stack.Item>

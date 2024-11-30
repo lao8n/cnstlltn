@@ -135,9 +135,10 @@ async def cluster_by(request: Request):
     all_cluster_ids = defaultdict(list) # cluster -> []ids
     message = completion.choices[0].message
     for response in message.parsed.responses: # response.title is just for debugging
-        if response.cluster not in clusters and response.cluster not in new_clusters:
-            new_clusters[response.cluster] = (uniform(0.1, 0.8), uniform(0.1, 0.8))
-        all_cluster_ids[response.cluster].append(response.id)
+        capitalized_cluster = response.cluster.capitalize()
+        if capitalized_cluster not in clusters and capitalized_cluster not in new_clusters:
+            new_clusters[capitalized_cluster] = (uniform(0.1, 0.8), uniform(0.1, 0.8))
+        all_cluster_ids[capitalized_cluster].append(response.id)
 
     print("user_clusters:", user_clusters, " clusters ", clusters, " cluster_ids ", all_cluster_ids)
     print("new_clusters", new_clusters)
