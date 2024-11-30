@@ -51,7 +51,7 @@ class BrowseRequest(BaseModel):
 class ClusterResponse(BaseModel):
     id: str
     title: str
-    clusterby: str
+    cluster: str
 
 class ClusterResponses(BaseModel):
     responses: List[ClusterResponse]

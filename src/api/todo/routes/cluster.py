@@ -104,14 +104,15 @@ async def cluster_by(request: Request):
     system_prompt = f"""
     You are an AI assistant tasked with clustering concepts into categories. Please follow these instructions:
     1. You will be give a list of concepts with an id, title, source, content and tags.
-    2. Return a list of the same concepts but with just the id, title and clusterby fields populated. The id and title 
-    should be exactly as in the prompt but you will have to decide the clusterby field based upon the this categorisation: 
+    2. Return a list of the same concepts but with just the id, title and cluster fields populated. The id and title 
+    should be exactly as in the prompt but you will have to decide the cluster field based upon this categorisation: 
     {cluster_by}
-    3. The clusterby field should be the category that the concept belongs to.
+    3. The cluster field should be the category that the concept belongs to.
     """
-    user_prompt = f"""
-        Please categorise the following concepts into the categories: {cluster_by}
-    """
+    json_data = []
+    for data in user_data:
+        json_data.append({"id": str(data.id), "title": data.title, "source": data.source, "content": data.content, "tags": ", ".join(data.tags)})
+    user_prompt = json.dumps(json_data)
 
     # make openai calls
     completion = openai_client.beta.chat.completions.parse(
@@ -133,10 +134,10 @@ async def cluster_by(request: Request):
     new_clusters = {} # cluster -> coordinates
     all_cluster_ids = defaultdict(list) # cluster -> []ids
     message = completion.choices[0].message
-    for response in message.parsed.responses:
-        if response.title not in clusters and response.title not in new_clusters:
-            new_clusters[response.title] = (uniform(0.1, 0.8), uniform(0.1, 0.8))
-        all_cluster_ids[response.title].append(response.id)
+    for response in message.parsed.responses: # response.title is just for debugging
+        if response.cluster not in clusters and response.cluster not in new_clusters:
+            new_clusters[response.cluster] = (uniform(0.1, 0.8), uniform(0.1, 0.8))
+        all_cluster_ids[response.cluster].append(response.id)
 
     print("user_clusters:", user_clusters, " clusters ", clusters, " cluster_ids ", all_cluster_ids)
     print("new_clusters", new_clusters)
