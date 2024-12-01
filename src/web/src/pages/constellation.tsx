@@ -1,5 +1,5 @@
 // react imports
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Stack } from '@fluentui/react';
 // state imports
 import { AppContext } from '../state/applicationState';
@@ -13,7 +13,15 @@ import NotePane from '../panes/notePane';
 import { constellationQueryPageStyle, aiPageStyle, constellationPageStyle, notePageStyle, welcomePageStyle } from '../ux/pages/constellation';
 
 export const Constellation = () => {
-  const appContext : AppContext = useContext(UserAppContext);
+  const appContext: AppContext = useContext(UserAppContext);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  // Add window resize listener
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   if (!appContext.state.userState?.isLoggedIn) {
     return (
@@ -26,6 +34,16 @@ export const Constellation = () => {
         </Stack.Item>
       </Stack>
       );
+  }
+
+  if (windowWidth < 500 && appContext.state.userState.constellationName !== "Home") {
+    return (
+      <Stack horizontal styles={constellationQueryPageStyle}>
+        <Stack.Item styles={aiPageStyle}>
+          <AIPane/>
+        </Stack.Item>
+      </Stack>
+    );
   }
   
   return (
