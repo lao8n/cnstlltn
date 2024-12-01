@@ -7,6 +7,8 @@ import UserAppContext from "../state/userContext"
 import { bindActionCreators } from "../state/actions/actionCreators";
 import { NoteActions } from "../state/actions/noteActions";
 import * as noteActions from "../state/actions/noteActions";
+import { DisplayActions } from '../state/actions/displayActions';
+import * as displayActions from '../state/actions/displayActions';
 // ux imports
 import { noteComponentStackStyle, noteTextFieldStyle } from "../ux/components/note";
 
@@ -20,6 +22,7 @@ const EditableNoteComponent: React.FC<EditableNoteProps> = ({ disabled, field, i
     const appContext = useContext<AppContext>(UserAppContext)
     const actions = useMemo(() => ({
         note: bindActionCreators(noteActions, appContext.dispatch) as unknown as NoteActions,
+        display: bindActionCreators(displayActions, appContext.dispatch) as unknown as DisplayActions,
     }), [appContext.dispatch]);
     const [text, setText] = useState(initialContent);
 
@@ -41,6 +44,7 @@ const EditableNoteComponent: React.FC<EditableNoteProps> = ({ disabled, field, i
             console.log("save new note ", newContent);
             actions.note.setSelectedContent(newContent);
             await actions.note.editFramework(appContext.state.userState.userId, newContent);
+            actions.display.setUpdated(Date.now());
         }
     };
 

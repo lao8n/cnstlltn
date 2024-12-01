@@ -6,8 +6,6 @@ import { AppContext } from "../state/applicationState";
 import { QueryResponse } from '../state/queryState';
 import UserAppContext from "../state/userContext";
 import { bindActionCreators } from "../state/actions/actionCreators";
-import { UserActions } from '../state/actions/userActions';
-import * as userActions from '../state/actions/userActions';
 import { ConstellationActions } from '../state/actions/constellationActions';
 import * as constellationActions from '../state/actions/constellationActions';
 import { ClusterActions } from '../state/actions/clusterActions';
@@ -32,7 +30,6 @@ import { setConstellationDisplayPoints, setClusterDisplayPoints, drawConstellati
 const ConstellationPane: FC = (): ReactElement => {
     const appContext = useContext<AppContext>(UserAppContext)
     const actions = useMemo(() => ({
-        user: bindActionCreators(userActions, appContext.dispatch) as unknown as UserActions,
         constellation: bindActionCreators(constellationActions, appContext.dispatch) as unknown as ConstellationActions,
         cluster: bindActionCreators(clusterActions, appContext.dispatch) as unknown as ClusterActions,
         note: bindActionCreators(noteActions, appContext.dispatch) as unknown as NoteActions,
