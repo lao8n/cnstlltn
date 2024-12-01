@@ -14,11 +14,10 @@ import { constellationQueryPageStyle, aiPageStyle, constellationPageStyle, noteP
 
 export const Constellation = () => {
   const appContext: AppContext = useContext(UserAppContext);
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [tabWidth, setTabWidth] = useState(document.documentElement.clientWidth);
 
-  // Add window resize listener
   useEffect(() => {
-    const handleResize = () => setWindowWidth(window.innerWidth);
+    const handleResize = () => setTabWidth(document.documentElement.clientWidth);
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
@@ -36,7 +35,7 @@ export const Constellation = () => {
       );
   }
 
-  if (windowWidth < 500 && appContext.state.userState.constellationName !== "Home") {
+  if (tabWidth < 500 && appContext.state.userState.constellationName !== "Home") {
     return (
       <Stack horizontal styles={constellationQueryPageStyle}>
         <Stack.Item styles={aiPageStyle}>
