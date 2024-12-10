@@ -77,11 +77,15 @@ async def browse(browse: BrowseRequest) -> BrowseResponses:
         Title: [Concise title for the section]
         Source: [Source of the material, such as author and book title - use your knowledge of the material to infer this]
         Content: [Detailed explanation of the section's content]
-        Flag: [true or false, set to true if there could still be more detail in this section not covered in your response, 
-        set to false if your response covers absolutely all the details from this section of the source material]
+        Flag: [true or false, set to true if ANY of these apply:
+        - There are details, examples, or quotes from the source material not included in your summary
+        - There are technical terms or concepts from the source that weren't fully explained
+        - There are arguments or points from the source that were simplified or condensed
+        - There are related discussions from the source material that weren't covered
+        Set to false ONLY if your response includes every single detail mentioned in this section of the source material]
 
         Do not include any introduction, conclusion, or other non-content sections.
-        Do not include any markdown formatting such as # or * in the content, do not number the sections.
+        Do not include any markdown formatting such as # or * or numbering in the content, do not number the sections.
         """
     else:
         system_prompt = """
@@ -94,11 +98,15 @@ async def browse(browse: BrowseRequest) -> BrowseResponses:
         Title: [Concise title for the section]
         Source: [Source of the material, such as author and book title - use your knowledge of the material to infer this]
         Content: [Detailed explanation of the section's content]
-        Flag: [true or false, set to true if there could still be more detail in this section not covered in your response, 
-        set to false if your response covers absolutely all the details from this section of the source material]
-
+        Flag: [true or false, set to true if ANY of these apply:
+        - There are details, examples, or quotes from the source material not included in your summary
+        - There are technical terms or concepts from the source that weren't fully explained
+        - There are arguments or points from the source that were simplified or condensed
+        - There are related discussions from the source material that weren't covered
+        Set to false ONLY if your response includes every single detail mentioned in this section of the source material]
+        
         Do not include any introduction, conclusion, or other non-content sections.
-        Do not include any markdown formatting such as # or * in the content, do not number the sections.
+        Do not include any markdown formatting such as # or * or numbering in the content, do not number the sections.
         """
 
     if browse.attachment:
