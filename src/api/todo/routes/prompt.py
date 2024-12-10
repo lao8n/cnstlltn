@@ -95,7 +95,7 @@ async def browse(browse: BrowseRequest) -> BrowseResponses:
 
     messages = [
         {"role": "system", "content": system_prompt }, 
-        {"role": "user", "content": "Summarise the key concepts in 3-8 sections"}
+        {"role": "user", "content": user_content}
     ]
     for message in browse.messages:
         responses_content = "\n\n".join([
