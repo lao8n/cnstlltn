@@ -66,53 +66,32 @@ async def browse(browse: BrowseRequest) -> BrowseResponses:
     print("attachment: ", browse.attachment, "material: ", browse.material)
 
     # prepare request
-    if browse.attachment:
-        system_prompt = """
-        You are an AI assistant tasked with analyzing and summarizing key concepts from given texts. Please follow these instructions:
-
-        1. Read the source material carefully. This could be a video transcript or an article.
-        2. Divide the material into 3 to 8 continuous sections.
-        3. For each section, provide the following information:
-
-        Title: [Concise title for the section]
-        Source: [Source of the material, such as author and book title - use your knowledge of the material to infer this]
-        Content: [Detailed explanation of the section's content]
-        Flag: [true or false, set to true if ANY of these apply:
-        - There are details, examples, or quotes from the source material not included in your summary
-        - There are technical terms or concepts from the source that weren't fully explained
-        - There are arguments or points from the source that were simplified or condensed
-        - There are related discussions from the source material that weren't covered
-        Set to false ONLY if your response includes every single detail mentioned in this section of the source material]
-
-        Do not include any introduction, conclusion, or other non-content sections.
-        Do not include any markdown formatting such as # or * or numbering in the content, do not number the sections.
-        """
-    else:
-        system_prompt = """
-        You are an AI assistant tasked with analyzing and summarizing key concepts from a book. Please follow these instructions:
-
-        1. Consider the book as a whole.
-        2. Divide the material into 3 to 8 continuous sections.
-        3. For each section, provide the following information:
-
-        Title: [Concise title for the section]
-        Source: [Source of the material, such as author and book title - use your knowledge of the material to infer this]
-        Content: [Detailed explanation of the section's content]
-        Flag: [true or false, set to true if ANY of these apply:
-        - There are details, examples, or quotes from the source material not included in your summary
-        - There are technical terms or concepts from the source that weren't fully explained
-        - There are arguments or points from the source that were simplified or condensed
-        - There are related discussions from the source material that weren't covered
-        Set to false ONLY if your response includes every single detail mentioned in this section of the source material]
-        
-        Do not include any introduction, conclusion, or other non-content sections.
-        Do not include any markdown formatting such as # or * or numbering in the content, do not number the sections.
-        """
-
+    system_prompt = """
+    You are an AI assistant tasked with analyzing and summarizing key concepts from given texts.
+    Do not include any introduction, conclusion, or other non-content sections.
+    Do not include any markdown formatting such as # or * or numbering in the content, do not number the sections.
+    """
     if browse.attachment:
         system_prompt = f"Here is the material to analyze:\n\n{browse.material}"
     else:
         system_prompt = f"Here is the name of the book, article or concept to analyse:\n\n{browse.material}"
+
+    user_content = """
+    Please follow these instructions:
+        1. Read the source material carefully.
+        2. Divide the material into 3 to 8 continuous sections.
+        3. For each section, provide the following information:
+
+        Title: [Concise title for the section]
+        Source: [Source of the material, such as author and book title - use your knowledge of the material to infer this]
+        Content: [Detailed explanation of the section's content]
+        Flag: [true or false, set to true if ANY of these apply:
+        - There are details, examples, or quotes from the source material not included in your summary
+        - There are technical terms or concepts from the source that weren't fully explained
+        - There are arguments or points from the source that were simplified or condensed
+        - There are related discussions from the source material that weren't covered
+        Set to false ONLY if your response includes every single detail mentioned in this section of the source material]
+    """
 
     messages = [
         {"role": "system", "content": system_prompt }, 
