@@ -219,22 +219,37 @@ const ConstellationPane: FC = (): ReactElement => {
                 if (type === "up") { // Check if the mouse click is released, which indicates a click
                     const mousePt = new Pt(x, y);
                     const range = Circle.fromCenter(mousePt, r);
+                    
+                    // Find the closest point within range
+                    let closestPoint: DisplayPoint | null = null;
+                    let minDistance = Infinity;
+                    
                     constellationPts.current.forEach(pt => {
                         if (Circle.withinBound(range, pt.position)) {
-                            if (appContext.state.userState.constellationName === "Home") {
-                                actions.constellation.setConstellation([]);
-                                actions.cluster.setClusters([]);
-                                actions.note.setSelectedContent(null);
-                                setUnclusteredContent(0);
-                                actions.cluster.setClusterBy('');
-                                actions.constellation.setConstellationName(pt.name);
-                                actions.display.setUpdated(Date.now());
-                            } else {
-                                pt.selected = !pt.selected;
-                                actions.note.setSelectedContent(pt.selected ? pt.userFramework : null);
+                            const distance = mousePt.$subtract(pt.position).magnitude();
+                            if (distance < minDistance) {
+                                minDistance = distance;
+                                closestPoint = pt;
                             }
                         }
                     });
+
+                    // Only handle the closest point if one was found
+                    if (closestPoint !== null) {
+                        closestPoint = closestPoint as DisplayPoint;
+                        if (appContext.state.userState.constellationName === "Home") {
+                            actions.constellation.setConstellation([]);
+                            actions.cluster.setClusters([]);
+                            actions.note.setSelectedContent(null);
+                            setUnclusteredContent(0);
+                            actions.cluster.setClusterBy('');
+                            actions.constellation.setConstellationName(closestPoint.name);
+                            actions.display.setUpdated(Date.now());
+                        } else {
+                            closestPoint.selected = !closestPoint.selected;
+                            actions.note.setSelectedContent(closestPoint.selected ? closestPoint.userFramework : null);
+                        }
+                    }
                 }
             }
         });
