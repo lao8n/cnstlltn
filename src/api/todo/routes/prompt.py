@@ -2,9 +2,9 @@
 from typing import List
 # local imports
 from todo.app import app, openai_client
-from todo.models import (QueryRequest, BrowseRequest, QueryResponses, BrowseResponses)
+from todo.models import (QueryRequest, BrowseRequest, QueryResponses, BrowseResponses, FrameRequest, FrameResponses)
 
-@app.post("/query-ai", response_model=QueryResponses, response_model_by_alias=False, status_code=201)
+@app.post("/query-ai", response_model=QueryResponses, response_model_by_alias=False, status_code=200)
 async def query_ai(query: QueryRequest) -> QueryResponses:
     print("query-ai")
     print("user text: ", query.userTxt)
@@ -60,7 +60,7 @@ async def query_ai(query: QueryRequest) -> QueryResponses:
         print(response.refusal)
         return []
 
-@app.post("/browse", response_model=BrowseResponses, response_model_by_alias=False, status_code=201)
+@app.post("/browse", response_model=BrowseResponses, response_model_by_alias=False, status_code=200)
 async def browse(browse: BrowseRequest) -> BrowseResponses:
     print("browse")
     print("attachment: ", browse.attachment, "material: ", browse.material)
@@ -76,7 +76,7 @@ async def browse(browse: BrowseRequest) -> BrowseResponses:
     else:
         system_prompt = f"Here is the name of the book, article or concept to analyse:\n\n{browse.material}"
 
-    user_content = """
+    user_prompt = """
     Please follow these instructions:
         1. Read the source material carefully.
         2. Divide the material into 3 to 8 continuous sections.
@@ -95,7 +95,7 @@ async def browse(browse: BrowseRequest) -> BrowseResponses:
 
     messages = [
         {"role": "system", "content": system_prompt }, 
-        {"role": "user", "content": user_content}
+        {"role": "user", "content": user_prompt}
     ]
     for message in browse.messages:
         responses_content = "\n\n".join([
@@ -124,6 +124,61 @@ async def browse(browse: BrowseRequest) -> BrowseResponses:
     # process response
     response = response.choices[0].message
     print("browse structured output:", response)
+    if response.parsed:
+        return response.parsed
+    else:
+        print(response.refusal)
+        return []
+    
+@app.post("/frame", response_model=FrameResponses, response_model_by_alias=False, status_code=200)
+async def frame(frame: FrameRequest) -> FrameResponses:
+    print("frame")
+    print("frame request ", frame.argument)
+    
+    # prepare request
+    system_prompt = """
+    You are an AI assistant tasked with analyzing text. 
+    Try to be as specific as possible. Do not include any introduction or conclusion. 
+    Do not use markdown in your formatting.
+    """
+
+    frameworks_text = "\n\n".join([
+        f"Title: {framework.title}\nSource: {framework.source}\nContent: {framework.content}"
+        for framework in frame.frameworks
+    ])
+
+    user_prompt = f"""
+        Please follow these instructions:
+
+        1. Use the provided data to evaluate the provided argument
+        2. Breakdown your analysis into parts where for each give a title and then steelman and strawman each part.
+
+        Title: [Concept, Event or Narrative Title]
+        Steelman: [Steelman this idea]
+        Strawman: [Strawman this idea]
+
+        Here is the provided argument {frame.argument}
+        Here is the provided data {frameworks_text}
+        """
+    
+    # make openai call
+    completion = openai_client.beta.chat.completions.parse(
+        model='gpt-4o-2024-08-06', # best model
+        messages=[
+            {
+                "role": "system",
+                "content": system_prompt,
+            },
+            {
+                "role": "user",
+                "content": user_prompt,
+            }
+        ],
+        response_format=FrameResponses,
+    )
+
+    response = completion.choices[0].message
+    print("frame response:", response)
     if response.parsed:
         return response.parsed
     else:

@@ -15,7 +15,21 @@ class UserId(Document):
 class LoginConfig(BaseModel):
     googleClientId: str
 
-# prompt
+# notes
+class Framework(BaseModel):
+    title: str
+    source: str
+    content: str
+
+class UserFramework(Document):
+    userid: str
+    constellation: str
+    title: str
+    content: str
+    source: str = ""
+    tags: List[str] = []
+
+# query
 class QueryRequest(BaseModel):
     userTxt: str
     material: str
@@ -47,6 +61,19 @@ class BrowseRequest(BaseModel):
     material: str
     messages: List[BrowseMessage] = []
 
+# frame
+class FrameResponse(BaseModel):
+    title: str
+    steelman: str
+    strawman: str
+
+class FrameResponses(BaseModel):
+    responses: List[FrameResponse]
+
+class FrameRequest(BaseModel):
+    argument: str
+    frameworks: List[Framework]
+
 # cluster
 class ClusterResponse(BaseModel):
     id: str
@@ -64,19 +91,5 @@ class UserCluster(Document):
     islatest: bool = False
     coordinate: Tuple[float, float] = (0, 0)
     frameworks: Dict[str, Tuple[float, float]] = Field(default_factory=dict) # object id as key
-
-# notes
-class Framework(BaseModel):
-    title: str
-    source: str
-    content: str
-
-class UserFramework(Document):
-    userid: str
-    constellation: str
-    title: str
-    content: str
-    source: str = ""
-    tags: List[str] = []
 
 __beanie_models__ = [UserFramework, UserCluster, UserId]
