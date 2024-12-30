@@ -5,6 +5,7 @@ import * as clusterActions from './clusterActions'
 import * as noteActions from './noteActions'
 import * as displayActions from './displayActions'
 import * as browseActions from './browseActions'
+import * as frameActions from './frameActions'
 
 export enum ActionTypes {
     // user 
@@ -12,8 +13,8 @@ export enum ActionTypes {
     GET_LOGIN_CONFIG = "GET_LOGIN_CONFIG",
     GET_GOOGLE_USER_ID = "GET_GOOGLE_USER_ID",
     // query
-    POST_QUERY_RESPONSE_LIST = "POST_QUERY_RESPONSE_LIST",
-    SET_QUERY_RESPONSE_LIST = "SET_QUERY_RESPONSE_LIST",
+    POST_QUERY = "POST_QUERY",
+    SET_QUERY_RESPONSES = "SET_QUERY_RESPONSES",
     // browse
     POST_BROWSE = "POST_BROWSE",
     SET_BROWSE_MATERIAL = "SET_BROWSE_MATERIAL",
@@ -21,6 +22,9 @@ export enum ActionTypes {
     SET_BROWSE_CHOSEN = "SET_BROWSE_CHOSEN",
     PUSH_BROWSE_MESSAGE = "PUSH_BROWSE_MESSAGE",
     POP_BROWSE_MESSAGE = "POP_BROWSE_MESSAGE",
+    // frame
+    POST_FRAME = "POST_FRAME",
+    SET_FRAME_RESPONSES = "SET_FRAME_RESPONSES",
     // constellation
     SAVE_SELECTED_FRAMEWORKS = "SAVE_SELECTED_FRAMEWORKS",
     GET_CONSTELLATION = "GET_CONSTELLATION",
@@ -48,8 +52,8 @@ export type ApplicationActions =
     userActions.SetUserAction |
     userActions.GetLoginConfigAction |
     // query
-    queryActions.PostQueryResponseListAction |
-    queryActions.SetQueryResponseListAction |
+    queryActions.PostQueryAction |
+    queryActions.SetQueryResponsesAction |
     // browse
     browseActions.PostBrowseAction |
     browseActions.SetBrowseMaterialAction |
@@ -57,6 +61,9 @@ export type ApplicationActions =
     browseActions.SetBrowseChosenAction |
     browseActions.PushBrowseMessageAction |
     browseActions.PopBrowseMessageAction |
+    // frame
+    frameActions.PostFrameAction |
+    frameActions.SetFrameResponsesAction |
     // constellation
     constellationActions.SaveSelectedFrameworksAction | 
     constellationActions.GetConstellationAction |

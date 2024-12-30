@@ -60,8 +60,8 @@ const QueryPane: FC = (): ReactElement => {
         if (newQuery) {
             setIsLoading(true);
             const query: Query = {userTxt: newQuery, material: newMaterial}
-            const queryResponses = await actions.query.postQueryResponseList(query)
-            actions.query.setQueryResponseList(queryResponses)
+            const queryResponses = await actions.query.postQuery(query)
+            actions.query.setQueryResponses(queryResponses)
             setSelectedResponses(new Set()); // set to empty
             setIsLoading(false);
         } else {

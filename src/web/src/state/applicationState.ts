@@ -1,6 +1,7 @@
 import { UserState } from "./userState";
-import { QueryState } from "./queryState";
+import { QueryResponses } from "./queryState";
 import { BrowseState } from "./browseState";
+import { FrameResponses } from "./frameState";
 import { Dispatch } from "react";
 import { ApplicationActions } from "./actions/common";
 
@@ -11,7 +12,8 @@ export interface AppContext {
 
 export interface ApplicationState {
     userState: UserState,
-    queryState: QueryState,
+    queryState: QueryResponses,
+    frameState: FrameResponses,
     browseState: BrowseState,
 }
 
@@ -28,11 +30,14 @@ export const getDefaultState = (): ApplicationState => {
             selectedContent: null,
         },
         queryState: {
-            query: undefined, responses: undefined
+            responses: []
         },
         browseState: {
             material: "",
             messages: [],
-        }
+        },
+        frameState: {   
+            responses: [],
+        },
     }
 }

@@ -4,6 +4,7 @@ import { FC, ReactElement, useState, useContext, useMemo } from "react";
 // pages & panes imports
 import QueryPane from './queryPane';
 import BrowsePane from './browsePane';
+import FramePane from './framePane';
 // state imports
 import { AppContext } from '../state/applicationState';
 import UserAppContext from '../state/userContext';
@@ -18,12 +19,12 @@ const AIPane: FC = (): ReactElement => {
     const actions = useMemo(() => ({
         query: bindActionCreators(queryActions, appContext.dispatch) as unknown as QueryActions,
     }), [appContext.dispatch]);
-    const buttons = ["PROMPT", "BROWSE"];
+    const buttons = ["PROMPT", "BROWSE", "ANALYSE"];
     const [selectedButton, setSelectedButton] = useState(buttons[0]);
     const onButtonClick = (tabName: string) => {
         console.log("on button click", tabName)
         setSelectedButton(tabName);
-        actions.query.setQueryResponseList(undefined)
+        actions.query.setQueryResponses(undefined)
     }
     return (
         <Stack styles={aiStackStyle}>
@@ -47,6 +48,13 @@ const AIPane: FC = (): ReactElement => {
                 selectedButton === "BROWSE" && (
                     <Stack>
                         <BrowsePane/>
+                    </Stack>
+                )
+            }
+            {
+                selectedButton === "ANALYSE" && (
+                    <Stack>
+                        <FramePane/>
                     </Stack>
                 )
             }

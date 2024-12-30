@@ -1,46 +1,42 @@
 import { Dispatch } from "react";
 import config from "../../config";
 import { QueryService } from "../../backend/queryService";
-import { Query, QueryResponse } from "../queryState";
+import { Query, QueryResponses } from "../queryState";
 import { ActionMethod, createPayloadAction, PayloadAction } from "./actionCreators";
 import { ActionTypes } from "./common";
 
 const queryService = new QueryService(config.api.baseUrl);
 
 export interface QueryActions {
-    postQueryResponseList(query: Query): Promise<QueryResponse[]>;
-    setQueryResponseList(queryResponses: QueryResponse[] | undefined): void;
+    postQuery(query: Query): Promise<QueryResponses>;
+    setQueryResponses(queryResponses: QueryResponses): void;
 }
 
-export const postQueryResponseList = (query: Query): ActionMethod<QueryResponse[]> =>
-    async (dispatch: Dispatch<PostQueryResponseListAction>) => {
+export const postQuery = (query: Query): ActionMethod<QueryResponses> =>
+    async (dispatch: Dispatch<PostQueryAction>) => {
         console.log("query", query.userTxt)
         try {
             const queryResponses = await queryService.postQueryResponseList(query);
             console.log("query responses", queryResponses)
-            dispatch(postQueryResponseListAction(queryResponses.responses));
+            dispatch(postQueryAction(queryResponses));
             console.log("returned query responses")
-            return queryResponses.responses
+            return queryResponses
         } catch (error) {
             console.error("Error posting query responses: ", error);
             throw error
         }
 }
-export interface PostQueryResponseListAction extends PayloadAction<string, QueryResponse[]> {
-    type: ActionTypes.POST_QUERY_RESPONSE_LIST
+export interface PostQueryAction extends PayloadAction<string, QueryResponses> {
+    type: ActionTypes.POST_QUERY
 }
-const postQueryResponseListAction =
-    createPayloadAction<PostQueryResponseListAction>(ActionTypes.POST_QUERY_RESPONSE_LIST);
+const postQueryAction =
+    createPayloadAction<PostQueryAction>(ActionTypes.POST_QUERY);
 
-export const setQueryResponseList = (queryResponses: QueryResponse[] | undefined) =>
-    (dispatch: Dispatch<SetQueryResponseListAction>) => {
-        dispatch(setQueryResponseListAction(queryResponses));
+export const setQueryResponses = (queryResponses: QueryResponses) =>
+    (dispatch: Dispatch<SetQueryResponsesAction>) => {
+        dispatch(setQueryResponsesAction(queryResponses));
     }
-export interface SetQueryResponseListAction {
-    type: ActionTypes.SET_QUERY_RESPONSE_LIST,
-    payload: QueryResponse[] | undefined
+export interface SetQueryResponsesAction extends PayloadAction<string, QueryResponses> {
+    type: ActionTypes.SET_QUERY_RESPONSES
 }
-const setQueryResponseListAction = (queryResponses: QueryResponse[] | undefined): SetQueryResponseListAction => ({
-    type: ActionTypes.SET_QUERY_RESPONSE_LIST,
-    payload: queryResponses
-});
+const setQueryResponsesAction = createPayloadAction<SetQueryResponsesAction>(ActionTypes.SET_QUERY_RESPONSES);

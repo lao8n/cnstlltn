@@ -13,11 +13,12 @@ export const appReducer: Reducer<ApplicationState, ApplicationActions> = (state:
         case ActionTypes.GET_LOGIN_CONFIG:
             break;
         // query
-        case ActionTypes.POST_QUERY_RESPONSE_LIST:
+        case ActionTypes.POST_QUERY:
             break;
-        case ActionTypes.SET_QUERY_RESPONSE_LIST:
-            state.queryState.responses = action.payload;
+        case ActionTypes.SET_QUERY_RESPONSES:
+            state.queryState = action.payload;
             break;
+        // browse
         case ActionTypes.POST_BROWSE:
             break;
         case ActionTypes.SET_BROWSE_MATERIAL:
@@ -38,6 +39,12 @@ export const appReducer: Reducer<ApplicationState, ApplicationActions> = (state:
             if (state.browseState.messages.length > 0) {
                 state.browseState.messages.pop();
             }
+            break;
+        // frame
+        case ActionTypes.POST_FRAME:
+            break;
+        case ActionTypes.SET_FRAME_RESPONSES:
+            state.frameState = action.payload;
             break;
         // constellation
         case ActionTypes.SAVE_SELECTED_FRAMEWORKS:

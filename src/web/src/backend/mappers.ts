@@ -1,3 +1,5 @@
+import { Framework } from "../state/frameState";
+import { QueryResponse } from "../state/queryState";
 import { Cluster, UserFramework } from "../state/userState";
 import { DbCluster, DbUserFramework } from "./models";
 
@@ -31,5 +33,13 @@ export function mapUserFrameworkToDbUserFramework(userid: string, userFramework:
         source: userFramework.source,
         content: userFramework.content,
         tags: userFramework.tags
+    } 
+}
+
+export function mapQueryResponseToFramework(queryResponse: QueryResponse): Framework {
+    return {
+        title: queryResponse.title,
+        source: queryResponse.source,
+        content: queryResponse.content
     }
 }
