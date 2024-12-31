@@ -4,7 +4,7 @@ import { FC, ReactElement, useState, useContext, useMemo } from "react";
 // pages & panes imports
 import QueryPane from './queryPane';
 import BrowsePane from './browsePane';
-import FramePane from './framePane';
+import AnalysePane from './analysePane';
 // state imports
 import { AppContext } from '../state/applicationState';
 import UserAppContext from '../state/userContext';
@@ -54,7 +54,7 @@ const AIPane: FC = (): ReactElement => {
             {
                 selectedButton === "ANALYSE" && (
                     <Stack>
-                        <FramePane/>
+                        <AnalysePane/>
                     </Stack>
                 )
             }

@@ -16,7 +16,7 @@ import * as displayActions from '../state/actions/displayActions';
 import { LoadingDots } from '../components/loadingDots';
 // ux imports
 import { queryBarStyle, queryStackStyle, toggleSecondSearchButtonStyle, selectedButtonTextStyles, buttonTextStyles } from '../ux/panes/query';
-import { stackItemPadding, saveSelectedButtonStyle, queryFieldStyles, badInputNotifications, buttonStyles, selectedButtonStyles, } from '../ux/shared/components';
+import { stackItemPadding, saveSelectedButtonStyle, textFieldStyles, badInputNotifications, buttonStyles, selectedButtonStyles, } from '../ux/shared/components';
 import { blackLoadingDots } from '../ux/components/loadingDots';
 
 const QueryPane: FC = (): ReactElement => {
@@ -127,7 +127,7 @@ const QueryPane: FC = (): ReactElement => {
                                 "Prompt for notes"}
                             onChange={onTypeQuery}
                             onSearch={onSubmit}
-                            styles={queryFieldStyles}
+                            styles={textFieldStyles}
                             iconProps={{ iconName: "None" }}
                             />
                     </Stack.Item>
@@ -139,7 +139,7 @@ const QueryPane: FC = (): ReactElement => {
                             placeholder="Copy-paste source article or video transcript"
                             onChange={onTypeMaterial}
                             onSearch={onSubmit}
-                            styles={queryFieldStyles}
+                            styles={textFieldStyles}
                             iconProps={{ iconName: "None" }}
                         />
                     </Stack.Item>

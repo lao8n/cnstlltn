@@ -16,7 +16,7 @@ import * as displayActions from '../state/actions/displayActions';
 import { LoadingDots } from '../components/loadingDots';
 // ux imports
 import { browsePaneStyle, browseStackStyle, browseButtonStackStyle, drillDownButtonStackStyle, drillDownButtonStyles, drillUpIconStyles, browseBarStyle, materialAttachedButtonStyle, browsePaneItemStyle, buttonTextStyles, selectedButtonTextStyles, drillUpButtonStackStyle } from "../ux/panes/browse";
-import { stackItemPadding, saveSelectedButtonStyle, queryFieldStyles, badInputNotifications, buttonStyles, selectedButtonStyles } from '../ux/shared/components';
+import { stackItemPadding, saveSelectedButtonStyle, textFieldStyles, badInputNotifications, buttonStyles, selectedButtonStyles } from '../ux/shared/components';
 import { blackLoadingDots } from '../ux/components/loadingDots';
 
 const BrowsePane: FC = (): ReactElement => {
@@ -203,7 +203,7 @@ const BrowsePane: FC = (): ReactElement => {
                             placeholder={materialAttached ? "Copy-paste source article or video transcript" : "Name and author of book"}
                             onChange={onTypeSource}
                             onSearch={onSubmitMaterial}
-                            styles={queryFieldStyles}
+                            styles={textFieldStyles}
                             iconProps={{ iconName: "None" }}
                             />
                     </Stack.Item>

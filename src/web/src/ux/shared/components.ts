@@ -60,7 +60,7 @@ export const badInputNotifications: IStackStyles = {
     }
 }
 
-export const queryFieldStyles = {
+export const textFieldStyles = {
     field: {
         color: theme.palette.black,
         fontFamily: '"Segoe UI", "Noto Sans", "Helvetica Neue"',
