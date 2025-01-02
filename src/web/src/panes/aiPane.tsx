@@ -24,7 +24,7 @@ const AIPane: FC = (): ReactElement => {
     const onButtonClick = (tabName: string) => {
         console.log("on button click", tabName)
         setSelectedButton(tabName);
-        actions.query.setQueryResponses(undefined)
+        actions.query.setQueryResponses({ responses: [] })
     }
     return (
         <Stack styles={aiStackStyle}>
