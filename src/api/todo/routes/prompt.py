@@ -153,12 +153,17 @@ async def frame(frame: FrameRequest) -> FrameResponses:
 
         1. Use the provided data to evaluate the provided argument
         2. Breakdown your analysis into parts where for each give a title and then steelman and strawman each part.
-        Each part should represent a logical part of the provided argument, i.e. the parts together
-        should represent the entire argument.
+        Each part should represent a logical block of evidence, events or narrative for the provided argument, 
+        i.e. the parts together should represent the entire argument. 
+        
+        For each part, include relevant text from the provided text. Do not include evidence that is not found in the
+        provided text.
 
-        Title: [Concept, Event or Narrative Title]
-        Steelman: [Steelman this idea]
-        Strawman: [Strawman this idea]
+        Title: [Evidence, Events or Narrative Title]
+        Steelman: [Steelman this part as it relates to the provided argument- make sure you haven't got this the wrong
+        way around with strawman. This part should reinforce the argument, not weaken it.]
+        Strawman: [Strawman this part as it relates to the provided argument- make sure you haven't got this the wrong
+        way around with steelman. This part should weaken the argument, not reinforce it.]
 
         Here is the provided argument {frame.argument}
         Here is the provided data {frameworks_text}
