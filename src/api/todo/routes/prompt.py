@@ -138,7 +138,8 @@ async def frame(frame: FrameRequest) -> FrameResponses:
     # prepare request
     system_prompt = """
     You are an AI assistant tasked with analyzing text. 
-    Try to be as specific as possible. Do not include any introduction or conclusion. 
+    Try to be as specific as possible, include relevant text from the provided text. 
+    Do not include any introduction or conclusion. 
     Do not use markdown in your formatting.
     """
 
@@ -152,6 +153,8 @@ async def frame(frame: FrameRequest) -> FrameResponses:
 
         1. Use the provided data to evaluate the provided argument
         2. Breakdown your analysis into parts where for each give a title and then steelman and strawman each part.
+        Each part should represent a logical part of the provided argument, i.e. the parts together
+        should represent the entire argument.
 
         Title: [Concept, Event or Narrative Title]
         Steelman: [Steelman this idea]
