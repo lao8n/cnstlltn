@@ -85,15 +85,21 @@ const BrowsePane: FC = (): ReactElement => {
     const onDrillDown = async (index: number) => {
         console.log("drill down")
         const browseState = appContext.state.browseState.messages[appContext.state.browseState.messages.length - 1];
-        actions.browse.setBrowseChosen(browseState.responses[index].title);
-        console.log("browse chosen", browseState.responses[index].title)
+        const selectedResponse = browseState.responses[index];
+        console.log("selected response", selectedResponse);
+
+        actions.browse.setBrowseChosen(selectedResponse.title);
+        console.log("browse chosen", selectedResponse.title)
+
         setIsLoading(true);
-        setPreviousTitles([...previousTitles, browseState.responses[index].title]);
+        setPreviousTitles([...previousTitles, selectedResponse.title]);
+        
         const browseResponses = await actions.browse.postBrowse({
             attachment: materialAttached,
             material: appContext.state.browseState.material,
             messages: appContext.state.browseState.messages // TODO: check if browse chosen updated in time
         });
+
         console.log("browse responses", browseResponses)
         actions.browse.pushBrowseMessage({
             chosen: "", // user hasn't chosen yet
@@ -104,13 +110,16 @@ const BrowsePane: FC = (): ReactElement => {
                 content: response.content
             }))
         });
+
         setSelectedResponses(new Set());
         setIsLoading(false);
     }
 
     const onDrillUp = () => {
+        console.log("drill up");
+        const newPreviousTitles = previousTitles.slice(0, -1);
+        setPreviousTitles(newPreviousTitles);
         actions.browse.popBrowseMessage();
-        setPreviousTitles(previousTitles.slice(0, -1));
         setSelectedResponses(new Set());
     }
 
