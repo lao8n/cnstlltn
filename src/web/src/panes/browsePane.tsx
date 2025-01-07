@@ -94,13 +94,13 @@ const BrowsePane: FC = (): ReactElement => {
         setIsLoading(true);
         setPreviousTitles([...previousTitles, selectedResponse.title]);
         
-        const messages = appContext.state.browseState.messages
-        console.log("browse state messages", messages)
+        const currentMessages = [...appContext.state.browseState.messages];
+        console.log("browse state messages", currentMessages)
 
         const browseResponses = await actions.browse.postBrowse({
             attachment: materialAttached,
             material: appContext.state.browseState.material,
-            messages: appContext.state.browseState.messages // TODO: check if browse chosen updated in time
+            messages: currentMessages
         });
 
         console.log("browse responses", browseResponses)
@@ -123,6 +123,7 @@ const BrowsePane: FC = (): ReactElement => {
         const newPreviousTitles = previousTitles.slice(0, -1);
         setPreviousTitles(newPreviousTitles);
         actions.browse.popBrowseMessage();
+        actions.browse.setBrowseChosen("");
         const poppedMessages = appContext.state.browseState.messages;
         console.log("messages", poppedMessages)
         setSelectedResponses(new Set());
