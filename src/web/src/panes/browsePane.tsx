@@ -94,7 +94,10 @@ const BrowsePane: FC = (): ReactElement => {
         setIsLoading(true);
         setPreviousTitles([...previousTitles, selectedResponse.title]);
         
-        const currentMessages = [...appContext.state.browseState.messages];
+        const currentMessages = appContext.state.browseState.messages.map(message => ({
+            ...message,
+            responses: [...message.responses]
+        }));
         console.log("browse state messages", currentMessages)
 
         const browseResponses = await actions.browse.postBrowse({
