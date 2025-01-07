@@ -94,7 +94,8 @@ const BrowsePane: FC = (): ReactElement => {
         setIsLoading(true);
         setPreviousTitles([...previousTitles, selectedResponse.title]);
         
-        console.log("browse state messages", appContext.state.browseState.messages)
+        const messages = appContext.state.browseState.messages
+        console.log("browse state messages", messages)
 
         const browseResponses = await actions.browse.postBrowse({
             attachment: materialAttached,
@@ -122,6 +123,8 @@ const BrowsePane: FC = (): ReactElement => {
         const newPreviousTitles = previousTitles.slice(0, -1);
         setPreviousTitles(newPreviousTitles);
         actions.browse.popBrowseMessage();
+        const poppedMessages = appContext.state.browseState.messages;
+        console.log("messages", poppedMessages)
         setSelectedResponses(new Set());
     }
 
