@@ -84,29 +84,34 @@ const BrowsePane: FC = (): ReactElement => {
 
     const onDrillDown = async (index: number) => {
         console.log("drill down")
-        const browseState = appContext.state.browseState.messages[appContext.state.browseState.messages.length - 1];
-        const selectedResponse = browseState.responses[index];
-        console.log("selected response", selectedResponse);
-
-        actions.browse.setBrowseChosen(selectedResponse.title);
-        console.log("browse chosen", selectedResponse.title)
-
-        setIsLoading(true);
-        setPreviousTitles([...previousTitles, selectedResponse.title]);
-        
-        const currentMessages = appContext.state.browseState.messages.map(message => ({
+        // find selected response
+        const currentState = appContext.state.browseState.messages.map(message => ({
+            // deep copy
             ...message,
             responses: [...message.responses]
         }));
-        console.log("browse state messages", currentMessages)
+        const lastMessageIndex = currentState.length - 1;
+        const lastMessage = currentState[lastMessageIndex];
+        const selectedResponse = lastMessage.responses[index];
+        console.log("selected response", selectedResponse);
 
+        // set selected response
+        actions.browse.setBrowseChosen(selectedResponse.title);
+        console.log("browse chosen", selectedResponse.title)
+        setPreviousTitles([...previousTitles, selectedResponse.title]);
+        setIsLoading(true)
+        currentState[lastMessageIndex].chosen = selectedResponse.title // we have local copy
+
+        // browse call
+        console.log("messages, should be none unchosen", currentState)
         const browseResponses = await actions.browse.postBrowse({
             attachment: materialAttached,
             material: appContext.state.browseState.material,
-            messages: currentMessages
+            messages: currentState
         });
-
         console.log("browse responses", browseResponses)
+
+        // update messages 
         actions.browse.pushBrowseMessage({
             chosen: "", // user hasn't chosen yet
             responses: browseResponses.map(response => ({
@@ -116,7 +121,6 @@ const BrowsePane: FC = (): ReactElement => {
                 content: response.content
             }))
         });
-
         setSelectedResponses(new Set());
         setIsLoading(false);
     }
