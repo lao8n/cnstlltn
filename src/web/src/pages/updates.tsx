@@ -7,7 +7,7 @@ export const Updates = () => {
     return(
         <Stack styles={updatesPageStyle}>
             <Stack.Item styles={updateHeadingStyle}>
-                Updates - last updated 02/01/2025
+                Updates - last updated 26/01/2025
             </Stack.Item>
             <Stack.Item styles={updateTextStyle}>
                 This page is for updates on cnstlltn. As we are still in pre-alpha there will be lots of bugs so please send any you see over to cnstlltn@outlook.com. We also welcome any feedback you wish to share including feature requests etc.
@@ -29,6 +29,9 @@ export const Updates = () => {
                 Currently Worked On Features
             </Stack.Item>
             <Stack.Item styles={updateTextStyle}>
+                <Stack.Item>
+                - [Released] When browsing can now set source manually once for all notes for a given source material
+                </Stack.Item>
                 <Stack.Item>
                 - [Released] Add analyse strongman and strawman functionality.
                 </Stack.Item>
