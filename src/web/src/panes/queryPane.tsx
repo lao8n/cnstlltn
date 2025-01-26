@@ -118,7 +118,9 @@ const QueryPane: FC = (): ReactElement => {
             <Stack.Item tokens={stackItemPadding}>
                 <Stack horizontal styles={queryBarStyle}>
                     <Stack.Item align="stretch">
-                        <IconButton aria-label="Toggle second search" iconProps={{ iconName: isSecondSearchVisible ? "ChevronDown" : "ChevronRight" }} onClick={toggleSecondSearch} styles={toggleSecondSearchButtonStyle} />
+                        <IconButton aria-label="Toggle second search"
+                            iconProps={{ iconName: isSecondSearchVisible ? "ChevronDown" : "ChevronRight" }}
+                            onClick={toggleSecondSearch} styles={toggleSecondSearchButtonStyle} />
                     </Stack.Item>
                     <Stack.Item styles={queryBarStyle}>
                         <SearchBox

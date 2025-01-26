@@ -15,7 +15,7 @@ import * as displayActions from '../state/actions/displayActions';
 // components
 import { LoadingDots } from '../components/loadingDots';
 // ux imports
-import { browsePaneStyle, browseStackStyle, browseButtonStackStyle, drillDownButtonStackStyle, drillDownButtonStyles, drillUpIconStyles, browseBarStyle, materialAttachedButtonStyle, browsePaneItemStyle, buttonTextStyles, selectedButtonTextStyles, drillUpButtonStackStyle } from "../ux/panes/browse";
+import { browsePaneStyle, browseStackStyle, browseButtonStackStyle, drillDownButtonStackStyle, drillDownButtonStyles, drillUpIconStyles, browseBarStyle, materialAttachedButtonStyle, browsePaneItemStyle, buttonTextStyles, selectedButtonTextStyles, drillUpButtonStackStyle, toggleSetSourceButtonStyle } from "../ux/panes/browse";
 import { stackItemPadding, saveSelectedButtonStyle, textFieldStyles, badInputNotifications, buttonStyles, selectedButtonStyles } from '../ux/shared/components';
 import { blackLoadingDots } from '../ux/components/loadingDots';
 
@@ -29,11 +29,13 @@ const BrowsePane: FC = (): ReactElement => {
 
     // display
     const [newMaterial, setNewMaterial] = useState('');
+    const [newManuallySetSource, setNewManuallySetSource] = useState('');
     const [previousTitles, setPreviousTitles] = useState(['Browse Home']);
     const [materialAttached, setMaterialAttached] = useState(true);
     const [emptyMaterial, setEmptyMaterial] = useState(false);
     const [selectedResponses, setSelectedResponses] = useState<Set<number>>(new Set());
     const [emptySelection, setEmptySelection] = useState(false);
+    const [isSetSourceVisible, setIsSetSourceVisible] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [tryingToSaveOnHome, setTryingToSaveOnHome] = useState(false);
 
@@ -42,9 +44,18 @@ const BrowsePane: FC = (): ReactElement => {
         setNewMaterial(newValue || '');
     }
 
+    const onTypeSetSource = (_: ChangeEvent<HTMLInputElement> | undefined, newValue?: string) => {
+        setNewManuallySetSource(newValue || '');
+    }
+
+    const toggleSetSource = () => {
+        setIsSetSourceVisible(!isSetSourceVisible);
+    };
+
     const onSwitchMaterialAttached = () => {
         setMaterialAttached(!materialAttached);
         setNewMaterial('');
+        setNewManuallySetSource('');
         setEmptyMaterial(false);
         setEmptySelection(false);
         setSelectedResponses(new Set());
@@ -67,7 +78,7 @@ const BrowsePane: FC = (): ReactElement => {
                 chosen: "",
                 responses: browseResponses.map(response => ({
                     title: response.title,
-                    source: response.source,
+                    source: newManuallySetSource === '' ? response.source : newManuallySetSource,
                     flag: response.flag,
                     content: response.content
                 }))
@@ -212,12 +223,17 @@ const BrowsePane: FC = (): ReactElement => {
     return (
         <Stack styles={browsePaneStyle}>
             <Stack.Item tokens={stackItemPadding}>
-            <Stack horizontal styles={browseBarStyle}>
+                <Stack horizontal styles={browseBarStyle}>
                     <Stack.Item align="stretch">
                         <IconButton aria-label="material attached"
                             iconProps={{ iconName: materialAttached ? "Copy" : "BookAnswers" }}
                             onClick={onSwitchMaterialAttached}
                             styles={materialAttachedButtonStyle} />
+                    </Stack.Item>
+                    <Stack.Item align="stretch">
+                        <IconButton aria-label="Toggle set source"
+                            iconProps={{ iconName: isSetSourceVisible ? "ChevronDown" : "ChevronRight" }}
+                            onClick={toggleSetSource} styles={toggleSetSourceButtonStyle} />
                     </Stack.Item>
                     <Stack.Item styles={browseBarStyle}>
                         <SearchBox
@@ -230,6 +246,18 @@ const BrowsePane: FC = (): ReactElement => {
                             />
                     </Stack.Item>
                 </Stack>
+                {isSetSourceVisible && (
+                    <Stack.Item>
+                        <SearchBox
+                            value={newManuallySetSource}
+                            placeholder="(Optional) Manually set source material"
+                            onChange={onTypeSetSource}
+                            onSearch={onSubmitMaterial}
+                            styles={textFieldStyles}
+                            iconProps={{ iconName: "None" }}
+                        />
+                    </Stack.Item>
+                )}
             </Stack.Item>
             {(emptyMaterial || (appContext.state.browseState.messages.length > 0 &&
                 appContext.state.browseState.messages[appContext.state.browseState.messages.length - 1].responses?.length === 0 && emptySelection)) &&

@@ -114,6 +114,13 @@ export const materialAttachedButtonStyle: IButtonStyles = {
     },
 }
 
+export const toggleSetSourceButtonStyle: IButtonStyles = {
+    root: {
+        color: theme.palette.black
+    },
+    // TODO: add root hovered and root pressed
+}
+
 export const buttonTextStyles = mergeStyles({
     color: theme.palette.black,
     textAlign: 'left',
